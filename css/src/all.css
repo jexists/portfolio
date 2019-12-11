@@ -1,0 +1,130 @@
+@charset "UTF-8";
+/*main.css */
+/* @include horizontal_slide_banner('.my_banner,4'){
+	$url:'../img/mybanner/';
+	$imgName: 'mybanner_';
+	$count:4;
+	@include horizon_banner_img($count, $imgName, $url:$url, $file:'png');
+	기타 div 및 하위내용삽입
+} */
+#wrap {
+  width: 100%;
+  min-width: 1000px;
+  height: 100%;
+  margin: auto;
+  background-color: #fff; }
+
+#headBox {
+  width: 100%;
+  height: 125px;
+  padding: 20px 100px 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ddd; }
+
+.headarea {
+  width: 100%;
+  height: 64px; }
+
+h1 {
+  float: left;
+  width: 100px;
+  height: 40px; }
+
+h1 > a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../img/big_portfolio-01.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 50% 50%; }
+
+h1 > a:hover {
+  outline: 0;
+  transform: scale(1.1); }
+
+.search {
+  float: left;
+  width: 500px;
+  height: 30px;
+  margin-top: 8px;
+  margin-left: 20px;
+  border: 1px solid #ddd;
+  border-radius: 15px; }
+
+.searchtext {
+  float: left;
+  margin-left: 4%;
+  line-height: 30px; }
+
+.searchlogo {
+  float: right;
+  width: 10%;
+  height: 100%;
+  line-height: 30px;
+  text-align: center; }
+
+.gnb {
+  width: 100%;
+  height: 40px; }
+
+.gnb > ul {
+  width: 100%;
+  height: 100%;
+  margin-left: 140px; }
+
+.gnb > ul:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-top: 1px solid #ddd; }
+
+.gnb > ul > li {
+  float: left;
+  width: auto;
+  height: 100%;
+  margin-right: 10px; }
+
+.gnb > ul > li > a {
+  display: block;
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 30px; }
+
+.gnb > ul > li:nth-child(1) a {
+  font-weight: bold;
+  color: #5479BC; }
+
+.gnb > ul > li:nth-child(1):after {
+  content: " ";
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: #5479BC;
+  margin-top: -3px; }
+
+#contentBox {
+  width: 100%;
+  height: auto;
+  min-height: 800px;
+  background-color: #fee; }
+
+#footBox {
+  border-top: 2px solid #ddd;
+  box-sizing: border-box; }
+
+/* wrap
+headBox
+h1
+search
+searchlogo
+searchtext
+talklogo
+gnb
+ul
+li
+a */

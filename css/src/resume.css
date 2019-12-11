@@ -1,0 +1,27 @@
+@charset "UTF-8";
+/*main.css */
+/* @include horizontal_slide_banner('.my_banner,4'){
+	$url:'../img/mybanner/';
+	$imgName: 'mybanner_';
+	$count:4;
+	@include horizon_banner_img($count, $imgName, $url:$url, $file:'png');
+	기타 div 및 하위내용삽입
+} */
+#headBox {
+  width: 100%;
+  height: 100px;
+  border-bottom: 3px solid #ddd; }
+
+.gnb {
+  width: 100%;
+  height: 30px; }
+
+.gnb > ul {
+  width: 100%;
+  height: 100%; }
+
+.gnb > ul > li {
+  float: left;
+  width: auto;
+  height: 100px;
+  margin-right: 30px; }

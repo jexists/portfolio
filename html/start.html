@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!-- content.html -->
+<!-- start.html -->
 <html lang="ko-KR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="웹페이지 실습에 따른 목차구성">
   <meta name="keyword" content="html, css, js, web, design, 웹디자인">
@@ -15,7 +15,7 @@
    <link rel="stylesheet" href="../css/base/reset.css">
    <link rel="stylesheet" href="../css/base/common.css">
    <link rel="stylesheet" href="../font/fontawesome/css/all.min.css">
-   <link rel="stylesheet" href="../css/src/content.css">
+   <link rel="stylesheet" href="../css/src/start.css">
 
    <!--[if lte IE 9]>
       <script src="./ie/html5shiv-3.7.3/dist/html5shiv.min.js"> </script>
@@ -39,24 +39,28 @@
  </noscript>
 <!-- layout=================== -->
 <div id="wrap">
-	<header id="headBox">
-		<h1><a href="#">제목</a></h1>
-		<h2>목차</h2>
-    <ul>
-      <li><a href="./main.html">슬라이드 모음</a></li>
-    </ul>
-	</header>
-	<main id="contentBox">
-		<h2>부제</h2>
-	</main>
-	<footer id="footBox">
-		<h2>정보</h2>
-	</footer>
+  <div id="searchBox">
+    <h1><span class="hd">portfolio</span></h1>
+    <div class="search">
+      <div class="searchlogo">
+        <i class="fas fa-search"></i>
+      </div>
+      <p class="searchtext">
+        <span class="hd">정주애를 검색하세요.</span>
+      </p>
+      <div class="talklogo"></div>
+    </div>
+    <div class="search_btn">
+      <div class="sbtn_01">juae 검색</div>
+      <div class="sbtn_02">i`m web designer</div>
+    </div>
+  </div>
 </div>
 
+
 <!-- Script=================== -->
- <script src="../../js/base/jquery-3.4.1.min.js"></script>
- <script src="../../js/base/jquery-ui.min.js"></script>
- <script src="../../js/src/content.js"></script>
+ <script src="../js/base/jquery-3.4.1.min.js"></script>
+ <script src="../js/base/jquery-ui.min.js"></script>
+ <script src="../js/src/start/start.js"></script>
 </body>
 </html>

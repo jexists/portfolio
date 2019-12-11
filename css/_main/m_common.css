@@ -1,0 +1,10 @@
+#wrap {
+  width: 100%;
+  height: 100%;
+  margin: auto; }
+
+#searchBox {
+  width: 50%;
+  height: 50vh;
+  margin: auto;
+  background-color: #333; }
