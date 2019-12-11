@@ -1,0 +1,17 @@
+// _var.scss
+
+// color
+$pmC: #f06;
+$b: #333;
+$sbC: $b;
+$wt: #fff;
+$y: #fa0;
+$gy: #ccc;
+$gn: #7f7;
+$spC: $y;
+
+//line
+$line: (1px,3px,10px,30px); //nth($line,1);
+$bd1: nth($line,1) solid $spC;
+
+//font
