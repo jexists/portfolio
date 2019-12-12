@@ -1,0 +1,18 @@
+
+
+
+.gnb li:nth-child(3) a{font-weight: bold; color: $blue;}
+.gnb li:nth-child(3):after{content: " "; display: block; width: 100%;
+	height: 4px; background-color: $blue; margin-top: -3px;}
+
+#related{width: 70%; height: 80px; 
+ &:after{content: " "; display:block; width: 86%; height: 80px; 
+ 	border-bottom: $border; margin-left: 10%;}	
+ >p{float: left; margin-left: 140px; width: 130px; height: 100%;
+ 	line-height: 50px; text-align: center; font-weight: bold;}
+ >ul{float: left; overflow: hidden; width:65%; height: 78px;
+ 	padding-top: 10px; box-sizing: border-box;
+  li{float: left; width: auto; height: auto; 
+  	margin-right: 20px; color: #00C; font-size: 0.9rem;
+  	line-height: 30px; 
+  	a{display:block; width: auto; height: auto; color:inherit;}}}}

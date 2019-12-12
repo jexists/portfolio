@@ -2,7 +2,20 @@
 .gnb li:nth-child(2) a{font-weight: bold; color: $blue;}
 .gnb li:nth-child(2):after{content: " "; display: block; width: 100%;
 	height: 4px; background-color: $blue; margin-top: -3px;}
-#contentBox{width: 100%; height: 1000px;}
+#contentBox{width: 100%; height: auto; min-height: 800px; 
+	background-color: $white;}
+#information{float: left; width: 60%; height: 1000px;}
+#related{width: 100%; height: 80px; 
+ &:after{content: " "; display:block; width: 86%; height: 80px; 
+ 	border-bottom: $border; margin-left: 10%;}	
+ >p{float: left; margin-left: 140px; width: 130px; height: 100%;
+ 	line-height: 50px; text-align: center; font-weight: bold;}
+ >ul{float: left; overflow: hidden; width:65%; height: 78px;
+ 	padding-top: 10px; box-sizing: border-box;
+  li{float: left; width: auto; height: auto; 
+  	margin-right: 20px; color: #00C; font-size: 0.9rem;
+  	line-height: 30px; }}}
+
 #resume{width: 100%; height: 350px; margin: auto;
  &:after{content:" "; display: block; margin-left: 10%;
  	width: 86%; height: 280px; border-bottom: $border;}
@@ -10,16 +23,45 @@
  	margin-left: 15%;
  	font-size:1.2rem; font-weight: bold; line-height: 30px;}
 .resume_area{width: 100%; height: auto; 
-	background-color: #fee;
  .pic{float:left; width: 170px; height: 220px; 
  	margin-left:15%; 
- 	background: url($imgUrl + 'resumePic.jpg') no-repeat 50% 50% / contain;}
- .info{float: left; margin-left: 40px; width: 60%; height: 200px;
+ 	background: url($imgUrl + 'resumePic.jpg') no-repeat 50% 50% / contain;
+ 	&:hover{background-size: 105% auto;}}
+ .persinfo{float: left; margin-left: 40px; width: 60%; height: 200px;
  dl{width: 100%; height: 30px;
  &:nth-of-type(1) {height: 40px; margin-bottom: 5px;
   dt{font-size: 1.48rem; width: 16%; color: #00c;}
   dd{font-size: 1.2rem; line-height: 2;}}
   dt{float: left; width: 15%; font-weight: bold;}
   dd{float: left;}}}}}
-#school{width: 100%; height: 350px; margin: auto;}
-#footBox{}
+#studyinfo{width: 100%; height: 350px; margin: auto;
+ .studylink{width: 100%; height: 32px; margin-left: 15%;
+  li{float: left; width: auto; height: 30px;
+  	border:$border; line-height: 30px;
+  	background-color: #f0f0f0;
+  &.action{background-color: #777; color: #fff; font-weight: bold;}
+  	a{display: block; padding: 0 18px; color: inherit;}}}
+ .infoconts{width: 100%; height: auto; margin-left: 15%; 
+ 	margin-top: 15px;
+ dl{width: 100%; height: auto; margin-top: 15px; margin-left: 10px;
+ dt{font-size: 1.5rem; color:$blue; font-weight: bold;
+ 	margin-bottom:5px; 
+  em{font-style: normal; font-size: 1rem;}}
+ dd{text-indent: 20px;}}}}
+.studyconts{display: none}
+.educonts{display: none}
+
+#ability{float: left; width: 40%; height: 1000px; 
+	margin: 20px 0; 
+	border-left: $border; box-sizing:border-box;}
+.compcan{width: 35%; height: 400px; margin-left: 20px;
+ >p{font-size: 1.2rem; font-weight: bold; margin-bottom: 20px;}
+ ul{width: 100%; height: auto;
+ li{width: 100%; height: 50px; margin-bottom: 10px;
+ >div{float: left;width: 20%; height: 100%; background-color: #f00;}
+ dl{float:left; width: 80%;
+ dt{margin-left: 10px; width: 100%; height: 30px;
+	line-height: 30px; font-weight: bold;
+ 	text-transform: uppercase; font-size: 0.9rem;}
+ dd{margin-left: 10px; width: 90%; height: 20px; background-color: #ddd;
+ span{display: block; width: 0; height: 100%; transition: width 500ms ease; }}}}}}

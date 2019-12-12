@@ -118,6 +118,43 @@ h1 {
           outline: none;
           font-size: 1.1rem; }
 
+#footBox {
+  width: 100%;
+  height: 150px;
+  margin-top: 100px;
+  background-color: #f0f0f0; }
+  #footBox .footlink {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    padding-top: 40px;
+    box-sizing: border-box; }
+    #footBox .footlink li {
+      display: inline-block;
+      position: relative;
+      width: auto;
+      height: auto;
+      margin-right: 30px; }
+      #footBox .footlink li:after, #footBox .footlink li::after {
+        content: " ";
+        display: block;
+        position: absolute;
+        left: 25%;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100%;
+        height: 15px;
+        border-right: 2px solid #777; }
+      #footBox .footlink li:last-child:after {
+        display: none; }
+      #footBox .footlink li a {
+        display: block;
+        width: 100%;
+        height: 100%; }
+  #footBox p {
+    text-align: center; }
+
 #wrap {
   width: 100%;
   min-width: 1000px;
@@ -136,3 +173,7 @@ h1 {
   height: 4px;
   background-color: #5479BC;
   margin-top: -3px; }
+
+#contentBox {
+  width: 100%;
+  height: 100%; }

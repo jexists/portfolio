@@ -1,3 +1,11 @@
+@charset "UTF-8";
+/* @include horizontal_slide_banner('.my_banner,4'){
+	$url:'../img/mybanner/';
+	$imgName: 'mybanner_';
+	$count:4;
+	@include horizon_banner_img($count, $imgName, $url:$url, $file:'png');
+	기타 div 및 하위내용삽입
+} */
 #headBox {
   width: 100%;
   height: 134px;
@@ -108,3 +116,91 @@ h1 {
           color: #333;
           outline: none;
           font-size: 1.1rem; }
+
+#footBox {
+  width: 100%;
+  height: 150px;
+  margin-top: 100px;
+  background-color: #f0f0f0; }
+  #footBox .footlink {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    padding-top: 40px;
+    box-sizing: border-box; }
+    #footBox .footlink li {
+      display: inline-block;
+      position: relative;
+      width: auto;
+      height: auto;
+      margin-right: 30px; }
+      #footBox .footlink li:after, #footBox .footlink li::after {
+        content: " ";
+        display: block;
+        position: absolute;
+        left: 25%;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100%;
+        height: 15px;
+        border-right: 2px solid #777; }
+      #footBox .footlink li:last-child:after {
+        display: none; }
+      #footBox .footlink li a {
+        display: block;
+        width: 100%;
+        height: 100%; }
+  #footBox p {
+    text-align: center; }
+
+.gnb li:nth-child(3) a {
+  font-weight: bold;
+  color: #5479BC; }
+
+.gnb li:nth-child(3):after {
+  content: " ";
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: #5479BC;
+  margin-top: -3px; }
+
+#related {
+  width: 70%;
+  height: 80px; }
+  #related:after {
+    content: " ";
+    display: block;
+    width: 86%;
+    height: 80px;
+    border-bottom: 1px solid #ddd;
+    margin-left: 10%; }
+  #related > p {
+    float: left;
+    margin-left: 140px;
+    width: 130px;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+    font-weight: bold; }
+  #related > ul {
+    float: left;
+    overflow: hidden;
+    width: 65%;
+    height: 78px;
+    padding-top: 10px;
+    box-sizing: border-box; }
+    #related > ul li {
+      float: left;
+      width: auto;
+      height: auto;
+      margin-right: 20px;
+      color: #00C;
+      font-size: 0.9rem;
+      line-height: 30px; }
+      #related > ul li a {
+        display: block;
+        width: auto;
+        height: auto;
+        color: inherit; }

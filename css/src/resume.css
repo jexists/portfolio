@@ -118,6 +118,43 @@ h1 {
           outline: none;
           font-size: 1.1rem; }
 
+#footBox {
+  width: 100%;
+  height: 150px;
+  margin-top: 100px;
+  background-color: #f0f0f0; }
+  #footBox .footlink {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    padding-top: 40px;
+    box-sizing: border-box; }
+    #footBox .footlink li {
+      display: inline-block;
+      position: relative;
+      width: auto;
+      height: auto;
+      margin-right: 30px; }
+      #footBox .footlink li:after, #footBox .footlink li::after {
+        content: " ";
+        display: block;
+        position: absolute;
+        left: 25%;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100%;
+        height: 15px;
+        border-right: 2px solid #777; }
+      #footBox .footlink li:last-child:after {
+        display: none; }
+      #footBox .footlink li a {
+        display: block;
+        width: 100%;
+        height: 100%; }
+  #footBox p {
+    text-align: center; }
+
 .gnb li:nth-child(2) a {
   font-weight: bold;
   color: #5479BC; }
@@ -132,7 +169,48 @@ h1 {
 
 #contentBox {
   width: 100%;
+  height: auto;
+  min-height: 800px;
+  background-color: #fff; }
+
+#information {
+  float: left;
+  width: 60%;
   height: 1000px; }
+
+#related {
+  width: 100%;
+  height: 80px; }
+  #related:after {
+    content: " ";
+    display: block;
+    width: 86%;
+    height: 80px;
+    border-bottom: 1px solid #ddd;
+    margin-left: 10%; }
+  #related > p {
+    float: left;
+    margin-left: 140px;
+    width: 130px;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+    font-weight: bold; }
+  #related > ul {
+    float: left;
+    overflow: hidden;
+    width: 65%;
+    height: 78px;
+    padding-top: 10px;
+    box-sizing: border-box; }
+    #related > ul li {
+      float: left;
+      width: auto;
+      height: auto;
+      margin-right: 20px;
+      color: #00C;
+      font-size: 0.9rem;
+      line-height: 30px; }
 
 #resume {
   width: 100%;
@@ -155,40 +233,136 @@ h1 {
     line-height: 30px; }
   #resume .resume_area {
     width: 100%;
-    height: auto;
-    background-color: #fee; }
+    height: auto; }
     #resume .resume_area .pic {
       float: left;
       width: 170px;
       height: 220px;
       margin-left: 15%;
       background: url("../../img/resumePic.jpg") no-repeat 50% 50%/contain; }
-    #resume .resume_area .info {
+      #resume .resume_area .pic:hover {
+        background-size: 105% auto; }
+    #resume .resume_area .persinfo {
       float: left;
       margin-left: 40px;
       width: 60%;
       height: 200px; }
-      #resume .resume_area .info dl {
+      #resume .resume_area .persinfo dl {
         width: 100%;
         height: 30px; }
-        #resume .resume_area .info dl:nth-of-type(1) {
+        #resume .resume_area .persinfo dl:nth-of-type(1) {
           height: 40px;
           margin-bottom: 5px; }
-          #resume .resume_area .info dl:nth-of-type(1) dt {
+          #resume .resume_area .persinfo dl:nth-of-type(1) dt {
             font-size: 1.48rem;
             width: 16%;
             color: #00c; }
-          #resume .resume_area .info dl:nth-of-type(1) dd {
+          #resume .resume_area .persinfo dl:nth-of-type(1) dd {
             font-size: 1.2rem;
             line-height: 2; }
-        #resume .resume_area .info dl dt {
+        #resume .resume_area .persinfo dl dt {
           float: left;
           width: 15%;
           font-weight: bold; }
-        #resume .resume_area .info dl dd {
+        #resume .resume_area .persinfo dl dd {
           float: left; }
 
-#school {
+#studyinfo {
   width: 100%;
   height: 350px;
   margin: auto; }
+  #studyinfo .studylink {
+    width: 100%;
+    height: 32px;
+    margin-left: 15%; }
+    #studyinfo .studylink li {
+      float: left;
+      width: auto;
+      height: 30px;
+      border: 1px solid #ddd;
+      line-height: 30px;
+      background-color: #f0f0f0; }
+      #studyinfo .studylink li.action {
+        background-color: #777;
+        color: #fff;
+        font-weight: bold; }
+      #studyinfo .studylink li a {
+        display: block;
+        padding: 0 18px;
+        color: inherit; }
+  #studyinfo .infoconts {
+    width: 100%;
+    height: auto;
+    margin-left: 15%;
+    margin-top: 15px; }
+    #studyinfo .infoconts dl {
+      width: 100%;
+      height: auto;
+      margin-top: 15px;
+      margin-left: 10px; }
+      #studyinfo .infoconts dl dt {
+        font-size: 1.5rem;
+        color: #5479BC;
+        font-weight: bold;
+        margin-bottom: 5px; }
+        #studyinfo .infoconts dl dt em {
+          font-style: normal;
+          font-size: 1rem; }
+      #studyinfo .infoconts dl dd {
+        text-indent: 20px; }
+
+.studyconts {
+  display: none; }
+
+.educonts {
+  display: none; }
+
+#ability {
+  float: left;
+  width: 40%;
+  height: 1000px;
+  margin: 20px 0;
+  border-left: 1px solid #ddd;
+  box-sizing: border-box; }
+
+.compcan {
+  width: 35%;
+  height: 400px;
+  margin-left: 20px; }
+  .compcan > p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px; }
+  .compcan ul {
+    width: 100%;
+    height: auto; }
+    .compcan ul li {
+      width: 100%;
+      height: 50px;
+      margin-bottom: 10px; }
+      .compcan ul li > div {
+        float: left;
+        width: 20%;
+        height: 100%;
+        background-color: #f00; }
+      .compcan ul li dl {
+        float: left;
+        width: 80%; }
+        .compcan ul li dl dt {
+          margin-left: 10px;
+          width: 100%;
+          height: 30px;
+          line-height: 30px;
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 0.9rem; }
+        .compcan ul li dl dd {
+          margin-left: 10px;
+          width: 90%;
+          height: 20px;
+          background-color: #ddd; }
+          .compcan ul li dl dd span {
+            display: block;
+            width: 0;
+            height: 100%;
+            transition: width 500ms ease; }

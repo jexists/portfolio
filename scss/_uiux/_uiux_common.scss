@@ -1,13 +1,32 @@
 @import "../_basic/var";
 
 #wrap{width: 100%; min-width: 1000px; height: 100%; margin: auto; 
-	background-color: $white;}
+	/* background-color: $white; */}
 
 .gnb li:nth-child(3) a{font-weight: bold; color: $blue;}
 .gnb li:nth-child(3):after{content: " "; display: block; width: 100%;
 	height: 4px; background-color: $blue; margin-top: -3px;}
-	.bigbox{width: 100%; height: auto; min-height: 500px;}
-	.conbox{width: 80%; height: auto; min-height: 400px; margin: auto;
-	 li{float: left; width: 30%; height: 400px; margin-right: 5%;
-	 	border:$border; box-sizing:border-box;
-	  &:nth-child(3){margin-right: 0;}}}
+.bigbox{width: 100%; height: auto; min-height: 500px;}
+.conbox{width: 80%; height: auto; min-height: 500px; margin: auto;
+	margin-top: 40px;
+ li{position:relative; float: left; 
+ 	width: 450px; height: 550px; margin-right: 50px;
+ 	border-radius: 30px;
+ 	border:$border; box-sizing:border-box;
+  &:nth-child(3){margin-right: 0;}
+  span{position:absolute; top:60px; left: 15px; 
+	overflow: hidden;
+  	display: block; width: 410px; height: 210px;}
+  img{position: absolute; top:0; left: 0; z-index: -1; width: 415px; height: auto;
+  	transition: all 4000ms ease;
+  &.action{top:-805px}}
+  .desklink{display:block; width: 100%; height: 360px; margin-bottom: 20px;
+  	text-align: center; line-height: 360px;}
+  .desktop{width: 450px; height: 360px; 
+  	background: url($imgUrl + 'desktop.png') no-repeat 50% 100% / contain;}
+  dl{width: 100%; height: 30px; margin-left: 20px; line-height: 30px;
+    &:nth-of-type(1) a:hover{font-weight: bold; color: $blue;}
+  	&:nth-of-type(2) a:hover{font-weight: bold; color: $blue;}
+  	&:nth-of-type(3) a:hover{font-weight: bold; color: #333;}
+  	dt{float:left; width: 22%; font-weight: bold;}
+  	dd{float: left;}}}}
