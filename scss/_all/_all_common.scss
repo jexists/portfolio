@@ -1,71 +1,38 @@
+@import "../_basic/var";
 
+#wrap{width: 100%; min-width: 1000px; height: 100%; margin: auto; 
+	background-color: $white;}
 
-#wrap{width: 100%; min-width: 1000px;height: 100%; margin: auto; 
-	background-color: #fff;}
-#headBox{width: 100%; height: 134px; 
-	padding: 20px 100px 0 20px; box-sizing:border-box;
-	border-bottom: 1px solid #ddd;}
-.headarea{position: relative; z-index:100; 
-	width: 100%; height: 64px; margin-bottom: 10px;}
-h1{float: left; width: 100px; height: 50px;
- a{display: block; width: 100%; height: 100%;
-	background-image: url(../../img/big_portfolio-01.png);
-	background-repeat: no-repeat; background-size: contain;
-	background-position: 50% 50%;}
- a:hover{outline: 0; transform: scale(1.1)}}
-.search{position: absolute; z-index:100; left: 100px; top: 0;
-	float: left; width: 500px; height: 40px;
-	margin-top: 8px; margin-left: 20px;
-	border: 1px solid #ddd; border-radius: 20px;
-	background-color: #fff; transition: height 500ms ease;
- &.action{height: 300px; cursor: pointer; box-shadow: 0 0 3px #ddd;}}
-.searchtext{float: left; margin-left:4%; line-height: 40px;
- >p{font-weight: bold;}}
-.searchlist{display: none; width: 100%; height: auto; margin-top: 10px;
- li{width: 100%; height: auto; margin-top: 2px; line-height: 30px;}}
-.searchlogo{float: right; width: 10%; height: 100%;
-	line-height: 40px; text-align: center;
- &.action{font-size: 1.3rem;}}
+.gnb li:nth-child(1) a{font-weight: bold; color: $blue;}
+.gnb li:nth-child(1):after{content: " "; display: block; width: 100%;
+	height: 4px; background-color: $blue; margin-top: -3px;}
 
-.gnb{width: 100%; height: 40px;
- ul{width: 100%; min-width: 1000px; height: 100%;
- &:before{content: " "; 
-	position:absolute; left: 0;
-	display: block; width: 100%; height: auto;
-	border-top: 1px solid #ddd; }
- li{float: left; width: auto; height: 100%; margin-right: 10px;
-  a{display: block; width: auto; height: 40px;
-	line-height: 40px; padding: 0 30px;}
- &:nth-child(1) { margin-left: 140px;
-  a{font-weight: bold; color: #5479BC;}}
- &:nth-child(1):after{content: " "; display: block; width: 100%;
-	height: 4px; background-color: #5479BC; margin-top: -3px;}}}}
 #contentBox{width: 100%; height: auto; min-height: 800px; 
-	background-color: #fff;}
+	background-color: $white;}
 #related{width: 100%; height: 80px; 
  &:after{content: " "; display:block; width: 86%; height: 80px; 
- 	border-bottom: 1px solid #ddd; margin-left: 10%;}	
+ 	border-bottom: $border; margin-left: 10%;}	
  >p{float: left; margin-left: 140px; width: 130px; height: 100%;
  	line-height: 50px; text-align: center; font-weight: bold;}
  >ul{float: left; overflow: hidden; width:65%; height: 78px;
  	padding-top: 10px; box-sizing: border-box;
   li{float: left; width: auto; height: auto; 
-  	margin-right: 20px; color: #00C;
+  	margin-right: 20px; color: #00C; font-size: 0.9rem;
   	line-height: 30px; }}}
+
 #information{float: left; width: 60%; height: 1000px;}
-#etc{float: left; width: 40%; height: 1000px; 
-	margin: 20px 0; 
-	border-left: 1px solid #ddd; box-sizing:border-box;}
+
 #resume{width: 100%; height: 300px; margin: auto;
  &:after{content:" "; display: block; margin-left: 10%;
- 	width: 86%; height: 300px; border-bottom: 1px solid #ddd;}
+ 	width: 86%; height: 280px; border-bottom: $border;}
  >p{width: 100%; height: 30px; margin: 20px 0 10px; 
  	margin-left: 15%;
  	font-size:1.2rem; font-weight: bold; line-height: 30px;}
 .resume_area{width: 100%; height: auto; 
 	background-color: #fee;
  .pic{float:left; width: 170px; height: 220px; 
- 	margin-left:15%; background-color: #333;}
+ 	margin-left:15%; 
+ 	background: url($imgUrl + 'resumePic.jpg') no-repeat 50% 50% / contain;}
  .info{float: left; margin-left: 40px; width: 60%; height: 200px;
  dl{width: 100%; height: 30px;
  &:nth-of-type(1) {height: 40px; margin-bottom: 5px;
@@ -73,17 +40,12 @@ h1{float: left; width: 100px; height: 50px;
   dd{font-size: 1.2rem; line-height: 2;}}
   dt{float: left; width: 15%; font-weight: bold;}
   dd{float: left;}}}}}
+
+#etc{float: left; width: 40%; height: 1000px; 
+	margin: 20px 0; 
+	border-left: $border; box-sizing:border-box;}
+.bestproj{width: 30%; height: 400px; 
+	margin-left: 20px;}
+
 #footBox{border-top: 2px solid #ddd;
 	box-sizing:border-box;}
-
-/* wrap
-headBox
-h1
-search
-searchlogo
-searchtext
-talklogo
-gnb
-ul
-li
-a */

@@ -1,0 +1,13 @@
+@import "../_basic/var";
+
+#wrap{width: 100%; min-width: 1000px; height: 100%; margin: auto; 
+	background-color: $white;}
+
+.gnb li:nth-child(3) a{font-weight: bold; color: $blue;}
+.gnb li:nth-child(3):after{content: " "; display: block; width: 100%;
+	height: 4px; background-color: $blue; margin-top: -3px;}
+	.bigbox{width: 100%; height: auto; min-height: 500px;}
+	.conbox{width: 80%; height: auto; min-height: 400px; margin: auto;
+	 li{float: left; width: 30%; height: 400px; margin-right: 5%;
+	 	border:$border; box-sizing:border-box;
+	  &:nth-child(3){margin-right: 0;}}}

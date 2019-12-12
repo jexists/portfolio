@@ -1,7 +1,25 @@
 
-#headBox{width: 100%; height: 100px; border-bottom: 3px solid #ddd;}
-.gnb{width: 100%; height: 30px;}
-.gnb>ul{width: 100%; height: 100%;}
-.gnb>ul>li{float: left; width: auto; height: 100px; margin-right: 30px;}
-#contentBox{}
+.gnb li:nth-child(2) a{font-weight: bold; color: $blue;}
+.gnb li:nth-child(2):after{content: " "; display: block; width: 100%;
+	height: 4px; background-color: $blue; margin-top: -3px;}
+#contentBox{width: 100%; height: 1000px;}
+#resume{width: 100%; height: 350px; margin: auto;
+ &:after{content:" "; display: block; margin-left: 10%;
+ 	width: 86%; height: 280px; border-bottom: $border;}
+ >p{width: 100%; height: 30px; margin: 20px 0 10px; 
+ 	margin-left: 15%;
+ 	font-size:1.2rem; font-weight: bold; line-height: 30px;}
+.resume_area{width: 100%; height: auto; 
+	background-color: #fee;
+ .pic{float:left; width: 170px; height: 220px; 
+ 	margin-left:15%; 
+ 	background: url($imgUrl + 'resumePic.jpg') no-repeat 50% 50% / contain;}
+ .info{float: left; margin-left: 40px; width: 60%; height: 200px;
+ dl{width: 100%; height: 30px;
+ &:nth-of-type(1) {height: 40px; margin-bottom: 5px;
+  dt{font-size: 1.48rem; width: 16%; color: #00c;}
+  dd{font-size: 1.2rem; line-height: 2;}}
+  dt{float: left; width: 15%; font-weight: bold;}
+  dd{float: left;}}}}}
+#school{width: 100%; height: 350px; margin: auto;}
 #footBox{}

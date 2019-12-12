@@ -125,130 +125,14 @@ h1 {
   margin: auto;
   background-color: #fff; }
 
-.gnb li:nth-child(1) a {
+.gnb li:nth-child(6) a {
   font-weight: bold;
   color: #5479BC; }
 
-.gnb li:nth-child(1):after {
+.gnb li:nth-child(6):after {
   content: " ";
   display: block;
   width: 100%;
   height: 4px;
   background-color: #5479BC;
   margin-top: -3px; }
-
-#contentBox {
-  width: 100%;
-  height: auto;
-  min-height: 800px;
-  background-color: #fff; }
-
-#related {
-  width: 100%;
-  height: 80px; }
-  #related:after {
-    content: " ";
-    display: block;
-    width: 86%;
-    height: 80px;
-    border-bottom: 1px solid #ddd;
-    margin-left: 10%; }
-  #related > p {
-    float: left;
-    margin-left: 140px;
-    width: 130px;
-    height: 100%;
-    line-height: 50px;
-    text-align: center;
-    font-weight: bold; }
-  #related > ul {
-    float: left;
-    overflow: hidden;
-    width: 65%;
-    height: 78px;
-    padding-top: 10px;
-    box-sizing: border-box; }
-    #related > ul li {
-      float: left;
-      width: auto;
-      height: auto;
-      margin-right: 20px;
-      color: #00C;
-      font-size: 0.9rem;
-      line-height: 30px; }
-
-#information {
-  float: left;
-  width: 60%;
-  height: 1000px; }
-
-#resume {
-  width: 100%;
-  height: 300px;
-  margin: auto; }
-  #resume:after {
-    content: " ";
-    display: block;
-    margin-left: 10%;
-    width: 86%;
-    height: 280px;
-    border-bottom: 1px solid #ddd; }
-  #resume > p {
-    width: 100%;
-    height: 30px;
-    margin: 20px 0 10px;
-    margin-left: 15%;
-    font-size: 1.2rem;
-    font-weight: bold;
-    line-height: 30px; }
-  #resume .resume_area {
-    width: 100%;
-    height: auto;
-    background-color: #fee; }
-    #resume .resume_area .pic {
-      float: left;
-      width: 170px;
-      height: 220px;
-      margin-left: 15%;
-      background: url("../../img/resumePic.jpg") no-repeat 50% 50%/contain; }
-    #resume .resume_area .info {
-      float: left;
-      margin-left: 40px;
-      width: 60%;
-      height: 200px; }
-      #resume .resume_area .info dl {
-        width: 100%;
-        height: 30px; }
-        #resume .resume_area .info dl:nth-of-type(1) {
-          height: 40px;
-          margin-bottom: 5px; }
-          #resume .resume_area .info dl:nth-of-type(1) dt {
-            font-size: 1.48rem;
-            width: 16%;
-            color: #00c; }
-          #resume .resume_area .info dl:nth-of-type(1) dd {
-            font-size: 1.2rem;
-            line-height: 2; }
-        #resume .resume_area .info dl dt {
-          float: left;
-          width: 15%;
-          font-weight: bold; }
-        #resume .resume_area .info dl dd {
-          float: left; }
-
-#etc {
-  float: left;
-  width: 40%;
-  height: 1000px;
-  margin: 20px 0;
-  border-left: 1px solid #ddd;
-  box-sizing: border-box; }
-
-.bestproj {
-  width: 30%;
-  height: 400px;
-  margin-left: 20px; }
-
-#footBox {
-  border-top: 2px solid #ddd;
-  box-sizing: border-box; }
