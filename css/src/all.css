@@ -7,115 +7,91 @@
 	@include horizon_banner_img($count, $imgName, $url:$url, $file:'png');
 	기타 div 및 하위내용삽입
 } */
-#wrap {
-  width: 100%;
-  min-width: 1000px;
-  height: 100%;
-  margin: auto;
-  background-color: #fff; }
+#wrap { width: 100%; min-width: 1000px; height: 100%; margin: auto; background-color: #fff; }
 
-#headBox {
-  width: 100%;
-  height: 125px;
-  padding: 20px 100px 20px;
-  box-sizing: border-box;
-  border-bottom: 1px solid #ddd; }
+#headBox { width: 100%; height: 134px; padding: 20px 100px 0 20px; box-sizing: border-box; border-bottom: 1px solid #ddd; }
 
-.headarea {
-  width: 100%;
-  height: 64px; }
+.headarea { position: relative; z-index: 100; width: 100%; height: 64px; margin-bottom: 10px; }
 
-h1 {
-  float: left;
-  width: 100px;
-  height: 40px; }
+h1 { float: left; width: 100px; height: 50px; }
 
-h1 > a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-image: url(../../img/big_portfolio-01.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: 50% 50%; }
+h1 a { display: block; width: 100%; height: 100%; background-image: url(../../img/big_portfolio-01.png); background-repeat: no-repeat; background-size: contain; background-position: 50% 50%; }
 
-h1 > a:hover {
-  outline: 0;
-  transform: scale(1.1); }
+h1 a:hover { outline: 0; transform: scale(1.1); }
 
-.search {
-  float: left;
-  width: 500px;
-  height: 30px;
-  margin-top: 8px;
-  margin-left: 20px;
-  border: 1px solid #ddd;
-  border-radius: 15px; }
+.search { position: absolute; z-index: 100; left: 100px; top: 0; float: left; width: 500px; height: 40px; margin-top: 8px; margin-left: 20px; border: 1px solid #ddd; border-radius: 20px; background-color: #fff; transition: height 500ms ease; }
 
-.searchtext {
-  float: left;
-  margin-left: 4%;
-  line-height: 30px; }
+.search.action { height: 300px; cursor: pointer; box-shadow: 0 0 3px #ddd; }
 
-.searchlogo {
-  float: right;
-  width: 10%;
-  height: 100%;
-  line-height: 30px;
-  text-align: center; }
+.searchtext { float: left; margin-left: 4%; line-height: 40px; }
 
-.gnb {
-  width: 100%;
-  height: 40px; }
+.searchtext > p { font-weight: bold; }
 
-.gnb > ul {
-  width: 100%;
-  height: 100%;
-  margin-left: 140px; }
+.searchlist { display: none; width: 100%; height: auto; margin-top: 10px; }
 
-.gnb > ul:before {
-  content: " ";
-  position: absolute;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: auto;
-  border-top: 1px solid #ddd; }
+.searchlist li { width: 100%; height: auto; margin-top: 2px; line-height: 30px; }
 
-.gnb > ul > li {
-  float: left;
-  width: auto;
-  height: 100%;
-  margin-right: 10px; }
+.searchlogo { float: right; width: 10%; height: 100%; line-height: 40px; text-align: center; }
 
-.gnb > ul > li > a {
-  display: block;
-  width: auto;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 30px; }
+.searchlogo.action { font-size: 1.3rem; }
 
-.gnb > ul > li:nth-child(1) a {
-  font-weight: bold;
-  color: #5479BC; }
+.gnb { width: 100%; height: 40px; }
 
-.gnb > ul > li:nth-child(1):after {
-  content: " ";
-  display: block;
-  width: 100%;
-  height: 4px;
-  background-color: #5479BC;
-  margin-top: -3px; }
+.gnb ul { width: 100%; min-width: 1000px; height: 100%; }
 
-#contentBox {
-  width: 100%;
-  height: auto;
-  min-height: 800px;
-  background-color: #fee; }
+.gnb ul:before { content: " "; position: absolute; left: 0; display: block; width: 100%; height: auto; border-top: 1px solid #ddd; }
 
-#footBox {
-  border-top: 2px solid #ddd;
-  box-sizing: border-box; }
+.gnb ul li { float: left; width: auto; height: 100%; margin-right: 10px; }
+
+.gnb ul li a { display: block; width: auto; height: 40px; line-height: 40px; padding: 0 30px; }
+
+.gnb ul li:nth-child(1) { margin-left: 140px; }
+
+.gnb ul li:nth-child(1) a { font-weight: bold; color: #5479BC; }
+
+.gnb ul li:nth-child(1):after { content: " "; display: block; width: 100%; height: 4px; background-color: #5479BC; margin-top: -3px; }
+
+#contentBox { width: 100%; height: auto; min-height: 800px; background-color: #fff; }
+
+#related { width: 100%; height: 80px; }
+
+#related:after { content: " "; display: block; width: 86%; height: 80px; border-bottom: 1px solid #ddd; margin-left: 10%; }
+
+#related > p { float: left; margin-left: 140px; width: 130px; height: 100%; line-height: 50px; text-align: center; font-weight: bold; }
+
+#related > ul { float: left; overflow: hidden; width: 65%; height: 78px; padding-top: 10px; box-sizing: border-box; }
+
+#related > ul li { float: left; width: auto; height: auto; margin-right: 20px; color: #00C; line-height: 30px; }
+
+#information { float: left; width: 60%; height: 1000px; }
+
+#etc { float: left; width: 40%; height: 1000px; margin: 20px 0; border-left: 1px solid #ddd; box-sizing: border-box; }
+
+#resume { width: 100%; height: 300px; margin: auto; }
+
+#resume:after { content: " "; display: block; margin-left: 10%; width: 86%; height: 300px; border-bottom: 1px solid #ddd; }
+
+#resume > p { width: 100%; height: 30px; margin: 20px 0 10px; margin-left: 15%; font-size: 1.2rem; font-weight: bold; line-height: 30px; }
+
+#resume .resume_area { width: 100%; height: auto; background-color: #fee; }
+
+#resume .resume_area .pic { float: left; width: 170px; height: 220px; margin-left: 15%; background-color: #333; }
+
+#resume .resume_area .info { float: left; margin-left: 40px; width: 60%; height: 200px; }
+
+#resume .resume_area .info dl { width: 100%; height: 30px; }
+
+#resume .resume_area .info dl:nth-of-type(1) { height: 40px; margin-bottom: 5px; }
+
+#resume .resume_area .info dl:nth-of-type(1) dt { font-size: 1.48rem; width: 16%; color: #00c; }
+
+#resume .resume_area .info dl:nth-of-type(1) dd { font-size: 1.2rem; line-height: 2; }
+
+#resume .resume_area .info dl dt { float: left; width: 15%; font-weight: bold; }
+
+#resume .resume_area .info dl dd { float: left; }
+
+#footBox { border-top: 2px solid #ddd; box-sizing: border-box; }
 
 /* wrap
 headBox
