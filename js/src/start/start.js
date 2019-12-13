@@ -6,14 +6,16 @@
  let tyInt;
  let typingTxt = '정주애를 검색하세요.'; // 타이핑될 텍스트를 가져온다 
  typingTxt=typingTxt.split(""); // 한글자씩 자른다. 
-  
+ const sbtn = $('.sbtn_01');
+
  const typing = function(){ 
    if(typingIdx<typingTxt.length){ // 타이핑될 텍스트 길이만큼 반복 
      $(".searchtext").append(typingTxt[typingIdx]); // 한글자씩 이어준다. 
      typingIdx++; 
    } else{ 
      clearInterval(tyInt); //끝나면 반복종료 
-     setTimeout(function(){window.location = "./all.html";}, 2000);
+     setTimeout(function(){sbtn.css({backgroundColor:"#5479BC", color:"#fff"})},1800);
+     setTimeout(function(){window.location = "./all.html";}, 2500);
    } 
  }
 

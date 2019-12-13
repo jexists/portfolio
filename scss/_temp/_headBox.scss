@@ -2,15 +2,17 @@
 
 
 #headBox{width: 100%; height: 134px; 
-	padding: 20px 100px 0 20px; box-sizing:border-box;
+	padding-top: 20px; box-sizing:border-box;
 	border-bottom: $border;}
 .headarea{position: relative; z-index:100; 
-	width: 100%; height: 64px; margin-bottom: 10px;}
-h1{float: left; width: 100px; height: 50px;
+	width: 100%; height: 64px; 
+	padding-left: 20px; box-sizing:border-box;
+	margin-bottom: 10px;}
+h1{float: left; width: 100px; height: 50px; margin-right: 10px;
  a{display: block; width: 100%; height: 100%;
  	background: url($imgUrl + 'big_portfolio-01.png') no-repeat 50% 50% / contain;
  &:hover{outline: 0; transform: scale(1.1)}}}
-.search{position: absolute; z-index:100; left: 100px; top: 0;
+.search{position: absolute; z-index:100; left: 130px; top: 0;
 	float: left; width: 500px; height: 40px;
 	margin-top: 8px; margin-left: 20px;
 	border: $border; border-radius: 20px;
@@ -24,12 +26,13 @@ h1{float: left; width: 100px; height: 50px;
 	line-height: 40px; text-align: center;
  &.action{font-size: 1.3rem;}}
 
-.gnb{width: 100%; height: 40px;
+.gnb{width: 100%; height: 40px; /* background-color: #f0f0f0;
+	box-shadow: 0 0 15px #ddd inset; */
  ul{width: 100%; min-width: 1000px; height: 100%;
- &:before{content: " "; 
+/* &:before{content: " "; 
 	position:absolute; left: 0;
 	display: block; width: 100%; height: auto;
-	border-top: $border; }
+	border-top: $border; } */
  li{float: left; width: auto; height: 100%; margin-right: 10px;
  	&:first-child{ margin-left: 140px;}
   a{display: block; width: auto; height: 40px;

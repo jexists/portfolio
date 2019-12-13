@@ -1,6 +1,5 @@
 // _mixin.scss
-
-
+@import "./var";
 
 //내부에 있는 text 숨기는 기능 처리하기 
  @mixin hdTxt(){
@@ -12,75 +11,34 @@
 	display: block; width: $w; height: $h;
 	@content;
 	>span{@include hdTxt;}}
-
-//인디케이터 형태 ===========
-@mixin indicator_01($ind_class, $myW){
-	//하단 인디케이터 형태, focus처리되면 해당 버튼이 길게 늘어나는 형태
-	//OPT_01: 인디케이터 버튼 하나의 크기 $myW로 설정
-	//OPT_02: class선택자의 이름 설정 $ind_class
-	//[기본구조] $ind_clss > ul > li > a 순서
-#{$ind_class}{$w:$myW; $f:100%;
- 	position: absolute; left: 50%; bottom:$w; transform:translateX(-50%);
- 	margin: auto; width:auto; min-width: 135px; 
- 	height: $w; padding: 5px; 
- 	border-radius: $w; background-color: $wt;
- >ul{width: $f; height: $f;
-  >li{float:left; width: auto; height: $w; 
-  	margin-left: 5px;  
-  &:first-child{margin-left: 0;}
-	a{@include link($w:$w, $h:$f); border-radius: $w;
-		background-color: $gy; transition: all 300ms ease;
-	 &:hover{background-color: lighten($pmC,30%);}
-	 &.action, &:focus{background-color: $pmC; width: ($w * 3); 
-	 	border-radius: $w; outline: none;}
-	  >span{@include hdTxt;}}}}}
-}// mixin indicatory_01
-
-//가로형 슬라이드배너 스타일 1 ===========
-//(.slide_form, 4,)
-//(선택자이름, 슬라이드갯수,넓이, 높이, overflow )
-//.guide: bannerName 자식 가로 슬라이드 배너의 내용을 담을 박스 이름
-//.guide의 자식요소는 div로 설정
-//필수입력 (*)
-//$bName: (*)광고 슬라이드 배너를 처리하고 있는 영역의 이름(기본틀)
-//$c: (*)가로형 슬라이드 배너의 갯수(기본)
-//$w: 기본틀의 가로값
-//$h: 기본틀의 세로값
-//$view: [true]overflow:visible [false]overflow:hidden
-//$
-@mixin horizontal_slide_banner($bName, $c,$w:100%, $h:100%, $view:false){
-//가로형 슬라이드 배너
-#{$bName}{$slideN:$c;
-	@if ($view == true){overflow: visible;}
-	@else{overflow: hidden}
-	width: $w; height: $h;
-	.guide{width: (100%*$slideN); height: 100%; background-color: $spC;
-		>div{float: left; width: (100%/$slideN); height: 100%; 
-				padding:4rem; box-sizing:border-box;
-				background-repeat: no-repeat; background-position: 50% 50%;
-				background-size: cover;
-		@content;
-		}//div(개별요소)
-		}
-	} //가로형 슬라이드 배너
-} //hr_sl_bn
-
-//===================
-$url : '../../img/slide/'; //이미지 경로
-@mixin horizon_banner_img($slideN, $imgName, $url:$url, $file:'jpg'){
-	@for $i from 1 through $slideN {
-		&:nth-of-type(#{$i}){
-		$n : null;
-		@if ($i < 10 ){
-			$n : '0' + $i; //01, 02 ... 09
-		}@else{$n:$i;}
-		background-image:url($url + $imgName + $n + '.' + $file);}
-		}//@for문
+//링크
+@mixin link($h:30px){
+	float: left; width: auto; height: $h;
+  	border:$border; line-height: $h;
+  	background-color: #f0f0f0;
 }
-/* @include horizontal_slide_banner('.my_banner,4'){
-	$url:'../img/mybanner/';
-	$imgName: 'mybanner_';
-	$count:4;
-	@include horizon_banner_img($count, $imgName, $url:$url, $file:'png');
-	기타 div 및 하위내용삽입
-} */
+//링크 액션
+@mixin linkAct(){
+	background-color: #777; color: #fff; font-weight: bold;
+}
+//링크 A
+@mixin linkA(){
+	display: block; padding: 0 18px; color: inherit;
+}
+@mixin ability(){
+ width: 35%; height: 400px; margin-left: 30px;
+ ul{width: 100%; height: auto;
+ li{position:relative; width: 100%; height: 50px; margin-bottom: 10px;
+ >div{float: left;width: 20%; height: 100%; 
+  background-size: contain; background-repeat: no-repeat;
+  background-position: 50% 50%;}
+ dl{float:left; width: 80%;
+ dt{margin-left: 10px; width: 100%; height: 25px;
+	line-height: 25px; font-weight: bold;
+ 	text-transform: uppercase; font-size: 0.9rem;}
+ dd{margin-left: 10px; width: 90%; height: 20px; background-color: #ddd;
+ span{display: block; width: 0; height: 100%; 
+  background-color: $blue; text-align:right; /* transition: width 2000ms ease; */}
+  em{position: absolute; right:15px; bottom: 0;  z-index: 5;
+  	font-style: normal; font-size: 0.9rem; line-height: 32px;} }}}}
+}

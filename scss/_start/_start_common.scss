@@ -1,16 +1,10 @@
 
-
-
-
 #wrap{width: 100%; height: 100%; margin: auto; background-color: #fff;}
 #searchBox{
 	position: relative; top: 20%;
 	width: 700px; height: auto; margin: auto; }
 h1{width: 100%; height: 100px;
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	background-size: contain;
-	background-image: url(../../img/big_portfolio-01.png);}
+	background: url($imgUrl + 'big_portfolio-01.png') no-repeat 50% 50% / contain;}
 .search{width: 500px; height: 50px;
 	margin:auto; margin-top: 30px;
 	border-radius: 25px; 
@@ -23,20 +17,30 @@ h1{width: 100%; height: 100px;
 	font-weight: bold; color: #aaa;}
 .talklogo{float: left; 
 	width: 10%; height: 100%; 
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	background-size: 30% auto;
-	background-image: url(../../img/talk_logo.png);}
+	background: url($imgUrl + 'talk_logo.png') no-repeat 50% 50% / 30% auto;}
 .search_btn{width: 270px; height: 40px; 
 	margin:auto; margin-top: 20px;
 	text-align: center; line-height: 40px;
 	text-transform: capitalize;}
 .search_btn>div{float: left;
 	border-radius: 5px;
-	background-color: #f4f4f4; }
+	background-color: #f4f4f4; overflow: hidden;
+a{display:block; width: 100%; height: 100%; color: inherit;
+ &:hover{background-color: #777; color: #fff;}
+ &:focus{background-color: $blue; color:#fff;}}}
 .sbtn_01{
-	width: 100px; height: 100%; margin-right: 20px;
-	}
+	width: 100px; height: 100%; margin-right: 20px;	}
 .sbtn_02{
-	width: 150px; height: 100%;
-	}
+	width: 150px; height: 100%;	}
+.search_btn>.click{position:relative; top: -15px; left:70px; z-index: 20;
+	width: 50px; height: 50px; background-color: #f00;
+	transform:rotate(-15deg); animation: mouse 2.5s linear infinite/*  alternate */;
+	background: url($imgUrl + 'click.png') no-repeat 50% 50% / contain;}
+
+ @keyframes mouse{
+  0%{top:30px; left: 120px; opacity: 0;}
+  // 50%{top:20px; left:80px;}
+  70%{top:-15px; left: 70px; opacity: 1;}
+  100%{top:-15px; left: 70px; opacity: 1;}
+  // 100%{bottom:5px;}
+ }

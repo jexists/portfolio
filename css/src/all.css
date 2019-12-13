@@ -1,16 +1,8 @@
-@charset "UTF-8";
 /*main.css */
-/* @include horizontal_slide_banner('.my_banner,4'){
-	$url:'../img/mybanner/';
-	$imgName: 'mybanner_';
-	$count:4;
-	@include horizon_banner_img($count, $imgName, $url:$url, $file:'png');
-	기타 div 및 하위내용삽입
-} */
 #headBox {
   width: 100%;
   height: 134px;
-  padding: 20px 100px 0 20px;
+  padding-top: 20px;
   box-sizing: border-box;
   border-bottom: 1px solid #ddd; }
 
@@ -19,12 +11,15 @@
   z-index: 100;
   width: 100%;
   height: 64px;
+  padding-left: 20px;
+  box-sizing: border-box;
   margin-bottom: 10px; }
 
 h1 {
   float: left;
   width: 100px;
-  height: 50px; }
+  height: 50px;
+  margin-right: 10px; }
   h1 a {
     display: block;
     width: 100%;
@@ -37,7 +32,7 @@ h1 {
 .search {
   position: absolute;
   z-index: 100;
-  left: 100px;
+  left: 130px;
   top: 0;
   float: left;
   width: 500px;
@@ -82,19 +77,17 @@ h1 {
 
 .gnb {
   width: 100%;
-  height: 40px; }
+  height: 40px;
+  /* background-color: #f0f0f0;
+	box-shadow: 0 0 15px #ddd inset; */ }
   .gnb ul {
     width: 100%;
     min-width: 1000px;
-    height: 100%; }
-    .gnb ul:before {
-      content: " ";
-      position: absolute;
-      left: 0;
-      display: block;
-      width: 100%;
-      height: auto;
-      border-top: 1px solid #ddd; }
+    height: 100%;
+    /* &:before{content: " "; 
+	position:absolute; left: 0;
+	display: block; width: 100%; height: auto;
+	border-top: $border; } */ }
     .gnb ul li {
       float: left;
       width: auto;
@@ -134,18 +127,20 @@ h1 {
       position: relative;
       width: auto;
       height: auto;
-      margin-right: 30px; }
+      padding: 0 10px;
+      margin-right: 0;
+      box-sizing: border-box; }
       #footBox .footlink li:after, #footBox .footlink li::after {
         content: " ";
         display: block;
         position: absolute;
-        left: 25%;
+        right: -3px;
         top: 0;
         bottom: 0;
         margin: auto;
-        width: 100%;
-        height: 15px;
-        border-right: 2px solid #777; }
+        width: 0;
+        height: 12px;
+        border-right: 2px solid #999; }
       #footBox .footlink li:last-child:after {
         display: none; }
       #footBox .footlink li a {
@@ -159,8 +154,7 @@ h1 {
   width: 100%;
   min-width: 1000px;
   height: 100%;
-  margin: auto;
-  background-color: #fff; }
+  margin: auto; }
 
 .gnb li:nth-child(1) a {
   font-weight: bold;
@@ -177,8 +171,7 @@ h1 {
 #contentBox {
   width: 100%;
   height: auto;
-  min-height: 800px;
-  background-color: #fff; }
+  min-height: 800px; }
 
 #related {
   width: 100%;
@@ -217,31 +210,24 @@ h1 {
 #information {
   float: left;
   width: 60%;
-  height: 1000px; }
+  height: 400px;
+  margin-bottom: 40px; }
 
 #resume {
   width: 100%;
   height: 300px;
-  margin: auto; }
-  #resume:after {
-    content: " ";
-    display: block;
-    margin-left: 10%;
-    width: 86%;
-    height: 280px;
-    border-bottom: 1px solid #ddd; }
+  margin: auto;
+  background-color: #fff; }
   #resume > p {
-    width: 100%;
+    width: 60%;
     height: 30px;
-    margin: 20px 0 10px;
-    margin-left: 15%;
+    margin: 20px 0 10px 15%;
     font-size: 1.2rem;
     font-weight: bold;
     line-height: 30px; }
   #resume .resume_area {
     width: 100%;
-    height: auto;
-    background-color: #fee; }
+    height: auto; }
     #resume .resume_area .pic {
       float: left;
       width: 170px;
@@ -272,16 +258,186 @@ h1 {
           font-weight: bold; }
         #resume .resume_area .info dl dd {
           float: left; }
+        #resume .resume_area .info dl .copy {
+          margin-left: 10px;
+          border: 1px solid #ddd;
+          font-size: 0.7rem;
+          border-radius: 5px;
+          background-color: #777;
+          overflow: hidden;
+          color: #fff; }
+          #resume .resume_area .info dl .copy a {
+            display: block;
+            width: 100%;
+            height: auto;
+            padding: 2px 5px;
+            color: inherit; }
+            #resume .resume_area .info dl .copy a:hover, #resume .resume_area .info dl .copy a:focus {
+              background-color: #5479BC; }
+            #resume .resume_area .info dl .copy a:active {
+              background-color: #f00; }
 
-#etc {
+#copy {
+  position: relative;
+  z-index: -10;
+  /* width: 0; height: 0; */
+  border: none; }
+
+#project {
   float: left;
   width: 40%;
-  height: 1000px;
-  margin: 20px 0;
-  border-left: 1px solid #ddd;
-  box-sizing: border-box; }
-
-.bestproj {
-  width: 30%;
   height: 400px;
-  margin-left: 20px; }
+  margin: 20px 0;
+  /*   border-left: $border; box-sizing:border-box; */ }
+
+.projLink {
+  width: 100%;
+  height: 30px; }
+  .projLink li {
+    float: left;
+    width: auto;
+    height: 30px;
+    border: 1px solid #ddd;
+    line-height: 30px;
+    background-color: #f0f0f0;
+    border-bottom: 0; }
+    .projLink li:first-child {
+      margin-left: 20px; }
+    .projLink li.action {
+      background-color: #777;
+      color: #fff;
+      font-weight: bold; }
+    .projLink li a {
+      display: block;
+      padding: 0 18px;
+      color: inherit; }
+
+.proj {
+  width: 60%;
+  height: 340px;
+  margin-left: 20px;
+  border: 1px solid #ddd; }
+  .proj ol {
+    width: 100%;
+    height: auto; }
+    .proj ol li {
+      width: 100%;
+      height: 30px; }
+      .proj ol li:first-child {
+        padding-top: 20px; }
+      .proj ol li a {
+        display: block;
+        width: 100%;
+        height: auto;
+        float: left;
+        overflow: hidden;
+        text-indent: 20px;
+        letter-spacing: -1px;
+        text-overflow: ellipsis;
+        word-wrap: normal;
+        white-space: nowrap; }
+      .proj ol li dl {
+        width: 100%;
+        height: auto; }
+        .proj ol li dl dt {
+          float: left;
+          overflow: hidden;
+          width: 50%;
+          height: auto;
+          margin-left: 5%;
+          text-overflow: ellipsis;
+          word-wrap: normal;
+          text-indent: 0;
+          white-space: nowrap;
+          font-weight: bold; }
+        .proj ol li dl dd {
+          float: left;
+          width: 35%;
+          height: auto;
+          font-weight: normal;
+          text-align: left; }
+
+.newproj {
+  display: none; }
+
+.bigbox {
+  float: left;
+  width: 100%;
+  height: auto;
+  min-height: 500px; }
+  .bigbox > p {
+    width: 60%;
+    height: 30px;
+    margin-top: 50px;
+    text-indent: 15%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 30px; }
+
+.conbox {
+  position: relative;
+  width: 80%;
+  height: auto;
+  min-height: 500px;
+  margin: auto;
+  /* &:before{content: " "; position:absolute; top: -50px; left: -80px;
+  width: 110%; height: 3; border-top: $border;} */ }
+  .conbox li {
+    position: relative;
+    float: left;
+    width: 450px;
+    height: 550px;
+    margin-right: 50px;
+    /*   border-radius: 30px;
+border:$border; box-sizing:border-box; */ }
+    .conbox li:nth-child(3) {
+      margin-right: 0; }
+    .conbox li span {
+      position: absolute;
+      top: 60px;
+      left: 15px;
+      overflow: hidden;
+      display: block;
+      width: 410px;
+      height: 210px; }
+    .conbox li img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 415px;
+      height: auto;
+      transition: all 4000ms ease; }
+      .conbox li img.action {
+        top: -805px; }
+    .conbox li .desklink {
+      display: block;
+      width: 100%;
+      height: 360px;
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 360px; }
+    .conbox li .desktop {
+      width: 450px;
+      height: 360px;
+      background: url("../../img/desktop.png") no-repeat 50% 100%/contain; }
+    .conbox li dl {
+      width: 100%;
+      height: 30px;
+      margin-left: 20px;
+      line-height: 30px; }
+      .conbox li dl:nth-of-type(1) a:hover {
+        font-weight: bold;
+        color: #5479BC; }
+      .conbox li dl:nth-of-type(2) a:hover {
+        font-weight: bold;
+        color: #5479BC; }
+      .conbox li dl:nth-of-type(3) a:hover {
+        font-weight: bold;
+        color: #333; }
+      .conbox li dl dt {
+        float: left;
+        width: 22%;
+        font-weight: bold; }
+      .conbox li dl dd {
+        float: left; }

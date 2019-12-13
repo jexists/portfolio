@@ -1,12 +1,4 @@
-@charset "UTF-8";
 /*main.css */
-/* @include horizontal_slide_banner('.my_banner,4'){
-	$url:'../img/mybanner/';
-	$imgName: 'mybanner_';
-	$count:4;
-	@include horizon_banner_img($count, $imgName, $url:$url, $file:'png');
-	기타 div 및 하위내용삽입
-} */
 #footBox {
   width: 100%;
   height: 150px;
@@ -23,18 +15,20 @@
       position: relative;
       width: auto;
       height: auto;
-      margin-right: 30px; }
+      padding: 0 10px;
+      margin-right: 0;
+      box-sizing: border-box; }
       #footBox .footlink li:after, #footBox .footlink li::after {
         content: " ";
         display: block;
         position: absolute;
-        left: 25%;
+        right: -3px;
         top: 0;
         bottom: 0;
         margin: auto;
-        width: 100%;
-        height: 15px;
-        border-right: 2px solid #777; }
+        width: 0;
+        height: 12px;
+        border-right: 2px solid #999; }
       #footBox .footlink li:last-child:after {
         display: none; }
       #footBox .footlink li a {
@@ -47,7 +41,7 @@
 #headBox {
   width: 100%;
   height: 134px;
-  padding: 20px 100px 0 20px;
+  padding-top: 20px;
   box-sizing: border-box;
   border-bottom: 1px solid #ddd; }
 
@@ -56,12 +50,15 @@
   z-index: 100;
   width: 100%;
   height: 64px;
+  padding-left: 20px;
+  box-sizing: border-box;
   margin-bottom: 10px; }
 
 h1 {
   float: left;
   width: 100px;
-  height: 50px; }
+  height: 50px;
+  margin-right: 10px; }
   h1 a {
     display: block;
     width: 100%;
@@ -74,7 +71,7 @@ h1 {
 .search {
   position: absolute;
   z-index: 100;
-  left: 100px;
+  left: 130px;
   top: 0;
   float: left;
   width: 500px;
@@ -119,19 +116,17 @@ h1 {
 
 .gnb {
   width: 100%;
-  height: 40px; }
+  height: 40px;
+  /* background-color: #f0f0f0;
+	box-shadow: 0 0 15px #ddd inset; */ }
   .gnb ul {
     width: 100%;
     min-width: 1000px;
-    height: 100%; }
-    .gnb ul:before {
-      content: " ";
-      position: absolute;
-      left: 0;
-      display: block;
-      width: 100%;
-      height: auto;
-      border-top: 1px solid #ddd; }
+    height: 100%;
+    /* &:before{content: " "; 
+	position:absolute; left: 0;
+	display: block; width: 100%; height: auto;
+	border-top: $border; } */ }
     .gnb ul li {
       float: left;
       width: auto;
