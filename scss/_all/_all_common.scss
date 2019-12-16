@@ -46,6 +46,7 @@ margin-bottom: 40px;}
   	&:active{background-color: #f00;}}}}}}}
 .hdtext{position:relative; z-index: -10}
 #copy{position: absolute;	border:none;}
+#copy:focus{background-color: #fff; outline: none;}
 #project{float: left; width: 40%; height: 400px; 
 	margin: 20px 0; 
 /*   border-left: $border; box-sizing:border-box; */}
