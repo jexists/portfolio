@@ -1,0 +1,17 @@
+// _resume_01.pc.scss
+
+/* PC 1280px~1919px (1024) h:800=============== */
+/* media screen and (min-width: 1280px) */
+@media screen and (min-width: 1280px) and (max-width: 1919px){
+
+
+#resume{
+.resume_area{
+ .persinfo{margin-left: 5%; width: 55%; height: 200px;
+ dl{
+ &:nth-of-type(1) dt{width: 20%;
+  dt{width: 30%;}
+  dd{width: 70%;}}}}}}
+
+
+}

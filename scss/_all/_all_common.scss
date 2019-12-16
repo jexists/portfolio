@@ -44,8 +44,8 @@ margin-bottom: 40px;}
   		padding: 2px 5px; color: inherit; 
   	&:hover,&:focus{background-color: $blue;}
   	&:active{background-color: #f00;}}}}}}}
-#copy{position: relative; z-index: -10; /* width: 0; height: 0; */
-	border:none;}
+.hdtext{position:relative; z-index: -10}
+#copy{position: absolute;	border:none;}
 #project{float: left; width: 40%; height: 400px; 
 	margin: 20px 0; 
 /*   border-left: $border; box-sizing:border-box; */}
