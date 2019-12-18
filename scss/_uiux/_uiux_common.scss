@@ -14,9 +14,8 @@
  	border-radius: 10px;
  	border:$border; box-sizing:border-box;
   &:nth-child(3){margin-right: 0;}
-  span{position:absolute; top:60px; left: 15px; 
-	overflow: hidden;
-  	display: block; width: 410px; height: 210px;}
+  span{display: block; position:absolute; top:60px; left: 15px; overflow: hidden; 
+  	width: 410px; height: 210px; font-size: 2rem; font-weight: bold;}
   img{position: absolute; top:0; left: 0; z-index: -1; width: 415px; height: auto;
   	transition: all 4000ms ease;
   &.action{top:-805px}}
@@ -29,4 +28,8 @@
   	&:nth-of-type(2) a:hover{font-weight: bold; color: $blue;}
   	&:nth-of-type(3) a:hover{font-weight: bold; color: #333;}
   	dt{float:left; width: 22%; font-weight: bold;}
-  	dd{float: left;}}}}
+  	dd{float: left;
+    em{font-style: normal; font-weight: bold; font-size: 14px;}}}}}
+.progress{position: absolute; right: 0; left: 0; top:18px; bottom: 0; margin: auto; 
+    z-index: 100; width: 100px; height: 30px; 
+    color: $white; font-weight: bold; line-height: 30px;}
