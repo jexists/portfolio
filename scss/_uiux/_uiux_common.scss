@@ -11,9 +11,9 @@
 	margin-top: 40px;
  li{position:relative; float: left; 
  	width: 450px; height: 550px; margin-right: 50px;
- 	border-radius: 10px;
+ 	margin-bottom:50px; border-radius: 10px;
  	border:$border; box-sizing:border-box;
-  &:nth-child(3){margin-right: 0;}
+  // &:nth-child(3){margin-right: 0;}
   span{display: block; position:absolute; top:60px; left: 15px; overflow: hidden; 
   	width: 410px; height: 210px; font-size: 2rem; font-weight: bold;}
   img{position: absolute; top:0; left: 0; z-index: -1; width: 415px; height: auto;

@@ -83,7 +83,8 @@ a{@include linkA;}}}
   margin-top: 15px;
   dl{width: 50%; height: 30px; line-height: 30px; margin-top: 15px; margin-left: 10px;
     dt{float:left; font-size: 1.1rem;   margin-bottom:5px; }
-    dd{float:left; text-indent: 20px; font-weight: bold; }}}
+    dd{float:left; text-indent: 20px; font-size: 0.9rem;
+     em{font-style: normal; font-size: 1rem; font-weight: bold;}}}}
 .award{display: none;}
 
 .compcan{@include ability;}
