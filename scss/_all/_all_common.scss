@@ -35,7 +35,8 @@ margin-bottom: 40px;}
   dt{font-size: 1.48rem; width: 16%; color: #00c;}
   dd{font-size: 1.2rem; line-height: 2;}}
   dt{float: left; width: 15%; font-weight: bold;}
-  dd{float: left;}
+  dd{float: left;
+    em{font-style: normal; font-size: 13px; font-weight: bold;}}
   .copy{margin-left: 10px; border:$border; 
   	font-size: 0.7rem; border-radius: 5px;
   	background-color: #777; overflow: hidden;
