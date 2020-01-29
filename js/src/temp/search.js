@@ -1,6 +1,6 @@
 
 
-(function(){
+(function($){
  const search = $('.search');
  const searchLs = $('.searchlist');
  const searchLogo = $('.searchlogo');

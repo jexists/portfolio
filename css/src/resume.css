@@ -57,7 +57,7 @@ h1 a:hover { outline: 0; transform: scale(1.1); }
 
 .gnb li:nth-child(2):after { content: " "; display: block; width: 100%; height: 4px; background-color: #5479BC; margin-top: -3px; }
 
-#contentBox { width: 100%; height: auto; min-height: 800px; background-color: #fff; }
+#contentBox { width: 100%; min-width: 1400px; height: auto; min-height: 800px; background-color: #fff; }
 
 #information { float: left; width: 60%; height: 1000px; }
 
@@ -96,6 +96,8 @@ h1 a:hover { outline: 0; transform: scale(1.1); }
 #resume .resume_area .persinfo dl dt { float: left; width: 15%; font-weight: bold; }
 
 #resume .resume_area .persinfo dl dd { float: left; }
+
+#resume .resume_area .persinfo dl dd em { font-style: normal; font-size: 13px; font-weight: bold; }
 
 .hdtext { position: relative; z-index: -10; }
 

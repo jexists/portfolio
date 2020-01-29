@@ -1,4 +1,4 @@
-(function(){
+(function($){
 	const studyLink = $('.studylink').find('a');
 	const studyInfo = $('#studyinfo');
 	const abilityLink = $('.abilityLink').find('a');

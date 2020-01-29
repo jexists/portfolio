@@ -61,16 +61,26 @@ h1 a:hover { outline: 0; transform: scale(1.1); }
 
 #contentBox { width: 100%; height: 100%; }
 
-.graphicsArea { width: 100%; height: auto; padding: 50px; box-sizing: border-box; }
+.graphicsArea { position: relative; top: 0; width: 100%; height: auto; padding: 50px; box-sizing: border-box; }
 
-.graphicsArea li { float: left; margin-left: 30px; }
+.graphicsArea li { float: left; margin-left: 30px; margin-bottom: 30px; width: auto; height: 200px; }
 
-.graphicsArea li:nth-child(1) { width: 250px; height: 200px; background-color: #ff0; }
+.graphicsArea li:nth-child(1) { width: 250px; }
 
-.graphicsArea li:nth-child(2) { width: 200px; height: 200px; background-color: #f00; }
+.graphicsArea li:nth-child(2) { width: 200px; }
 
-.graphicsArea li:nth-child(3) { width: 300px; height: 200px; background-color: #ffe; }
+.graphicsArea li:nth-child(3) { width: 300px; }
 
-.graphicsArea li dl { width: 100%; height: 100%; }
+.graphicsArea li a { display: block; width: 100%; height: 100%; }
 
-.graphicsArea li dl dt { width: 100%; height: 85%; background-color: #0ff; }
+.graphicsArea li dl { width: 100%; height: 100%; overflow: hidden; }
+
+.graphicsArea li dl dt { width: 100%; height: 100%; background-color: #fee; }
+
+.graphicsArea li dd { width: 100%; height: 15%; transform: translateY(100%); background-color: rgba(0, 0, 0, 0.6); color: #fff; transition: all 1000ms ease; }
+
+.graphicsArea li dd.act { transform: translateY(-100%); }
+
+.graphicsArea li div { display: none; position: absolute; top: 280px; left: 80px; width: 800px; height: 200px; background-color: #f00; }
+
+.graphicsArea li div.act { display: block; }

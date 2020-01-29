@@ -1,6 +1,6 @@
 
 
-(function(){
+(function($){
  const conbox = $('.conbox');
 
  conbox.find('li').on('mouseenter',function(){
