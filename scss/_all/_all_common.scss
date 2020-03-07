@@ -85,13 +85,15 @@ margin-bottom: 40px;}
   width: 450px; height: 550px; margin-right: 50px;
 /*   border-radius: 30px;
 border:$border; box-sizing:border-box; */
+  &:nth-child(1) img.action {top: -805px; }
+  &:nth-child(2) img.action {top: -445px; }
+  &:nth-child(3) img.action {top: -944px; }
   &:nth-child(3){margin-right: 0;}
   span{display: block; position:absolute; top:60px; left: 15px; 
   overflow: hidden; width: 410px; height: 210px;
   font-size: 2rem; font-weight: bold;}
-  img{position: absolute; top:0; left: 0; z-index: -1; width: 415px; height: auto;
-    transition: all 4000ms ease;
-  &.action{top:-805px}}
+  img{position: absolute; top:0; left: 2px; z-index: -1; width: 415px; height: auto;
+    transition: all 4000ms ease;}
   .desklink{display:block; width: 100%; height: 360px; margin-bottom: 20px;
     text-align: center; line-height: 360px;}
   .desktop{width: 450px; height: 360px; 
