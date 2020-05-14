@@ -34,7 +34,7 @@ h1 a:hover { outline: 0; transform: scale(1.1); }
 
 .gnb ul li a { display: block; width: auto; height: 40px; line-height: 40px; padding: 0 30px; }
 
-.gnb ul li a:hover { font-weight: bold; color: #5479BC; font-size: 1.1rem; }
+.gnb ul li a:hover { font-weight: bold; color: #5479BC; }
 
 .gnb ul li a:focus { font-weight: bold; color: #333; outline: none; font-size: 1.1rem; }
 
