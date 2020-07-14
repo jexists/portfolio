@@ -64,23 +64,23 @@ h1 a:hover { outline: 0; transform: scale(1.1); }
 
 .conbox li { position: relative; float: left; width: 450px; height: 550px; margin-bottom: 50px; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; }
 
-.conbox li:nth-child(2) img { top: 12px; }
+.conbox li:nth-child(3) img { top: 12px; }
 
-.conbox li:nth-child(4) img { top: -3px; transform: scale(0.95); }
+.conbox li:nth-child(5) img { top: -3px; transform: scale(0.95); }
 
-.conbox li:nth-child(1) img.action { top: -805px; }
+.conbox li:nth-child(2) img.action { top: -805px; }
 
-.conbox li:nth-child(2) img.action { top: -260px; }
+.conbox li:nth-child(3) img.action { top: -260px; }
 
-.conbox li:nth-child(3) img.action { top: -944px; }
+.conbox li:nth-child(4) img.action { top: -944px; }
 
-.conbox li:nth-child(4) img.action { top: -200px; }
-
-.conbox li:nth-child(5) img.action { top: 0; }
+.conbox li:nth-child(5) img.action { top: -200px; }
 
 .conbox li:nth-child(6) img.action { top: 0; }
 
 .conbox li:nth-child(7) img.action { top: 0; }
+
+.conbox li:nth-child(8) img.action { top: 0; }
 
 .conbox li span { display: block; position: absolute; top: 60px; left: 15px; overflow: hidden; width: 410px; height: 210px; font-size: 2rem; font-weight: bold; }
 
