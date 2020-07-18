@@ -14,10 +14,10 @@
  	width: 450px; height: 550px; 
  	margin-bottom:50px; border-radius: 10px;
  	border:$border; box-sizing:border-box;
-  // &:nth-child(3){margin-right: 0;}
+  &:nth-child(1) img {transform: scale(0.92);}
   &:nth-child(3) img {top: 12px;}
   &:nth-child(5) img {top: -3px; transform: scale(0.95);}
-  // &:nth-child(1) img.action {top: -805px; }
+  &:nth-child(1) img.action {top: 0; }
   &:nth-child(2) img.action {top: -805px; }
   &:nth-child(3) img.action {top: -260px; }
   &:nth-child(4) img.action {top: -944px; }
