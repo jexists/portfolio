@@ -1,0 +1,25 @@
+[
+  {
+    "_id": "owner",
+    "name": "정주애",
+    "nameEn": "Jeong, Ju Ae",
+    "role": "기획하는 개발자",
+    "birth": "1994-05-11",
+    "location": "경기도 수원시 권선구",
+    "kakaoId": "juae7",
+    "email": "jexists486@gmail.com",
+    "website": "https://jexists.github.io/portfolio/",
+    "github": "https://github.com/jexists/",
+    "keywords": [
+      "풀스택",
+      "프론트엔드",
+      "백엔드",
+      "기획",
+      "UX/UI",
+      "Angular",
+      "Golang",
+      "MongoDB"
+    ],
+    "body": "정주애는 서비스의 처음부터 끝까지 무한히 고민하는 개발자입니다.\n산업디자인 전공과 UX/UI 과정에서 다진 기획·디자인 감각을 바탕으로, 화면 설계부터 백엔드까지 직접 만들며 사용자 경험을 완성합니다.\n브레이스(2020.08–2026.03)에서 축구 커뮤니티·거래 플랫폼 레사모(4mation)를 풀스택으로 개발·운영하며, Angular SPA 아키텍처와 경매·입찰 실시간 UI, Golang REST API와 MongoDB 기반 결제(Payple·Toss)·정산 로직, Atlas Search 검색 고도화까지 담당했습니다.\n누적 가입자 8만 명, 연간 거래 26,000건 규모의 서비스를 만들고 지켜온 경험으로, 오늘도 더 나은 화면과 구조를 고민합니다."
+  }
+]

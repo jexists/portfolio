@@ -1,0 +1,18 @@
+# 로컬 개발용 MongoDB. 실행: docker compose up -d
+services:
+  mongo:
+    image: mongo:7
+    container_name: portfolio-mongo
+    ports:
+      # 호스트에 로컬 mongod(27017)가 이미 떠 있을 수 있어 27018 로 연다
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo-data:

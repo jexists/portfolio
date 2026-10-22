@@ -1,0 +1,27 @@
+[
+  {
+    "_id": "resume",
+    "label": "이력서",
+    "order": 1
+  },
+  {
+    "_id": "publishing",
+    "label": "퍼블리싱",
+    "order": 2
+  },
+  {
+    "_id": "design",
+    "label": "디자인",
+    "order": 3
+  },
+  {
+    "_id": "study",
+    "label": "스터디",
+    "order": 4
+  },
+  {
+    "_id": "etc",
+    "label": "기타",
+    "order": 5
+  }
+]
