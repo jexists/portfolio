@@ -1,0 +1,332 @@
+.logo {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-logo);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--font-letter-spacing-normal);
+  line-height: var(--font-line-height-tight);
+}
+
+.letter {
+  display: inline-block;
+}
+
+.logo[data-variant='compact'] {
+  font-size: var(--logo-compact-font-size);
+}
+
+.logo[data-variant='compact'] .butterflyAnchor {
+  top: var(--logo-compact-butterfly-offset-top);
+  left: var(--logo-compact-butterfly-offset-left);
+  width: var(--logo-compact-butterfly-size);
+  height: var(--logo-compact-butterfly-size);
+  transform: rotate(var(--logo-compact-butterfly-rotate));
+}
+
+.logo[data-variant='intro'] .letter {
+  animation: logo-drop var(--motion-duration-logo-drop) var(--motion-easing-bounce) both;
+  animation-delay: calc(var(--logo-letter-index) * var(--motion-duration-stagger));
+}
+
+.letter[data-color='blue'] {
+  color: var(--color-brand-blue);
+}
+
+.letter[data-color='red'] {
+  color: var(--color-brand-red);
+}
+
+.letter[data-color='yellow'] {
+  color: var(--color-brand-yellow);
+}
+
+.letter[data-color='green'] {
+  color: var(--color-brand-green);
+}
+
+.butterflyAnchor {
+  position: absolute;
+  top: var(--logo-butterfly-offset-top);
+  left: var(--logo-butterfly-offset-left);
+  width: var(--intro-butterfly-size);
+  height: var(--intro-butterfly-size);
+  color: var(--color-brand-red);
+  transform: rotate(var(--logo-butterfly-rotate));
+}
+
+.butterflyFlight {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: var(--opacity-visible);
+}
+
+.butterfly {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: center;
+}
+
+.leftWing,
+.rightWing {
+  fill: color-mix(in srgb, currentcolor 12%, transparent);
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+  transform-box: fill-box;
+}
+
+.leftWing {
+  transform-origin: right center;
+}
+
+.rightWing {
+  transform-origin: left center;
+}
+
+.butterflyBody {
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-width: var(--border-width-default);
+}
+
+.logo[data-variant='intro'] .butterflyFlight {
+  animation: butterfly-flight-fallback var(--motion-duration-butterfly) var(--motion-easing-butterfly-flight) both;
+}
+
+.logo[data-variant='intro'] .butterfly {
+  animation:
+    butterfly-settle var(--motion-duration-butterfly) var(--motion-easing-butterfly-settle) both,
+    butterfly-idle var(--motion-duration-butterfly-idle) var(--motion-easing-butterfly-idle)
+      var(--motion-delay-butterfly-idle) infinite;
+}
+
+.logo[data-variant='intro'] .leftWing {
+  animation:
+    butterfly-flap-left var(--motion-duration-butterfly) linear both,
+    butterfly-wing-idle-left var(--motion-duration-butterfly-idle) var(--motion-easing-butterfly-idle)
+      var(--motion-delay-butterfly-idle) infinite;
+}
+
+.logo[data-variant='intro'] .rightWing {
+  animation:
+    butterfly-flap-right var(--motion-duration-butterfly) linear both,
+    butterfly-wing-idle-right var(--motion-duration-butterfly-idle) var(--motion-easing-butterfly-idle)
+      var(--motion-delay-butterfly-idle) infinite;
+}
+
+@keyframes logo-drop {
+  from {
+    opacity: var(--opacity-hidden);
+    transform: translateY(calc(var(--intro-logo-drop-distance) * -1)) scale(var(--scale-down));
+  }
+
+  65% {
+    transform: translateY(var(--space-2)) scale(var(--scale-bounce));
+  }
+
+  to {
+    opacity: var(--opacity-visible);
+    transform: translateY(var(--space-0)) scale(var(--scale-base));
+  }
+}
+
+@keyframes butterfly-flight-fallback {
+  from {
+    opacity: var(--opacity-hidden);
+    transform: translate(var(--intro-butterfly-flight-x), calc(var(--intro-butterfly-flight-y) * -1))
+      rotate(var(--intro-butterfly-rotate-start));
+  }
+
+  8% {
+    opacity: var(--opacity-visible);
+  }
+
+  28% {
+    transform: translate(
+        var(--intro-butterfly-flight-waypoint-one-x),
+        calc(var(--intro-butterfly-flight-waypoint-one-y) * -1)
+      )
+      rotate(var(--intro-butterfly-rotate-mid));
+  }
+
+  50% {
+    transform: translate(
+        var(--intro-butterfly-flight-waypoint-two-x),
+        calc(var(--intro-butterfly-flight-waypoint-two-y) * -1)
+      )
+      rotate(var(--intro-butterfly-rotate-start));
+  }
+
+  70% {
+    transform: translate(
+        var(--intro-butterfly-flight-waypoint-three-x),
+        calc(var(--intro-butterfly-flight-waypoint-three-y) * -1)
+      )
+      rotate(var(--intro-butterfly-rotate-mid));
+  }
+
+  82% {
+    transform: translate(
+        var(--intro-butterfly-flight-waypoint-four-x),
+        calc(var(--intro-butterfly-flight-waypoint-four-y) * -1)
+      )
+      rotate(var(--intro-butterfly-rotate-start));
+  }
+
+  90% {
+    opacity: var(--opacity-visible);
+    transform: translate(var(--intro-butterfly-settle-x), calc(var(--intro-butterfly-settle-y) * -1))
+      rotate(var(--intro-butterfly-rotate-mid));
+  }
+
+  to {
+    opacity: var(--opacity-visible);
+    transform: translate(var(--space-0), var(--space-0)) rotate(var(--intro-butterfly-rotate-end));
+  }
+}
+
+@supports (offset-path: path('M 0 0 L 1 1')) {
+  .logo[data-variant='intro'] .butterflyFlight {
+    offset-anchor: center;
+    offset-distance: 0%;
+    offset-path: var(--intro-butterfly-flight-path);
+    offset-rotate: auto;
+    animation-name: butterfly-flight-path;
+  }
+}
+
+@keyframes butterfly-flight-path {
+  from {
+    opacity: var(--opacity-hidden);
+    offset-distance: 0%;
+  }
+
+  8% {
+    opacity: var(--opacity-visible);
+  }
+
+  86% {
+    opacity: var(--opacity-visible);
+    offset-distance: var(--intro-butterfly-flight-overshoot);
+  }
+
+  to {
+    opacity: var(--opacity-visible);
+    offset-distance: 100%;
+  }
+}
+
+@keyframes butterfly-settle {
+  0%,
+  80% {
+    transform: scale(var(--scale-base));
+  }
+
+  88% {
+    transform: translate(var(--intro-butterfly-settle-x), calc(var(--intro-butterfly-settle-y) * -1))
+      scale(var(--intro-butterfly-settle-scale));
+  }
+
+  to {
+    transform: scale(var(--scale-base));
+  }
+}
+
+@keyframes butterfly-flap-left {
+  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70% {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(var(--intro-butterfly-wing-open));
+  }
+
+  5%, 15%, 25%, 35%, 45%, 55%, 65%, 79% {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(var(--intro-butterfly-wing-fold));
+  }
+
+  88% {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(var(--intro-butterfly-wing-soft-fold));
+  }
+
+  to {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(var(--intro-butterfly-wing-open));
+  }
+}
+
+@keyframes butterfly-flap-right {
+  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70% {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(calc(var(--intro-butterfly-wing-open) * -1));
+  }
+
+  5%, 15%, 25%, 35%, 45%, 55%, 65%, 79% {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(calc(var(--intro-butterfly-wing-fold) * -1));
+  }
+
+  88% {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(calc(var(--intro-butterfly-wing-soft-fold) * -1));
+  }
+
+  to {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(calc(var(--intro-butterfly-wing-open) * -1));
+  }
+}
+
+@keyframes butterfly-idle {
+  0%,
+  100% {
+    transform: translateY(var(--space-0));
+  }
+
+  50% {
+    transform: translateY(calc(var(--intro-butterfly-idle-lift) * -1));
+  }
+}
+
+@keyframes butterfly-wing-idle-left {
+  0%,
+  100% {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(var(--intro-butterfly-wing-open));
+  }
+
+  50% {
+    transform: perspective(var(--intro-butterfly-wing-perspective)) rotateY(var(--intro-butterfly-wing-idle-fold));
+  }
+}
+
+@keyframes butterfly-wing-idle-right {
+  0%,
+  100% {
+    transform: perspective(var(--intro-butterfly-wing-perspective))
+      rotateY(calc(var(--intro-butterfly-wing-open) * -1));
+  }
+
+  50% {
+    transform: perspective(var(--intro-butterfly-wing-perspective))
+      rotateY(calc(var(--intro-butterfly-wing-idle-fold) * -1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo[data-variant='intro'] .letter,
+  .logo[data-variant='intro'] .butterflyFlight,
+  .logo[data-variant='intro'] .butterfly,
+  .logo[data-variant='intro'] .leftWing,
+  .logo[data-variant='intro'] .rightWing,
+  .butterfly,
+  .leftWing,
+  .rightWing {
+    animation: none;
+  }
+
+  .butterflyFlight {
+    opacity: var(--opacity-visible);
+    offset-distance: 100%;
+    offset-path: none;
+    transform: none;
+  }
+}

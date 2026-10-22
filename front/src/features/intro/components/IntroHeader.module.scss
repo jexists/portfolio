@@ -1,0 +1,23 @@
+.header {
+  position: absolute;
+  z-index: var(--z-header);
+  inset-block-start: var(--intro-header-offset);
+  inset-inline-end: var(--intro-header-offset);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.textLink {
+  border: var(--border-width-none);
+  color: inherit;
+  cursor: pointer;
+  padding: var(--space-1);
+  background: transparent;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

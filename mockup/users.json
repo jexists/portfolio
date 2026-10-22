@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "mock-github",
+    "name": "정주애",
+    "provider": "github",
+    "providerId": "jexists",
+    "role": "admin",
+    "purpose": null,
+    "createdAt": "2026-10-01T00:00:00.000Z"
+  },
+  {
+    "_id": "mock-kakao-visitor",
+    "name": "방문자",
+    "provider": "kakao",
+    "providerId": "sample-visitor",
+    "role": "user",
+    "purpose": "recruiter",
+    "createdAt": "2026-10-10T09:00:00.000Z"
+  }
+]

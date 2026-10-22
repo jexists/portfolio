@@ -1,0 +1,34 @@
+# deps / build
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# env (값은 .env 에만, 예시는 커밋)
+.env
+.env.*
+!.env.example
+
+# Go
+back/bin/
+back/tmp/
+*.test
+*.out
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# AI 개인 설정·로그
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/hooks/logs/
+__pycache__/
+
+# 참고 자료 중 큰 파일
+reference/**/*.pdf
+reference/**/*.zip
+reference/**/*.psd
+reference/**/*.mp4

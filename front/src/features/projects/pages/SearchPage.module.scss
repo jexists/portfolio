@@ -1,0 +1,98 @@
+.page {
+  min-height: var(--layout-viewport-height);
+  background: var(--color-bg-page);
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) minmax(var(--space-0), 1fr);
+  row-gap: var(--space-6);
+  width: var(--layout-full);
+  max-width: var(--search-header-max-width);
+  margin-inline: auto;
+  padding-block: var(--space-6) var(--space-12);
+  padding-inline: var(--search-content-padding-x);
+}
+
+.shell > * {
+  grid-column: 2;
+}
+
+.section {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.page[data-from-intro='true'] .section {
+  animation: section-enter var(--motion-duration-slow) var(--motion-easing-standard) both;
+  animation-delay: calc(var(--search-section-index) * var(--motion-duration-stagger));
+}
+
+.section h2 {
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--search-card-min-width), 1fr));
+  gap: var(--space-4);
+}
+
+.empty,
+.skeleton {
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  background: var(--color-bg-surface);
+  color: var(--color-text-muted);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.skeleton {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.skeleton span {
+  display: block;
+  height: var(--search-skeleton-height);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-subtle);
+}
+
+@keyframes section-enter {
+  from {
+    opacity: var(--opacity-hidden);
+    transform: translateY(calc(var(--space-4) * -1));
+  }
+
+  to {
+    opacity: var(--opacity-visible);
+    transform: translateY(var(--space-0));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page[data-from-intro='true'] .section {
+    animation: none;
+  }
+}
+
+@media (max-width: 48rem) {
+  .shell {
+    grid-template-columns: minmax(var(--space-0), 1fr);
+  }
+
+  .shell > * {
+    grid-column: 1;
+  }
+}

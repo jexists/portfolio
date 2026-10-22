@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(npm run:*)",
+      "Bash(go test ./...)",
+      "Bash(go build ./...)",
+      "Bash(go vet ./...)",
+      "Bash(make:*)",
+      "Bash(docker compose:*)",
+      "Bash(python3 -m unittest:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./**/.env)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/archive_plan.py\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}
