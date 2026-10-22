@@ -2,6 +2,12 @@
 
 > 중요한 설계 결정을 최신순으로 쌓는다. 형식: `## YYYY-MM-DD 제목` → 결정 / 이유 / 대안(버린 것). 뒤집을 때는 지우지 말고 새 항목에서 "대체: <이전 제목>"으로 연결한다.
 
+## 2026-10-22 GitHub 워크플로: hook 알림 + 스킬 + devflow.py, merge는 항상 사용자 승인
+- 결정: 계획 승인 → (PostToolUse hook이 보관하고 Workflow 블록이 있으면 additionalContext로 알림) → `dev-start`(Issue·브랜치) → `/dev-finish`(검증·커밋·PR·CI) → `/dev-merge`(승인 후 squash). GitHub 조작과 중복 방지 로직은 `scripts/devflow.py` 하나에 모으고, 상태는 GitHub·git·`docs/plans/<id>/meta.json`에서 다시 읽는다.
+- 이유: Claude Code가 공식으로 지원하는 승인 후 자동 실행 수단은 PostToolUse hook뿐이다. hook에서 바로 Issue를 만들면 계획을 해석할 수 없고 실패를 복구하기 어렵다. 원격을 바꾸는 단계는 명시적으로 호출하는 스킬(`disable-model-invocation`)과 권한 `ask` 규칙으로 막는다.
+- 제약: private + Free 플랜이라 Rulesets와 Branch protection을 쓸 수 없다(403) → 로컬 가드(권한 deny·ask, merge-check)로 대체하고, Auto-merge는 쓰지 않는다.
+- 대안: hook에서 gh 직접 호출(모든 계획에 Issue 강제), GitHub Actions 봇(외부 상태·권한 관리 부담), 저장소 public 전환(개인정보 공개).
+
 ## 2026-10-22 승인된 Plan은 PostToolUse hook으로 docs/plans에 원문 보관
 - 결정: `ExitPlanMode` PostToolUse hook(`.claude/hooks/archive_plan.py`)이 `docs/plans/<날짜>_<시분>_<sha8>/plan.md`(원문 그대로)와 `meta.json`을 만든다. 구현 결과(`result.md`)는 `plan-report` 스킬로 따로 작성한다.
 - 이유: Plan 원문이 `~/.claude/plans`(프로젝트 밖)에만 남아 추적이 안 된다. 승인 후에만 실행되는 PostToolUse라 승인 흐름을 바꾸지 않는다.

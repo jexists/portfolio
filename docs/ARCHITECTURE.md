@@ -8,7 +8,9 @@ portfolio/
 ├── AGENTS.md / CLAUDE.md      # AI 공통 지침(원본) / Claude 진입점(@AGENTS.md)
 ├── .agents/skills/            # 공용 스킬 원본 (Codex가 읽음)
 ├── .claude/                   # settings.json(권한·hook), skills/(→ .agents/skills 심볼릭 링크), hooks/
-├── docs/                      # PRD, ARCHITECTURE, DECISIONS, PROGRESS, plans/(승인된 계획 기록)
+├── .github/                   # Issue Forms(feature, bug), PR 템플릿, workflows/ci.yml(front·back)
+├── scripts/devflow.py         # GitHub 워크플로 도우미 (docs/WORKFLOW.md)
+├── docs/                      # PRD, ARCHITECTURE, DECISIONS, PROGRESS, WORKFLOW, plans/(승인된 계획 기록)
 ├── mockup/                    # 컬렉션별 JSON = Mongo 시드 = API 계약
 ├── front/                     # React SPA
 ├── back/                      # Go API
