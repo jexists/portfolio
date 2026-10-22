@@ -17,5 +17,9 @@
     "number": 2,
     "url": "https://github.com/jexists/portfolio/issues/2"
   },
-  "branch": "chore/2-dev-workflow"
+  "branch": "chore/2-dev-workflow",
+  "pr": {
+    "number": 3,
+    "url": "https://github.com/jexists/portfolio/pull/3"
+  }
 }
