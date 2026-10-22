@@ -12,8 +12,9 @@ description: 새 세션을 시작하거나 "이어서", "어디까지 했지", "
 ## 절차 (읽기 전용)
 1. `docs/PROGRESS.md` 전체를 읽는다. `docs/DECISIONS.md`는 최근 항목 3~5개만 읽는다.
 2. `git status -sb`, `git log --oneline -10`, `git branch --show-current`를 실행한다.
-3. `docs/plans/`에서 `meta.json`의 `status`가 `approved`인(아직 결과가 연결되지 않은) 최신 계획이 있으면 id를 기록한다.
-4. PROGRESS의 "진행 중", "다음 할 일"과 실제 git 상태(브랜치, 커밋되지 않은 변경, 최근 커밋)가 맞지 않으면 그 차이를 적는다.
+3. 작업 브랜치에 열린 PR이나 Issue가 있으면 `dev-status` 절차로 CI·PR 상태도 확인한다.
+4. `docs/plans/`에서 `meta.json`의 `status`가 `approved`인(아직 결과가 연결되지 않은) 최신 계획이 있으면 id를 기록한다.
+5. PROGRESS의 "진행 중", "다음 할 일"과 실제 git 상태(브랜치, 커밋되지 않은 변경, 최근 커밋)가 맞지 않으면 그 차이를 적는다.
 
 ## 완료 기준
 - 아래 형식으로 **5줄 이내**로 보고한다.

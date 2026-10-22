@@ -1,0 +1,32 @@
+name: 버그
+description: 잘못 동작하는 것
+title: "fix: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: 현상
+      description: 무엇이 잘못 동작하는지
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 재현 절차
+      description: 경로, 입력, 순서
+      value: |
+        1.
+        2.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대 동작
+      description: 원래 어떻게 동작해야 하는지
+  - type: textarea
+    id: environment
+    attributes:
+      label: 환경 / 로그
+      description: 브라우저, OS, 커밋, 에러 로그, 의심 원인

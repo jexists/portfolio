@@ -17,7 +17,7 @@ description: 사용자가 "마무리", "정리", "세션 종료", "오늘 여기
    - "다음 할 일"은 다음 세션이 바로 시작할 수 있게 구체적인 동사로 시작하는 1~5개로 정리한다.
 3. 이번 세션에 설계 결정(기술 선택, 구조, 규칙 변경)이 있었으면 `docs/DECISIONS.md` 맨 위에 새 항목을 추가한다(형식은 그 파일 참고).
 4. 폴더 구조나 API, 데이터 흐름이 바뀌었으면 `docs/ARCHITECTURE.md`의 해당 부분을 고친다.
-5. `docs/plans/`에 이번 세션에 구현한 `approved` 계획이 있으면 `plan-report` 실행을 제안한다.
+5. 열린 PR이 있으면 `dev-status`로 CI 상태를 확인해 PROGRESS에 적는다. `docs/plans/`에 이번 세션에 구현한 `approved` 계획이 있으면 `plan-report` 실행을 제안한다.
 6. 바뀐 문서에 비밀값이 없는지 확인한다: `git diff -- docs | grep -inE "password|secret|api[_-]?key|token|mongodb(\+srv)?://[^ ]*@"`
 7. AGENTS.md의 Git 규칙에 맞는 커밋 메시지를 제안한다(관련 없는 변경은 커밋을 나눠서 제안한다).
 

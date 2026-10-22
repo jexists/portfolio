@@ -1,0 +1,46 @@
+name: 기능 / 작업
+description: 새 기능, 개선, 문서·유지보수 작업
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: Background
+      description: 이 작업이 필요한 배경과 문제
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: 해결하려는 목표
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: 구현할 항목
+      value: "- "
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of Scope
+      description: 이번 작업에서 제외할 항목
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: 검증할 수 있는 완료 조건
+      value: "- [ ] "
+    validations:
+      required: true
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: Technical Notes
+      description: 기술적 고려사항, 의존성, 위험 요소
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: 관련 문서, Issue, docs/plans/<id>

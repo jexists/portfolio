@@ -32,6 +32,7 @@ docs/plans/<YYYY-MM-DD>_<HHMM>_<sha256 앞 8자리>/
 | `status` | `approved` → `implemented` |
 | `sensitive_findings` | `[{line, pattern}]` |
 | `result_commits` | 2단계에서 추가: 관련 커밋 해시 |
+| `issue`, `branch`, `pr`, `merged_pr` | 개발 워크플로우(dev-start / dev-finish / dev-merge)가 추가. status는 `merged`까지 진행 |
 
 ## 2단계: 구현 결과 연결 (수동)
 `/plan-report`(Claude) 또는 `$plan-report`(Codex)를 실행하면 `meta.git.base_commit` 이후의 변경을 기준으로 `result.md`를 작성한다. 내용은 변경 파일, 변경 이유, 테스트·빌드 결과, 계획과 달라진 부분, 관련 커밋이다.
