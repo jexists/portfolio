@@ -12,13 +12,34 @@
       "Bash(go vet ./...)",
       "Bash(make:*)",
       "Bash(docker compose:*)",
-      "Bash(python3 -m unittest:*)"
+      "Bash(python3 -m unittest:*)",
+      "Bash(python3 scripts/devflow.py context:*)",
+      "Bash(python3 scripts/devflow.py merge-check:*)",
+      "Bash(python3 scripts/devflow.py check-body:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh run list:*)"
+    ],
+    "ask": [
+      "Bash(gh pr merge:*)",
+      "Bash(python3 scripts/devflow.py merge:*)",
+      "Bash(gh repo edit:*)",
+      "Bash(gh api -X PATCH:*)",
+      "Bash(gh api --method PATCH:*)"
     ],
     "deny": [
       "Read(./.env)",
       "Read(./**/.env)",
       "Bash(git push --force:*)",
-      "Bash(git push -f:*)"
+      "Bash(git push -f:*)",
+      "Bash(git push origin main:*)",
+      "Bash(git push origin HEAD:main:*)",
+      "Bash(git push -u origin main:*)"
     ]
   },
   "hooks": {

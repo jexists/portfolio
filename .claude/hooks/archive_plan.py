@@ -45,8 +45,41 @@ def log_path(proj: Path) -> Path:
     return Path(override) if override else proj / ".claude" / "hooks" / "logs" / "archive_plan.log"
 
 
-def emit(message: str) -> None:
-    print(json.dumps({"systemMessage": message}, ensure_ascii=False))
+def emit(message: str, context: str | None = None) -> None:
+    out: dict = {"systemMessage": message}
+    if context:
+        out["hookSpecificOutput"] = {"hookEventName": "PostToolUse", "additionalContext": context}
+    print(json.dumps(out, ensure_ascii=False))
+
+
+WORKFLOW_RE = re.compile(r"^##\s+Workflow\s*$(?P<body>.*?)(?=^##\s|\Z)", re.M | re.S)
+
+
+def parse_workflow(plan: str) -> dict | None:
+    """계획 끝의 `## Workflow` 블록(- key: value)을 읽는다. 없으면 None (개발 실행이 아닌 계획)."""
+    # 코드 블록 안의 예시는 무시하고, 마지막 Workflow 블록을 쓴다.
+    without_code = re.sub(r"^```.*?^```[^\n]*$", "", plan, flags=re.M | re.S)
+    matches = list(WORKFLOW_RE.finditer(without_code))
+    if not matches:
+        return None
+    m = matches[-1]
+    fields = {}
+    for line in m.group("body").splitlines():
+        kv = re.match(r"^\s*-\s*([a-z]+)\s*:\s*(.+?)\s*(?:#.*)?$", line)
+        if kv:
+            fields[kv.group(1)] = kv.group(2)
+    return fields or None
+
+
+def workflow_context(plan_dir: str, workflow: dict) -> str:
+    """승인 직후 Claude 에게 다음 단계를 알린다. 실제 Issue·브랜치 작업은 dev-start 스킬이 한다."""
+    issue = workflow.get("issue", "new")
+    what = "Issue 없이 작업 브랜치만" if issue == "none" else f"Issue({issue})와 연결 브랜치를"
+    return (
+        f"승인된 계획이 {plan_dir}/plan.md 에 보관됐고 Workflow 블록이 있다 ({json.dumps(workflow, ensure_ascii=False)}). "
+        f"코드를 수정하기 전에 dev-start 스킬을 실행해 {what} 준비하라. "
+        "미커밋 변경이 있거나 gh 인증이 실패하면 멈추고 사용자에게 알린다."
+    )
 
 
 def extract_plan(payload: dict) -> tuple[str, str | None]:
@@ -111,7 +144,7 @@ def find_previous(metas: list[dict], session_id: str | None, source: str | None)
     return same[-1]["id"] if same else None
 
 
-def archive(payload: dict) -> str:
+def archive(payload: dict) -> tuple[str, str | None]:
     proj = project_dir(payload)
     root = archive_root(proj)
     plan, source = extract_plan(payload)
@@ -123,7 +156,7 @@ def archive(payload: dict) -> str:
     metas = load_existing(root)
     dup = find_duplicate(metas, tool_use_id, session_id, digest)
     if dup:
-        return ""  # 중복: 조용히 종료
+        return "", None  # 중복: 조용히 종료
 
     now = dt.datetime.now().astimezone()
     base_id = f"{now:%Y-%m-%d_%H%M}_{digest[:8]}"
@@ -178,16 +211,17 @@ def archive(payload: dict) -> str:
     if findings:
         lines = ", ".join(str(f["line"]) for f in findings)
         msg += f"\n⚠️ 민감 정보로 보이는 줄({lines})이 있습니다. 커밋 전에 {rel}/plan.md 를 확인하세요."
-    return msg
+    workflow = parse_workflow(plan)
+    return msg, (workflow_context(str(rel), workflow) if workflow else None)
 
 
 def main() -> int:
     payload: dict = {}
     try:
         payload = json.loads(sys.stdin.read() or "{}")
-        message = archive(payload)
+        message, context = archive(payload)
         if message:
-            emit(message)
+            emit(message, context)
     except Exception as exc:  # noqa: BLE001 - hook 은 절대 실패로 끝나면 안 된다
         log = log_path(project_dir(payload) if isinstance(payload, dict) else Path.cwd())
         try:

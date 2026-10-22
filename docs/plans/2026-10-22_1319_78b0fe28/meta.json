@@ -1,0 +1,16 @@
+{
+  "id": "2026-10-22_1319_78b0fe28",
+  "approved_at": "2026-10-22T13:19:50+09:00",
+  "session_id": "338710a8-7a88-4497-aeb6-44803c753468",
+  "tool_use_id": "toolu_01KtoE9FtdWqx1cbaAmya2XY",
+  "source_plan_path": "/Users/jexists/.claude/plans/merry-floating-hellman.md",
+  "sha256": "78b0fe28c042fa6bffb1921e6ded4957b9e724f3ec90e5f826df0bdfc6db6946",
+  "previous": "2026-10-22_1248_8f078c0d",
+  "git": {
+    "branch": "chore/init-setup",
+    "base_commit": "5821f2c2951486d25533d5b61a1f3ad27399330e",
+    "dirty": false
+  },
+  "status": "approved",
+  "sensitive_findings": []
+}

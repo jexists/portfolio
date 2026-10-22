@@ -16,7 +16,8 @@ SCRIPT = Path(__file__).with_name("archive_plan.py")
 PLAN = "# 계획\n\n1. 첫 단계\n2. 두 번째 단계 — 한글·이모지 ✅\n"
 
 
-class ArchivePlanTest(unittest.TestCase):
+class HookCase(unittest.TestCase):
+    """임시 디렉터리와 hook 실행 도우미 (테스트 없음)."""
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
@@ -45,6 +46,8 @@ class ArchivePlanTest(unittest.TestCase):
     def entries(self):
         return sorted(p for p in self.archive.iterdir() if p.is_dir()) if self.archive.exists() else []
 
+
+class ArchivePlanTest(HookCase):
     def test_saves_plan_byte_identical(self):
         out = self.run_hook(self.payload())
         [entry] = self.entries()
@@ -123,6 +126,38 @@ class ArchivePlanTest(unittest.TestCase):
         self.run_hook(self.payload(session_id="s2", tool_use_id="t2"))
         names = [p.name for p in self.entries()]
         self.assertEqual(len(set(names)), 2)
+
+
+class WorkflowContextTest(HookCase):
+    WORKFLOW = "\n## Workflow\n- type: feat   # 설명\n- issue: new\n- title: feat: 이메일 로그인\n- slug: email-login\n"
+
+    def test_plan_without_workflow_has_no_context(self):
+        out = self.run_hook(self.payload())
+        self.assertNotIn("hookSpecificOutput", out)
+
+    def test_workflow_block_adds_dev_start_context(self):
+        out = self.run_hook(self.payload(plan=PLAN + self.WORKFLOW))
+        ctx = out["hookSpecificOutput"]
+        self.assertEqual(ctx["hookEventName"], "PostToolUse")
+        self.assertIn("dev-start", ctx["additionalContext"])
+        self.assertIn('"slug": "email-login"', ctx["additionalContext"])
+        self.assertIn('"type": "feat"', ctx["additionalContext"])  # 주석은 값에서 제외
+
+    def test_issue_none_mentions_branch_only(self):
+        out = self.run_hook(self.payload(plan=PLAN + self.WORKFLOW.replace("issue: new", "issue: none")))
+        self.assertIn("Issue 없이", out["hookSpecificOutput"]["additionalContext"])
+
+    def test_example_in_code_block_is_ignored(self):
+        example = "\n```\n## Workflow\n- type: feat\n- slug: example\n```\n"
+        out = self.run_hook(self.payload(plan=PLAN + example))
+        self.assertNotIn("hookSpecificOutput", out)
+        out = self.run_hook(self.payload(plan=PLAN + example + self.WORKFLOW.replace("feat", "fix"), tool_use_id="t2"))
+        self.assertIn('"slug": "email-login"', out["hookSpecificOutput"]["additionalContext"])
+        self.assertIn('"type": "fix"', out["hookSpecificOutput"]["additionalContext"])
+
+    def test_duplicate_event_emits_nothing(self):
+        self.run_hook(self.payload(plan=PLAN + self.WORKFLOW))
+        self.assertIsNone(self.run_hook(self.payload(plan=PLAN + self.WORKFLOW)))
 
 
 if __name__ == "__main__":
