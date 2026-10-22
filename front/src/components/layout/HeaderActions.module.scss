@@ -1,0 +1,94 @@
+.actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.profile {
+  position: relative;
+}
+
+.iconButton,
+.avatarButton {
+  border: var(--border-width-none);
+  color: inherit;
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  z-index: var(--z-dropdown);
+  top: calc(var(--layout-full) + var(--space-2));
+  right: var(--space-0);
+  display: grid;
+  width: var(--auth-menu-width);
+  padding: var(--space-4);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  box-shadow: var(--shadow-md);
+  gap: var(--space-2);
+  color: var(--color-text-primary);
+  text-align: left;
+
+  button,
+  a {
+    margin-top: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border: var(--border-width-none);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-subtle);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    text-align: center;
+  }
+}
+
+.providerLabel {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.iconButton {
+  display: grid;
+  width: var(--intro-header-icon-button-size);
+  height: var(--intro-header-icon-button-size);
+  padding: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: transparent;
+
+  &:hover {
+    background: var(--color-intro-control-hover);
+  }
+
+  svg {
+    width: var(--layout-full);
+    height: var(--layout-full);
+    fill: var(--color-text-secondary);
+  }
+}
+
+.avatarButton {
+  display: grid;
+  width: var(--intro-avatar-ring-size);
+  height: var(--intro-avatar-ring-size);
+  padding: var(--intro-avatar-ring-width);
+  border-radius: var(--radius-pill);
+  background: conic-gradient(
+    var(--color-brand-blue),
+    var(--color-brand-red),
+    var(--color-brand-yellow),
+    var(--color-brand-green),
+    var(--color-brand-blue)
+  );
+
+  span {
+    display: grid;
+    border-radius: var(--radius-pill);
+    background: var(--color-intro-avatar-bg);
+    color: var(--color-text-inverse);
+    font-weight: var(--font-weight-bold);
+    place-items: center;
+  }
+}

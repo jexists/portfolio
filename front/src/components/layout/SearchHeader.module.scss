@@ -1,0 +1,160 @@
+.header {
+  position: sticky;
+  inset-block-start: var(--space-0);
+  z-index: var(--z-header);
+  border-bottom: var(--border-width-default) solid var(--color-border-default);
+  background: var(--color-bg-surface);
+}
+
+.topRow,
+.tabsRow {
+  display: grid;
+  grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) var(--search-header-column-gap) minmax(var(--space-0), var(--search-header-actions-column-width));
+  align-items: center;
+  width: var(--layout-full);
+  max-width: var(--search-header-max-width);
+  margin-inline: auto;
+  padding-inline: var(--search-content-padding-x);
+}
+
+.topRow {
+  padding-block: var(--search-header-padding-y);
+}
+
+.topRow [aria-label='PortFolio'] {
+  font-size: var(--search-logo-size);
+}
+
+.logoLink {
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: var(--search-header-icon-gap);
+  min-width: var(--space-0);
+  min-height: var(--search-bar-height);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--search-header-search-padding-x);
+  background: var(--color-bg-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.search:focus-within,
+.search:hover {
+  box-shadow: var(--shadow-intro-search);
+}
+
+.search input {
+  width: var(--layout-full);
+  min-width: var(--space-0);
+  border: var(--border-width-none);
+  padding: var(--space-0);
+  background: transparent;
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.clearButton,
+.shareButton {
+  border: var(--border-width-none);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.clearButton {
+  display: grid;
+  flex: var(--flex-none);
+  padding: var(--space-1);
+  place-items: center;
+}
+
+.divider {
+  width: var(--border-width-default);
+  height: var(--search-header-divider-height);
+  flex: var(--flex-none);
+  background: var(--color-border-default);
+}
+
+.icon {
+  width: var(--search-icon-size);
+  height: var(--search-icon-size);
+  flex: var(--flex-none);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+}
+
+.search > .icon {
+  color: var(--color-text-muted);
+}
+
+.search > .searchIcon {
+  color: var(--color-brand-blue);
+}
+
+.rightActions {
+  grid-column: 4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--search-header-actions-gap);
+  white-space: nowrap;
+}
+
+.shareButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--search-header-action-height);
+  padding-inline: var(--search-header-share-padding-x);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-subtle);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.shareButton:hover {
+  background: var(--color-intro-control-hover);
+}
+
+.tabsRow {
+  min-height: var(--search-header-tabs-height);
+}
+
+.tabsSlot {
+  grid-column: 2;
+  min-width: var(--space-0);
+}
+
+@media (max-width: 48rem) {
+  .topRow {
+    grid-template-columns: max-content minmax(var(--space-0), 1fr);
+    row-gap: var(--space-3);
+  }
+
+  .search {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .rightActions {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .tabsRow {
+    grid-template-columns: minmax(var(--space-0), 1fr);
+  }
+
+  .tabsSlot {
+    grid-column: 1;
+  }
+}

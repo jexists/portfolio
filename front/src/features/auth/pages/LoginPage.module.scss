@@ -1,0 +1,214 @@
+.page {
+  display: grid;
+  min-height: var(--login-page-min-height);
+  padding: var(--space-4);
+  background: var(--color-login-page-bg);
+  place-items: center;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  width: var(--layout-full);
+  max-width: var(--login-card-width);
+  padding: var(--login-card-padding);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  box-shadow: var(--shadow-sm);
+  align-items: center;
+  flex-direction: column;
+  gap: var(--space-8);
+  text-align: center;
+}
+
+.backButton {
+  position: absolute;
+  top: var(--login-back-button-inset);
+  left: var(--login-back-button-inset);
+  display: inline-flex;
+  width: var(--login-back-button-size);
+  height: var(--login-back-button-size);
+  padding: var(--space-0);
+  border: var(--border-width-none);
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--color-text-muted);
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  transition:
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+
+  svg {
+    width: var(--login-back-icon-size);
+    height: var(--login-back-icon-size);
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: var(--border-width-strong);
+  }
+}
+
+.backButton:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+}
+
+.logoLink {
+  --font-size-logo: var(--login-logo-size);
+  --logo-compact-font-size: var(--login-logo-size);
+
+  display: inline-flex;
+  color: inherit;
+  text-decoration: none;
+}
+
+.logoBlock {
+  display: flex;
+  margin-top: var(--space-8);
+  margin-bottom: var(--login-logo-offset-bottom);
+  align-items: center;
+  flex-direction: column;
+}
+
+.tagline {
+  margin: var(--space-3) var(--space-0) var(--space-0);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.providers {
+  display: grid;
+  width: var(--layout-full);
+  gap: var(--space-3);
+}
+
+.providerButton {
+  display: inline-flex;
+  width: var(--layout-full);
+  height: var(--login-provider-height);
+  padding: var(--space-0) var(--space-4);
+  border: var(--border-width-none);
+  border-radius: var(--radius-md);
+  align-items: center;
+  cursor: pointer;
+  font-weight: var(--font-weight-bold);
+  gap: var(--space-3);
+  justify-content: center;
+  transition:
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-normal) var(--motion-easing-standard),
+    transform var(--motion-duration-normal) var(--motion-easing-standard);
+  white-space: nowrap;
+
+  svg {
+    flex: var(--flex-none);
+    width: var(--login-provider-icon-size);
+    height: var(--login-provider-icon-size);
+    fill: currentColor;
+  }
+}
+
+.signupHint {
+  margin: var(--space-0);
+  margin-top: var(--space-2-5);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  text-align: center;
+  white-space: normal;
+}
+
+.kakao {
+  background: var(--color-auth-kakao);
+  color: var(--color-auth-kakao-text);
+}
+
+.kakao:hover {
+  background: var(--color-auth-kakao-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(var(--motion-translate-hover-lift));
+}
+
+.github {
+  background: var(--color-auth-github);
+  color: var(--color-text-inverse);
+}
+
+.github:hover {
+  background: var(--color-auth-github-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(var(--motion-translate-hover-lift));
+}
+
+.survey {
+  display: grid;
+  width: var(--layout-full);
+  margin-top: var(--space-8);
+  gap: var(--space-6);
+}
+
+.surveyTitle {
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xl);
+  line-height: var(--font-line-height-body);
+}
+
+.purposeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.purposeButton {
+  display: flex;
+  min-height: var(--login-purpose-card-height);
+  padding: var(--space-4);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  align-items: center;
+  cursor: pointer;
+  flex-direction: column;
+  font: inherit;
+  font-weight: var(--font-weight-medium);
+  gap: var(--space-2);
+  justify-content: center;
+  transition:
+    border-color var(--motion-duration-fast) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-normal) var(--motion-easing-standard),
+    transform var(--motion-duration-normal) var(--motion-easing-standard);
+}
+
+.purposeButton:hover:not(:disabled) {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(var(--motion-translate-hover-lift));
+}
+
+.purposeButton:focus-visible {
+  outline: var(--border-width-strong) solid var(--color-brand-blue);
+  outline-offset: var(--space-1);
+}
+
+.purposeButton:disabled {
+  cursor: default;
+  opacity: var(--opacity-muted);
+}
+
+.purposeEmoji {
+  font-size: var(--font-size-xl);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backButton,
+  .providerButton,
+  .purposeButton {
+    transition: none;
+  }
+}

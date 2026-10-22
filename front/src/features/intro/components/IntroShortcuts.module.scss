@@ -1,0 +1,51 @@
+.shortcuts {
+  display: flex;
+  width: var(--layout-full);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--intro-shortcut-gap);
+}
+
+.shortcut {
+  display: grid;
+  min-width: var(--intro-shortcut-item-width);
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-1);
+  border: var(--border-width-none);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+}
+
+.icon {
+  display: grid;
+  width: var(--intro-shortcut-icon-bg-size);
+  height: var(--intro-shortcut-icon-bg-size);
+  border-radius: var(--radius-pill);
+  background: var(--color-intro-shortcut-bg);
+  color: var(--color-intro-icon);
+  place-items: center;
+  transition: background var(--motion-duration-fast) var(--motion-easing-standard);
+
+  svg {
+    width: var(--intro-shortcut-icon-size);
+    height: var(--intro-shortcut-icon-size);
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: var(--border-width-strong);
+  }
+}
+
+.shortcut:hover .icon {
+  background: var(--color-intro-shortcut-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon {
+    transition: none;
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "pages": [
+    {
+      "name": "Intro",
+      "role": "홈 인트로 페이지",
+      "path": "src/features/intro/pages/IntroPage.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space"],
+      "states": ["ready"]
+    },
+    {
+      "name": "Login",
+      "role": "인증 로그인 페이지",
+      "path": "src/features/auth/pages/LoginPage.tsx",
+      "variants": ["default"],
+      "tokens": ["color.auth", "color.login", "color.text", "font", "space", "radius", "shadow", "motion", "login"],
+      "states": ["signedOut", "checkingPurpose", "survey", "savingPurpose", "redirecting", "hover", "reducedMotion"]
+    },
+    {
+      "name": "Search",
+      "role": "프로젝트 검색 페이지",
+      "path": "src/features/projects/pages/SearchPage.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space"],
+      "states": ["ready", "empty"]
+    },
+    {
+      "name": "ProjectDetail",
+      "role": "프로젝트 상세 페이지",
+      "path": "src/features/projects/pages/ProjectDetailPage.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space"],
+      "states": ["ready", "notFound"]
+    },
+    {
+      "name": "Admin",
+      "role": "관리자 전용 방문 통계 대시보드",
+      "path": "src/features/admin/pages/AdminPage.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "radius", "shadow", "admin"],
+      "states": ["checkingAuth", "loading", "ready", "empty", "redirecting"]
+    }
+  ],
+  "components": [
+    {
+      "name": "Logo",
+      "role": "PortFolio 브랜드 로고",
+      "path": "src/components/layout/Logo.tsx",
+      "variants": ["default", "compact", "intro", "intro-static"],
+      "tokens": ["color.brand", "font", "motion", "logo", "intro"],
+      "states": ["ready", "animated"]
+    },
+    {
+      "name": "IntroHeader",
+      "role": "인트로 우상단 외부 링크와 프로필 액션",
+      "path": "src/features/intro/components/IntroHeader.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "intro", "motion"],
+      "states": ["ready", "hover"]
+    },
+    {
+      "name": "HeaderActions",
+      "role": "공용 앱 그리드와 로그인 계정 액션",
+      "path": "src/components/layout/HeaderActions.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "space", "intro", "auth", "shadow"],
+      "states": ["signedOut", "signedIn", "admin", "menuOpen"]
+    },
+    {
+      "name": "IntroShortcuts",
+      "role": "인트로 포트폴리오 바로가기 모음",
+      "path": "src/features/intro/components/IntroShortcuts.tsx",
+      "variants": ["internal", "external"],
+      "tokens": ["color", "font", "space", "intro", "motion"],
+      "states": ["ready", "hover"]
+    },
+    {
+      "name": "SearchHeader",
+      "role": "검색결과 sticky 헤더",
+      "path": "src/components/layout/SearchHeader.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "search", "shadow"],
+      "states": ["ready", "sticky"]
+    },
+    {
+      "name": "CategoryTabs",
+      "role": "프로젝트 카테고리 탭",
+      "path": "src/features/projects/components/CategoryTabs.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "search", "motion"],
+      "states": ["ready", "selected"]
+    },
+    {
+      "name": "ProfileCard",
+      "role": "네이버 인물정보 스타일의 프로필·키워드·연락처 카드",
+      "path": "src/features/profile/components/ProfileCard.tsx",
+      "variants": ["initialAvatar", "imageAvatar"],
+      "tokens": ["color", "font", "space", "radius", "search", "shadow", "motion"],
+      "states": ["ready", "keywordSelected", "copied"]
+    },
+    {
+      "name": "Chip",
+      "role": "연관검색어와 태그 필터 pill 칩",
+      "path": "src/components/ui/Chip.tsx",
+      "variants": ["display", "button"],
+      "tokens": ["color", "font", "space", "search", "motion"],
+      "states": ["ready", "active"]
+    },
+    {
+      "name": "ProjectCard",
+      "role": "프로젝트 검색결과 카드",
+      "path": "src/features/projects/components/ProjectCard.tsx",
+      "variants": ["published", "draft"],
+      "tokens": ["color", "font", "space", "search", "shadow"],
+      "states": ["ready", "draft"]
+    },
+    {
+      "name": "SeriesNav",
+      "role": "프로젝트 상세 시리즈 이전 다음 내비게이션",
+      "path": "src/features/projects/components/SeriesNav.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "search", "shadow"],
+      "states": ["ready", "disabled"]
+    }
+  ]
+}
