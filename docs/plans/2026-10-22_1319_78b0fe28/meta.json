@@ -12,5 +12,10 @@
     "dirty": false
   },
   "status": "approved",
-  "sensitive_findings": []
+  "sensitive_findings": [],
+  "issue": {
+    "number": 2,
+    "url": "https://github.com/jexists/portfolio/issues/2"
+  },
+  "branch": "chore/2-dev-workflow"
 }
