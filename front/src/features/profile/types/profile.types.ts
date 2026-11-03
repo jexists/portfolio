@@ -2,7 +2,6 @@ export interface Profile {
   name: string;
   nameEn: string;
   role: string;
-  birth: string;
   location: string;
   kakaoId: string;
   email: string;
@@ -19,7 +18,6 @@ export interface ProfileDto {
   name: string;
   nameEn: string;
   role: string;
-  birth: string;
   location: string;
   kakaoId: string;
   email: string;

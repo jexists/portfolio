@@ -8,8 +8,7 @@ const profile: Profile = {
   name: '정주애',
   nameEn: 'Jeong, Ju Ae',
   role: '웹디자이너 · 퍼블리셔',
-  birth: '1994-05-11',
-  location: '경기도 수원시 권선구',
+  location: '서울',
   kakaoId: 'juae7',
   email: 'jexists486@gmail.com',
   website: 'https://example.com',
@@ -28,8 +27,7 @@ describe('ProfileCard', () => {
 
     const information = screen.getByLabelText('정주애 인물정보');
     for (const [label, value] of [
-      ['출생', '1994-05-11'],
-      ['거주지', '경기도 수원시 권선구'],
+      ['거주지', '서울'],
       ['카톡', 'juae7'],
       ['이메일', 'jexists486@gmail.com'],
       ['사이트', 'GitHub, 웹사이트'],
@@ -38,6 +36,7 @@ describe('ProfileCard', () => {
       expect(term.tagName).toBe('DT');
       expect(term.nextElementSibling).toHaveTextContent(value);
     }
+    expect(within(information).queryByText('출생')).not.toBeInTheDocument();
   });
 
   it('renders an email address with a copy label and copies from either text', async () => {

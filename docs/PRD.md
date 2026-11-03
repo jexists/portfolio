@@ -106,7 +106,7 @@
 }
 ```
 
-`mockup/profiles.json`: _id, name, nameEn, role, birth, location, kakaoId, email, website, github, avatar, keywords(연관검색어), body(자기소개 마크다운).
+`mockup/profiles.json`: _id, name, nameEn, role, location, kakaoId, email, website, github, avatar, keywords(연관검색어), body(자기소개 마크다운).
 그 밖의 컬렉션: `categories`(탭 라벨·순서), `users`(소셜 로그인 사용자·방문 목적), `visits`(방문 기록).
 
 ---
