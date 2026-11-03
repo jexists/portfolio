@@ -88,7 +88,11 @@ internal/
   router      /api/v1 라우트 등록
 ```
 
-## 7. 배포 계획 (미정, PRD §7 단계 5)
+## 7. 배포
+- 현재: GitHub Pages `https://jexists.github.io/portfolio/` — `.github/workflows/deploy-pages.yml`이 main push(또는 수동 실행) 때 front를 MSW 목업 모드로 빌드해 올린다.
+  - `VITE_BASE_PATH=/portfolio/` → vite `base`, 라우터 `basename`, MSW worker URL이 모두 `import.meta.env.BASE_URL`을 따른다(기본값 `/`라 로컬·Vercel은 그대로).
+  - SPA 딥링크는 `dist/404.html`(index.html 복사본)으로 처리한다. RSS·sitemap은 `SITE_URL`로 생성한다.
+- 이후 계획 (PRD §7 단계 5)
 - front: Vercel (`front/vercel.json` SPA rewrite). 백엔드 전환 전까지는 MSW 목업으로도 동작한다.
 - back: 컨테이너 호스팅 (Fly.io / Render / Cloud Run 중 선택, `back/Dockerfile`)
 - DB: MongoDB Atlas (접속 문자열은 호스팅 환경변수에만 둔다)

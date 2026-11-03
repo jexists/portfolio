@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 import { toProjectMeta } from '../src/features/projects/api/projectMapper';
 import type { ProjectDto, ProjectMeta } from '../src/features/projects/types/project.types';
 
-const DEFAULT_SITE_URL = 'https://jexists.github.io/portfolio_2026';
+export const DEFAULT_SITE_URL = 'https://jexists.github.io/portfolio';
 const CHANNEL_TITLE = '정주애 포트폴리오';
 
 function normalizeSiteUrl(siteUrl: string): string {

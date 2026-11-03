@@ -2,6 +2,8 @@
 
 "검색엔진에서 정주애를 검색한다" 컨셉의 개인 포트폴리오. React + Go(Gin) + MongoDB.
 
+배포: https://jexists.github.io/portfolio/ (GitHub Pages, 프론트 + MSW 목업. main에 merge되면 자동 배포)
+
 ## 빠른 시작
 ```bash
 # 1) 프론트만 (백엔드 없이 MSW 목업으로 동작)

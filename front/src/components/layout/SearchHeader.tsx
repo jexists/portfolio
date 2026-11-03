@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { HeaderActions } from './HeaderActions';
 import { Logo } from './Logo';
 import styles from './SearchHeader.module.scss';
@@ -33,9 +33,9 @@ export function SearchHeader({ tabs }: SearchHeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.topRow}>
-        <a className={styles.logoLink} href="/" aria-label="첫페이지로 이동">
+        <Link className={styles.logoLink} to="/" aria-label="첫페이지로 이동">
           <Logo />
-        </a>
+        </Link>
         <div className={styles.search} role="search">
           <input aria-label="검색어" value="정주애 포트폴리오" readOnly />
           <button className={styles.clearButton} type="button" aria-label="검색어 지우기" onClick={() => navigate('/')}>

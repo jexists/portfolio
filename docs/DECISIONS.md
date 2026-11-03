@@ -2,6 +2,12 @@
 
 > 중요한 설계 결정을 최신순으로 쌓는다. 형식: `## YYYY-MM-DD 제목` → 결정 / 이유 / 대안(버린 것). 뒤집을 때는 지우지 말고 새 항목에서 "대체: <이전 제목>"으로 연결한다.
 
+## 2026-11-03 첫 공개 배포는 GitHub Pages + MSW 목업
+- 결정: 프론트만 GitHub Actions로 빌드해 GitHub Pages(`/portfolio/` 하위 경로)에 올리고, API는 브라우저의 MSW가 mockup JSON으로 응답한다. 하위 경로는 `VITE_BASE_PATH` 하나로 맞추고 기본값은 `/`로 둔다.
+- 이유: 저장소가 public이라 추가 비용·계정 없이 바로 공개 URL을 얻는다. 백엔드·DB 호스팅을 정하기 전에도 포트폴리오를 보여 줄 수 있다.
+- 제약: Pages는 정적 호스팅이라 Go API·MongoDB는 올릴 수 없고, 딥링크 첫 응답은 404 상태코드다(404.html 방식). 로그인·통계는 localStorage mock이다.
+- 대안: Vercel(계정 연동 필요, `vercel.json`은 남겨 둔다), HashRouter(URL에 `#`이 붙어 sitemap·공유 링크가 어색함).
+
 ## 2026-10-22 GitHub 워크플로: hook 알림 + 스킬 + devflow.py, merge는 항상 사용자 승인
 - 결정: 계획 승인 → (PostToolUse hook이 보관하고 Workflow 블록이 있으면 additionalContext로 알림) → `dev-start`(Issue·브랜치) → `/dev-finish`(검증·커밋·PR·CI) → `/dev-merge`(승인 후 squash). GitHub 조작과 중복 방지 로직은 `scripts/devflow.py` 하나에 모으고, 상태는 GitHub·git·`docs/plans/<id>/meta.json`에서 다시 읽는다.
 - 이유: Claude Code가 공식으로 지원하는 승인 후 자동 실행 수단은 PostToolUse hook뿐이다. hook에서 바로 Issue를 만들면 계획을 해석할 수 없고 실패를 복구하기 어렵다. 원격을 바꾸는 단계는 명시적으로 호출하는 스킬(`disable-model-invocation`)과 권한 `ask` 규칙으로 막는다.

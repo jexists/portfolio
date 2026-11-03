@@ -75,4 +75,19 @@ describe('SearchHeader', () => {
     );
     expect(screen.queryByTestId('search-header-tabs')).not.toBeInTheDocument();
   });
+
+  it('links the logo to the first page under the router basename', () => {
+    render(
+      <AuthProvider initialUser={null}><MemoryRouter basename="/portfolio" initialEntries={['/portfolio/search']}>
+        <SearchHeader />
+        <LocationProbe />
+      </MemoryRouter></AuthProvider>,
+    );
+
+    const logoLink = screen.getByRole('link', { name: '첫페이지로 이동' });
+    expect(logoLink).toHaveAttribute('href', '/portfolio');
+
+    fireEvent.click(logoLink);
+    expect(screen.getByTestId('pathname')).toHaveTextContent(/^\/$/);
+  });
 });

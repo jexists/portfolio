@@ -7,6 +7,8 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 const mockupDir = path.resolve(dirname, '../mockup');
 
 export default defineConfig({
+  // 로컬·Vercel 은 '/', GitHub Pages 빌드는 VITE_BASE_PATH=/portfolio/
+  base: process.env.VITE_BASE_PATH ?? '/',
   plugins: [react()],
   resolve: {
     alias: {

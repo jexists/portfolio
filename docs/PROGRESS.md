@@ -9,6 +9,7 @@
 - 인증(소셜 로그인)과 방문 통계는 아직 프론트 localStorage mock이다.
 
 ## 완료
+- 2026-11-03 GitHub Pages 배포 설정: `deploy-pages.yml`, 하위 경로(base·basename·MSW worker) 대응 (Issue #5, 계획 `docs/plans/2026-11-03_1716_b3fb7822`)
 - 2026-10-22 개발 워크플로우 구현: Issue Forms·PR 템플릿·CI, `scripts/devflow.py`, 스킬 dev-start/finish/status/merge, Plan hook 알림 (Issue #2, 계획 `docs/plans/2026-10-22_1319_78b0fe28`)
 - 2026-10-22 모노레포 초기 설정 merge (PR #1): front·back·mockup, AI 공용 환경, Plan 자동 보관 hook
 
