@@ -10,4 +10,7 @@ export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
   { path: '/search', element: <SearchPage /> },
   { path: '/project/:slug', element: <ProjectDetailPage /> },
-]);
+], {
+  // GitHub Pages 처럼 하위 경로(/portfolio/)에 배포될 때 vite base 와 맞춘다
+  basename: import.meta.env.BASE_URL.replace(/\/$/, '') || '/',
+});

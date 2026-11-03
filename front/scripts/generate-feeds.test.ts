@@ -1,5 +1,5 @@
 import type { ProjectMeta } from '@/features/projects/types/project.types';
-import { buildRss, buildSitemap } from './generate-feeds';
+import { buildRss, buildSitemap, DEFAULT_SITE_URL } from './generate-feeds';
 
 const projects: ProjectMeta[] = [
   {
@@ -51,5 +51,10 @@ describe('generate feeds', () => {
     expect(xml).toContain('<loc>https://example.com/base/project/latest-project</loc>');
     expect(xml).toContain('<loc>https://example.com/base/project/older-project</loc>');
     expect(xml).not.toContain('draft-project');
+  });
+
+  it('defaults to the GitHub Pages URL of this repository', () => {
+    expect(DEFAULT_SITE_URL).toBe('https://jexists.github.io/portfolio');
+    expect(buildSitemap(projects)).toContain('<loc>https://jexists.github.io/portfolio/search</loc>');
   });
 });
