@@ -68,7 +68,6 @@ export function ProfileCard({ profile, activeKeyword = null, onKeywordClick }: P
 
       <div className={styles.details}>
         <dl className={styles.meta} aria-label={`${profile.name} 인물정보`}>
-          <MetaRow label="출생">{profile.birth}</MetaRow>
           <MetaRow label="거주지">{profile.location}</MetaRow>
           <MetaRow label="카톡">{profile.kakaoId}</MetaRow>
           <MetaRow label="이메일">

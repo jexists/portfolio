@@ -43,7 +43,7 @@ mockup/*.json ──(back: make seed)──▶ MongoDB ──▶ repo ─▶ ser
 ## 4. 컬렉션 (mockup 파일 = 컬렉션)
 | 컬렉션 | 주요 필드 | 인덱스 |
 |---|---|---|
-| `profiles` | `_id`, name, nameEn, role, birth, location, kakaoId, email, website, github, avatar?, keywords[], body(md) | — |
+| `profiles` | `_id`, name, nameEn, role, location, kakaoId, email, website, github, avatar?, keywords[], body(md) | — |
 | `projects` | `_id`(slug), title, categoryId, kind?, summary, tags[], series?{name, order}, publishedAt(YYYY-MM-DD), thumbnail?, link?, github?, featured, draft, body(md) | categoryId, tags, (featured, publishedAt) |
 | `categories` | `_id`(resume·publishing·design·study·etc), label, order | — |
 | `users` | `_id`, name, provider(kakao·github), providerId, role(admin·user), purpose?, createdAt | (provider, providerId) unique |

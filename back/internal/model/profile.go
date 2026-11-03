@@ -5,7 +5,6 @@ type Profile struct {
 	Name     string   `bson:"name" json:"name"`
 	NameEn   string   `bson:"nameEn" json:"nameEn"`
 	Role     string   `bson:"role" json:"role"`
-	Birth    string   `bson:"birth" json:"birth"`
 	Location string   `bson:"location" json:"location"`
 	KakaoID  string   `bson:"kakaoId" json:"kakaoId"`
 	Email    string   `bson:"email" json:"email"`

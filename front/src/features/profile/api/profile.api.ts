@@ -6,7 +6,6 @@ export function toProfile(dto: ProfileDto): Profile {
     name: dto.name,
     nameEn: dto.nameEn,
     role: dto.role,
-    birth: dto.birth,
     location: dto.location,
     kakaoId: dto.kakaoId,
     email: dto.email,
