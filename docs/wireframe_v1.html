@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>포트폴리오 와이어프레임 v1</title>
+<style>
+  :root {
+    --bg: #f4f4f5; --paper: #fff; --line: #dadce0; --line-strong: #bdc1c6;
+    --text: #202124; --sub: #5f6368; --muted: #9aa0a6;
+    --link: #1a0dab; --accent: #1a73e8; --accent-bg: #e8f0fe; --url: #188038;
+    --todo: #8a5a00; --todo-bg: #fff4d6; --fill: #f1f3f4;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.6 -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+
+  /* 와이어프레임 바깥 도구 막대 */
+  .bar { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 10px 16px; background: #202124; color: #fff; font-size: 13px; }
+  .bar b { font-weight: 600; }
+  .seg { display: inline-flex; border: 1px solid #5f6368; border-radius: 6px; overflow: hidden; }
+  .seg button { background: none; border: 0; color: #e8eaed; padding: 4px 10px; }
+  .seg button.on { background: #e8eaed; color: #202124; }
+  .bar .note { color: #bdc1c6; margin-left: auto; }
+
+  .stage { padding: 24px 16px 64px; display: flex; justify-content: center; }
+  .frame { width: 100%; max-width: 1120px; min-height: 640px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; transition: max-width .2s; }
+  .frame.mobile { max-width: 390px; }
+
+  /* 공통 조각 */
+  .todo { display: inline-block; font-size: 12px; color: var(--todo); background: var(--todo-bg); padding: 0 6px; border-radius: 4px; }
+  .box { border: 1px dashed var(--line-strong); border-radius: 8px; color: var(--muted); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+  .chip { border: 1px solid var(--line); background: var(--paper); border-radius: 16px; padding: 4px 12px; font-size: 13px; }
+  .chip.on { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .src { color: var(--url); font-size: 12px; margin: 0; }
+  .ttl { color: var(--link); font-size: 18px; margin: 2px 0; line-height: 1.35; }
+  a.ttl, .ttl a { text-decoration: none; color: var(--link); }
+  a.ttl:hover { text-decoration: underline; }
+  .desc { color: var(--sub); margin: 0; }
+  .h { font-size: 16px; font-weight: 600; margin: 0 0 10px; }
+  .card { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+
+  /* 첫 화면 */
+  .intro { min-height: 640px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; position: relative; }
+  .intro .top { position: absolute; top: 14px; right: 16px; display: flex; gap: 14px; align-items: center; color: var(--sub); font-size: 13px; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--fill); border: 1px solid var(--line); }
+  .logo { font-size: 64px; font-weight: 500; letter-spacing: -2px; margin: 0 0 24px; }
+  .mobile .logo { font-size: 44px; }
+  .logo span:nth-child(1) { color: #4285f4; } .logo span:nth-child(2) { color: #ea4335; } .logo span:nth-child(3) { color: #fbbc05; }
+  .logo span:nth-child(4) { color: #4285f4; } .logo span:nth-child(5) { color: #34a853; } .logo span:nth-child(6) { color: #ea4335; } .logo span:nth-child(7) { color: #4285f4; }
+  .sbox { width: 100%; max-width: 584px; border: 1px solid var(--line); border-radius: 24px; }
+  .sbox.open { border-radius: 24px 24px 0 0; box-shadow: 0 1px 6px rgba(32,33,36,.28); border-color: transparent; }
+  .sin { display: flex; gap: 10px; align-items: center; padding: 11px 18px; font-size: 16px; }
+  .caret { display: inline-block; width: 1px; height: 18px; background: var(--text); animation: blink 1s steps(1) infinite; vertical-align: middle; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .sugg { width: 100%; max-width: 584px; border-radius: 0 0 24px 24px; box-shadow: 0 4px 6px rgba(32,33,36,.28); padding: 4px 0 12px; border-top: 1px solid var(--line); }
+  .sugg button { display: flex; width: 100%; gap: 12px; align-items: center; padding: 7px 18px; background: none; border: 0; text-align: left; font-size: 15px; }
+  .sugg button:hover, .sugg button:first-child { background: var(--fill); }
+  .sugg .tag { margin-left: auto; font-size: 12px; color: var(--muted); }
+  .ibtns { display: flex; gap: 12px; margin-top: 28px; }
+  .ibtns button { background: var(--fill); border: 1px solid var(--fill); border-radius: 4px; padding: 8px 16px; font-size: 14px; }
+  .shortcuts { display: flex; gap: 20px; margin-top: 32px; flex-wrap: wrap; justify-content: center; }
+  .sc { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12px; color: var(--sub); width: 72px; }
+  .sc i { width: 48px; height: 48px; border-radius: 50%; background: var(--fill); display: block; }
+  .flow { margin-top: 32px; font-size: 12px; color: var(--muted); text-align: center; max-width: 460px; }
+
+  /* 검색결과 */
+  .shead { display: flex; gap: 20px; align-items: center; padding: 18px 24px 0; }
+  .shead .logo-s { font-size: 24px; font-weight: 500; letter-spacing: -1px; }
+  .shead .sin { flex: 1; max-width: 690px; border: 1px solid var(--line); border-radius: 24px; padding: 8px 18px; box-shadow: 0 1px 4px rgba(32,33,36,.12); }
+  .mobile .shead { flex-wrap: wrap; gap: 10px; padding: 12px 14px 0; }
+  .mobile .shead .sin { flex-basis: 100%; order: 3; }
+  .tabs { display: flex; gap: 22px; padding: 0 24px 0 168px; border-bottom: 1px solid var(--line); margin-top: 10px; overflow-x: auto; scrollbar-width: none; }
+  .mobile .tabs { padding: 0 14px; gap: 18px; }
+  .tabs button { background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 0 9px; color: var(--sub); white-space: nowrap; font-size: 14px; }
+  .tabs button.on { color: var(--accent); border-bottom-color: var(--accent); }
+  .sbody { padding: 12px 24px 40px 168px; }
+  .mobile .sbody { padding: 12px 14px 32px; }
+  .lens { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
+  .lens .lbl { font-size: 12px; color: var(--muted); }
+  .stat { font-size: 13px; color: var(--muted); margin: 6px 0 16px; }
+  .grid2 { display: grid; grid-template-columns: minmax(0, 652px) minmax(0, 368px); gap: 40px; }
+  .mobile .grid2 { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .mobile .grid2 .kp { order: -1; }
+  .result { margin-bottom: 26px; }
+  .result ul { margin: 6px 0 0; padding-left: 18px; color: var(--sub); }
+  .faq { border-top: 1px solid var(--line); padding-top: 14px; }
+  .faq details { border-bottom: 1px solid var(--line); padding: 10px 0; }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; }
+  .faq summary::after { content: "⌄"; color: var(--sub); }
+  .faq details[open] summary::after { content: "⌃"; }
+  .faq details p { margin: 8px 0 0; color: var(--sub); }
+
+  .kp .photo { height: 160px; margin-bottom: 12px; }
+  .kp .name { font-size: 26px; margin: 0; }
+  .kp .role { color: var(--sub); margin: 0 0 10px; }
+  .kp dl { display: grid; grid-template-columns: 56px 1fr; gap: 4px 10px; margin: 12px 0; padding-top: 12px; border-top: 1px solid var(--line); }
+  .kp dt { font-weight: 600; } .kp dd { margin: 0; color: var(--sub); }
+  .kp .acts { display: flex; gap: 6px; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid var(--line); }
+  .kp .acts button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 12px 0; }
+  .metric { background: var(--fill); border-radius: 8px; padding: 10px 12px; }
+  .metric p { margin: 0; } .metric .n { font-size: 22px; font-weight: 600; }
+  .timeline { border-left: 2px solid var(--line); padding-left: 18px; margin-left: 6px; }
+  .timeline .item { position: relative; margin-bottom: 22px; }
+  .timeline .item::before { content: ""; position: absolute; left: -25px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .timeline .item.dim::before { background: var(--line-strong); }
+
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .mobile .pgrid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pcard { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--paper); text-align: left; padding: 0; }
+  .pcard .thumb { height: 110px; border: 0; border-bottom: 1px dashed var(--line-strong); border-radius: 0; }
+  .pcard .in { padding: 10px 12px; }
+  .pcard .kind { font-size: 12px; color: var(--sub); }
+  .pcard .pt { font-weight: 600; margin: 2px 0; }
+  .pcard .match { font-size: 11px; color: var(--accent); }
+  .pcard.draft { opacity: .5; cursor: default; }
+
+  .skrow { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .mobile .skrow { grid-template-columns: 1fr; gap: 4px; }
+  .lvl { display: inline-flex; gap: 2px; vertical-align: middle; margin-left: 4px; }
+  .lvl i { width: 8px; height: 8px; border-radius: 2px; background: var(--line); }
+  .lvl i.f { background: var(--accent); }
+  .sk { display: inline-flex; align-items: center; gap: 2px; margin: 0 12px 6px 0; }
+
+  .edusec { margin-bottom: 24px; }
+  .edurow { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+
+  /* 상세 */
+  .detail { padding: 20px 24px 48px 168px; max-width: 900px; }
+  .mobile .detail { padding: 14px 14px 32px; }
+  .crumb { font-size: 13px; color: var(--sub); margin-bottom: 12px; }
+  .crumb button { background: none; border: 0; color: var(--accent); padding: 0; }
+  .hero { height: 240px; margin: 14px 0; }
+  .mobile .hero { height: 160px; }
+  .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 12px 0 20px; }
+  .meta div { background: var(--fill); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
+  .meta b { display: block; font-size: 12px; color: var(--sub); font-weight: 400; }
+  .doc h3 { font-size: 17px; margin: 24px 0 6px; }
+  .doc p, .doc li { color: var(--sub); }
+  .series { display: flex; justify-content: space-between; gap: 10px; margin-top: 28px; }
+  .series .card { flex: 1; font-size: 13px; }
+
+  .legend { max-width: 1120px; margin: 0 auto; padding: 0 16px 40px; color: var(--sub); font-size: 13px; }
+  .legend ul { margin: 6px 0; padding-left: 18px; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <b>와이어프레임 v1</b>
+  <span>화면</span>
+  <div class="seg" id="screenSeg">
+    <button data-screen="intro">① 첫 화면</button>
+    <button data-screen="search">② 검색결과</button>
+    <button data-screen="detail">③ 프로젝트 상세</button>
+  </div>
+  <span>폭</span>
+  <div class="seg" id="widthSeg">
+    <button data-w="desktop">데스크톱</button>
+    <button data-w="mobile">모바일 390</button>
+  </div>
+  <span class="note">노란 표시 = 내용 입력 필요</span>
+</div>
+
+<div class="stage"><div class="frame" id="frame"></div></div>
+
+<div class="legend">
+  <b>보는 법</b>
+  <ul>
+    <li>첫 화면의 자동완성에서 직무를 고르면 그 직무 렌즈로 검색결과가 열립니다. 고르지 않으면 실제 사이트에서는 "정주애"로 자동 진행합니다.</li>
+    <li>검색결과의 전체·경력사항·프로젝트 탭에서 렌즈 칩을 누르면 검색어, 헤드라인, 강조 순서, 이력서 PDF가 바뀝니다. 데이터는 하나이고 보여 주는 순서만 다릅니다.</li>
+    <li>모바일에서는 지식 패널이 결과 위로 올라가고, 탭은 가로로 스크롤됩니다.</li>
+  </ul>
+</div>
+
+<script>
+const LENSES = [
+  { id: 'all', label: '전체', q: '정주애' },
+  { id: 'dev', label: '개발', q: '정주애 개발자' },
+  { id: 'fde', label: 'FDE', q: '정주애 FDE' },
+  { id: 'product', label: '기획·PM·PO', q: '정주애 기획 PM PO' },
+  { id: 'qa', label: 'QA', q: '정주애 QA' },
+];
+const TABS = [
+  { id: 'all', label: '전체', lens: true },
+  { id: 'career', label: '경력사항', lens: true },
+  { id: 'projects', label: '프로젝트', lens: true },
+  { id: 'skills', label: '기술스택·자격' },
+  { id: 'education', label: '학력·교육' },
+  { id: 'etc', label: '기타' },
+];
+const HEADLINE = {
+  all: '기획하는 풀스택 개발자',
+  dev: 'Angular · Go 풀스택 개발자',
+  fde: '고객 문제를 코드로 바로 푸는 개발자',
+  product: '직접 만들 줄 아는 기획자',
+  qa: '테스트부터 쓰는 개발자',
+};
+const HIGHLIGHTS = [
+  { text: 'Angular SPA 아키텍처 설계, 경매·입찰 실시간 UI 개발', roles: ['dev', 'fde'] },
+  { text: 'Go REST API · MongoDB 기반 결제(Payple·Toss)·정산 로직 개발', roles: ['dev', 'fde', 'qa'] },
+  { text: 'Atlas Search 도입으로 검색 고도화', roles: ['dev', 'product'] },
+  { text: '8만 명 서비스의 기능 기획부터 출시·운영까지 담당', roles: ['product', 'fde'] },
+  { text: '결제·정산 오류를 막는 검증 시나리오와 운영 장애 재발 방지', roles: ['qa', 'fde'] },
+  { text: '화면 설계·요구사항 정리, 개발·디자인 사이 조율', roles: ['product'] },
+];
+const PROJECTS = [
+  { slug: 'resamo', title: '레사모(4mation) 경매·거래 플랫폼', kind: '실무', group: 'work', tags: 'Angular · Go · MongoDB', roles: ['dev', 'fde', 'product', 'qa'] },
+  { slug: 'portfolio', title: '이 포트폴리오 사이트', kind: '개인', group: 'personal', tags: 'React · Go · TDD', roles: ['dev', 'qa'] },
+  { slug: 'coca-cola', title: '(리디자인) 코카-콜라 저니', kind: '리디자인', group: 'design', tags: 'UX/UI · Figma', roles: ['product'] },
+  { slug: 'asiana', title: '(클론) 아시아나 항공 사이트', kind: '클론', group: 'clone', tags: 'HTML · SCSS · 반응형', roles: ['dev'] },
+  { slug: 'draft1', title: '준비중', kind: '', group: 'draft', tags: '', roles: [], draft: true },
+];
+const FAQS = [
+  { q: '디자인 전공자가 왜 개발을 하나요?', roles: ['all', 'dev', 'fde'] },
+  { q: '개발자인데 기획·PM·PO에 지원하는 이유는?', roles: ['all', 'product'] },
+  { q: '고객 현장에서 문제를 해결해 본 경험은?', roles: ['fde'] },
+  { q: '품질을 어떻게 지켜 왔나요?', roles: ['qa'] },
+];
+
+const state = { screen: 'intro', tab: 'all', lens: 'all', width: 'desktop', pgroup: 'all' };
+const todo = (t) => `<span class="todo">${t}</span>`;
+const lensOf = () => LENSES.find((l) => l.id === state.lens);
+const byLens = (list) => state.lens === 'all' ? list : [...list].sort((a, b) => b.roles.includes(state.lens) - a.roles.includes(state.lens));
+
+function go(patch) { Object.assign(state, patch); render(); }
+
+function logo(cls = 'logo') { return `<p class="${cls}">${[...'Jexists'].map((c) => `<span>${c}</span>`).join('')}</p>`; }
+
+function introView() {
+  return `<div class="intro">
+    <div class="top"><span>프로젝트</span><span>연락처</span><span class="avatar" title="로그인"></span></div>
+    ${logo()}
+    <div class="sbox open"><div class="sin">🔍 정주애<span class="caret"></span></div></div>
+    <div class="sugg">
+      ${LENSES.map((l) => `<button data-lens-go="${l.id}">🔍 <span>${l.q.replace('정주애', '정주애<b>')}</b></span><span class="tag">${l.id === 'all' ? '기본 · 자동 선택' : l.label + ' 렌즈'}</span></button>`).join('')}
+    </div>
+    <div class="ibtns"><button data-lens-go="all">Jexists 검색</button><button data-lens-go="all">I'm Feeling Lucky</button></div>
+    <div class="shortcuts">
+      ${['GitHub', '이력서 PDF', '이메일', '블로그'].map((s) => `<div class="sc"><i></i>${s}</div>`).join('')}
+    </div>
+    <p class="flow">실제 사이트: 로고 등장 → "정주애" 자동 타이핑 → 자동완성 → 첫 항목 자동 클릭 → 검색결과. 클릭·키 입력 시 바로 건너뜀</p>
+  </div>`;
+}
+
+function searchHead() {
+  return `<div class="shead">
+    <button class="logo-s" style="background:none;border:0;padding:0" data-screen="intro">${logo('logo-s').replace('<p class="logo-s">', '').replace('</p>', '')}</button>
+    <div class="sin">🔍 <span>${lensOf().q}</span><span style="margin-left:auto;color:var(--muted)">✕</span></div>
+    <span class="avatar"></span>
+  </div>
+  <nav class="tabs">${TABS.map((t) => `<button class="${t.id === state.tab ? 'on' : ''}" data-tab="${t.id}">${t.label}</button>`).join('')}</nav>`;
+}
+
+function lensRow() {
+  const tab = TABS.find((t) => t.id === state.tab);
+  if (!tab.lens) return '';
+  return `<div class="lens"><span class="lbl">직무 렌즈</span><div class="chips">${LENSES.map((l) => `<button class="chip ${l.id === state.lens ? 'on' : ''}" data-lens="${l.id}">${l.label}</button>`).join('')}</div></div>`;
+}
+
+function knowledgePanel() {
+  const pdf = state.lens === 'all' ? '이력서 PDF' : `${lensOf().label} 이력서 PDF`;
+  return `<aside class="kp card">
+    <div class="box photo">프로필 사진</div>
+    <p class="name">정주애</p>
+    <p class="role">${HEADLINE[state.lens]}</p>
+    <p class="desc">서비스의 처음부터 끝까지 고민하는 개발자. 산업디자인 전공과 UX/UI 과정에서 다진 기획·디자인 감각으로 화면 설계부터 백엔드까지 직접 만듭니다.</p>
+    <dl>
+      <dt>경력</dt><dd>5년 7개월 (브레이스)</dd>
+      <dt>거주</dt><dd>서울</dd>
+      <dt>전공</dt><dd>산업디자인 ${todo('학교 입력')}</dd>
+      <dt>주력</dt><dd>Angular · Go · MongoDB</dd>
+    </dl>
+    <div class="acts">
+      <button class="chip primary">${pdf}</button>
+      <button class="chip">이메일 복사</button>
+      <button class="chip">GitHub</button>
+      <button class="chip">카카오톡</button>
+    </div>
+  </aside>`;
+}
+
+function allTab() {
+  const hl = byLens(HIGHLIGHTS).slice(0, 3);
+  const top = byLens(PROJECTS.filter((p) => !p.draft)).slice(0, 2);
+  const faqs = FAQS.filter((f) => f.roles.includes(state.lens) || (state.lens === 'all' && f.roles.includes('all')));
+  return `<div class="grid2">
+    <div>
+      <div class="result">
+        <p class="src">jexists › 경력사항</p>
+        <button class="ttl" style="background:none;border:0;padding:0" data-tab="career">브레이스 · 풀스택 개발 · 2020.08 – 2026.03</button>
+        <p class="desc">누적 가입자 8만 명 · 연간 거래 26,000건 축구 커뮤니티·거래 플랫폼 개발·운영</p>
+        <ul>${hl.map((h) => `<li>${h.text}</li>`).join('')}</ul>
+      </div>
+      ${top.map((p) => `<div class="result">
+        <p class="src">jexists › 프로젝트 › ${p.kind}</p>
+        <button class="ttl" style="background:none;border:0;padding:0;text-align:left" data-screen="detail">${p.title}</button>
+        <p class="desc">${p.tags}</p>
+      </div>`).join('')}
+      <div class="result">
+        <p class="src">jexists › 기술스택</p>
+        <button class="ttl" style="background:none;border:0;padding:0" data-tab="skills">Angular · React · Go · MongoDB · Figma</button>
+        <p class="desc">프론트엔드 · 백엔드 · 데이터베이스 · 기획·디자인</p>
+      </div>
+      <div class="result">
+        <p class="src">jexists › 학력·교육</p>
+        <button class="ttl" style="background:none;border:0;padding:0" data-tab="education">산업디자인 전공 · UX/UI 과정 수료</button>
+        <p class="desc">${todo('학교·기관 입력')}</p>
+      </div>
+      <div class="faq">
+        <p class="h">관련 질문</p>
+        ${faqs.map((f) => `<details><summary>${f.q}</summary><p>${todo('답변 2~3문장 입력')}</p></details>`).join('')}
+      </div>
+    </div>
+    ${knowledgePanel()}
+  </div>`;
+}
+
+function careerTab() {
+  const hl = byLens(HIGHLIGHTS);
+  return `<div class="timeline">
+    <div class="item">
+      <p class="src">brace.co.kr › 레사모(4mation)</p>
+      <p class="ttl">브레이스 · 풀스택 개발</p>
+      <p class="desc">2020.08 – 2026.03 · 5년 7개월 · 정규직 ${todo('직급 입력')}</p>
+      <div class="metrics">
+        <div class="metric"><p class="desc">누적 가입자</p><p class="n">8만 명</p></div>
+        <div class="metric"><p class="desc">연간 거래</p><p class="n">26,000건</p></div>
+        <div class="metric"><p class="desc">담당 범위</p><p class="n">기획~운영</p></div>
+      </div>
+      <ul class="desc" style="padding-left:18px">${hl.map((h, i) => `<li style="${state.lens !== 'all' && !h.roles.includes(state.lens) ? 'color:var(--muted)' : ''}">${h.text}</li>`).join('')}</ul>
+      <p class="desc" style="margin-top:8px">관련 프로젝트 › <button class="chip" data-screen="detail">레사모 경매·거래 플랫폼</button></p>
+    </div>
+    <div class="item dim">
+      <p class="ttl" style="color:var(--sub)">이전 경력 ${todo('있으면 입력, 없으면 이 칸 삭제')}</p>
+      <p class="desc">회사 · 역할 · 기간 · 한 줄 성과</p>
+    </div>
+  </div>
+  <p class="desc" style="font-size:12px">렌즈를 바꾸면 해당 직무와 관련된 성과가 위로 올라오고, 나머지는 흐리게 표시됩니다.</p>`;
+}
+
+function projectsTab() {
+  const groups = [['all', '전체'], ['work', '실무'], ['personal', '개인'], ['design', '디자인'], ['clone', '클론']];
+  let list = PROJECTS.filter((p) => state.pgroup === 'all' || p.group === state.pgroup || p.draft);
+  list = byLens(list.filter((p) => !p.draft)).concat(list.filter((p) => p.draft));
+  return `<div class="chips" style="margin-bottom:14px">${groups.map(([id, l]) => `<button class="chip ${state.pgroup === id ? 'on' : ''}" data-pgroup="${id}">${l}</button>`).join('')}</div>
+  <div class="pgrid">${list.map((p) => `<button class="pcard ${p.draft ? 'draft' : ''}" ${p.draft ? '' : 'data-screen="detail"'}>
+    <div class="box thumb">${p.draft ? '준비중' : '썸네일'}</div>
+    <div class="in"><span class="kind">${p.kind || '&nbsp;'}</span><p class="pt">${p.title}</p><p class="desc" style="font-size:12px">${p.tags}</p>
+    ${state.lens !== 'all' && p.roles.includes(state.lens) ? `<span class="match">● ${lensOf().label} 관련</span>` : ''}</div>
+  </button>`).join('')}</div>`;
+}
+
+function skillsTab() {
+  const rows = [
+    ['프론트엔드', [['Angular', 5], ['TypeScript', 4], ['React', 3], ['HTML·SCSS', 5]]],
+    ['백엔드', [['Go (Gin)', 4], ['REST API 설계', 4]]],
+    ['데이터베이스', [['MongoDB', 4], ['Atlas Search', 3]]],
+    ['결제·연동', [['Payple', 3], ['Toss Payments', 3]]],
+    ['기획·디자인', [['화면 설계', 4], ['Figma', 4], ['UX/UI', 4]]],
+    ['품질·도구', [['Git·GitHub Actions', 4], ['Vitest·TDD', 3]]],
+  ];
+  const lvl = (n) => `<span class="lvl">${[1, 2, 3, 4, 5].map((i) => `<i class="${i <= n ? 'f' : ''}"></i>`).join('')}</span>`;
+  return `<p class="desc" style="margin-bottom:8px">숙련도 칸은 ${todo('본인 기준으로 조정')} · 각 기술을 누르면 쓴 프로젝트로 이동</p>
+  ${rows.map(([g, items]) => `<div class="skrow"><b>${g}</b><div>${items.map(([n, l]) => `<span class="sk">${n}${lvl(l)}</span>`).join('')}</div></div>`).join('')}
+  ${sec('자격사항', [[todo('자격증명 · 발급처'), todo('취득일')]])}`;
+}
+
+const sec = (title, rows) => `<div class="edusec"><p class="h">${title}</p>${rows.map(([a, b]) => `<div class="edurow"><span>${a}</span><span class="desc">${b}</span></div>`).join('')}</div>`;
+
+function educationTab() {
+  return sec('학력사항', [[`${todo('OO대학교')} 산업디자인과 졸업`, todo('입학–졸업 연월')]])
+    + sec('교육사항', [[`UX/UI 과정 ${todo('기관명')}`, todo('기간')], [todo('기타 교육과정'), todo('기간')]])
+    + `<p class="desc" style="font-size:12px">초·중·고는 적지 않습니다. 대학과 그 이후 교육만 적습니다.</p>`;
+}
+
+function etcTab() {
+  const items = [
+    ['스터디', '(카피) 그림판 · (카피) 일정관리', '바닐라 JS 스터디 기록'],
+    ['클론', '(클론) 네이버 포털 사이트', '퍼블리싱 연습'],
+    ['활동', todo('수상 · 대외활동 · 발표'), ''],
+    ['글', todo('기술 블로그 · 회고 링크'), ''],
+  ];
+  return items.map(([s, t, d]) => `<div class="result"><p class="src">jexists › ${s}</p><p class="ttl">${t}</p><p class="desc">${d}</p></div>`).join('');
+}
+
+function searchView() {
+  const views = { all: allTab, career: careerTab, projects: projectsTab, skills: skillsTab, education: educationTab, etc: etcTab };
+  const counts = { all: 24, career: 6, projects: 7, skills: 16, education: 4, etc: 5 };
+  return `${searchHead()}<div class="sbody">${lensRow()}<p class="stat">검색결과 약 ${counts[state.tab]}개 (0.42초)</p>${views[state.tab]()}</div>`;
+}
+
+function detailView() {
+  return `${searchHead()}<div class="detail">
+    <p class="crumb"><button data-tab="projects">← 프로젝트 목록</button> · 실무</p>
+    <p class="ttl" style="font-size:26px;color:var(--text)">레사모(4mation) 경매·거래 플랫폼</p>
+    <div class="chips"><span class="chip">Angular</span><span class="chip">Go</span><span class="chip">MongoDB</span><span class="chip">Atlas Search</span></div>
+    <div class="box hero">대표 이미지 · 화면 녹화</div>
+    <div class="meta">
+      <div><b>기간</b>2020.08 – 2026.03</div><div><b>역할</b>풀스택 · 기획</div>
+      <div><b>팀</b>${todo('인원 입력')}</div><div><b>성과</b>가입자 8만 · 연 거래 26,000건</div>
+    </div>
+    <div class="chips"><button class="chip primary" style="background:var(--accent);color:#fff;border-color:var(--accent)">서비스 보기</button><button class="chip">GitHub</button></div>
+    <div class="doc">
+      <h3>개요</h3><p>축구 커뮤니티와 중고 거래·경매를 합친 서비스. ${todo('2~3문장')}</p>
+      <h3>내 역할</h3><ul><li>Angular SPA 구조 설계, 경매·입찰 실시간 UI</li><li>Go REST API, 결제(Payple·Toss)·정산</li><li>Atlas Search 검색 고도화</li></ul>
+      <h3>문제와 해결</h3><p>${todo('가장 어려웠던 문제 1~2개: 상황 → 내가 한 일 → 결과(숫자)')}</p>
+      <h3>배운 점</h3><p>${todo('1~2문장')}</p>
+    </div>
+    <div class="series">
+      <div class="card"><span class="desc">← 이전 프로젝트</span><br>이 포트폴리오 사이트</div>
+      <div class="card" style="text-align:right"><span class="desc">다음 프로젝트 →</span><br>(리디자인) 코카-콜라 저니</div>
+    </div>
+  </div>`;
+}
+
+function render() {
+  const frame = document.getElementById('frame');
+  frame.className = 'frame' + (state.width === 'mobile' ? ' mobile' : '');
+  frame.innerHTML = { intro: introView, search: searchView, detail: detailView }[state.screen]();
+  document.querySelectorAll('#screenSeg button').forEach((b) => b.classList.toggle('on', b.dataset.screen === state.screen));
+  document.querySelectorAll('#widthSeg button').forEach((b) => b.classList.toggle('on', b.dataset.w === state.width));
+}
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('button');
+  if (!el) return;
+  const d = el.dataset;
+  if (d.screen) go({ screen: d.screen });
+  else if (d.w) go({ width: d.w });
+  else if (d.tab) go({ screen: 'search', tab: d.tab });
+  else if (d.lens) go({ lens: d.lens });
+  else if (d.lensGo) go({ screen: 'search', tab: 'all', lens: d.lensGo });
+  else if (d.pgroup) go({ pgroup: d.pgroup });
+});
+
+render();
+</script>
+</body>
+</html>
