@@ -1,13 +1,12 @@
-// 값 import 없이 타입만 사용한다: Node 스크립트(scripts/generate-feeds.ts)에서도 그대로 불러 쓴다.
+// Node 스크립트(scripts/generate-feeds.ts)에서도 그대로 불러 쓰므로 별칭 없이 타입과 상대 경로만 import 한다.
 import type { ProjectDto, ProjectMeta } from '@/features/projects/types/project.types';
+// Node 스크립트에서도 불러 쓰므로 @ 별칭 대신 상대 경로
+import { assetUrl } from '../../../lib/assetUrl';
 
 /** 빈 문자열(Go 의 zero value)은 값이 없는 것으로 본다 */
 const optional = (value?: string) => value || undefined;
 
 /** API 문서(ProjectDto)를 화면용 ProjectMeta 로 변환한다. 본문(body)은 포함하지 않는다. */
-/** public/ 아래 이미지(/images/...)는 하위 경로 배포(GitHub Pages /portfolio/)에서도 열리게 base 를 붙인다. Node 스크립트에는 import.meta.env 가 없다 */
-const assetUrl = (src: string) => (src.startsWith('/') ? `${(import.meta.env?.BASE_URL ?? '/').replace(/\/$/, '')}${src}` : src);
-
 export function toProjectMeta(dto: ProjectDto): ProjectMeta {
   return {
     slug: dto._id,

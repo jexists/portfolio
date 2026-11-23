@@ -1,3 +1,4 @@
+import { assetUrl } from '@/lib/assetUrl';
 import { http } from '@/lib/axios';
 import type { Profile, ProfileDto } from '@/features/profile/types/profile.types';
 
@@ -5,7 +6,7 @@ import type { Profile, ProfileDto } from '@/features/profile/types/profile.types
 export function toProfile(dto: ProfileDto): Profile {
   const { _id, avatar, ...rest } = dto;
   void _id;
-  return { ...rest, avatarUrl: avatar || undefined };
+  return { ...rest, avatarUrl: avatar ? assetUrl(avatar) : undefined };
 }
 
 export const profileApi = {
