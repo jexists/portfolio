@@ -19,11 +19,7 @@
   font-weight: var(--font-weight-bold);
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
+/* 경력기술서와 같은 머리말: 이름 아래 연락처 */
 
 .title {
   display: flex;
@@ -153,7 +149,7 @@
 }
 
 .skill .sub {
-  padding-left: var(--space-8);
+  padding-left: var(--space-4);
   color: var(--color-text-secondary);
 }
 
@@ -168,11 +164,6 @@
 @media (max-width: 48rem) {
   .page {
     padding: var(--space-4);
-  }
-
-  .header {
-    flex-direction: column;
-    gap: var(--space-2);
   }
 
   .contact {

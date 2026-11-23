@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import { Link, useLocation } from 'react-router';
 import { Card } from '@/components/ui/Card';
 import { RailButton } from '@/components/ui/RailButton';
 import { TechBadge } from '@/components/ui/TechBadge';
 import { useRail } from '@/hooks/useRail';
-import type { Career, CareerAchievement, Credential, Education, Period, Skill, SkillSection } from '@/features/resume/types/resume.types';
+import type { Career, Credential, Education, Period, Skill, SkillSection } from '@/features/resume/types/resume.types';
 import { CERTIFICATE_COUNT } from '../utils/profileFacts';
 import styles from './ResumeSections.module.scss';
 
@@ -23,50 +24,50 @@ function Bullets({ items }: { items: string[] }) {
   ) : null;
 }
 
-function Tags({ names }: { names: string[] }) {
-  return (
-    <div className={styles.tags}>
-      {names.map((name) => (
-        <span className={styles.tag} key={name}>
-          {name}
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function Achievement({ item, open }: { item: CareerAchievement; open: boolean }) {
-  return (
-    <details className={styles.achievement} open={open}>
-      <summary>
-        <h4>{item.title}</h4>
-        <span>{item.period}</span>
-      </summary>
-      <div className={styles.achievementBody}>
-        {item.role ? <p className={styles.muted}>{item.role}</p> : null}
-        {item.work.length ? (
-          <div>
-            <p className={styles.label}>주요 업무</p>
-            <Bullets items={item.work} />
-          </div>
-        ) : null}
-        {item.problems.length ? (
-          <div>
-            <p className={styles.label}>문제 해결</p>
-            <Bullets items={item.problems} />
-          </div>
-        ) : null}
-        {item.result ? (
-          <p className={styles.result}>
-            <b>성과</b> {item.result}
-          </p>
-        ) : null}
-      </div>
-    </details>
-  );
-}
-
 const careerAnchor = (id: string) => `career-${id}`;
+
+// 기술 이름 → 아이콘 배지 이름 (기술 탭 배지와 같게). 묶인 이름은 바꾸고 Adobe 는 뺀다
+const BADGE_SPLIT: Record<string, string[]> = { 'Go (Gin)': ['Go'], 'CSS / SCSS': ['CSS', 'Sass'] };
+const badgeNames = (name: string) => BADGE_SPLIT[name] ?? [name.replace(/^Adobe /, '')];
+
+/** 경력의 기술을 아이콘 배지로 (경력 탭 카드·경력 상세 서비스 개요 공용) */
+export function CareerTechBadges({ career, skills }: { career: Career; skills: Skill[] }) {
+  const skillName = new Map(skills.map((skill) => [skill.id, skill.name]));
+  return (
+    <ul className={styles.techBadges}>
+      {career.skillIds
+        .flatMap((id) => badgeNames(skillName.get(id) ?? id))
+        .map((name) => (
+          <li key={name}>
+            <TechBadge name={name} />
+          </li>
+        ))}
+    </ul>
+  );
+}
+
+/** 내용 속에서 links.text 와 같은 글자(앞에서부터 처음 나오는 곳)만 링크로 건다 */
+function FactText({ text, links = [] }: { text: string; links?: Array<{ text: string; url: string }> }) {
+  const parts: ReactNode[] = [];
+  let rest = text;
+  for (const link of links) {
+    const at = rest.indexOf(link.text);
+    if (at < 0) continue;
+    parts.push(
+      rest.slice(0, at),
+      <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
+        {link.text}
+      </a>,
+    );
+    rest = rest.slice(at + link.text.length);
+  }
+  return (
+    <>
+      {parts}
+      {rest}
+    </>
+  );
+}
 
 /** 상세 문서가 있으면 상세 화면, 없으면 경력 탭의 그 회사 위치 */
 const careerLink = (career: Career) =>
@@ -75,14 +76,11 @@ const careerLink = (career: Career) =>
 interface CareerSectionProps {
   careers: Career[];
   skills: Skill[];
-  /** 경력 요약 줄 (profiles.json summary) */
-  summary: string[];
 }
 
-/** 경력 탭: 경력기술서 순서 (경력 타임라인 → 경력 요약 → 회사별 카드) */
-export function CareerSection({ careers, skills, summary }: CareerSectionProps) {
+/** 경력 탭: 경력 타임라인(+ 경력기술서 보기) → 회사별 카드 */
+export function CareerSection({ careers, skills }: CareerSectionProps) {
   const location = useLocation();
-  const skillName = new Map(skills.map((skill) => [skill.id, skill.name]));
   const main = careers.filter((career) => !career.minor);
   const minor = careers.filter((career) => career.minor);
 
@@ -99,78 +97,70 @@ export function CareerSection({ careers, skills, summary }: CareerSectionProps) 
       <HTimeline
         title="경력 타임라인"
         items={main.map((career) => careerItem(career, `/search?tab=career#${careerAnchor(career.id)}`))}
+        more={
+          <Link className={styles.moreLink} to="/search?tab=careerdoc">
+            경력기술서 보기 <span aria-hidden="true">→</span>
+          </Link>
+        }
       />
-      {summary.length ? (
-        <Card title="경력 요약">
-          <Bullets items={summary} />
-        </Card>
-      ) : null}
       {main.map((career) => (
         <Card key={career.id} ariaLabel={career.company}>
           <article className={styles.career} id={careerAnchor(career.id)}>
             <header className={styles.careerHead}>
               <h3>
-                {career.company}
+                {career.body ? <Link to={`/career/${career.id}`}>{career.company}</Link> : career.company}
                 {career.companyNote ? <small>{career.companyNote}</small> : null}
               </h3>
               <span>
                 {period(career.period)} · {career.duration}
               </span>
-              {career.body ? (
-                <Link className={styles.careerMore} to={`/career/${career.id}`}>
-                  자세히 보기 &gt;
-                </Link>
-              ) : null}
             </header>
-            <p className={styles.muted}>{career.role}</p>
-            {career.service ? <p>{career.service}</p> : null}
-            {career.metrics.length ? (
-              <dl className={styles.metrics}>
-                {career.metrics.map((metric) => (
-                  <div key={metric.label}>
-                    <dt>{metric.label}</dt>
+            <p className={`${styles.muted} ${styles.careerRole}`}>{career.role}</p>
+            {career.facts?.length ? (
+              <dl className={styles.careerFacts}>
+                {career.facts.map((fact) => (
+                  <div key={fact.label}>
+                    <dt>{fact.label}</dt>
                     <dd>
-                      <strong>{metric.value}</strong>
-                      <small>{metric.note}</small>
+                      <FactText text={fact.text} links={fact.links} />
                     </dd>
                   </div>
                 ))}
               </dl>
+            ) : career.service ? (
+              <p>{career.service}</p>
             ) : null}
             {career.responsibilities.length ? (
               <>
-                <h4 className={styles.subhead}>역할</h4>
+                <h4 className={styles.subhead}>담당 범위</h4>
                 <Bullets items={career.responsibilities} />
               </>
             ) : null}
-            {career.achievements.length ? (
+            {career.collaboration?.length ? (
               <>
-                <h4 className={styles.subhead}>주요 업무와 문제 해결</h4>
-                <div className={styles.achievements}>
-                  {career.achievements.map((item, index) => (
-                    <Achievement key={item.title} item={item} open={index === 0} />
-                  ))}
-                </div>
-              </>
-            ) : null}
-            {career.extras.length ? (
-              <>
-                <h4 className={styles.subhead}>그 밖의 개발·운영</h4>
-                <Bullets items={career.extras} />
+                <h4 className={styles.subhead}>협업</h4>
+                <Bullets items={career.collaboration} />
               </>
             ) : null}
             {career.skillIds.length ? (
               <>
                 <h4 className={styles.subhead}>기술</h4>
-                <Tags names={career.skillIds.map((id) => skillName.get(id) ?? id)} />
+                <CareerTechBadges career={career} skills={skills} />
               </>
+            ) : null}
+            {career.body ? (
+              <div className={styles.careerLinks}>
+                <Link to={`/career/${career.id}`}>
+                  프로젝트 보기 <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             ) : null}
           </article>
         </Card>
       ))}
       {minor.length ? (
         <Card title="그 밖의 경력">
-          <ul className={styles.rows}>
+          <ul className={`${styles.rows} ${styles.minorRows}`}>
             {minor.map((career) => (
               <li key={career.id}>
                 <span className={styles.when}>{period(career.period)}</span>
@@ -938,7 +928,7 @@ const careerItem = (career: Career, to: string): TimelineItem => ({
 });
 
 /** 가로 타임라인 카드 (최신순). 스크롤바 대신 양 끝 화살표로 넘긴다 */
-function HTimeline({ title, items }: { title: string; items: TimelineItem[] }) {
+function HTimeline({ title, items, more }: { title: string; items: TimelineItem[]; more?: ReactNode }) {
   const rail = useRail<HTMLOListElement>([items]);
   if (!items.length) return null;
   const sorted = [...items].sort((a, b) => b.period.start.localeCompare(a.period.start));
@@ -961,6 +951,7 @@ function HTimeline({ title, items }: { title: string; items: TimelineItem[] }) {
         {rail.edge.start ? null : <RailButton side="prev" label="이전 항목" onClick={() => rail.scroll(-1)} />}
         {rail.edge.end ? null : <RailButton side="next" label="다음 항목" onClick={() => rail.scroll(1)} />}
       </div>
+      {more}
     </Card>
   );
 }

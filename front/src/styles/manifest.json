@@ -101,7 +101,7 @@
     {
       "name": "CategoryTabs",
       "role": "프로젝트 카테고리 탭",
-      "path": "src/features/projects/components/CategoryTabs.tsx",
+      "path": "src/components/layout/CategoryTabs.tsx",
       "variants": ["default"],
       "tokens": ["color", "font", "space", "search", "motion"],
       "states": ["ready", "selected"]
@@ -184,6 +184,14 @@
       "path": "src/features/resume/components/ResumeDocument.tsx",
       "variants": ["default"],
       "tokens": ["color", "font", "space", "radius", "search"],
+      "states": ["ready"]
+    },
+    {
+      "name": "CareerDocument",
+      "role": "경력기술서 화면 (경력 탭 타임라인의 경력기술서 보기)",
+      "path": "src/features/resume/components/CareerDocument.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "radius"],
       "states": ["ready"]
     },
     {

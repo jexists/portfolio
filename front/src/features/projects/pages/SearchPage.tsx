@@ -5,6 +5,7 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { LinksCard, ProfileCard, ProfileSide, StrengthsCard, useProfile } from '@/features/profile';
 import {
   buildProfileFacts,
+  CareerDocument,
   CareerSection,
   CredentialsSection,
   EducationSection,
@@ -17,7 +18,7 @@ import {
   useEducations,
   useSkills,
 } from '@/features/resume';
-import { CategoryTabs, isSearchTab, type SearchTab } from '@/features/projects/components/CategoryTabs';
+import { CategoryTabs, isSearchTab, type SearchTab } from '@/components/layout/CategoryTabs';
 import { FeaturedRail, ProjectsTab } from '@/features/projects/components/ProjectCollections';
 import { useProjects } from '@/features/projects/hooks/useProjects';
 import styles from './SearchPage.module.scss';
@@ -62,7 +63,7 @@ export function SearchPage() {
 
   return (
     <main className={styles.page} data-from-intro={fromIntro}>
-      <SearchHeader tabs={<CategoryTabs value={tab} onChange={changeTab} />} />
+      <SearchHeader tabs={<CategoryTabs value={tab === 'careerdoc' ? 'career' : tab} onChange={changeTab} />} />
       {!ready || !profile || !projects || !careers || !skills || !educations || !credentials ? (
         <div className={styles.shell}>
           <SearchSkeleton />
@@ -84,7 +85,8 @@ export function SearchPage() {
               </>
             ) : null}
             {tab === 'resume' ? <ResumeDocument /> : null}
-            {tab === 'career' ? <CareerSection careers={careers} skills={skills} summary={profile.summary} /> : null}
+            {tab === 'careerdoc' ? <CareerDocument /> : null}
+            {tab === 'career' ? <CareerSection careers={careers} skills={skills} /> : null}
             {tab === 'skills' ? (
               <SkillsSection skills={skills} summary={profile.skillSummary ?? []} languages={profile.languages ?? []} />
             ) : null}
@@ -92,8 +94,8 @@ export function SearchPage() {
             {tab === 'certs' ? <CredentialsSection credentials={credentials} /> : null}
             {tab === 'projects' ? <ProjectsTab key={tag ?? ''} projects={projects} tag={tag} onClearTag={clearTag} /> : null}
           </div>
-          {/* 이력서는 문서만 보여 준다 */}
-          {tab === 'resume' ? null : (
+          {/* 이력서·경력기술서는 문서만 보여 준다 */}
+          {tab === 'resume' || tab === 'careerdoc' ? null : (
           <aside className={styles.side} aria-label="사이드 정보">
             {tab === 'all' ? <StrengthsCard strengths={profile.strengths} /> : <ProfileSide profile={profile} facts={facts} />}
             {/* 관련 검색어: 지금은 숨긴다. 다시 쓰려면 주석을 풀고 import 에 buildRelatedQueries, RelatedQueries 를 더한다

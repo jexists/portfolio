@@ -31,6 +31,10 @@ export interface Career {
   role: string;
   service?: string;
   responsibilities: string[];
+  /** 경력 카드 위쪽 항목·내용 표 (재직 기간, 서비스 등) */
+  facts?: Array<{ label: string; text: string; links?: Array<{ text: string; url: string }> }>; // links.text 와 같은 글자를 링크로
+  /** 경력 카드 협업 줄 */
+  collaboration?: string[];
   metrics: CareerMetric[];
   achievements: CareerAchievement[];
   extras: string[];

@@ -9,6 +9,7 @@ export {
   SkillsSection,
 } from './components/ResumeSections';
 export { ResumeDocument } from './components/ResumeDocument';
+export { CareerDocument } from './components/CareerDocument';
 export { CareerDetailPage } from './pages/CareerDetailPage';
 export { resumeKeys, useCareers, useCredentials, useEducations, useSkills } from './hooks/useResume';
 export { buildProfileFacts } from './utils/profileFacts';

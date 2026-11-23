@@ -26,19 +26,12 @@ const Icon = ({ children }: { children: ReactNode }) => (
 export function ResumeDocument() {
   return (
     <article className={styles.page} aria-label="정주애 이력서">
-      <header className={styles.header}>
+      <header>
         <div className={styles.title}>
           <h1>정주애</h1>
           <span className={styles.doc}>이력서</span>
         </div>
         <div className={styles.contact}>
-          <span>
-            <Icon>
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-              <circle cx="12" cy="10" r="3" />
-            </Icon>
-            서울특별시 관악구
-          </span>
           <a href="mailto:jexists486@gmail.com">
             <Icon>
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -92,7 +85,7 @@ export function ResumeDocument() {
       <h2>학력사항</h2>
       <Item title="필리핀 산토 토마스 대학교 (University of Santo Tomas, UST)" date="2012.06 – 2016.06">
         <div>BFA in Industrial Design (산업디자인 전공) · 졸업</div>
-        <div>GWA 1.761 (최고점 1.00 · 약 89~90%) · 7등/62명 · 총 이수학점 198 · Dean’s List 총 4회 (2013–2016)</div>
+        <div>GWA 1.76 (최고점 1.00 · 100점 환산 89점) · Dean’s List 총 4회 (2013–2016)</div>
       </Item>
 
       <h2>보유기술</h2>

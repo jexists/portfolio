@@ -68,6 +68,17 @@ const TECH_ICONS: Record<string, SimpleIcon> = {
   Figma: siFigma,
 };
 
+// Simple Icons 에 없는 것(Adobe·OpenAI·AWS)은 로고 대신 색 네모 + 글자로 그린다 (브랜드 색은 Simple Icons hex 처럼 인라인).
+// 글자가 세 자면 size 를 줄인다
+const LETTER_ICONS: Record<string, { text: string; fg: string; bg: string; size?: number }> = {
+  Photoshop: { text: 'Ps', fg: '#31A8FF', bg: '#001E36' },
+  Illustrator: { text: 'Ai', fg: '#FF9A00', bg: '#330000' },
+  InDesign: { text: 'Id', fg: '#FF3366', bg: '#49021F' },
+  ChatGPT: { text: 'GPT', fg: '#FFFFFF', bg: '#10A37F', size: 9 },
+  Codex: { text: 'Cx', fg: '#FFFFFF', bg: '#000000' },
+  AWS: { text: 'aws', fg: '#FF9900', bg: '#232F3E', size: 10 },
+};
+
 interface TechBadgeProps {
   name: string;
   /** 있으면 누를 수 있는 버튼, 없으면 표시용 */
@@ -78,11 +89,19 @@ interface TechBadgeProps {
 /** 기술 이름 배지: 연한 회색 바탕 + 브랜드 색 아이콘 (Simple Icons) */
 export function TechBadge({ name, onClick, size = 'md' }: TechBadgeProps) {
   const icon = TECH_ICONS[name];
+  const letter = LETTER_ICONS[name];
   const content = (
     <>
       {icon ? (
         <svg viewBox="0 0 24 24" aria-hidden="true" style={{ fill: `#${icon.hex}` }}>
           <path d={icon.path} />
+        </svg>
+      ) : letter ? (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect width="24" height="24" rx="5" fill={letter.bg} />
+          <text x="12" y="16.5" textAnchor="middle" fontSize={letter.size ?? 12} fontWeight="700" fill={letter.fg}>
+            {letter.text}
+          </text>
         </svg>
       ) : null}
       {name}
