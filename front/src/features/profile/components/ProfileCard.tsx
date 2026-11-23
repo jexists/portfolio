@@ -2,13 +2,15 @@ import { useEffect, useId, useState } from 'react';
 import { Link } from 'react-router';
 import { Card } from '@/components/ui/Card';
 import type { Profile, Strength } from '@/features/profile/types/profile.types';
+import { TechBadge } from '@/components/ui/TechBadge';
 import styles from './ProfileCard.module.scss';
 
-/** 경력·학력·자격 요약 한 줄 (resume feature 의 buildProfileFacts 결과와 같은 모양) */
+/** 경력·학력·기술 요약 한 줄 (resume feature 의 buildProfileFacts 결과와 같은 모양) */
 export interface ProfileFactRow {
   label: string;
   values: string[];
   periods?: string[];
+  badges?: string[];
 }
 
 function useCopy(text: string) {
@@ -52,6 +54,16 @@ function FactList({ profile, facts, contacts = true }: { profile: Profile; facts
         <div key={fact.label}>
           <dt>{fact.label}</dt>
           <dd>
+            {fact.badges?.length ? (
+              <p className={styles.badgeRow}>
+                {fact.badges.map((name) => (
+                  <TechBadge key={name} name={name} size="sm" />
+                ))}
+                <Link className={styles.moreSkills} to="/search?tab=skills" aria-label="기술 전체 보기" title="기술 전체 보기">
+                  …
+                </Link>
+              </p>
+            ) : null}
             {fact.values.map((value, index) => {
               const period = fact.periods?.[index];
               return (
@@ -138,7 +150,7 @@ export function ProfileCard({ profile, facts }: ProfileCardProps) {
   );
 }
 
-/** 전체 외 탭의 사이드 첫 카드: 이름과 경력·학력·자격 요약만 (사진·연락처는 뺀다) */
+/** 전체 외 탭의 사이드 첫 카드: 이름과 경력·학력·기술 요약 + 이력서 보기 (사진·연락처는 뺀다) */
 export function ProfileSide({ profile, facts }: { profile: Profile; facts: ProfileFactRow[] }) {
   return (
     <Card ariaLabel="프로필" className={styles.side}>
@@ -149,6 +161,9 @@ export function ProfileSide({ profile, facts }: { profile: Profile; facts: Profi
         </p>
       </div>
       <FactList profile={profile} facts={facts} contacts={false} />
+      <Link className={styles.resumeLink} to="/search?tab=resume">
+        이력서 보기 <span aria-hidden="true">→</span>
+      </Link>
     </Card>
   );
 }

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useLocation, useSearchParams } from 'react-router';
 import { SearchHeader } from '@/components/layout/SearchHeader';
 import { LinksCard, ProfileCard, ProfileSide, StrengthsCard, useProfile } from '@/features/profile';
@@ -9,6 +9,7 @@ import {
   EducationSection,
   ResumeDocument,
   ResumeResultCards,
+  ResumeTimeline,
   SkillsSection,
   useCareers,
   useCredentials,
@@ -16,7 +17,7 @@ import {
   useSkills,
 } from '@/features/resume';
 import { CategoryTabs, isSearchTab, type SearchTab } from '@/features/projects/components/CategoryTabs';
-import { buildRelatedQueries, FeaturedRail, ProjectsTab, RelatedQueries } from '@/features/projects/components/ProjectCollections';
+import { FeaturedRail, ProjectsTab } from '@/features/projects/components/ProjectCollections';
 import { useProjects } from '@/features/projects/hooks/useProjects';
 import styles from './SearchPage.module.scss';
 
@@ -37,14 +38,15 @@ export function SearchPage() {
   const credentials = useCredentials().data;
 
   const facts = useMemo(
-    () => buildProfileFacts(careers ?? [], educations ?? [], credentials ?? []),
-    [careers, educations, credentials],
-  );
-  const projectTitles = useMemo(
-    () => Object.fromEntries((projects ?? []).map((project) => [project.slug, project.title])),
-    [projects],
+    () => buildProfileFacts(careers ?? [], educations ?? []),
+    [careers, educations],
   );
   const featured = useMemo(() => (projects ?? []).filter((project) => project.featured), [projects]);
+
+  // 탭이 바뀌면(탭 버튼·"더보기" 링크 모두) 브라우저가 스크롤을 유지하므로 맨 위로 올린다
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [tab]);
 
   function changeTab(next: SearchTab) {
     setSearchParams(next === 'all' ? {} : { tab: next });
@@ -69,20 +71,23 @@ export function SearchPage() {
             {tab === 'all' ? (
               <>
                 <ProfileCard profile={profile} facts={facts} />
+                <ResumeTimeline careers={careers} educations={educations} />
                 <FeaturedRail projects={featured} />
                 <ResumeResultCards
                   headline={profile.headline}
                   summary={profile.summary}
                   careers={careers}
-                  skills={skills}
                   educations={educations}
-                  credentials={credentials}
+                  mainSkills={profile.skillSummary?.[0]?.items ?? []}
+                  skillHighlights={profile.skillHighlights ?? []}
                 />
               </>
             ) : null}
             {tab === 'resume' ? <ResumeDocument /> : null}
             {tab === 'career' ? <CareerSection careers={careers} skills={skills} /> : null}
-            {tab === 'skills' ? <SkillsSection skills={skills} careers={careers} projectTitles={projectTitles} /> : null}
+            {tab === 'skills' ? (
+              <SkillsSection skills={skills} summary={profile.skillSummary ?? []} languages={profile.languages ?? []} />
+            ) : null}
             {tab === 'education' ? <EducationSection educations={educations} projects={projects} /> : null}
             {tab === 'certs' ? <CredentialsSection credentials={credentials} /> : null}
             {tab === 'projects' ? <ProjectsTab key={tag ?? ''} projects={projects} tag={tag} onClearTag={clearTag} /> : null}
@@ -91,6 +96,7 @@ export function SearchPage() {
           {tab === 'resume' ? null : (
           <aside className={styles.side} aria-label="사이드 정보">
             {tab === 'all' ? <StrengthsCard strengths={profile.strengths} /> : <ProfileSide profile={profile} facts={facts} />}
+            {/* 관련 검색어: 지금은 숨긴다. 다시 쓰려면 주석을 풀고 import 에 buildRelatedQueries, RelatedQueries 를 더한다
             <RelatedQueries
               queries={buildRelatedQueries(
                 profile.name,
@@ -98,6 +104,7 @@ export function SearchPage() {
                 skills.filter((skill) => skill.usage === 'work').map((skill) => skill.name),
               )}
             />
+            */}
             <LinksCard profile={profile} />
           </aside>
           )}

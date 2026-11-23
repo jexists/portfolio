@@ -73,6 +73,33 @@
   white-space: nowrap;
 }
 
+/* 기술 줄: 배지 + … (카드의 한 줄 말줄임 규칙보다 앞서도록 .card 까지 붙인다) */
+.facts dd p.badgeRow,
+.card .facts dd p.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  overflow: visible;
+  white-space: normal;
+}
+
+/* 기술 탭으로 가는 … (배지와 같은 바탕) */
+.facts a.moreSkills {
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: var(--font-line-height-tight);
+  text-decoration: none;
+}
+
+.facts a.moreSkills:hover {
+  background: var(--color-border-default);
+  color: var(--color-text-primary);
+}
+
 .facts a {
   color: var(--color-text-link);
 }
@@ -123,8 +150,10 @@
   transition: color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
+/* 이력서 보기는 밑줄 없이 글자색만 진해진다 (전체 탭 카드·사이드 카드 공통) */
 .resumeLink:hover {
   color: var(--color-text-primary);
+  text-decoration: none;
 }
 
 .photo {
@@ -144,8 +173,17 @@
   font-size: var(--font-size-sm);
 }
 
+/* 라벨(경력·학력·자격)은 글자 폭만큼, 값과의 간격은 카드 왼쪽 여백과 같게 */
 .side .facts > div {
-  gap: var(--space-2);
+  grid-template-columns: max-content minmax(var(--space-0), 1fr);
+  gap: var(--search-card-padding);
+}
+
+/* 사이드 카드(Card)는 패딩 토큰이 달라 맞춰 준다 */
+.side .resumeLink {
+  margin: var(--space-4) calc(var(--search-card-padding) * -1) calc(var(--search-card-padding) * -1);
+  padding: var(--space-2-5);
+  font-size: var(--font-size-sm);
 }
 
 /* 사이드 카드는 폭이 좁아 경력 기간을 숨기고 한 줄로 */
@@ -208,6 +246,10 @@
   cursor: pointer;
 }
 
+.strengths button:hover b {
+  text-decoration: underline;
+}
+
 .strengths b {
   flex: var(--flex-auto);
 }
@@ -248,10 +290,12 @@
 }
 
 .linkRows li + li {
-  border-top: var(--border-width-default) solid var(--color-border-default);
+  border-top: var(--border-width-default) solid var(--color-border-subtle);
 }
 
 .linkRows a {
+  /* 호버 밑줄은 제목에만 준다 */
+  text-decoration: none;
   display: flex;
   align-items: center;
   gap: var(--space-3);

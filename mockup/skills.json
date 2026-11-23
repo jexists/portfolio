@@ -12,6 +12,52 @@
     "careerIds": [
       "brace",
       "sungjin"
+    ],
+    "section": "work",
+    "subgroup": "프론트엔드",
+    "summary": "사용자·관리자 화면 구현, 라우팅·권한 제어, 폼 검증, 공통 기능 개발과 버전 업그레이드를 할 수 있음",
+    "details": [
+      {
+        "title": "1. 핵심 기능·구조",
+        "items": [
+          "Angular 13 → 20, 3차례에 걸쳐 한 메이저씩 직접 업그레이드 (2024.04–2025.09)",
+          "Lazy Loading (loadChildren·loadComponent)으로 화면 단위 분리",
+          "일부 화면 Standalone Component 전환",
+          "Service·DI로 화면과 비즈니스 로직 분리, 공통 서비스 구성",
+          "Router의 경로·쿼리 파라미터로 화면 상태 처리",
+          "Route Guard로 로그인·권한별 접근 제어",
+          "Reactive Forms·Validators로 복잡한 입력 폼 구현",
+          "공통 Pipe·Directive와 재사용 컴포넌트 개발",
+          "ngOnDestroy에서 구독·타이머 정리로 메모리 누수 방지"
+        ]
+      },
+      {
+        "title": "2. 서비스 기능 구현",
+        "items": [
+          "SEO: 메타 태그, JSON-LD 구조화 데이터",
+          "결제 SDK 연동",
+          "모바일 웹: 무한 스크롤, 이미지 업로드 전 압축·지연 로딩",
+          "다국어 (i18n): ngx-translate 도입"
+        ]
+      },
+      {
+        "title": "3. UI·외부 라이브러리",
+        "items": [
+          "UI 컴포넌트: Angular CDK, ng-zorro, Angular Material",
+          "차트·통계: ApexCharts",
+          "엑셀: xlsx (SheetJS)로 공통 엑셀 생성 함수"
+        ]
+      },
+      {
+        "title": "4. 개발·운영",
+        "items": [
+          "개발·스테이징·운영 환경별 설정 관리 (environment)",
+          "버전 업그레이드에 맞춘 npm 라이브러리 버전 관리",
+          "반응형 웹 UI 구현",
+          "웹뷰·기기별 화면 호환성 대응",
+          "기존 코드 리팩토링과 유지보수"
+        ]
+      }
     ]
   },
   {
@@ -28,6 +74,18 @@
     ],
     "careerIds": [
       "brace"
+    ],
+    "section": "work",
+    "subgroup": "프론트엔드",
+    "summary": "화면 데이터와 API 응답을 타입으로 관리하며 서비스 프론트엔드를 작성할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "서비스 프론트엔드 전체를 TypeScript로 작성",
+          "API 응답·화면 모델을 인터페이스로 정의해 화면과 서버 구조를 맞춤"
+        ]
+      }
     ]
   },
   {
@@ -42,12 +100,25 @@
     ],
     "careerIds": [
       "brace"
+    ],
+    "section": "work",
+    "subgroup": "프론트엔드",
+    "summary": "비동기 데이터와 화면 상태를 스트림으로 다룰 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "BehaviorSubject·Subject로 여러 컴포넌트 간 상태 공유",
+          "switchMap·debounceTime으로 검색·연속 요청 처리",
+          "catchError로 API 호출 에러 처리"
+        ]
+      }
     ]
   },
   {
     "_id": "html-css",
     "order": 4,
-    "name": "HTML · CSS(SCSS) · JavaScript",
+    "name": "HTML",
     "group": "Frontend",
     "usage": "work",
     "context": "퍼블리싱 실무, 2019–2020 클론·리디자인 작업",
@@ -58,66 +129,68 @@
     ],
     "careerIds": [
       "sungjin"
+    ],
+    "section": "work",
+    "subgroup": "프론트엔드",
+    "summary": "시맨틱 구조와 접근성을 고려한 화면 마크업을 할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "퍼블리싱 실무와 서비스 화면 마크업",
+          "제목 단계 (h1~h6)·숨김 텍스트 (IR)·focus 상태를 고려한 마크업"
+        ]
+      }
     ]
   },
   {
-    "_id": "react",
+    "_id": "css",
     "order": 5,
-    "name": "React",
+    "name": "CSS / SCSS",
     "group": "Frontend",
-    "usage": "project",
-    "context": "5단계 진행 화면, 영업 CRM 화면, RAG 상담 화면",
-    "projectIds": [
-      "blog2shorts",
-      "salesluv",
-      "jeonse-factchecker",
-      "lecture-practice"
-    ],
-    "careerIds": []
-  },
-  {
-    "_id": "nextjs",
-    "order": 6,
-    "name": "Next.js",
-    "group": "Frontend",
-    "usage": "project",
-    "context": "AX 캠퍼스 서비스 전체와 plog (Vercel 배포)",
-    "projectIds": [
-      "hanbit-math",
-      "testory",
-      "snapbook",
-      "heuk-studio",
-      "plog"
-    ],
-    "careerIds": []
-  },
-  {
-    "_id": "jquery",
-    "order": 7,
-    "name": "jQuery",
-    "group": "Frontend",
-    "usage": "project",
-    "context": "2019–2020 리디자인·클론 인터랙션",
-    "projectIds": [
-      "cocacola-redesign",
-      "portfolio-2019",
-      "naver-clone"
-    ],
-    "careerIds": []
-  },
-  {
-    "_id": "vue",
-    "order": 8,
-    "name": "Vue.js",
-    "group": "Frontend",
-    "usage": "study",
-    "context": "학습",
+    "usage": "work",
+    "context": "반응형 화면과 공통 스타일 구조를 만들 수 있음",
     "projectIds": [],
-    "careerIds": []
+    "careerIds": [],
+    "section": "work",
+    "subgroup": "프론트엔드",
+    "summary": "반응형 화면과 공통 스타일 구조를 만들 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "미디어쿼리 기반 반응형 레이아웃",
+          "SCSS 변수·믹스인으로 공통 스타일 구조화",
+          "애니메이션·hover·focus 인터랙션"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "javascript",
+    "order": 6,
+    "name": "JavaScript",
+    "group": "Frontend",
+    "usage": "work",
+    "context": "프레임워크 없이도 화면 동작을 구현할 수 있음",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "work",
+    "subgroup": "프론트엔드",
+    "summary": "프레임워크 없이도 화면 동작을 구현할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "퍼블리싱부터 서비스 화면까지 사용",
+          "IntersectionObserver로 스크롤 위치에 따른 로딩 처리"
+        ]
+      }
+    ]
   },
   {
     "_id": "go",
-    "order": 9,
+    "order": 7,
     "name": "Go (Gin)",
     "group": "Backend",
     "usage": "work",
@@ -125,11 +198,93 @@
     "projectIds": [],
     "careerIds": [
       "brace"
+    ],
+    "section": "work",
+    "subgroup": "백엔드",
+    "summary": "REST API 설계·개발, 외부 서비스 연동, 스케줄러·파일 처리를 할 수 있음",
+    "details": [
+      {
+        "title": "1. API 설계·개발",
+        "items": [
+          "Gin 라우터·미들웨어로 API 구성, ShouldBind와 직접 작성한 검증으로 요청 처리",
+          "JWT 클레임으로 요청 사용자 확인과 권한별 처리",
+          "공통 에러 응답·로그 함수로 오류 응답 형식 통일"
+        ]
+      },
+      {
+        "title": "2. 외부 서비스 연동",
+        "items": [
+          "결제: PG 결제 연동과 웹훅 처리",
+          "커머스: 외부 커머스 API 주문·재고 연동",
+          "배송: 택배사 발송·송장 엑셀 처리, 배송 추적 API (스마트택배·tracker.delivery) 연동",
+          "알림: SMS·카카오 알림톡, FCM 푸시 발송·재시도",
+          "외부 API 호출에 HTTP 타임아웃 설정"
+        ]
+      },
+      {
+        "title": "3. 스케줄링·데이터 처리",
+        "items": [
+          "gocron으로 주기 작업 자동화",
+          "Excelize로 엑셀 업로드를 읽어 일괄 처리",
+          "WebP 변환·썸네일 생성, ffmpeg로 동영상 프레임 JPEG 추출"
+        ]
+      },
+      {
+        "title": "4. 테스트·운영",
+        "items": [
+          "업무 흐름 전 과정을 따라가는 통합 테스트 작성",
+          "경우별 테스트와 테스트용 목업 데이터 구성",
+          "서버 오류 Slack 실시간 알림",
+          "Graceful Shutdown으로 서버 정상 종료 처리"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "mongodb",
+    "order": 8,
+    "name": "MongoDB",
+    "group": "Database",
+    "usage": "work",
+    "context": "Aggregation, 인덱스, Atlas Search 통합 검색",
+    "projectIds": [],
+    "careerIds": [
+      "brace"
+    ],
+    "section": "work",
+    "subgroup": "백엔드",
+    "summary": "서비스 요구사항에 맞는 데이터 모델링부터 집계, 검색 기능까지 구현할 수 있음",
+    "details": [
+      {
+        "title": "1. 데이터 모델링·집계",
+        "items": [
+          "서비스 요구사항에 따른 컬렉션 설계와 데이터 모델링",
+          "Aggregation Pipeline으로 여러 컬렉션 조인, 통계 집계, 목록·전체 개수 동시 조회",
+          "원자적 갱신과 대량 데이터 일괄 수정·등록"
+        ]
+      },
+      {
+        "title": "2. 인덱스·성능 개선",
+        "items": [
+          "조회·검색 조건에 맞춘 인덱스 생성",
+          "실행 계획 (explain)을 확인하며 느린 쿼리 개선",
+          "조인을 줄이고 조회 조건에 맞춘 인덱스 추가"
+        ]
+      },
+      {
+        "title": "3. MongoDB Atlas Search",
+        "items": [
+          "Atlas Search 인덱스로 자동완성·복합 조건 검색 구현",
+          "서비스 검색과 관리자 검색 기능 구현",
+          "검색 동의어 등록·수정 기능",
+          "Atlas Search 도입은 대표 주도, 서비스 검색 기능 적용은 직접 담당"
+        ]
+      }
     ]
   },
   {
     "_id": "python",
-    "order": 10,
+    "order": 9,
     "name": "Python",
     "group": "Backend",
     "usage": "work",
@@ -141,12 +296,290 @@
     ],
     "careerIds": [
       "brace"
+    ],
+    "section": "work",
+    "subgroup": "백엔드",
+    "summary": "데이터 수집 크롤러를 만들고 운영할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "네이버 카페 게시글 수집 크롤러 개발·운영"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "redis",
+    "order": 10,
+    "name": "Redis",
+    "group": "Database",
+    "usage": "work",
+    "context": "캐시, SETNX 락으로 중복 마감 차단",
+    "projectIds": [],
+    "careerIds": [
+      "brace"
+    ],
+    "section": "work",
+    "subgroup": "백엔드",
+    "summary": "캐시와 중복 처리 방지를 적용할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "공통 캐시 함수와 API 응답 캐시 미들웨어, 만료 시간 (TTL) 설정",
+          "데이터 변경 시 캐시 삭제",
+          "SETNX 락으로 동시 요청 중복 처리 방지"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "firebase",
+    "order": 11,
+    "name": "Firebase",
+    "group": "Database",
+    "usage": "work",
+    "context": "Realtime DB 채팅, FCM 푸시",
+    "projectIds": [],
+    "careerIds": [
+      "brace"
+    ],
+    "section": "work",
+    "subgroup": "백엔드",
+    "summary": "실시간 채팅과 푸시 알림을 연동할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "Realtime Database 기반 채팅",
+          "FCM 푸시 발송과 실패 처리, 폐기된 FCM 일괄 발송 API (SendAll)를 Send 방식으로 전환"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "git",
+    "order": 12,
+    "name": "Git / GitHub",
+    "group": "Tools",
+    "usage": "work",
+    "context": "실무 8개 저장소, 팀 PR 협업",
+    "projectIds": [
+      "blog2shorts",
+      "salesluv"
+    ],
+    "careerIds": [
+      "brace"
+    ],
+    "section": "work",
+    "subgroup": "개발 협업 및 클라우드",
+    "summary": "브랜치와 Pull Request로 코드 변경을 관리하며 협업할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "실무 및 개인·팀 프로젝트 소스 코드 버전 관리",
+          "Branch 기반 개발 및 Pull Request를 통한 코드 변경사항 관리",
+          "변경 이력 추적 및 협업 기반 형상관리"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "docker-work",
+    "order": 13,
+    "name": "Docker",
+    "group": "Infra / DevOps",
+    "usage": "work",
+    "context": "기존 Docker 환경에서 서비스 개발·실행",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "work",
+    "subgroup": "개발 협업 및 클라우드",
+    "summary": "이미 구성된 Docker 환경에서 서비스를 개발·실행할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "기존 Docker 환경에서 서비스 개발·실행"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "aws-work",
+    "order": 14,
+    "name": "AWS",
+    "group": "Infra / DevOps",
+    "usage": "work",
+    "context": "AWS S3: 서비스 이미지 및 파일 업로드·저장·관리",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "work",
+    "subgroup": "개발 협업 및 클라우드",
+    "summary": "S3 파일 저장과 Secrets Manager 비밀값 등록을 할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "AWS S3: 서비스 이미지 및 파일 업로드·저장·관리",
+          "AWS Secrets Manager: AWS 콘솔에서 Secret 생성·값 등록"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "notion",
+    "order": 15,
+    "name": "Notion",
+    "group": "Tools",
+    "usage": "work",
+    "context": "문서·기획",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "work",
+    "subgroup": "문서 및 업무 도구",
+    "summary": "프로젝트 문서와 업무 내용을 정리할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "프로젝트 관련 문서 및 업무 내용 정리"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "office",
+    "order": 16,
+    "name": "Microsoft Office",
+    "group": "Tools",
+    "usage": "work",
+    "context": "Excel을 활용한 데이터 및 업무자료 정리",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "work",
+    "subgroup": "문서 및 업무 도구",
+    "summary": "Excel·Word·PowerPoint로 업무 자료와 발표 자료를 만들 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "Excel을 활용한 데이터 및 업무자료 정리",
+          "Word 문서 작성 및 PowerPoint 발표자료 제작"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "react",
+    "order": 17,
+    "name": "React",
+    "group": "Frontend",
+    "usage": "project",
+    "context": "5단계 진행 화면, 영업 CRM 화면, RAG 상담 화면",
+    "projectIds": [
+      "blog2shorts",
+      "salesluv",
+      "jeonse-factchecker",
+      "lecture-practice"
+    ],
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "프론트엔드",
+    "summary": "컴포넌트를 나눠 서비스 화면을 만들고 API와 연동할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "서비스 화면 및 공통 컴포넌트 구현",
+          "디자인 시스템과 재사용 가능한 컴포넌트 구성",
+          "API 연동 및 서버 데이터 기반 화면 구현"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "nextjs",
+    "order": 18,
+    "name": "Next.js",
+    "group": "Frontend",
+    "usage": "project",
+    "context": "AX 캠퍼스 서비스 전체와 plog (Vercel 배포)",
+    "projectIds": [
+      "hanbit-math",
+      "testory",
+      "snapbook",
+      "heuk-studio",
+      "plog"
+    ],
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "프론트엔드",
+    "summary": "역할별 화면을 갖춘 웹 애플리케이션을 만들고 배포할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "역할별 화면과 기능을 갖춘 웹 애플리케이션 개발",
+          "페이지 및 컴포넌트 구조 설계",
+          "프론트엔드 애플리케이션 빌드 및 배포"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "vue",
+    "order": 19,
+    "name": "Vue.js",
+    "group": "Frontend",
+    "usage": "project",
+    "context": "학습",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "프론트엔드",
+    "summary": "컴포넌트 기반으로 웹 화면을 만들 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "컴포넌트 기반 웹 화면 개발"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "jquery",
+    "order": 20,
+    "name": "jQuery",
+    "group": "Frontend",
+    "usage": "project",
+    "context": "2019–2020 리디자인·클론 인터랙션",
+    "projectIds": [
+      "cocacola-redesign",
+      "portfolio-2019",
+      "naver-clone"
+    ],
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "프론트엔드",
+    "summary": "화면 효과와 입력값 검증을 구현할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "슬라이드, 스크롤 효과 및 애니메이션 구현",
+          "정규표현식을 활용한 입력값 검증"
+        ]
+      }
     ]
   },
   {
     "_id": "fastapi",
-    "order": 11,
-    "name": "FastAPI",
+    "order": 21,
+    "name": "Python (FastAPI, Django)",
     "group": "Backend",
     "usage": "project",
     "context": "작업 상태 API, 비동기 처리(202 + 폴링), 서버 페이지네이션",
@@ -156,11 +589,25 @@
       "jeonse-factchecker",
       "plog"
     ],
-    "careerIds": []
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "백엔드 및 데이터베이스",
+    "summary": "인증·작업 큐를 갖춘 REST API를 설계·개발할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "REST API 설계 및 개발",
+          "JWT 기반 인증 및 소셜 로그인 연동",
+          "비동기 작업 큐 및 재시도 처리 구현",
+          "중복 실행 방지 및 멱등성 처리"
+        ]
+      }
+    ]
   },
   {
     "_id": "nestjs",
-    "order": 12,
+    "order": 22,
     "name": "NestJS",
     "group": "Backend",
     "usage": "project",
@@ -171,57 +618,25 @@
       "snapbook",
       "heuk-studio"
     ],
-    "careerIds": []
-  },
-  {
-    "_id": "django",
-    "order": 13,
-    "name": "Django",
-    "group": "Backend",
-    "usage": "study",
-    "context": "학습",
-    "projectIds": [],
-    "careerIds": []
-  },
-  {
-    "_id": "mongodb",
-    "order": 14,
-    "name": "MongoDB",
-    "group": "Database",
-    "usage": "work",
-    "context": "Aggregation, 인덱스, Atlas Search 통합 검색",
-    "projectIds": [],
-    "careerIds": [
-      "brace"
-    ]
-  },
-  {
-    "_id": "redis",
-    "order": 15,
-    "name": "Redis",
-    "group": "Database",
-    "usage": "work",
-    "context": "캐시, SETNX 락으로 중복 마감 차단",
-    "projectIds": [],
-    "careerIds": [
-      "brace"
-    ]
-  },
-  {
-    "_id": "firebase",
-    "order": 16,
-    "name": "Firebase",
-    "group": "Database",
-    "usage": "work",
-    "context": "Realtime DB 채팅, FCM 푸시",
-    "projectIds": [],
-    "careerIds": [
-      "brace"
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "백엔드 및 데이터베이스",
+    "summary": "업무 규칙과 권한 검증을 포함한 API를 만들고 테스트할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "업무 규칙 및 권한 검증을 포함한 API 개발",
+          "TypeORM·Prisma를 활용한 데이터베이스 연동",
+          "Swagger API 문서 작성",
+          "E2E 테스트 작성"
+        ]
+      }
     ]
   },
   {
     "_id": "postgresql",
-    "order": 17,
+    "order": 23,
     "name": "PostgreSQL",
     "group": "Database",
     "usage": "project",
@@ -232,11 +647,24 @@
       "heuk-studio",
       "testory"
     ],
-    "careerIds": []
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "백엔드 및 데이터베이스",
+    "summary": "ERD를 설계하고 제약조건·행 잠금으로 데이터 무결성을 지킬 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "관계형 데이터베이스 구조 및 ERD 설계",
+          "UNIQUE·CHECK·EXCLUDE 제약조건을 활용한 데이터 무결성 관리",
+          "FOR UPDATE 행 잠금을 활용한 동시성 제어 및 정원 초과 방지"
+        ]
+      }
+    ]
   },
   {
     "_id": "supabase",
-    "order": 18,
+    "order": 24,
     "name": "Supabase",
     "group": "Database",
     "usage": "project",
@@ -246,12 +674,49 @@
       "jeonse-factchecker",
       "plog"
     ],
-    "careerIds": []
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "백엔드 및 데이터베이스",
+    "summary": "DB·인증·파일 저장을 한곳에서 구성할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "PostgreSQL 기반 데이터베이스 구성 및 관리",
+          "Supabase Auth를 활용한 사용자 인증",
+          "Supabase Storage를 활용한 파일 저장 및 관리"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "actions",
+    "order": 25,
+    "name": "GitHub Actions",
+    "group": "Infra / DevOps",
+    "usage": "project",
+    "context": "OIDC 인증, SSM 환경변수, 헬스체크, 자동 롤백",
+    "projectIds": [
+      "salesluv"
+    ],
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "배포 및 인프라",
+    "summary": "테스트·빌드 CI와 배포 Workflow를 작성할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "테스트 및 빌드 자동화 CI 구성",
+          "배포 Workflow 작성 (헬스체크·자동 롤백 포함)"
+        ]
+      }
+    ]
   },
   {
     "_id": "aws",
-    "order": 19,
-    "name": "AWS (S3 · CloudFront · EC2)",
+    "order": 26,
+    "name": "AWS",
     "group": "Infra / DevOps",
     "usage": "project",
     "context": "정적 배포와 EC2 백엔드 배포. 실무에서는 S3·Secrets Manager 콘솔 등록",
@@ -260,11 +725,23 @@
     ],
     "careerIds": [
       "brace"
+    ],
+    "section": "project",
+    "subgroup": "배포 및 인프라",
+    "summary": "S3·CloudFront 정적 배포와 EC2 서버를 구성할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "S3·CloudFront를 활용한 정적 웹사이트 배포",
+          "EC2 기반 백엔드 서버 구성"
+        ]
+      }
     ]
   },
   {
     "_id": "docker",
-    "order": 20,
+    "order": 27,
     "name": "Docker · Nginx",
     "group": "Infra / DevOps",
     "usage": "project",
@@ -274,23 +751,24 @@
     ],
     "careerIds": [
       "brace"
+    ],
+    "section": "project",
+    "subgroup": "배포 및 인프라",
+    "summary": "컨테이너와 Nginx 리버스 프록시로 서버를 배포할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "Docker 기반 애플리케이션 컨테이너 구성 및 실행",
+          "Nginx를 활용한 웹 서버 및 리버스 프록시 설정",
+          "포트 전환 방식의 배포 스크립트 구현"
+        ]
+      }
     ]
   },
   {
-    "_id": "actions",
-    "order": 21,
-    "name": "GitHub Actions",
-    "group": "Infra / DevOps",
-    "usage": "project",
-    "context": "OIDC 인증, SSM 환경변수, 헬스체크, 자동 롤백",
-    "projectIds": [
-      "salesluv"
-    ],
-    "careerIds": []
-  },
-  {
     "_id": "vercel",
-    "order": 22,
+    "order": 28,
     "name": "Vercel · Render · GitHub Pages",
     "group": "Infra / DevOps",
     "usage": "project",
@@ -301,11 +779,22 @@
       "heuk-studio",
       "plog"
     ],
-    "careerIds": []
+    "careerIds": [],
+    "section": "project",
+    "subgroup": "배포 및 인프라",
+    "summary": "프론트엔드·백엔드와 정적 사이트를 배포할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "프론트엔드·백엔드 애플리케이션 및 정적 웹사이트 배포"
+        ]
+      }
+    ]
   },
   {
     "_id": "ai-coding",
-    "order": 23,
+    "order": 29,
     "name": "Claude Code · Codex",
     "group": "AI / Data",
     "usage": "project",
@@ -315,11 +804,45 @@
       "travel-content-maker",
       "blog2shorts"
     ],
-    "careerIds": []
+    "careerIds": [],
+    "section": "ai",
+    "subgroup": "AI 개발 도구",
+    "summary": "요구사항을 직접 정하고 AI 코딩 에이전트로 구현·테스트한 뒤 검수할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "요구사항·규칙·화면 흐름을 직접 정하고 구현·테스트 작성은 AI 코딩 에이전트로 진행, 결과물 직접 검수",
+          "스킬 제작·사용, MCP 연결해 활용",
+          "팀 프로젝트의 AI 코딩 도구 공통 규칙과 CodeRabbit 자동 코드 리뷰 세팅"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "llm-chat",
+    "order": 30,
+    "name": "ChatGPT · Claude · Gemini",
+    "group": "AI / Data",
+    "usage": "project",
+    "context": "코딩, 기획 (요구사항·화면 흐름 정리), 문서 작업에 활용",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "ai",
+    "subgroup": "AI 개발 도구",
+    "summary": "코딩·기획·문서 작업에 활용할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "코딩, 기획 (요구사항·화면 흐름 정리), 문서 작업에 활용"
+        ]
+      }
+    ]
   },
   {
     "_id": "rag",
-    "order": 24,
+    "order": 31,
     "name": "RAG (LangChain · pgvector · Dify)",
     "group": "AI / Data",
     "usage": "project",
@@ -329,11 +852,28 @@
       "hanbit-math",
       "heuk-studio"
     ],
-    "careerIds": []
+    "careerIds": [],
+    "section": "ai",
+    "subgroup": "AI 서비스 개발",
+    "summary": "문서를 수집·임베딩해 근거 기반으로 답하는 챗봇을 만들 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "외부 API 및 PDF 문서 수집·전처리",
+          "텍스트 및 Vision 기반 PDF 데이터 추출",
+          "임베딩 생성 및 벡터 데이터베이스 적재",
+          "pgvector를 활용한 벡터 검색 구성",
+          "검색 결과를 활용한 근거 기반 답변 생성",
+          "근거 점수가 낮은 경우 답변을 제한하는 기능 구현",
+          "Dify를 활용한 문서 기반 챗봇 구성 및 백엔드 API 연동"
+        ]
+      }
+    ]
   },
   {
     "_id": "prompt",
-    "order": 25,
+    "order": 32,
     "name": "프롬프트 설계",
     "group": "AI / Data",
     "usage": "project",
@@ -342,38 +882,45 @@
       "blog2shorts",
       "plog"
     ],
-    "careerIds": []
+    "careerIds": [],
+    "section": "ai",
+    "subgroup": "AI 서비스 개발",
+    "summary": "단계별 호출과 출력 규칙으로 생성 결과를 제어할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "단계별 LLM 호출 및 결과 연결",
+          "카테고리별 프롬프트와 출력 규칙 설계",
+          "생성 결과의 형식과 품질을 제어하는 프롬프트 작성"
+        ]
+      }
+    ]
   },
   {
-    "_id": "streamlit",
-    "order": 26,
-    "name": "Streamlit",
+    "_id": "langgraph",
+    "order": 33,
+    "name": "LangGraph · OCR · 멀티에이전트",
     "group": "AI / Data",
-    "usage": "project",
-    "context": "데이터 대시보드 프로토타입",
-    "projectIds": [
-      "jeonse-factchecker",
-      "tube-eottae",
-      "ev-charging-sos"
-    ],
-    "careerIds": []
-  },
-  {
-    "_id": "kotlin",
-    "order": 27,
-    "name": "Kotlin · Jetpack Compose",
-    "group": "Mobile",
-    "usage": "project",
-    "context": "사진 정리·문구 편집 Android 앱",
-    "projectIds": [
-      "instpic",
-      "photo-organizer"
-    ],
-    "careerIds": []
+    "usage": "study",
+    "context": "교육 과정에서 개념 학습, LangGraph 그래프 골격은 팀원과 함께 논의해 설계, 팀원이 구현한 기능의 화면·API 연동 경험",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "ai",
+    "subgroup": "AI 서비스 개발",
+    "summary": "교육 과정에서 개념을 익히고 팀 기능의 화면·API를 연동해 봄",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "교육 과정에서 개념 학습, LangGraph 그래프 골격은 팀원과 함께 논의해 설계, 팀원이 구현한 기능의 화면·API 연동 경험"
+        ]
+      }
+    ]
   },
   {
     "_id": "figma",
-    "order": 28,
+    "order": 34,
     "name": "Figma",
     "group": "Design",
     "usage": "work",
@@ -381,36 +928,23 @@
     "projectIds": [
       "blog2shorts"
     ],
-    "careerIds": []
-  },
-  {
-    "_id": "indesign",
-    "order": 29,
-    "name": "InDesign",
-    "group": "Design",
-    "usage": "work",
-    "context": "매거진 편집디자인, 전자책 파일 제작",
-    "projectIds": [],
-    "careerIds": [
-      "newsgate"
-    ]
-  },
-  {
-    "_id": "illustrator",
-    "order": 30,
-    "name": "Illustrator",
-    "group": "Design",
-    "usage": "work",
-    "context": "광고 그래픽",
-    "projectIds": [],
-    "careerIds": [
-      "newsgate"
+    "careerIds": [],
+    "section": "design",
+    "subgroup": "디자인 도구",
+    "summary": "웹·모바일 화면 시안을 만들 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "웹·모바일 서비스 UI 디자인 및 화면 시안 제작"
+        ]
+      }
     ]
   },
   {
     "_id": "photoshop",
-    "order": 31,
-    "name": "Photoshop",
+    "order": 35,
+    "name": "Adobe Photoshop",
     "group": "Design",
     "usage": "work",
     "context": "광고 그래픽, 리디자인 그래픽",
@@ -419,31 +953,153 @@
     ],
     "careerIds": [
       "newsgate"
-    ]
-  },
-  {
-    "_id": "git",
-    "order": 32,
-    "name": "Git · GitHub",
-    "group": "Tools",
-    "usage": "work",
-    "context": "실무 8개 저장소, 팀 PR 협업",
-    "projectIds": [
-      "blog2shorts",
-      "salesluv"
     ],
-    "careerIds": [
-      "brace"
+    "section": "design",
+    "subgroup": "디자인 도구",
+    "summary": "이미지 보정·합성과 광고 이미지를 만들 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "이미지 보정·합성 및 광고·홍보 이미지 제작"
+        ]
+      }
     ]
   },
   {
-    "_id": "notion",
-    "order": 33,
-    "name": "Notion · MS Office",
-    "group": "Tools",
+    "_id": "illustrator",
+    "order": 36,
+    "name": "Adobe Illustrator",
+    "group": "Design",
     "usage": "work",
-    "context": "문서·기획",
+    "context": "광고 그래픽",
     "projectIds": [],
-    "careerIds": []
+    "careerIds": [
+      "newsgate"
+    ],
+    "section": "design",
+    "subgroup": "디자인 도구",
+    "summary": "로고·아이콘 같은 벡터 그래픽을 만들 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "로고·아이콘 등 벡터 그래픽 제작 및 편집"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "indesign",
+    "order": 37,
+    "name": "Adobe InDesign",
+    "group": "Design",
+    "usage": "work",
+    "context": "매거진 편집디자인, 전자책 파일 제작",
+    "projectIds": [],
+    "careerIds": [
+      "newsgate"
+    ],
+    "section": "design",
+    "subgroup": "디자인 도구",
+    "summary": "잡지·인쇄물 지면을 편집할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "잡지 및 인쇄물 편집, 레이아웃 구성 및 지면 디자인"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "web-ui",
+    "order": 38,
+    "name": "웹 UI 디자인",
+    "group": "Design",
+    "usage": "work",
+    "context": "웹 서비스 화면 구조 및 UI 디자인",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "design",
+    "subgroup": "UI 디자인",
+    "summary": "화면 구조를 설계하고 시안을 웹 화면으로 퍼블리싱할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "웹 서비스 화면 구조 및 UI 디자인",
+          "스타일 가이드 및 와이어프레임 작성",
+          "디자인 시안을 바탕으로 한 웹 화면 퍼블리싱"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "design-system",
+    "order": 39,
+    "name": "디자인 시스템",
+    "group": "Design",
+    "usage": "project",
+    "context": "디자인 토큰 및 공통 컴포넌트 구성",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "design",
+    "subgroup": "UI 디자인",
+    "summary": "디자인 토큰과 공통 컴포넌트를 정리하고 문서화할 수 있음",
+    "details": [
+      {
+        "title": "",
+        "items": [
+          "디자인 토큰 및 공통 컴포넌트 구성",
+          "컴포넌트별 사용 규칙 및 스타일 가이드 문서화"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "kotlin",
+    "order": 40,
+    "name": "Kotlin · Jetpack Compose",
+    "group": "Mobile",
+    "usage": "project",
+    "context": "사진 정리·문구 편집 Android 앱",
+    "projectIds": [
+      "instpic",
+      "photo-organizer"
+    ],
+    "careerIds": [],
+    "section": "other",
+    "subgroup": "",
+    "summary": "AI 코딩 도구를 활용한 Android 앱 개발 및 UI 구성 경험",
+    "details": []
+  },
+  {
+    "_id": "autocad",
+    "order": 41,
+    "name": "AutoCAD · 3ds Max",
+    "group": "Design",
+    "usage": "study",
+    "context": "2D·3D 설계 및 모델링 기초 사용 경험, AutoCAD 2급 자격 취득 (2013)",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "other",
+    "subgroup": "",
+    "summary": "2D·3D 설계 및 모델링 기초 사용 경험, AutoCAD 2급 자격 취득 (2013)",
+    "details": []
+  },
+  {
+    "_id": "vegas",
+    "order": 42,
+    "name": "Sony Vegas",
+    "group": "Design",
+    "usage": "study",
+    "context": "기본적인 영상 편집 및 제작 경험",
+    "projectIds": [],
+    "careerIds": [],
+    "section": "other",
+    "subgroup": "",
+    "summary": "기본적인 영상 편집 및 제작 경험",
+    "details": []
   }
 ]

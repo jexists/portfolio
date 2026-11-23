@@ -42,7 +42,16 @@
     color: var(--color-text-primary);
     cursor: pointer;
     text-align: center;
+
+    &:hover {
+      background: var(--color-intro-control-hover);
+      text-decoration: none;
+    }
   }
+}
+
+.avatarButton:hover {
+  opacity: var(--opacity-muted);
 }
 
 .providerLabel {

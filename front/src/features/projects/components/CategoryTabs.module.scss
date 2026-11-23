@@ -39,6 +39,10 @@
   font-weight: var(--font-weight-bold);
 }
 
+.tab:hover {
+  color: var(--color-text-primary);
+}
+
 .indicator {
   position: absolute;
   inset-block-end: var(--space-0);

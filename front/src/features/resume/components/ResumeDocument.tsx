@@ -92,7 +92,7 @@ export function ResumeDocument() {
       <h2>학력사항</h2>
       <Item title="필리핀 산토 토마스 대학교 (University of Santo Tomas, UST)" date="2012.06 – 2016.06">
         <div>BFA in Industrial Design (산업디자인 전공) · 졸업</div>
-        <div>GWA 1.76 (최고점 1.00 · 100점 환산 89점) · Dean’s List 총 4회 (2013–2016)</div>
+        <div>GWA 1.761 (최고점 1.00 · 약 89~90%) · 7등/62명 · 총 이수학점 198 · Dean’s List 총 4회 (2013–2016)</div>
       </Item>
 
       <h2>보유기술</h2>

@@ -1,0 +1,39 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  border: var(--border-width-none);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  line-height: var(--font-line-height-tight);
+  white-space: nowrap;
+}
+
+/* 좁은 인물정보 카드용 */
+.badge[data-size='sm'] {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-xs);
+}
+
+button.badge {
+  cursor: pointer;
+}
+
+button.badge:hover {
+  background: var(--color-border-default);
+}
+
+.badge svg {
+  width: var(--font-size-sm);
+  height: var(--font-size-sm);
+  flex: var(--flex-none);
+}
+
+.badge[data-size='sm'] svg {
+  width: var(--font-size-xs);
+  height: var(--font-size-xs);
+}

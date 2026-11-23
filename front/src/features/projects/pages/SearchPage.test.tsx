@@ -19,7 +19,7 @@ describe('Search page (MSW mockup)', () => {
     expect(screen.getByRole('article', { name: '경력 검색결과' })).toHaveTextContent('주식회사 브레이스');
     expect(screen.getByRole('article', { name: '기술 검색결과' })).toBeInTheDocument();
     expect(screen.getByRole('region', { name: '핵심 역량' })).toBeInTheDocument();
-    expect(screen.getByRole('region', { name: '관련 검색어' })).toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: '관련 검색어' })).not.toBeInTheDocument();
     expect(screen.getByRole('region', { name: '외부 링크' })).toBeInTheDocument();
   });
 
@@ -28,7 +28,7 @@ describe('Search page (MSW mockup)', () => {
     ['skills', 'Frontend'],
     ['education', 'University of Santo Tomas'],
     ['certs', '웹디자인기능사'],
-    ['projects', '대표 프로젝트'],
+    ['projects', '바이브코딩'],
   ])('fills the %s tab and shows my profile in the side (AC-IA1)', async (tab, text) => {
     renderSearch(`/search?tab=${tab}`);
 
@@ -61,16 +61,16 @@ describe('Search page (MSW mockup)', () => {
     expect(screen.getAllByRole('link', { name: '한빛수학' })[0]).toHaveAttribute('href', '/project/hanbit-math');
   });
 
-  it('expands all projects with group filters from the more button (AC-IA5)', async () => {
+  it('lists all projects newest first with group filters (AC-IA5)', async () => {
     const user = userEvent.setup();
     renderSearch('/search?tab=projects');
 
-    await user.click(await screen.findByRole('button', { name: /프로젝트 더보기/ }));
-    const all = screen.getByRole('region', { name: '모든 프로젝트' });
+    const all = await screen.findByRole('region', { name: '프로젝트' });
+    expect(within(all).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('흙의 온도');
     expect(within(all).getByRole('link', { name: /네이버 포털/ })).toHaveAttribute('href', '/project/naver-clone');
     expect(within(all).queryByText(/레사모/)).not.toBeInTheDocument();
 
-    await user.click(within(all).getByRole('button', { name: '개인' }));
+    await user.click(within(all).getByRole('button', { name: '바이브코딩' }));
     expect(within(all).getByRole('link', { name: /plog/ })).toBeInTheDocument();
     expect(within(all).queryByRole('link', { name: /네이버 포털/ })).not.toBeInTheDocument();
   });
@@ -78,7 +78,7 @@ describe('Search page (MSW mockup)', () => {
   it('opens the projects list filtered by ?tag=', async () => {
     renderSearch('/search?tag=Kotlin');
 
-    const all = await screen.findByRole('region', { name: '모든 프로젝트' });
+    const all = await screen.findByRole('region', { name: '프로젝트' });
     expect(within(all).getAllByRole('listitem')).toHaveLength(2);
     expect(within(all).getByRole('button', { name: 'Kotlin 필터 해제' })).toBeInTheDocument();
   });

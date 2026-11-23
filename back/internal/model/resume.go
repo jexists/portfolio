@@ -41,6 +41,12 @@ type Career struct {
 	Minor            bool                `bson:"minor" json:"minor"`
 }
 
+// 기술 탭에서 펼쳐 보는 세부 내용 묶음. title 이 비면 제목 없이 목록만 보인다
+type SkillDetail struct {
+	Title string   `bson:"title" json:"title"`
+	Items []string `bson:"items" json:"items"`
+}
+
 type Skill struct {
 	ID         string   `bson:"_id" json:"_id"`
 	Order      int      `bson:"order" json:"order"`
@@ -50,6 +56,18 @@ type Skill struct {
 	Context    string   `bson:"context" json:"context"`
 	ProjectIDs []string `bson:"projectIds" json:"projectIds"`
 	CareerIDs  []string `bson:"careerIds" json:"careerIds"`
+	// 기술 탭 배치: section(work | project | ai | design | other) → subgroup 제목 → 기술 박스
+	Section  string        `bson:"section" json:"section"`
+	Subgroup string        `bson:"subgroup" json:"subgroup"`
+	Summary  string        `bson:"summary" json:"summary"`
+	Details  []SkillDetail `bson:"details" json:"details"`
+}
+
+// 전체 탭 학력 결과 카드에만 쓰는 자세한 문구 (학력 탭은 name·major·notes 를 쓴다)
+type EducationHighlight struct {
+	Title string   `bson:"title" json:"title"`
+	Line  string   `bson:"line" json:"line"`
+	Notes []string `bson:"notes" json:"notes"`
 }
 
 type Education struct {
@@ -67,6 +85,8 @@ type Education struct {
 	Notes       []string `bson:"notes" json:"notes"`
 	Featured    bool     `bson:"featured" json:"featured"`     // 교육 "중요" 필터에 보일 과정
 	ProjectIDs  []string `bson:"projectIds" json:"projectIds"` // 이 과정에서 만든 프로젝트
+	// 전체 탭 결과 카드용, 없으면 nil
+	Highlight *EducationHighlight `bson:"highlight,omitempty" json:"highlight,omitempty"`
 }
 
 type Credential struct {

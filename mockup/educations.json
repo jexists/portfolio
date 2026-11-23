@@ -3,10 +3,10 @@
     "_id": "ust",
     "kind": "degree",
     "order": 1,
-    "name": "University of Santo Tomas",
+    "name": "University of Santo Tomas (UST)",
     "summaryLine": "필리핀 산토 토마스 대학교 산업디자인 졸업",
     "org": "필리핀 마닐라",
-    "major": "College of Fine Arts and Design · Industrial Design",
+    "major": "College of Fine Arts and Design (CFAD) · Industrial Design (산업디자인학과)",
     "degree": "BFA (학사) 졸업",
     "period": {
       "start": "2012.06",
@@ -14,11 +14,19 @@
     },
     "hours": "",
     "notes": [
-      "GWA 1.76 (100점 환산 89점), 7등/62명",
+      "GWA 1.761 (100점 환산 89점), 7등/62명",
       "Dean's List 4회 (2013–2016)"
     ],
     "featured": false,
-    "projectIds": []
+    "projectIds": [],
+    "highlight": {
+      "title": "University of Santo Tomas (UST)",
+      "line": "College of Fine Arts and Design (CFAD) · BFA in Industrial Design (산업디자인 전공) 졸업",
+      "notes": [
+        "GWA 1.761 (약 89~90%, 1.00이 최고점), 7등/62명 · 총 이수학점 198",
+        "Dean's List (학장 우수자 명단) 총 4회 (2013–2016)"
+      ]
+    }
   },
   {
     "_id": "ax-campus",
@@ -135,7 +143,7 @@
     },
     "hours": "700시간",
     "notes": [
-      "98.9/100, 성적우수상·개근상",
+      "성적우수상 (98.9/100) · 개근상",
       "UX/UI 디자인 이론과 화면 설계, HTML·CSS (SCSS)·JavaScript (jQuery)로 웹 화면 구현까지 학습",
       "회고: 디자인과 웹 프론트엔드 개념을 함께 배우며 디자이너에서 개발자로 넘어가는 출발점이 됨"
     ],

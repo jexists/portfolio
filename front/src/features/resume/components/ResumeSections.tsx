@@ -1,12 +1,13 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
+import { flushSync } from 'react-dom';
 import { Link } from 'react-router';
 import { Card } from '@/components/ui/Card';
+import { TechBadge } from '@/components/ui/TechBadge';
 import { useRail } from '@/hooks/useRail';
-import type { Career, CareerAchievement, Credential, Education, Skill, SkillUsage } from '@/features/resume/types/resume.types';
+import type { Career, CareerAchievement, Credential, Education, Skill, SkillSection } from '@/features/resume/types/resume.types';
 import { CERTIFICATE_COUNT } from '../utils/profileFacts';
 import styles from './ResumeSections.module.scss';
 
-const USAGE_LABEL: Record<SkillUsage, string> = { work: '실무', project: '프로젝트', study: '학습' };
 // 시작과 끝이 같으면(한 해짜리 학년 등) 하나만 쓴다
 const period = (value: { start: string; end: string }) =>
   !value.end || value.start === value.end ? value.start : `${value.start} – ${value.end}`;
@@ -150,51 +151,280 @@ export function CareerSection({ careers, skills }: { careers: Career[]; skills: 
 
 interface SkillsSectionProps {
   skills: Skill[];
-  careers: Career[];
-  projectTitles: Record<string, string>;
+  /** 맨 위 기술 요점 (profiles.json skillSummary) */
+  summary: Array<{ label: string; items: string[] }>;
+  /** 맨 아래 언어 (profiles.json languages) */
+  languages: LabeledText[];
 }
 
-export function SkillsSection({ skills, careers, projectTitles }: SkillsSectionProps) {
-  const groups = [...new Set(skills.map((skill) => skill.group))];
-  const careerName = new Map(careers.map((career) => [career.id, career.company]));
+interface LabeledText {
+  label: string;
+  text: string;
+}
+
+const SKILL_SECTIONS: Array<{ key: SkillSection; filter: string; title: string; note: string }> = [
+  { key: 'work', filter: '실무', title: '실무', note: '회사에서 운영하며 사용' },
+  {
+    key: 'project',
+    filter: '프로젝트',
+    title: '프로젝트 기반 기술',
+    note: '교육·개인 프로젝트 (AI 코딩 도구로 구현, 기획·설계·검수 직접 진행)',
+  },
+  { key: 'ai', filter: 'AI', title: 'AI 활용 기술', note: '교육·개인 프로젝트에서 사용' },
+  { key: 'design', filter: '디자인', title: '디자인', note: '산업디자인 전공, 뉴스게이트 편집디자인 3년 실무, 교육·개인 프로젝트에서 사용' },
+  { key: 'other', filter: '기타', title: '기타 기술 및 도구 경험', note: '' },
+];
+
+// 배지 이름 → 아래 카드의 기술 박스 id. 이름이 박스 이름과 다르거나(Gin → Go (Gin)) 묶여 있는 것(Codex → Claude Code · Codex)
+const TECH_TARGET: Record<string, string> = {
+  Angular: 'angular',
+  TypeScript: 'typescript',
+  RxJS: 'rxjs',
+  Go: 'go',
+  Gin: 'go',
+  MongoDB: 'mongodb',
+  Git: 'git',
+  Python: 'python',
+  Redis: 'redis',
+  Firebase: 'firebase',
+  Docker: 'docker-work',
+  AWS: 'aws-work',
+  HTML: 'html-css',
+  CSS: 'css',
+  Sass: 'css',
+  JavaScript: 'javascript',
+  React: 'react',
+  'Next.js': 'nextjs',
+  'Vue.js': 'vue',
+  FastAPI: 'fastapi',
+  Django: 'fastapi',
+  NestJS: 'nestjs',
+  PostgreSQL: 'postgresql',
+  Supabase: 'supabase',
+  Nginx: 'docker',
+  'GitHub Actions': 'actions',
+  'Claude Code': 'ai-coding',
+  Codex: 'ai-coding',
+  MCP: 'ai-coding',
+  ChatGPT: 'llm-chat',
+  Gemini: 'llm-chat',
+  LangChain: 'rag',
+  Figma: 'figma',
+  Photoshop: 'photoshop',
+  Illustrator: 'illustrator',
+  InDesign: 'indesign',
+};
+
+const skillBoxId = (id: string) => `skill-box-${id}`;
+const skillSectionId = (key: SkillSection) => `skill-section-${key}`;
+
+// 기술 요점 줄 → "자세히 보기"로 내려갈 카드
+const SUMMARY_SECTION: Record<string, SkillSection> = {
+  '주요 실무 기술': 'work',
+  '기타 활용 기술': 'work',
+  '프로젝트 경험 기술': 'project',
+  'AI 활용': 'ai',
+  디자인: 'design',
+};
+
+/** 카드 위 테두리가 고정 헤더 바로 아래(살짝 띄워서) 보이게 스크롤한다 */
+function scrollToSection(key: SkillSection) {
+  const card = document.getElementById(skillSectionId(key))?.closest('section');
+  if (!card) return;
+  const headerHeight = document.querySelector('header')?.getBoundingClientRect().height ?? 0;
+  const gap = parseFloat(getComputedStyle(document.documentElement).fontSize); // 1rem
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({
+    top: card.getBoundingClientRect().top + window.scrollY - headerHeight - gap,
+    behavior: reduce ? 'auto' : 'smooth',
+  });
+}
+
+function scrollToSkill(id: string) {
+  const box = document.getElementById(skillBoxId(id));
+  if (!box) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  box.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+  // 도착한 박스 테두리를 잠깐 깜빡여 찾기 쉽게 한다. 같은 배지를 다시 눌러도 처음부터 깜빡이게 속성을 지웠다 다시 단다
+  box.removeAttribute('data-flash');
+  void box.offsetWidth;
+  box.setAttribute('data-flash', 'true');
+  box.addEventListener('animationend', () => box.removeAttribute('data-flash'), { once: true });
+}
+
+/** 기술 이름 배지 목록 (아이콘은 브랜드 색). 누르면 아래 해당 기술 박스로 스크롤한다 */
+function TechBadges({ names, onSelect }: { names: string[]; onSelect: (skillId: string) => void }) {
+  return (
+    <ul className={styles.techBadges}>
+      {names.map((name) => {
+        const target = TECH_TARGET[name];
+        return (
+          <li key={name}>
+            <TechBadge name={name} onClick={target ? () => onSelect(target) : undefined} />
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/** 왼쪽 라벨 + 오른쪽 내용 줄 (언어) */
+function LabeledRows({ rows }: { rows: LabeledText[] }) {
+  return (
+    <ul className={styles.rows}>
+      {rows.map((row) => (
+        <li key={row.label}>
+          <span className={styles.rowLabel}>{row.label}</span>
+          <p className={styles.rowValue}>{row.text}</p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** 기술 박스: 이름·한 줄 설명, 세부 내용이 있으면 박스나 화살표를 눌러 펼친다 */
+function SkillBox({ skill }: { skill: Skill }) {
+  const [open, setOpen] = useState(false);
+  const expandable = skill.details.length > 0;
+  const detailId = `skill-${skill.id}`;
+
+  return (
+    <li
+      id={skillBoxId(skill.id)}
+      className={styles.skillBox}
+      data-expandable={expandable}
+      onClick={expandable ? (event) => {
+        // 펼친 내용 안을 누를 때는 접지 않는다 (글자 선택 등)
+        if (!(event.target as HTMLElement).closest(`.${styles.courseDetail}`)) setOpen((value) => !value);
+      } : undefined}
+    >
+      <div className={styles.courseBody}>
+        <h3>{skill.name}</h3>
+        {skill.summary ? <p className={styles.muted}>{skill.summary}</p> : null}
+      </div>
+      {expandable ? (
+        <button
+          className={styles.courseToggle}
+          type="button"
+          aria-expanded={open}
+          aria-controls={detailId}
+          aria-label={`${skill.name} 내용 ${open ? '접기' : '펼치기'}`}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+      ) : null}
+      {expandable ? (
+        <div className={styles.courseDetail} id={detailId} hidden={!open}>
+          {skill.details.map((detail, index) => (
+            <div key={detail.title || index} className={styles.skillDetail}>
+              {detail.title ? <h4>{detail.title}</h4> : null}
+              <ul className={styles.courseNotes}>
+                {detail.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </li>
+  );
+}
+
+/** 기술 탭: 기술 요점 → 실무 → 프로젝트 기반 기술 → AI 활용 기술 → 디자인 → 기타 → 언어 */
+export function SkillsSection({ skills, summary, languages }: SkillsSectionProps) {
+  const [filter, setFilter] = useState<SkillSection | 'all'>('all');
+  const sections = SKILL_SECTIONS.filter(({ key }) => skills.some((skill) => skill.section === key));
+
+  // 배지의 기술이 필터로 숨어 있으면 전체로 바꾼 뒤(바로 그려지게 flushSync) 스크롤한다
+  function selectSkill(skillId: string) {
+    const section = skills.find((skill) => skill.id === skillId)?.section;
+    if (filter !== 'all' && filter !== section) flushSync(() => setFilter('all'));
+    scrollToSkill(skillId);
+  }
 
   return (
     <>
-      {groups.map((group) => (
-        <Card key={group} title={group}>
-          <ul className={styles.skills}>
-            {skills
-              .filter((skill) => skill.group === group)
-              .map((skill) => (
-                <li key={skill.id} className={styles.skill}>
-                  <p className={styles.skillName}>
-                    {skill.name}
-                    <span className={styles.badge} data-usage={skill.usage}>
-                      {USAGE_LABEL[skill.usage]}
-                    </span>
-                  </p>
-                  <div>
-                    <p className={styles.muted}>{skill.context}</p>
-                    {skill.projectIds.length || skill.careerIds.length ? (
-                      <p className={styles.refs}>
-                        {skill.careerIds.map((id) => (
-                          <Link key={id} to="/search?tab=career">
-                            {careerName.get(id) ?? id}
-                          </Link>
-                        ))}
-                        {skill.projectIds.map((id) => (
-                          <Link key={id} to={`/project/${id}`}>
-                            {projectTitles[id] ?? id}
-                          </Link>
-                        ))}
-                      </p>
-                    ) : null}
-                  </div>
+      {summary.length ? (
+        <Card title="기술 요점">
+          <ul className={styles.rows}>
+            {summary.map((row) => {
+              const section = SUMMARY_SECTION[row.label];
+              return (
+                <li key={row.label}>
+                  {/* 라벨을 누르면 아래 해당 카드로 내려간다 */}
+                  {section ? (
+                    <button
+                      className={styles.summaryLabel}
+                      type="button"
+                      onClick={() => scrollToSection(section)}
+                      aria-label={`${row.label} 자세히 보기`}
+                    >
+                      {row.label}
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m9 6 6 6-6 6" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <span className={styles.rowLabel}>{row.label}</span>
+                  )}
+                  <TechBadges names={row.items} onSelect={selectSkill} />
                 </li>
-              ))}
+              );
+            })}
           </ul>
         </Card>
-      ))}
+      ) : null}
+
+      {/* 구분 필터: 카드 사이에 떠 보여 지금은 숨긴다. 기술 요점 배지·자세히 보기가 목차 역할을 한다
+      <div className={`${styles.sortToggle} ${styles.skillFilter}`} role="group" aria-label="기술 구분">
+        {[{ key: 'all' as const, filter: '전체' }, ...sections].map(({ key, filter: label }) => (
+          <button key={key} type="button" aria-pressed={filter === key} onClick={() => setFilter(key)}>
+            {label}
+          </button>
+        ))}
+      </div>
+      */}
+
+      {sections.map(({ key, title, note }) => {
+        if (filter !== 'all' && filter !== key) return null;
+        const items = skills.filter((skill) => skill.section === key).sort((a, b) => a.order - b.order);
+        if (!items.length) return null;
+        // 데이터 순서대로 소제목을 묶는다
+        const subgroups = [...new Set(items.map((skill) => skill.subgroup))];
+        return (
+          <Card key={key} ariaLabel={title}>
+            <div className={styles.sectionHead} id={skillSectionId(key)}>
+              <h2>
+                {title}
+                {note ? <small className={styles.headNote}>{note}</small> : null}
+              </h2>
+            </div>
+            <div className={styles.skillGroups}>
+              {subgroups.map((subgroup) => (
+                <section key={subgroup || key} className={styles.skillGroup} aria-label={subgroup || title}>
+                  {subgroup ? <h3>{subgroup}</h3> : null}
+                  <ul className={styles.courseList}>
+                    {items
+                      .filter((skill) => skill.subgroup === subgroup)
+                      .map((skill) => (
+                        <SkillBox key={skill.id} skill={skill} />
+                      ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </Card>
+        );
+      })}
+
+      {languages.length ? (
+        <Card title="언어">
+          <LabeledRows rows={languages} />
+        </Card>
+      ) : null}
     </>
   );
 }
@@ -319,8 +549,12 @@ export function EducationSection({ educations, projects = [] }: { educations: Ed
                     </p>
                   ) : (
                     <>
-                      <h3>{item.name}</h3>
-                      <p className={styles.muted}>{[item.org, item.major].filter(Boolean).join(' · ')}</p>
+                      {/* 대학: 학교명 + 지역 한 줄, 그 아래 단과대·전공 한 줄 */}
+                      <h3 className={styles.schoolLine}>
+                        <b>{item.name}</b>
+                        {item.org ? <span>{item.org}</span> : null}
+                      </h3>
+                      {item.major ? <p className={styles.muted}>{item.major}</p> : null}
                       {item.notes.length ? <p className={styles.note}>{item.notes.join(' · ')}</p> : null}
                     </>
                   )}
@@ -354,7 +588,14 @@ export function EducationSection({ educations, projects = [] }: { educations: Ed
             {visibleCourses.map((item) => {
               const open = openCourses.has(item.id);
               return (
-              <li key={item.id}>
+              <li
+                key={item.id}
+                data-expandable={item.notes.length > 0}
+                // 박스 어디를 눌러도 펼친다. 펼친 내용(프로젝트 링크·레일) 안의 클릭은 제외
+                onClick={item.notes.length ? (event) => {
+                  if (!(event.target as HTMLElement).closest(`.${styles.courseDetail}`)) toggleCourse(item.id);
+                } : undefined}
+              >
                 <div className={styles.courseBody}>
                   <h3>{item.name}</h3>
                   <p className={styles.muted}>{[item.org, item.major].filter(Boolean).join(' · ')}</p>
@@ -370,7 +611,6 @@ export function EducationSection({ educations, projects = [] }: { educations: Ed
                     aria-expanded={open}
                     aria-controls={`course-${item.id}`}
                     aria-label={`${item.name} 내용 ${open ? '접기' : '펼치기'}`}
-                    onClick={() => toggleCourse(item.id)}
                   >
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <path d="m6 9 6 6 6-6" />
@@ -468,41 +708,57 @@ export function EducationIcon({ kind }: { kind: Education['kind'] }) {
 }
 
 export function CredentialsSection({ credentials }: { credentials: Credential[] }) {
-  const sections: Array<[string, Credential['kind'], string]> = [
-    ['자격', 'certificate', '발급기관'],
-    ['수상', 'award', '주최'],
-  ];
+  const [showAllCertificates, setShowAllCertificates] = useState(false);
+  // 날짜가 YYYY.MM 형식이라 문자열 비교로 최신순 정렬된다
+  const byNewest = (kind: Credential['kind']) =>
+    credentials.filter((item) => item.kind === kind).sort((a, b) => b.date.localeCompare(a.date));
+  const certificates = byNewest('certificate');
+  const awards = byNewest('award');
+  // 자격은 order 가 앞선 대표 자격(운전면허·웹디자인기능사)만 기본으로 보이고 나머지는 더보기로 펼친다
+  const featuredIds = new Set(
+    [...certificates].sort((a, b) => a.order - b.order).slice(0, CERTIFICATE_COUNT).map((item) => item.id),
+  );
+  const visibleCertificates = showAllCertificates ? certificates : certificates.filter((item) => featuredIds.has(item.id));
+
+  const rows = (items: Credential[]) => (
+    // 첫 줄 기관(왼쪽)·날짜(오른쪽) → 이름, 디자인은 교육 카드와 같은 박스
+    <ul className={styles.courseList}>
+      {items.map((item) => (
+        <li key={item.id} className={styles.credentialCard}>
+          <p className={styles.credentialHead}>
+            <span className={styles.when}>{item.issuer}</span>
+            <span className={styles.when}>{item.date}</span>
+          </p>
+          <p className={styles.credentialName}>
+            <b>{item.name}</b>
+            {item.note ? <span className={styles.credentialNote}>{item.note}</span> : null}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <>
-      {sections.map(([title, kind, issuerLabel]) => {
-        const items = credentials.filter((item) => item.kind === kind);
-        return items.length ? (
-          <Card key={kind} title={title}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th scope="col">날짜</th>
-                  <th scope="col">{title}</th>
-                  <th scope="col">{issuerLabel}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.date}</td>
-                    <td>
-                      <span className={styles.strong}>{item.name}</span>
-                      {item.note ? <span className={styles.muted}> {item.note}</span> : null}
-                    </td>
-                    <td>{item.issuer}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Card>
-        ) : null;
-      })}
+      {certificates.length ? (
+        <Card title="자격">
+          {rows(visibleCertificates)}
+          {certificates.length > featuredIds.size ? (
+            <button
+              className={styles.foldButton}
+              type="button"
+              aria-expanded={showAllCertificates}
+              onClick={() => setShowAllCertificates((value) => !value)}
+            >
+              {showAllCertificates ? '접기' : '더보기'}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={showAllCertificates ? 'm6 15 6-6 6 6' : 'm6 9 6 6 6-6'} />
+              </svg>
+            </button>
+          ) : null}
+        </Card>
+      ) : null}
+      {awards.length ? <Card title="수상">{rows(awards)}</Card> : null}
     </>
   );
 }
@@ -511,17 +767,17 @@ interface ResumeResultCardsProps {
   headline: string;
   summary: string[];
   careers: Career[];
-  skills: Skill[];
   educations: Education[];
-  credentials: Credential[];
+  /** 기술 카드 배지 (기술 요점 첫 줄 = 주요 실무 기술) */
+  mainSkills: string[];
+  /** 기술 카드 대표 기술 설명 */
+  skillHighlights: LabeledText[];
 }
 
-/** 전체 탭의 통합검색 결과 형식 카드 (경력·기술·학력/자격) */
-export function ResumeResultCards({ headline, summary, careers, skills, educations, credentials }: ResumeResultCardsProps) {
+/** 전체 탭의 통합검색 결과 형식 카드 (경력·기술·학력/교육) */
+export function ResumeResultCards({ headline, summary, careers, educations, mainSkills, skillHighlights }: ResumeResultCardsProps) {
   const [main, ...others] = careers.filter((career) => !career.minor);
-  const workSkills = skills.filter((skill) => skill.usage === 'work' && ['Frontend', 'Backend', 'Database'].includes(skill.group));
   const degree = educations.find((item) => item.kind === 'degree');
-  const certificates = credentials.filter((item) => item.kind === 'certificate').slice(0, CERTIFICATE_COUNT);
 
   return (
     <>
@@ -561,18 +817,25 @@ export function ResumeResultCards({ headline, summary, careers, skills, educatio
           ) : null}
         </article>
       ) : null}
-      {workSkills.length ? (
+      {mainSkills.length || skillHighlights.length ? (
         <article className={styles.resultCard} aria-label="기술 검색결과">
           <p className={styles.source}>
             <span className={styles.dot} data-tone="green" aria-hidden="true">기</span>기술
           </p>
           <h3>
-            <Link to="/search?tab=skills">실무 기술 {workSkills.length}개 · 전체 기술 {skills.length}개</Link>
+            <Link to="/search?tab=skills">주요 실무 기술</Link>
           </h3>
+          {mainSkills.length ? (
+            <p className={styles.resultBadges}>
+              {mainSkills.map((name) => (
+                <TechBadge key={name} name={name} size="sm" />
+              ))}
+            </p>
+          ) : null}
           <ul className={styles.facts}>
-            {workSkills.slice(0, 5).map((skill) => (
-              <li key={skill.id}>
-                <b>{skill.name}</b> {skill.context}
+            {skillHighlights.map((item) => (
+              <li key={item.label}>
+                <b>{item.label}</b> {item.text}
               </li>
             ))}
           </ul>
@@ -582,34 +845,74 @@ export function ResumeResultCards({ headline, summary, careers, skills, educatio
           </div>
         </article>
       ) : null}
-      {degree || certificates.length ? (
-        <article className={styles.resultCard} aria-label="학력·자격 검색결과">
+      {degree ? (
+        <article className={styles.resultCard} aria-label="학력 검색결과">
           <p className={styles.source}>
-            <span className={styles.dot} data-tone="yellow" aria-hidden="true">학</span>학력 · 자격
+            <span className={styles.dot} data-tone="yellow" aria-hidden="true">학</span>학력
           </p>
-          {degree ? (
-            <Fragment>
-              <h3>
-                <Link to="/search?tab=education">{degree.name}</Link>
-              </h3>
-              <p>
-                {[degree.major, degree.degree].filter(Boolean).join(' · ')} ({period(degree.period)})
-              </p>
-            </Fragment>
-          ) : null}
+          <div className={styles.degreeHead}>
+            <h3>
+              <Link to="/search?tab=education">{degree.highlight?.title ?? degree.name}</Link>
+              <span className={styles.when}>{period(degree.period)}</span>
+            </h3>
+            <p>{degree.highlight?.line ?? [degree.major, degree.degree].filter(Boolean).join(' · ')}</p>
+          </div>
           <ul className={styles.facts}>
-            {certificates.map((item) => (
-              <li key={item.id}>
-                {item.date} {item.name} · {item.issuer}
-              </li>
+            {(degree.highlight?.notes ?? degree.notes).map((note) => (
+              <li key={note}>{note}</li>
             ))}
           </ul>
           <div className={styles.resultFoot}>
-            <Link to="/search?tab=education">학력 더보기 &gt;</Link>
-            <Link to="/search?tab=certs">자격·수상 더보기 &gt;</Link>
+            <span />
+            <Link to="/search?tab=education">학력·교육 더보기 &gt;</Link>
           </div>
         </article>
       ) : null}
     </>
+  );
+}
+
+type TimelineKind = 'career' | 'degree' | 'course';
+
+const TIMELINE_LABEL: Record<TimelineKind, string> = { career: '경력', degree: '학력', course: '교육' };
+
+// shortcut: 주요 타임라인에 보일 항목은 id 로 고정, 자주 바뀌면 careers·educations 에 필드를 둔다
+const TIMELINE_IDS = ['skn30', 'brace', 'uxui', 'newsgate', 'ust'];
+
+/** 전체 탭: 주요 경력·학력·교육을 최신순으로 가로 타임라인에 놓는다 */
+export function ResumeTimeline({ careers, educations }: { careers: Career[]; educations: Education[] }) {
+  const items = [
+    ...careers
+      .filter((career) => TIMELINE_IDS.includes(career.id))
+      .map((career) => ({ id: career.id, kind: 'career' as const, period: career.period, title: career.company, sub: career.role, to: '/search?tab=career' })),
+    ...educations
+      .filter((item) => TIMELINE_IDS.includes(item.id))
+      .map((item) => ({
+        id: item.id,
+        kind: (item.kind === 'degree' ? 'degree' : 'course') as TimelineKind,
+        period: item.period,
+        title: item.name,
+        sub: item.kind === 'degree' ? item.degree ?? '' : item.org,
+        to: '/search?tab=education',
+      })),
+  ].sort((a, b) => b.period.start.localeCompare(a.period.start));
+
+  if (!items.length) return null;
+
+  return (
+    <Card title="주요 타임라인">
+      <ol className={styles.hTimeline}>
+        {items.map((item) => (
+          <li key={item.id} data-kind={item.kind}>
+            <span className={styles.hTimelineWhen}>{period({ start: item.period.start.slice(0, 7), end: item.period.end.slice(0, 7) })}</span>
+            <span className={styles.hTimelineKind}>{TIMELINE_LABEL[item.kind]}</span>
+            <Link to={item.to} className={styles.hTimelineTitle}>
+              {item.title}
+            </Link>
+            {item.sub ? <span className={styles.hTimelineSub}>{item.sub}</span> : null}
+          </li>
+        ))}
+      </ol>
+    </Card>
   );
 }

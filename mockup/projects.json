@@ -3,7 +3,7 @@
     "_id": "hanbit-math",
     "title": "한빛수학",
     "subtitle": "학원 수강 신청·출결 관리 서비스",
-    "categoryId": "edu",
+    "categoryId": "ax-campus",
     "featured": true,
     "course": "AX Campus 3회차 · DB 설계와 사내 문서 챗봇",
     "period": {
@@ -74,7 +74,7 @@
     "_id": "blog2shorts",
     "title": "blog2shorts",
     "subtitle": "블로그 글을 세로 숏폼 영상으로",
-    "categoryId": "edu",
+    "categoryId": "minintern",
     "featured": true,
     "course": "미니인턴 웹서비스 개발반 · 스마트동 2팀",
     "period": {
@@ -125,7 +125,7 @@
     "_id": "salesluv",
     "title": "SalesLuv",
     "subtitle": "영업 운영 CRM + AI 에이전트",
-    "categoryId": "edu",
+    "categoryId": "skn30",
     "featured": true,
     "course": "SK네트웍스 Family AI 캠프 30기 · 최종 프로젝트",
     "period": {
@@ -171,7 +171,7 @@
     "_id": "jeonse-factchecker",
     "title": "전·월세 분쟁 팩트체커",
     "subtitle": "계약서 위험 진단 RAG 상담",
-    "categoryId": "edu",
+    "categoryId": "skn30",
     "featured": true,
     "course": "SK네트웍스 Family AI 캠프 30기 · 3·4차 프로젝트",
     "period": {
@@ -231,7 +231,7 @@
     "_id": "testory",
     "title": "Testory",
     "subtitle": "베타테스터 모집·피드백 관리",
-    "categoryId": "edu",
+    "categoryId": "ax-campus",
     "featured": false,
     "course": "AX Campus 1회차 · 로그인과 AI",
     "period": {
@@ -285,7 +285,7 @@
     "_id": "snapbook",
     "title": "snapbook",
     "subtitle": "1인 사진관 촬영 예약",
-    "categoryId": "edu",
+    "categoryId": "ax-campus",
     "featured": false,
     "course": "AX Campus 1회차 · 로그인과 AI",
     "period": {
@@ -333,7 +333,7 @@
     "_id": "heuk-studio",
     "title": "흙의 온도",
     "subtitle": "도자기 공방 운영 통합 서비스",
-    "categoryId": "edu",
+    "categoryId": "ax-campus",
     "featured": false,
     "course": "AX Campus 7회차 · FDE 해커톤 (5시간)",
     "period": {
@@ -383,7 +383,7 @@
     "_id": "travel-content-maker",
     "title": "travel-content-maker",
     "subtitle": "여행 콘텐츠 제작 자동화",
-    "categoryId": "edu",
+    "categoryId": "ax-campus",
     "featured": false,
     "course": "AX Campus 4회차 · 업무 자동화",
     "period": {
@@ -437,7 +437,7 @@
     "_id": "tube-eottae",
     "title": "튜브어때",
     "subtitle": "유튜브 채널 이탈 예측과 광고 추천",
-    "categoryId": "edu",
+    "categoryId": "skn30",
     "featured": false,
     "course": "SK네트웍스 Family AI 캠프 30기 · 2차 프로젝트",
     "period": {
@@ -475,7 +475,7 @@
     "_id": "ev-charging-sos",
     "title": "전기차 충전 인프라 SOS 대시보드",
     "subtitle": "충전 불편지수 대시보드",
-    "categoryId": "edu",
+    "categoryId": "skn30",
     "featured": false,
     "course": "SK네트웍스 Family AI 캠프 30기 · 1차 프로젝트",
     "period": {
@@ -508,7 +508,7 @@
     "_id": "plog",
     "title": "plog",
     "subtitle": "사진으로 블로그 초안 쓰기",
-    "categoryId": "personal",
+    "categoryId": "vibe-coding",
     "featured": false,
     "period": {
       "start": "2026.03.06",
@@ -549,7 +549,7 @@
     "_id": "photo-organizer",
     "title": "photo_organizer",
     "subtitle": "촬영일 기준 사진 자동 분류",
-    "categoryId": "personal",
+    "categoryId": "vibe-coding",
     "featured": false,
     "period": {
       "start": "2026.02.15",
@@ -583,7 +583,7 @@
     "_id": "instpic",
     "title": "instpic",
     "subtitle": "인스타 사진 문구 자동 입력",
-    "categoryId": "personal",
+    "categoryId": "vibe-coding",
     "featured": false,
     "period": {
       "start": "2026.02.13",
@@ -616,7 +616,7 @@
     "_id": "portfolio-2019",
     "title": "포트폴리오 2019",
     "subtitle": "검색엔진 컨셉 첫 포트폴리오",
-    "categoryId": "archive",
+    "categoryId": "uiux",
     "featured": false,
     "period": {
       "start": "2019.12.10",
@@ -655,7 +655,7 @@
     "_id": "cocacola-redesign",
     "title": "코카-콜라 저니",
     "subtitle": "브랜드 사이트 리디자인",
-    "categoryId": "archive",
+    "categoryId": "uiux",
     "featured": false,
     "period": {
       "start": "2019.10.25",
@@ -694,7 +694,7 @@
     "_id": "naver-clone",
     "title": "네이버 포털",
     "subtitle": "손코딩 클론",
-    "categoryId": "archive",
+    "categoryId": "hand-coding",
     "featured": false,
     "series": {
       "name": "클론 코딩",
@@ -738,7 +738,7 @@
     "_id": "asiana-clone",
     "title": "아시아나 항공",
     "subtitle": "손코딩 클론",
-    "categoryId": "archive",
+    "categoryId": "hand-coding",
     "featured": false,
     "series": {
       "name": "클론 코딩",
@@ -781,7 +781,7 @@
     "_id": "payple-clone",
     "title": "페이플 통합결제",
     "subtitle": "손코딩 클론",
-    "categoryId": "archive",
+    "categoryId": "hand-coding",
     "featured": false,
     "series": {
       "name": "클론 코딩",
@@ -823,7 +823,7 @@
     "_id": "trello-clone",
     "title": "트렐로",
     "subtitle": "Angular 클론",
-    "categoryId": "archive",
+    "categoryId": "hand-coding",
     "featured": false,
     "series": {
       "name": "클론 코딩",
@@ -867,7 +867,7 @@
     "_id": "lecture-practice",
     "title": "강의 실습",
     "subtitle": "일정관리·그림판·시계·버킷리스트·영화 블로그",
-    "categoryId": "archive",
+    "categoryId": "hand-coding",
     "featured": false,
     "period": {
       "start": "2020.03",

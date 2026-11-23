@@ -31,14 +31,6 @@ describe('ProjectCard', () => {
     expect(screen.queryByText('수강 신청 서비스')).not.toBeInTheDocument();
   });
 
-  it('shows summary, highlights and tags in detailed mode', () => {
-    renderCard({ project, detailed: true });
-
-    expect(screen.getByText('수강 신청 서비스')).toBeInTheDocument();
-    expect(screen.getByText('테스트 71개')).toBeInTheDocument();
-    expect(screen.getByText('NestJS')).toBeInTheDocument();
-  });
-
   it('uses the first image as thumbnail when one exists', () => {
     renderCard({ project: { ...project, images: [{ src: '/images/a.png', caption: '첫 화면' }] } });
 

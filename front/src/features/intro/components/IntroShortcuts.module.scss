@@ -7,6 +7,8 @@
 }
 
 .shortcut {
+  /* 호버 밑줄은 제목에만 준다 */
+  text-decoration: none;
   display: grid;
   min-width: var(--intro-shortcut-item-width);
   justify-items: center;
