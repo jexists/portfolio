@@ -37,6 +37,8 @@ export interface ProjectMeta {
   kind?: string;
   course?: string;
   period: ProjectPeriod;
+  /** 집중해서 작업한 기간 (하루·이틀·N일·N주·N개월). 나중에 고친 커밋은 빼고 센다 */
+  duration?: string;
   publishedAt: string;
   featured?: boolean;
   draft?: boolean;
@@ -72,6 +74,8 @@ export interface ProjectDto {
   kind?: string;
   course?: string;
   period: ProjectPeriod;
+  /** 집중해서 작업한 기간 (하루·이틀·N일·N주·N개월). 나중에 고친 커밋은 빼고 센다 */
+  duration?: string;
   summary: string;
   tags: string[];
   team?: string;

@@ -5,6 +5,7 @@ import { routes } from './router';
 vi.mock('@/features/intro', () => ({ IntroPage: () => <div>첫 화면</div> }));
 vi.mock('@/features/admin', () => ({ AdminPage: () => <div>관리자</div> }));
 vi.mock('@/features/auth', () => ({ LoginPage: () => <div>로그인</div> }));
+vi.mock('@/features/resume', () => ({ CareerDetailPage: () => <div>경력 상세</div> }));
 vi.mock('@/features/projects', () => ({
   SearchPage: () => <div>검색 결과</div>,
   ProjectDetailPage: () => <div>상세</div>,
@@ -44,5 +45,11 @@ describe('routes', () => {
 
     expect(screen.getByText('검색 결과')).toBeInTheDocument();
     expect(screen.getByTestId('pathname')).toHaveTextContent('/search');
+  });
+
+  it('opens the career detail page', () => {
+    renderAt('/career/brace');
+
+    expect(screen.getByText('경력 상세')).toBeInTheDocument();
   });
 });

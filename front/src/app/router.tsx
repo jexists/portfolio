@@ -4,6 +4,7 @@ import { AdminPage } from '@/features/admin';
 import { LoginPage } from '@/features/auth';
 import { IntroPage } from '@/features/intro';
 import { ProjectDetailPage, SearchPage } from '@/features/projects';
+import { CareerDetailPage } from '@/features/resume';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <IntroPage /> },
@@ -11,6 +12,7 @@ export const routes: RouteObject[] = [
   { path: '/login', element: <LoginPage /> },
   { path: '/search', element: <SearchPage /> },
   { path: '/project/:slug', element: <ProjectDetailPage /> },
+  { path: '/career/:id', element: <CareerDetailPage /> },
   // 없는 주소(예전 사이트의 /html/all.html 등)는 첫 화면으로 보낸다
   { path: '*', element: <Navigate to="/" replace /> },
 ];

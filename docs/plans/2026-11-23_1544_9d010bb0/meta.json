@@ -11,7 +11,7 @@
     "base_commit": "71af962bad145441d4f19655314697796ea33676",
     "dirty": false
   },
-  "status": "implemented",
+  "status": "merged",
   "sensitive_findings": [],
   "issue": {
     "number": 12,
@@ -27,6 +27,10 @@
     "43f9ecb"
   ],
   "pr": {
+    "number": 13,
+    "url": "https://github.com/jexists/portfolio/pull/13"
+  },
+  "merged_pr": {
     "number": 13,
     "url": "https://github.com/jexists/portfolio/pull/13"
   }

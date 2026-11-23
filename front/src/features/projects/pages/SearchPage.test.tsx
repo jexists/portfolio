@@ -25,8 +25,8 @@ describe('Search page (MSW mockup)', () => {
 
   it.each([
     ['career', '주식회사 브레이스'],
-    ['skills', 'Frontend'],
-    ['education', 'University of Santo Tomas'],
+    ['skills', '주요 실무 기술'],
+    ['education', 'University of Santo Tomas (UST)'],
     ['certs', '웹디자인기능사'],
     ['projects', '바이브코딩'],
   ])('fills the %s tab and shows my profile in the side (AC-IA1)', async (tab, text) => {
@@ -52,13 +52,12 @@ describe('Search page (MSW mockup)', () => {
     expect(screen.getByText('그 밖의 경력')).toBeInTheDocument();
   });
 
-  it('labels skills by usage without percentages and links related projects (AC-IA4)', async () => {
+  it('groups skills by usage without percentages (AC-IA4)', async () => {
     renderSearch('/search?tab=skills');
 
     expect((await screen.findAllByText('실무')).length).toBeGreaterThan(0);
-    expect(screen.getAllByText('학습').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('프로젝트 기반 기술').length).toBeGreaterThan(0);
     expect(screen.queryByText(/%$/)).not.toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: '한빛수학' })[0]).toHaveAttribute('href', '/project/hanbit-math');
   });
 
   it('lists all projects newest first with group filters (AC-IA5)', async () => {
@@ -67,12 +66,12 @@ describe('Search page (MSW mockup)', () => {
 
     const all = await screen.findByRole('region', { name: '프로젝트' });
     expect(within(all).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('흙의 온도');
-    expect(within(all).getByRole('link', { name: /네이버 포털/ })).toHaveAttribute('href', '/project/naver-clone');
+    expect(within(all).getByRole('link', { name: /흙의 온도/ })).toHaveAttribute('href', '/project/heuk-studio');
     expect(within(all).queryByText(/레사모/)).not.toBeInTheDocument();
 
     await user.click(within(all).getByRole('button', { name: '바이브코딩' }));
     expect(within(all).getByRole('link', { name: /plog/ })).toBeInTheDocument();
-    expect(within(all).queryByRole('link', { name: /네이버 포털/ })).not.toBeInTheDocument();
+    expect(within(all).queryByRole('link', { name: /흙의 온도/ })).not.toBeInTheDocument();
   });
 
   it('opens the projects list filtered by ?tag=', async () => {
@@ -92,7 +91,6 @@ describe('Search page (MSW mockup)', () => {
     expect(card).toHaveTextContent('필리핀 한인 매거진 뉴스게이트 디자이너');
     expect(card).toHaveTextContent('주식회사 브레이스 웹 풀스택');
     expect(card).not.toHaveTextContent('성진에이치디에스');
-    expect(card).toHaveTextContent('웹디자인기능사, 운전면허 2종 보통');
 
     await user.click(within(card).getByRole('link', { name: /이력서 보기/ }));
 

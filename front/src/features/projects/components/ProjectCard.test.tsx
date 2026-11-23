@@ -26,8 +26,9 @@ describe('ProjectCard', () => {
     renderCard({ project });
 
     expect(screen.getByRole('link')).toHaveAttribute('href', '/project/hanbit-math');
-    expect(screen.getByRole('heading', { name: '한빛수학 · 학원 관리' })).toBeInTheDocument();
-    expect(screen.getByText('교육 · 2026.11 · 1명')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '한빛수학' })).toBeInTheDocument();
+    expect(screen.getByText('학원 관리')).toBeInTheDocument();
+    expect(screen.getByText('2026 · 개인')).toBeInTheDocument();
     expect(screen.queryByText('수강 신청 서비스')).not.toBeInTheDocument();
   });
 

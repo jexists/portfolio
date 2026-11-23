@@ -23,6 +23,12 @@ type CareerAchievement struct {
 	Result   string   `bson:"result" json:"result"`
 }
 
+// 전체 탭 경력 결과 카드에만 쓰는 문구
+type CareerHighlight struct {
+	Line  string   `bson:"line" json:"line"`
+	Notes []string `bson:"notes" json:"notes"`
+}
+
 type Career struct {
 	ID               string              `bson:"_id" json:"_id"`
 	Order            int                 `bson:"order" json:"order"`
@@ -39,6 +45,10 @@ type Career struct {
 	Extras           []string            `bson:"extras" json:"extras"`
 	SkillIDs         []string            `bson:"skillIds" json:"skillIds"`
 	Minor            bool                `bson:"minor" json:"minor"`
+	Highlight        *CareerHighlight    `bson:"highlight,omitempty" json:"highlight,omitempty"`
+	// Body 는 경력 상세 화면 본문 마크다운. 목록 응답에 같이 실린다
+	// shortcut: 목록에 body(약 40KB)를 같이 보낸다, 상세가 늘면 /careers/:id 로 분리
+	Body string `bson:"body,omitempty" json:"body,omitempty"`
 }
 
 // 기술 탭에서 펼쳐 보는 세부 내용 묶음. title 이 비면 제목 없이 목록만 보인다

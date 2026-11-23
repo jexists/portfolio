@@ -1,0 +1,45 @@
+.button {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  width: var(--search-rail-button-size);
+  height: var(--search-rail-button-size);
+  place-items: center;
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.button:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-bg-subtle);
+}
+
+.button[data-side='prev'] {
+  left: var(--search-rail-button-offset);
+}
+
+.button[data-side='next'] {
+  right: var(--search-rail-button-offset);
+}
+
+.button svg {
+  width: var(--font-size-lg);
+  height: var(--font-size-lg);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+}
+
+/* 모바일은 손가락으로 넘긴다 */
+@media (max-width: 48rem) {
+  .button {
+    display: none;
+  }
+}

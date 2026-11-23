@@ -1,5 +1,6 @@
 import { useEffect, useId, useState } from 'react';
 import { Link } from 'react-router';
+import { siGithub, siGmail, siTistory } from 'simple-icons';
 import { Card } from '@/components/ui/Card';
 import type { Profile, Strength } from '@/features/profile/types/profile.types';
 import { TechBadge } from '@/components/ui/TechBadge';
@@ -182,9 +183,10 @@ export function StrengthsCard({ strengths }: { strengths: Strength[] }) {
           return (
             <li key={strength.title} data-open={expanded}>
               <button type="button" aria-expanded={expanded} aria-controls={panelId} onClick={() => setOpen(expanded ? -1 : index)}>
-                <span className={styles.strengthNo} aria-hidden="true">
-                  {index + 1}
-                </span>
+                {/* 네 항목 모두 같은 반짝임 아이콘 */}
+                <svg className={styles.strengthIcon} viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3c.6 5.4 3.6 8.4 9 9-5.4.6-8.4 3.6-9 9-.6-5.4-3.6-8.4-9-9 5.4-.6 8.4-3.6 9-9Z" />
+                </svg>
                 <b>{strength.title}</b>
                 <svg className={styles.strengthArrow} viewBox="0 0 24 24" aria-hidden="true">
                   <path d="m6 9 6 6 6-6" />
@@ -201,6 +203,21 @@ export function StrengthsCard({ strengths }: { strengths: Strength[] }) {
   );
 }
 
+// simple-icons 는 LinkedIn 요청으로 LinkedIn 로고를 뺐다. 예전 simple-icons(CC0) 경로를 그대로 둔다
+const LINKEDIN = {
+  hex: '0A66C2',
+  path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z',
+};
+
+/** 링크 주소로 브랜드 로고를 고른다. 모르는 주소는 null (첫 글자로 대신) */
+function linkLogo(href: string) {
+  if (href.startsWith('mailto:')) return siGmail;
+  if (href.includes('github.com')) return siGithub;
+  if (href.includes('linkedin.com')) return LINKEDIN;
+  if (href.includes('tistory.com')) return siTistory;
+  return null;
+}
+
 const linkHost = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 
 export function LinksCard({ profile }: { profile: Profile }) {
@@ -212,11 +229,19 @@ export function LinksCard({ profile }: { profile: Profile }) {
   return (
     <Card ariaLabel="외부 링크">
       <ul className={styles.linkRows}>
-        {rows.map((row) => (
+        {rows.map((row) => {
+          const logo = linkLogo(row.href);
+          return (
           <li key={row.key}>
             <a href={row.href} {...(row.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
               <span className={styles.linkIcon} aria-hidden="true">
-                {row.external ? row.label.slice(0, 1) : '@'}
+                {logo ? (
+                  <svg viewBox="0 0 24 24" style={{ fill: `#${logo.hex}` }}>
+                    <path d={logo.path} />
+                  </svg>
+                ) : (
+                  row.label.slice(0, 1)
+                )}
               </span>
               <span className={styles.linkText}>
                 <b>{row.label}</b>
@@ -227,7 +252,8 @@ export function LinksCard({ profile }: { profile: Profile }) {
               </span>
             </a>
           </li>
-        ))}
+          );
+        })}
       </ul>
     </Card>
   );

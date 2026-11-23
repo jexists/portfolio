@@ -42,6 +42,8 @@
 .career {
   display: grid;
   gap: var(--space-2);
+  /* #career-<id> 로 이동할 때 고정 헤더(검색창 + 탭)와 카드 여백 아래에 보이게 */
+  scroll-margin-top: calc(var(--space-12) * 3 + var(--space-4));
 }
 
 .career p {
@@ -52,7 +54,6 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  justify-content: space-between;
   gap: var(--space-2) var(--space-3);
 }
 
@@ -70,8 +71,19 @@
 }
 
 .careerHead span {
+  margin-left: auto;
   color: var(--color-text-secondary);
   font-variant-numeric: tabular-nums;
+}
+
+.careerMore {
+  color: var(--color-text-link);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+}
+
+.careerMore:hover {
+  text-decoration: underline;
 }
 
 .metrics {
@@ -507,17 +519,39 @@
   list-style: none;
 }
 
-.resultFoot {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-3);
-  margin-top: var(--space-2);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+/* 경력 카드: 왼쪽 선 대신 가운데 점, 줄이 넘어가도 점 뒤로 맞춘다 */
+.facts[data-bullet='dot'] {
+  border-left: var(--border-width-none);
+  padding-left: var(--space-0);
 }
 
-.resultFoot a {
-  color: var(--color-text-secondary);
+.facts[data-bullet='dot'] li {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.facts[data-bullet='dot'] li::before {
+  content: '·';
+  font-weight: var(--font-weight-bold);
+}
+
+/* 카드 맨 아래 가로 전체 더보기 (인물정보 카드의 "이력서 보기 →"와 같은 모양) */
+.moreLink {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-2) calc(var(--search-card-padding) * -1) calc(var(--search-card-padding) * -1);
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  padding: var(--space-3);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.moreLink:hover {
+  color: var(--color-text-primary);
+  text-decoration: none;
 }
 
 .related {
@@ -547,6 +581,10 @@
 
   .resultCard {
     padding: var(--space-4);
+  }
+
+  .moreLink {
+    margin: var(--space-2) calc(var(--space-4) * -1) calc(var(--space-4) * -1);
   }
 }
 
@@ -1106,15 +1144,25 @@ button.courseToggle:hover {
 }
 
 /* ── 전체 탭 가로 타임라인: 점 위 가로선, 최신이 왼쪽 ── */
+.hTimelineWrap {
+  position: relative;
+}
+
+/* 스크롤바는 숨기고 양 끝 화살표(RailButton)로 넘긴다 */
 .hTimeline {
   display: grid;
   grid-auto-columns: var(--search-h-timeline-item-width);
   grid-auto-flow: column;
   overflow-x: auto;
   margin: var(--space-0);
-  padding: var(--space-0) var(--space-0) var(--space-2);
+  padding: var(--space-0);
   list-style: none;
   scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.hTimeline::-webkit-scrollbar {
+  display: none;
 }
 
 .hTimeline li {

@@ -1,28 +1,22 @@
-import ReactMarkdown, { type Components } from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router';
 import { Card } from '@/components/ui/Card';
+import { Markdown } from '@/components/ui/Markdown';
 import { SearchHeader } from '@/components/layout/SearchHeader';
+import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ProjectThumbnail } from '@/features/projects/components/ProjectCard';
 import { LINK_KIND } from '@/features/projects/components/ProjectCollections';
 import { SeriesNav } from '@/features/projects/components/SeriesNav';
 import { useProject, useProjects, useSeries } from '@/features/projects/hooks/useProjects';
 import styles from './ProjectDetailPage.module.scss';
 
-/** 본문 안의 외부 링크는 새 탭으로 연다 */
-const markdownComponents: Components = {
-  a: ({ href, children }) =>
-    href && /^https?:\/\//.test(href) ? (
-      <a href={href} target="_blank" rel="noopener noreferrer">
-        {children}
-      </a>
-    ) : (
-      <a href={href}>{children}</a>
-    ),
-};
-
 export function ProjectDetailPage() {
   const { slug } = useParams();
+
+  // 학력·프로젝트 탭에서 내려온 스크롤 위치가 남지 않게 맨 위에서 시작한다 (다른 프로젝트로 옮겨 갈 때도)
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [slug]);
   const projectQuery = useProject(slug);
   const found = projectQuery.data;
   // 준비중(draft) 프로젝트는 상세로 노출하지 않는다 (AC-L2)
@@ -99,9 +93,7 @@ export function ProjectDetailPage() {
             ) : null}
           </section>
           <article className={styles.markdown} aria-label="프로젝트 상세 내용">
-            <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
-              {project.body}
-            </ReactMarkdown>
+            <Markdown>{project.body}</Markdown>
           </article>
           {meta.images.length > 1 ? (
             <Card title="화면">
@@ -164,6 +156,7 @@ export function ProjectDetailPage() {
           ) : null}
         </aside>
       </div>
+      <SiteFooter />
     </main>
   );
 }

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import type { Education } from '@/features/resume/types/resume.types';
-import { buildGlance, EducationSection } from './ResumeSections';
+import type { Career, Education } from '@/features/resume/types/resume.types';
+import { buildGlance, CareerSection, EducationSection, ResumeResultCards, ResumeTimeline } from './ResumeSections';
 
 const edu = (over: Partial<Education>): Education => ({
   id: 'x', kind: 'school', order: 1, name: '', org: '', period: { start: '', end: '' }, notes: [], ...over,
@@ -29,7 +29,7 @@ const renderSection = () =>
     </MemoryRouter>,
   );
 const schoolNames = (region: HTMLElement) =>
-  within(region).getAllByRole('listitem').map((node) => node.querySelector('h3, b')?.textContent);
+  within(region).getAllByRole('listitem').map((node) => node.querySelector('b')?.textContent);
 const courseNames = (region: HTMLElement) => within(region).getAllByRole('heading', { level: 3 }).map((node) => node.textContent);
 
 describe('buildGlance (숨겨 둔 한눈에 보기)', () => {
@@ -83,5 +83,50 @@ describe('EducationSection (AC-9)', () => {
     const card = within(region).getByRole('link', { name: /SalesLuv/ });
     expect(card).toHaveAttribute('href', '/project/salesluv');
     expect(card).toHaveTextContent('프로젝트SalesLuv영업 운영 에이전트');
+  });
+});
+
+const career = (over: Partial<Career>): Career => ({
+  id: 'x', order: 1, company: '', period: { start: '', end: '' }, duration: '', role: '',
+  responsibilities: [], metrics: [], achievements: [], extras: [], skillIds: [], minor: false, ...over,
+});
+
+const careers: Career[] = [
+  career({ id: 'brace', company: '주식회사 브레이스', companyNote: '구 아유레디', role: '웹 풀스택 개발', duration: '5년 8개월', period: { start: '2020.08', end: '2026.04' }, body: '## 서비스 개요' }),
+  career({ id: 'sungjin', order: 2, company: '성진에이치디에스', role: '웹 퍼블리싱', period: { start: '2020.02', end: '2020.04' } }),
+  career({ id: 'newsgate', order: 3, company: '뉴스게이트', role: '편집디자인', period: { start: '2016.05', end: '2019.05' } }),
+];
+
+const inRouter = (node: React.ReactNode) => render(<MemoryRouter>{node}</MemoryRouter>);
+
+describe('ResumeTimeline', () => {
+  it('shows the company note next to the company name', () => {
+    inRouter(<ResumeTimeline careers={careers} educations={[]} />);
+
+    expect(screen.getByRole('link', { name: '주식회사 브레이스 (구 아유레디)' })).toBeInTheDocument();
+  });
+});
+
+describe('ResumeResultCards (전체 탭 경력 카드)', () => {
+  it('shows 경력 as source, company with period as title linking to the detail page, and other careers with role', () => {
+    inRouter(<ResumeResultCards careers={careers} educations={[]} mainSkills={[]} skillHighlights={[]} />);
+
+    const card = screen.getByRole('article', { name: '경력 검색결과' });
+    expect(card.querySelector('p')).toHaveTextContent(/^경경력$/);
+    expect(within(card).getByRole('link', { name: '주식회사 브레이스' })).toHaveAttribute('href', '/career/brace');
+    expect(card).toHaveTextContent('2020.08 – 2026.04 (5년 8개월)');
+    expect(within(card).getByRole('link', { name: '성진에이치디에스 - 웹 퍼블리싱' })).toHaveAttribute('href', '/search?tab=career#career-sungjin');
+  });
+});
+
+describe('CareerSection (경력 탭)', () => {
+  it('shows a career timeline, the summary, then each company with 자세히 보기 for detailed ones', () => {
+    inRouter(<CareerSection careers={careers} skills={[]} summary={['웹 풀스택 개발 5년 8개월']} />);
+
+    expect(screen.getByRole('region', { name: '경력 타임라인' })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: '경력 요약' })).toHaveTextContent('웹 풀스택 개발 5년 8개월');
+    expect(screen.getByRole('link', { name: '자세히 보기 >' })).toHaveAttribute('href', '/career/brace');
+    expect(screen.getAllByRole('link', { name: '자세히 보기 >' })).toHaveLength(1);
+    expect(document.getElementById('career-sungjin')).not.toBeNull();
   });
 });

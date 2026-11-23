@@ -1,0 +1,59 @@
+.footer {
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  background: var(--color-bg-surface);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* 본문과 같은 최대 폭 안에서 왼쪽 저작권, 오른쪽 문의 */
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  max-width: var(--search-header-max-width);
+  margin-inline: auto;
+  padding: var(--space-6) var(--search-content-padding-x);
+}
+
+/* 풋터 위 회색 바탕, 오른쪽 끝 맨위로 */
+.topRow {
+  justify-content: flex-end;
+  padding-block: var(--space-0) var(--space-4);
+}
+
+.inner small {
+  font-size: inherit;
+}
+
+.inner a {
+  color: var(--color-text-secondary);
+}
+
+.top {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  border: var(--border-width-none);
+  padding: var(--space-0);
+  background: none;
+  color: var(--color-text-secondary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.top svg {
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+}
+
+.top:hover,
+.inner a:hover {
+  color: var(--color-text-primary);
+}

@@ -16,7 +16,7 @@ describe('ProjectDetail page (MSW mockup)', () => {
     expect(within(body).getAllByRole('table').length).toBeGreaterThan(0);
     expect(within(body).queryByText(/면접 예상 질문|4줄 요약/)).not.toBeInTheDocument();
     const overview = screen.getByRole('region', { name: '개요' });
-    expect(overview).toHaveTextContent('2026.11.02 – 2026.11.06');
+    expect(overview).toHaveTextContent('2026.11.02 – 2026.11.05');
   });
 
   it('opens every external link in a new tab with safe rel', async () => {
