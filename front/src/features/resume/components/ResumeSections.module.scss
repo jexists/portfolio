@@ -1265,6 +1265,14 @@ button.courseToggle:hover {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   text-decoration: none;
+
+  /* 제목은 항상 두 줄 높이로 맞춰 아래 기관·직책 줄이 가지런하다 (넘치면 말줄임) */
+  display: -webkit-box;
+  overflow: hidden;
+  line-height: 1.4;
+  min-height: 2.8em;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .hTimelineTitle:hover {
