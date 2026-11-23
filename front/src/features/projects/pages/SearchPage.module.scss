@@ -27,9 +27,9 @@
   min-width: var(--space-0);
 }
 
+/* 사이드는 따라 내려오지 않는다 (긴 사이드가 헤더 밑에서 어색하게 멈춰서 sticky 를 뺐다) */
 .side {
-  position: sticky;
-  top: var(--space-6);
+  align-self: start;
   grid-column: 3;
 }
 
@@ -79,7 +79,6 @@
   }
 
   .side {
-    position: static;
     grid-column: 2;
   }
 }

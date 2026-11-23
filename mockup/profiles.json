@@ -48,6 +48,97 @@
         "title": "디자이너 출신 개발자",
         "text": "산업디자인을 전공하고 편집디자이너로 3년 일했습니다. 화면을 만들 때 쓰는 사람이 무엇을 판단해야 하는지부터 생각합니다."
       }
+    ],
+    "skillSummary": [
+      {
+        "label": "주요 실무 기술",
+        "items": [
+          "Angular",
+          "TypeScript",
+          "RxJS",
+          "Go",
+          "Gin",
+          "MongoDB",
+          "Git"
+        ]
+      },
+      {
+        "label": "기타 활용 기술",
+        "items": [
+          "Python",
+          "Redis",
+          "Firebase",
+          "Docker",
+          "AWS",
+          "HTML",
+          "CSS",
+          "Sass",
+          "JavaScript"
+        ]
+      },
+      {
+        "label": "프로젝트 경험 기술",
+        "items": [
+          "React",
+          "Next.js",
+          "Vue.js",
+          "FastAPI",
+          "Django",
+          "NestJS",
+          "PostgreSQL",
+          "Supabase",
+          "Nginx",
+          "GitHub Actions"
+        ]
+      },
+      {
+        "label": "AI 활용",
+        "items": [
+          "Claude Code",
+          "Codex",
+          "ChatGPT",
+          "Gemini",
+          "LangChain",
+          "MCP"
+        ]
+      },
+      {
+        "label": "디자인",
+        "items": [
+          "Figma",
+          "Photoshop",
+          "Illustrator",
+          "InDesign"
+        ]
+      }
+    ],
+    "languages": [
+      {
+        "label": "한국어",
+        "text": "모국어"
+      },
+      {
+        "label": "영어",
+        "text": "기본 회화 (필리핀 대학 졸업·거주)"
+      },
+      {
+        "label": "타갈로그어",
+        "text": "필리핀 거주"
+      }
+    ],
+    "skillHighlights": [
+      {
+        "label": "Angular",
+        "text": "사용자·관리자 화면 개발, 웹·앱 웹뷰 공용 화면 구조, 공통 기능 개발, 버전 업그레이드 (13 → 20)"
+      },
+      {
+        "label": "Go (Gin)",
+        "text": "REST API 설계 및 개발, 외부 서비스 연동, 스케줄러 및 파일 처리 기능 개발"
+      },
+      {
+        "label": "MongoDB",
+        "text": "서비스 데이터 모델링, Aggregation 집계, Atlas Search 기반 검색 구현"
+      }
     ]
   }
 ]

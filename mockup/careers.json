@@ -131,6 +131,8 @@
     "extras": [],
     "skillIds": [
       "html-css",
+      "css",
+      "javascript",
       "angular"
     ],
     "minor": false,

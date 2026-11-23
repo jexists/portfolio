@@ -1,17 +1,32 @@
 [
   {
-    "_id": "edu",
-    "label": "교육 프로젝트",
+    "_id": "minintern",
+    "label": "미니인턴",
     "order": 1
   },
   {
-    "_id": "personal",
-    "label": "개인 프로젝트",
+    "_id": "ax-campus",
+    "label": "AX 캠퍼스",
     "order": 2
   },
   {
-    "_id": "archive",
-    "label": "2019–2020 작업",
+    "_id": "skn30",
+    "label": "SKN 30기",
     "order": 3
+  },
+  {
+    "_id": "vibe-coding",
+    "label": "바이브코딩",
+    "order": 4
+  },
+  {
+    "_id": "hand-coding",
+    "label": "손코딩",
+    "order": 5
+  },
+  {
+    "_id": "uiux",
+    "label": "UI/UX",
+    "order": 6
   }
 ]

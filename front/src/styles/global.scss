@@ -28,9 +28,15 @@ select {
   font: inherit;
 }
 
-a {
+:where(a) {
   color: inherit;
   text-decoration: none;
+}
+
+/* 따로 정하지 않은 링크도 호버하면 밑줄로 티를 낸다.
+   두 규칙 모두 :where 로 특이도 0 → CSS 로드 순서와 상관없이 컴포넌트 규칙이 이긴다 */
+:where(a:hover) {
+  text-decoration: underline;
 }
 
 #root {

@@ -6,7 +6,7 @@ export function projectMeta(overrides: Partial<ProjectMeta> = {}): ProjectMeta {
   return {
     slug: 'sample',
     title: '샘플 프로젝트',
-    category: 'edu',
+    category: 'skn30',
     kind: '교육',
     period: { start: '2026.11.01', end: '2026.11.05' },
     publishedAt: '2026-11-05',

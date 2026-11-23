@@ -1,4 +1,4 @@
-import type { Career, Credential, Education } from '@/features/resume/types/resume.types';
+import type { Career, Education } from '@/features/resume/types/resume.types';
 import { buildProfileFacts } from './profileFacts';
 
 const career = (over: Partial<Career>): Career => ({
@@ -7,7 +7,7 @@ const career = (over: Partial<Career>): Career => ({
 });
 
 describe('buildProfileFacts', () => {
-  it('summarizes detailed main careers, the degree and top certificates', () => {
+  it('summarizes detailed main careers, the degree and main skills', () => {
     const careers = [
       career({ id: 'a', company: '브레이스', role: '웹 풀스택 개발', summaryLine: '브레이스 웹 풀스택', responsibilities: ['역할'] }),
       career({ id: 'b', order: 2, company: '성진', period: { start: '2020.02', end: '2020.04' }, role: '퍼블리싱' }),
@@ -19,26 +19,19 @@ describe('buildProfileFacts', () => {
       { id: 's', kind: 'school', order: 3, name: '고등학교', org: '', period: { start: '', end: '' }, notes: [] },
       { id: 'k', kind: 'course', order: 2, name: '과정', org: '', period: { start: '', end: '' }, notes: [] },
     ];
-    const credentials: Credential[] = [
-      { id: '1', kind: 'certificate', order: 1, name: 'A', issuer: '', date: '' },
-      { id: '2', kind: 'award', order: 2, name: '상', issuer: '', date: '' },
-      { id: '3', kind: 'certificate', order: 3, name: 'B', issuer: '', date: '' },
-      { id: '4', kind: 'certificate', order: 4, name: 'C', issuer: '', date: '' },
-      { id: '5', kind: 'certificate', order: 5, name: 'D', issuer: '', date: '' },
-    ];
 
-    expect(buildProfileFacts(careers, educations, credentials)).toEqual([
+    expect(buildProfileFacts(careers, educations)).toEqual([
       {
         label: '경력',
         values: ['브레이스 웹 풀스택', '뉴스게이트 편집디자인'],
         periods: ['2020.08.~2026.04.', '2016.08.~2019.03.'],
       },
       { label: '학력', values: ['대학교 산업디자인 졸업'] },
-      { label: '자격', values: ['A, B'] },
+      { label: '기술', values: [], badges: ['Angular', 'Go', 'MongoDB'] },
     ]);
   });
 
   it('omits rows without data', () => {
-    expect(buildProfileFacts([], [], [])).toEqual([]);
+    expect(buildProfileFacts([], []).map((fact) => fact.label)).toEqual(['기술']);
   });
 });

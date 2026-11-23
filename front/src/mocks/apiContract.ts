@@ -83,11 +83,11 @@ export function runContentApiContract(
 
     it('filters projects by category and tag', async () => {
       const source = createSource();
-      const edu = await source.listProjects({ category: 'edu' });
+      const edu = await source.listProjects({ category: 'skn30' });
       const react = await source.listProjects({ tag: 'React' });
 
       expect(edu.length).toBeGreaterThan(0);
-      expect(edu.every((project) => project.category === 'edu')).toBe(true);
+      expect(edu.every((project) => project.category === 'skn30')).toBe(true);
       expect(react.length).toBeGreaterThan(0);
       expect(react.every((project) => project.tags.includes('React'))).toBe(true);
     });

@@ -41,6 +41,14 @@ export interface Career {
 
 export type SkillUsage = 'work' | 'project' | 'study';
 
+export interface SkillDetail {
+  /** 비면 제목 없이 목록만 */
+  title: string;
+  items: string[];
+}
+
+export type SkillSection = 'work' | 'project' | 'ai' | 'design' | 'other';
+
 export interface Skill {
   id: string;
   order: number;
@@ -50,6 +58,13 @@ export interface Skill {
   context: string;
   projectIds: string[];
   careerIds: string[];
+  /** 기술 탭 배치: 카드 → 소제목 → 박스 */
+  section: SkillSection;
+  subgroup: string;
+  /** 박스에 늘 보이는 한 줄 설명 */
+  summary: string;
+  /** 화살표로 펼쳐 보는 세부 내용 */
+  details: SkillDetail[];
 }
 
 export interface Education {
@@ -69,6 +84,8 @@ export interface Education {
   featured?: boolean;
   /** 이 과정에서 만든 프로젝트 slug */
   projectIds?: string[];
+  /** 전체 탭 학력 결과 카드에만 쓰는 자세한 문구 (없으면 name·major·degree·notes) */
+  highlight?: { title: string; line: string; notes: string[] };
 }
 
 export interface Credential {

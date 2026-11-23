@@ -119,11 +119,11 @@
 }
 
 .achievements {
-  border-bottom: var(--border-width-default) solid var(--color-border-default);
+  border-bottom: var(--border-width-default) solid var(--color-border-subtle);
 }
 
 .achievement {
-  border-top: var(--border-width-default) solid var(--color-border-default);
+  border-top: var(--border-width-default) solid var(--color-border-subtle);
 }
 
 .achievement summary {
@@ -133,6 +133,10 @@
   padding: var(--space-3) var(--space-0);
   cursor: pointer;
   list-style: none;
+}
+
+.achievement summary:hover h4 {
+  text-decoration: underline;
 }
 
 .achievement summary::-webkit-details-marker {
@@ -183,7 +187,7 @@
   display: grid;
   grid-template-columns: var(--search-row-label-width) minmax(var(--space-0), 1fr);
   gap: var(--space-4);
-  border-top: var(--border-width-default) solid var(--color-border-default);
+  border-top: var(--border-width-default) solid var(--color-border-subtle);
   padding: var(--space-3) var(--space-0);
 }
 
@@ -209,7 +213,7 @@
   display: grid;
   grid-template-columns: var(--search-skill-name-width) minmax(var(--space-0), 1fr);
   gap: var(--space-4);
-  border-top: var(--border-width-default) solid var(--color-border-default);
+  border-top: var(--border-width-default) solid var(--color-border-subtle);
   padding: var(--space-3) var(--space-0);
 }
 
@@ -258,34 +262,163 @@
   color: var(--color-text-link);
 }
 
-/* ── 표 ── */
-.table {
-  width: var(--layout-full);
-  border-collapse: collapse;
+/* 기술 탭: 라벨 + 값 줄, 실무 그룹 */
+.rowLabel {
+  color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
 
-.table th {
-  border-bottom: var(--border-width-default) solid var(--color-border-strong);
-  padding: var(--space-0) var(--space-3) var(--space-2) var(--space-0);
+.rowValue {
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+}
+
+.headNote {
+  margin-left: var(--space-2);
   color: var(--color-text-muted);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  font-weight: normal;
+}
+
+.skillGroups {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.skillGroup {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.skillGroup > h3 {
+  margin: var(--space-0);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* 기술 박스: 교육 카드 박스에서 기간 칸을 뺀 모양. 설명 줄이 없어도 이름·화살표가 가운데에 오게 */
+.courseList > li.skillBox {
+  grid-template-columns: minmax(var(--space-0), 1fr) auto;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+}
+
+/* 기술 요점 배지에서 이동해 온 박스: 2px 점선이 서서히 나타났다 사라지기를 두 번 (outline 이라 박스 크기가 흔들리지 않는다) */
+.courseList > li.skillBox[data-flash='true'] {
+  outline: var(--border-width-strong) dashed transparent;
+  outline-offset: calc(var(--border-width-default) * -1);
+  animation: skill-flash var(--motion-duration-skill-flash) ease-in-out 2;
+}
+
+@keyframes skill-flash {
+  50% {
+    outline-color: var(--color-text-primary);
+  }
+}
+
+/* 기술 요점 라벨: 누르면 해당 카드로 이동 (› 로 이동할 수 있음을 알린다) */
+.summaryLabel {
+  display: inline-flex;
+  align-items: center;
+  align-self: start;
+  justify-self: start;
+  gap: var(--space-1);
+  border: var(--border-width-none);
+  padding: var(--space-1) var(--space-0);
+  background: none;
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: var(--font-size-sm);
   text-align: left;
+  cursor: pointer;
 }
 
-.table td {
-  border-bottom: var(--border-width-default) solid var(--color-border-default);
-  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-0);
-  vertical-align: top;
+.summaryLabel svg {
+  width: var(--font-size-sm);
+  height: var(--font-size-sm);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+  transition: transform var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.table tr:last-child td {
-  border-bottom: var(--border-width-none);
+.summaryLabel:hover {
+  color: var(--color-text-link);
 }
 
-.table td:first-child {
-  color: var(--color-text-muted);
-  font-variant-numeric: tabular-nums;
+.summaryLabel:hover svg {
+  transform: translateX(var(--space-1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .summaryLabel svg {
+    transition: none;
+  }
+}
+
+/* 기술 요점 배지: 흰 바탕 + 연한 테두리, 아이콘만 브랜드 색 */
+.techBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-0);
+  padding: var(--space-0);
+  list-style: none;
+}
+
+.skillBox .courseBody p {
+  margin: var(--space-0);
+  font-size: var(--font-size-sm);
+}
+
+.skillDetail {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.skillDetail h4 {
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+/* ── 표 ── */
+.credentialName {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+}
+
+.courseList:has(> li.credentialCard) {
+  gap: var(--space-2);
+}
+
+.courseList > li.credentialCard {
+  grid-template-columns: minmax(var(--space-0), 1fr);
+  gap: var(--space-0);
+  padding: var(--space-3) var(--space-4);
+}
+
+.credentialHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  margin: var(--space-0);
+}
+
+.credentialNote {
+  border-radius: var(--radius-badge);
+  padding: var(--space-0) var(--space-1);
+  padding-top: 0.12em;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  font-size: var(--search-tag-font-size);
 }
 
 /* ── 전체 탭 결과 카드 ── */
@@ -308,6 +441,24 @@
   font-size: var(--font-size-lg);
 }
 
+/* 학력 결과 카드: 학교명(왼쪽)·기간(오른쪽) 한 줄, 아래 전공을 붙여 쓴다 */
+.degreeHead {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.degreeHead h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+}
+
+.degreeHead h3 .when {
+  font-weight: normal;
+}
+
 .source {
   display: flex;
   align-items: center;
@@ -320,10 +471,13 @@
   display: grid;
   width: var(--font-size-xl);
   height: var(--font-size-xl);
+  flex: none;
   place-items: center;
   border-radius: var(--radius-pill);
   background: var(--color-brand-blue);
   color: var(--color-text-inverse);
+  line-height: 1;
+  padding-top: 0.12em; /* 한글 글리프가 위로 쏠려 보이는 것을 보정 */
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
 }
@@ -334,6 +488,12 @@
 
 .dot[data-tone='yellow'] {
   background: var(--color-text-muted);
+}
+
+.resultBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
 }
 
 .facts {
@@ -362,7 +522,7 @@
 
 .related {
   margin-top: var(--space-2);
-  border-top: var(--border-width-default) solid var(--color-border-default);
+  border-top: var(--border-width-default) solid var(--color-border-subtle);
   padding-top: var(--space-3);
 }
 
@@ -412,6 +572,12 @@
   background: var(--color-bg-subtle);
 }
 
+.skillFilter {
+  flex-wrap: wrap;
+  justify-self: start;
+  width: fit-content;
+}
+
 .sortToggle button {
   border: var(--border-width-none);
   border-radius: var(--radius-sm);
@@ -420,6 +586,10 @@
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   cursor: pointer;
+}
+
+.sortToggle button:hover {
+  color: var(--color-text-primary);
 }
 
 .sortToggle button[aria-pressed='true'] {
@@ -541,6 +711,7 @@
 .eduBadge {
   border-radius: var(--radius-sm);
   padding: var(--space-0) var(--space-2);
+  padding-top: 0.12em;
   background: var(--color-bg-subtle);
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
@@ -704,6 +875,8 @@
 .schoolLine span {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
+  /* 대학 줄은 h3 안이라 굵게 상속되므로 학교 줄과 맞춘다 */
+  font-weight: normal;
 }
 
 .courseToggle {
@@ -720,6 +893,21 @@
   cursor: pointer;
 }
 
+.courseList > li[data-expandable='true'] {
+  cursor: pointer;
+}
+
+/* 박스 호버는 제목 밑줄로만 알린다 */
+.courseList > li[data-expandable='true']:hover h3 {
+  text-decoration: underline;
+}
+
+/* 펼친 내용 위에서는 일반 커서 */
+.courseDetail {
+  cursor: auto;
+}
+
+.courseList > li[data-expandable='true']:hover .courseToggle,
 button.courseToggle:hover {
   background: var(--color-bg-subtle);
   color: var(--color-text-primary);
@@ -800,6 +988,8 @@ button.courseToggle:hover {
 }
 
 .projectRail a {
+  /* 호버 밑줄은 제목에만 준다 */
+  text-decoration: none;
   display: grid;
   /* 옆 카드 높이에 맞춰 늘어나도 내용은 세로 가운데 (위아래 여백이 같게) */
   align-content: center;
@@ -868,6 +1058,11 @@ button.courseToggle:hover {
   transform: translateY(-50%);
 }
 
+.projectRailButton:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-bg-subtle);
+}
+
 .projectRailButton[data-side='prev'] {
   left: calc(var(--space-2) * -1);
 }
@@ -908,4 +1103,92 @@ button.courseToggle:hover {
     grid-row: 2;
     justify-items: start;
   }
+}
+
+/* ── 전체 탭 가로 타임라인: 점 위 가로선, 최신이 왼쪽 ── */
+.hTimeline {
+  display: grid;
+  grid-auto-columns: var(--search-h-timeline-item-width);
+  grid-auto-flow: column;
+  overflow-x: auto;
+  margin: var(--space-0);
+  padding: var(--space-0) var(--space-0) var(--space-2);
+  list-style: none;
+  scroll-snap-type: x proximity;
+}
+
+.hTimeline li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  padding: calc(var(--search-timeline-dot-size) + var(--space-3)) var(--space-4) var(--space-0) var(--space-0);
+  scroll-snap-align: start;
+}
+
+/* 점 */
+.hTimeline li::before {
+  position: absolute;
+  z-index: 1;
+  top: var(--space-0);
+  left: var(--space-0);
+  width: var(--search-timeline-dot-size);
+  height: var(--search-timeline-dot-size);
+  border-radius: var(--radius-pill);
+  background: var(--color-border-strong);
+  content: '';
+}
+
+.hTimeline li[data-kind='career']::before {
+  background: var(--color-brand-blue);
+}
+
+.hTimeline li[data-kind='degree']::before {
+  background: var(--color-text-primary);
+}
+
+/* 점에서 다음 점까지 가로선 */
+.hTimeline li:not(:last-child)::after {
+  position: absolute;
+  top: calc((var(--search-timeline-dot-size) - var(--border-width-default)) / 2);
+  right: var(--space-0);
+  left: var(--space-0);
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  content: '';
+}
+
+.hTimelineWhen {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.hTimelineKind {
+  justify-self: start;
+  border-radius: var(--radius-badge);
+  padding: var(--space-0) var(--space-1);
+  padding-top: 0.12em;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.hTimeline li[data-kind='career'] .hTimelineKind {
+  color: var(--color-brand-blue);
+}
+
+.hTimelineTitle {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+.hTimelineTitle:hover {
+  text-decoration: underline;
+}
+
+.hTimelineSub {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
 }

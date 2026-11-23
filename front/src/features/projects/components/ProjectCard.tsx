@@ -4,14 +4,12 @@ import styles from './ProjectCard.module.scss';
 
 interface ProjectCardProps {
   project: ProjectMeta;
-  /** 프로젝트 탭: 요약·기술 태그까지, 전체 탭 레일: 제목·기간만 */
-  detailed?: boolean;
 }
 
 const year = (project: ProjectMeta) => project.period.start.slice(0, 7);
 
 /** 썸네일 타일. 대표 이미지가 없으면 제목 첫 글자를 보여 준다. */
-export function ProjectCard({ project, detailed = false }: ProjectCardProps) {
+export function ProjectCard({ project }: ProjectCardProps) {
   const body = (
     <>
       <ProjectThumbnail project={project} />
@@ -20,24 +18,9 @@ export function ProjectCard({ project, detailed = false }: ProjectCardProps) {
           {project.title}
           {project.subtitle ? <span> · {project.subtitle}</span> : null}
         </h3>
-        {detailed ? <p className={styles.summary}>{project.summary}</p> : null}
-        {detailed && project.highlights.length ? (
-          <ul className={styles.highlights}>
-            {project.highlights.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        ) : null}
         <p className={styles.meta}>
           {[project.kind, year(project), project.team?.replace(/ \(.*\)$/, '')].filter(Boolean).join(' · ')}
         </p>
-        {detailed ? (
-          <div className={styles.tags}>
-            {project.tags.slice(0, 5).map((tag) => (
-              <span key={tag}>{tag}</span>
-            ))}
-          </div>
-        ) : null}
       </div>
     </>
   );

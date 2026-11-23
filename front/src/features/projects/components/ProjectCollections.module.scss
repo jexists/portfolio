@@ -33,6 +33,11 @@
   transform: translateY(-50%);
 }
 
+.railButton:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-bg-subtle);
+}
+
 .railButton[data-side='prev'] {
   left: var(--search-rail-button-offset);
 }
@@ -49,29 +54,6 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: var(--border-width-strong);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(var(--space-0), 1fr));
-  gap: var(--space-4);
-}
-
-.more {
-  width: var(--layout-full);
-  margin-top: var(--space-4);
-  border: var(--border-width-default) solid var(--color-border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-3);
-  background: var(--color-bg-surface);
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-bold);
-  cursor: pointer;
-}
-
-.more:hover {
-  border-color: var(--color-border-strong);
-  color: var(--color-text-primary);
 }
 
 .filters {
@@ -92,6 +74,11 @@
   cursor: pointer;
 }
 
+.chip:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
 .chip[aria-pressed='true'] {
   border-color: var(--color-brand-blue);
   background: var(--color-brand-blue);
@@ -106,7 +93,7 @@
 }
 
 .list li {
-  border-top: var(--border-width-default) solid var(--color-border-default);
+  border-top: var(--border-width-default) solid var(--color-border-subtle);
   padding: var(--space-4) var(--space-0);
 }
 
@@ -179,8 +166,33 @@
   .railButton {
     display: none;
   }
+}
 
-  .grid {
-    grid-template-columns: minmax(var(--space-0), 1fr);
-  }
+/* 프로젝트 탭 더보기 (학력 더보기 버튼과 같은 모양) */
+.moreButton {
+  width: var(--layout-full);
+  margin-top: var(--space-4);
+  border: var(--border-width-none);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.moreButton svg {
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+  margin-left: var(--space-1);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+  vertical-align: middle;
+}
+
+.moreButton:hover {
+  color: var(--color-text-primary);
 }

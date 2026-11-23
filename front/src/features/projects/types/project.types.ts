@@ -1,5 +1,15 @@
 /** 프로젝트 구분 (mockup/categories.json) */
-export type Category = 'edu' | 'personal' | 'archive';
+export type Category = 'minintern' | 'ax-campus' | 'skn30' | 'vibe-coding' | 'hand-coding' | 'uiux';
+
+/** 프로젝트 탭 구분 칩 (categories.json 의 label·order 와 같게 유지) */
+export const CATEGORY_LABEL: Record<Category, string> = {
+  minintern: '미니인턴',
+  'ax-campus': 'AX 캠퍼스',
+  skn30: 'SKN 30기',
+  'vibe-coding': '바이브코딩',
+  'hand-coding': '손코딩',
+  uiux: 'UI/UX',
+};
 
 export type ProjectLinkType = 'live' | 'github' | 'slides' | 'video' | 'doc' | 'pdf';
 

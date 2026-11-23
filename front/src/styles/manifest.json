@@ -123,6 +123,14 @@
       "states": ["ready", "disabled"]
     },
     {
+      "name": "TechBadge",
+      "role": "기술 이름 배지 (Simple Icons 아이콘, 표시용·버튼)",
+      "path": "src/components/ui/TechBadge.tsx",
+      "variants": ["md", "sm"],
+      "tokens": ["color", "font", "space", "radius"],
+      "states": ["ready", "hover"]
+    },
+    {
       "name": "Card",
       "role": "검색결과 흰 카드 (제목·더보기 화살표)",
       "path": "src/components/ui/Card.tsx",

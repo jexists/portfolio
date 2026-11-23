@@ -5,6 +5,7 @@ export {
   CredentialsSection,
   EducationSection,
   ResumeResultCards,
+  ResumeTimeline,
   SkillsSection,
 } from './components/ResumeSections';
 export { ResumeDocument } from './components/ResumeDocument';
