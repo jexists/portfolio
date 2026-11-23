@@ -7,10 +7,10 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import styles from './CategoryTabs.module.scss';
 
-export type SearchTab = 'all' | 'career' | 'skills' | 'education' | 'certs' | 'projects';
+export type SearchTab = 'all' | 'resume' | 'career' | 'skills' | 'education' | 'certs' | 'projects';
 
-/** 검색결과 탭. 인물정보 카드의 칩 탭도 같은 목록을 쓴다. */
-export const searchTabs: Array<{ value: SearchTab; label: string }> = [
+/** 검색결과 탭. resume(이력서)는 인물정보 카드의 "이력서 보기"로만 들어가서 목록에 없다. */
+const tabs: Array<{ value: SearchTab; label: string }> = [
   { value: 'all', label: '전체' },
   { value: 'career', label: '경력' },
   { value: 'skills', label: '기술' },
@@ -18,10 +18,9 @@ export const searchTabs: Array<{ value: SearchTab; label: string }> = [
   { value: 'certs', label: '자격·수상' },
   { value: 'projects', label: '프로젝트' },
 ];
-const tabs = searchTabs;
 
 export function isSearchTab(value: string | null): value is SearchTab {
-  return tabs.some((tab) => tab.value === value);
+  return value === 'resume' || tabs.some((tab) => tab.value === value);
 }
 
 interface CategoryTabsProps {
@@ -43,12 +42,16 @@ export function CategoryTabs({ value, onChange }: CategoryTabsProps) {
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [indicatorStyle, setIndicatorStyle] = useState<IndicatorStyle>(initialIndicatorStyle);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const activeIndex = Math.max(
-    tabs.findIndex((tab) => tab.value === value),
-    0,
-  );
+  // 목록에 없는 값(resume)이면 -1: 선택 표시 없이 첫 탭만 포커스 받는다
+  const activeIndex = tabs.findIndex((tab) => tab.value === value);
+  const focusIndex = Math.max(activeIndex, 0);
 
   useLayoutEffect(() => {
+    if (activeIndex < 0) {
+      setIndicatorStyle(initialIndicatorStyle);
+      return;
+    }
+
     const activeTab = tabRefs.current[activeIndex];
     const activeSlide = activeTab?.parentElement;
 
@@ -106,7 +109,7 @@ export function CategoryTabs({ value, onChange }: CategoryTabsProps) {
               type="button"
               role="tab"
               aria-selected={value === tab.value}
-              tabIndex={value === tab.value ? 0 : -1}
+              tabIndex={index === focusIndex ? 0 : -1}
               onClick={() => onChange(tab.value)}
               onKeyDown={(event) => moveSelection(event, index)}
             >

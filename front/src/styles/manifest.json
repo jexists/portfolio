@@ -139,6 +139,14 @@
       "states": ["ready", "empty"]
     },
     {
+      "name": "ResumeDocument",
+      "role": "이력서 탭의 한 장짜리 이력서 문서",
+      "path": "src/features/resume/components/ResumeDocument.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "radius", "search"],
+      "states": ["ready"]
+    },
+    {
       "name": "ProjectCollections",
       "role": "대표 프로젝트 레일, 프로젝트 탭(더보기·구분 필터), 관련 검색어",
       "path": "src/features/projects/components/ProjectCollections.tsx",

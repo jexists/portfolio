@@ -7,6 +7,7 @@ import {
   CareerSection,
   CredentialsSection,
   EducationSection,
+  ResumeDocument,
   ResumeResultCards,
   SkillsSection,
   useCareers,
@@ -14,7 +15,7 @@ import {
   useEducations,
   useSkills,
 } from '@/features/resume';
-import { CategoryTabs, isSearchTab, searchTabs, type SearchTab } from '@/features/projects/components/CategoryTabs';
+import { CategoryTabs, isSearchTab, type SearchTab } from '@/features/projects/components/CategoryTabs';
 import { buildRelatedQueries, FeaturedRail, ProjectsTab, RelatedQueries } from '@/features/projects/components/ProjectCollections';
 import { useProjects } from '@/features/projects/hooks/useProjects';
 import styles from './SearchPage.module.scss';
@@ -67,7 +68,7 @@ export function SearchPage() {
           <div className={styles.main} data-tab={tab}>
             {tab === 'all' ? (
               <>
-                <ProfileCard profile={profile} facts={facts} tabs={searchTabs} activeTab={tab} />
+                <ProfileCard profile={profile} facts={facts} />
                 <FeaturedRail projects={featured} />
                 <ResumeResultCards
                   headline={profile.headline}
@@ -79,12 +80,15 @@ export function SearchPage() {
                 />
               </>
             ) : null}
+            {tab === 'resume' ? <ResumeDocument /> : null}
             {tab === 'career' ? <CareerSection careers={careers} skills={skills} /> : null}
             {tab === 'skills' ? <SkillsSection skills={skills} careers={careers} projectTitles={projectTitles} /> : null}
-            {tab === 'education' ? <EducationSection educations={educations} /> : null}
+            {tab === 'education' ? <EducationSection educations={educations} projects={projects} /> : null}
             {tab === 'certs' ? <CredentialsSection credentials={credentials} /> : null}
             {tab === 'projects' ? <ProjectsTab key={tag ?? ''} projects={projects} tag={tag} onClearTag={clearTag} /> : null}
           </div>
+          {/* 이력서는 문서만 보여 준다 */}
+          {tab === 'resume' ? null : (
           <aside className={styles.side} aria-label="사이드 정보">
             {tab === 'all' ? <StrengthsCard strengths={profile.strengths} /> : <ProfileSide profile={profile} facts={facts} />}
             <RelatedQueries
@@ -96,6 +100,7 @@ export function SearchPage() {
             />
             <LinksCard profile={profile} />
           </aside>
+          )}
         </div>
       )}
     </main>

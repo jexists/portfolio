@@ -39,14 +39,12 @@
 }
 
 /* ── 경력 ── */
-.career,
-.degree {
+.career {
   display: grid;
   gap: var(--space-2);
 }
 
-.career p,
-.degree p {
+.career p {
   margin: var(--space-0);
 }
 
@@ -342,7 +340,7 @@
   display: grid;
   gap: var(--space-1);
   margin: var(--space-1) var(--space-0) var(--space-0);
-  border-left: var(--search-accent-rule) solid var(--color-bg-subtle);
+  border-left: var(--search-accent-rule) solid var(--color-search-quote-rule);
   padding: var(--space-0) var(--space-0) var(--space-0) var(--space-4);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
@@ -389,5 +387,525 @@
 
   .resultCard {
     padding: var(--space-4);
+  }
+}
+
+/* ── 학력 탭 ── */
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.sectionHead h2 {
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+}
+
+.sortToggle {
+  display: flex;
+  border-radius: var(--radius-md);
+  padding: var(--space-1);
+  background: var(--color-bg-subtle);
+}
+
+.sortToggle button {
+  border: var(--border-width-none);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-3);
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+.sortToggle button[aria-pressed='true'] {
+  background: var(--color-bg-surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.legend {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin: calc(var(--space-2) * -1) var(--space-0) var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.legend span::before {
+  display: inline-block;
+  width: var(--space-2);
+  height: var(--space-2);
+  margin-right: var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--color-text-muted);
+  content: '';
+}
+
+.legend span[data-kind='school']::before {
+  background: var(--color-brand-blue);
+}
+
+/* 가로 타임라인: 노드 사이를 가는 선으로 잇고, 폭이 모자라면 가로 스크롤 */
+.glance {
+  display: flex;
+  overflow-x: auto;
+  margin: var(--space-0);
+  padding: var(--space-0) var(--space-0) var(--space-2);
+  list-style: none;
+  scrollbar-width: thin;
+}
+
+.glance li {
+  position: relative;
+  display: grid;
+  flex: var(--flex-none);
+  justify-items: center;
+  align-content: start;
+  gap: var(--space-1);
+  width: var(--search-glance-node-width);
+  padding-inline: var(--space-1);
+  text-align: center;
+}
+
+.glance li + li::before {
+  position: absolute;
+  top: calc(var(--search-glance-node-size) / 2);
+  right: 50%;
+  width: var(--layout-full);
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  content: '';
+}
+
+.glanceNode {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: var(--search-glance-node-size);
+  height: var(--search-glance-node-size);
+  place-items: center;
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface);
+  color: var(--color-text-muted);
+}
+
+.glance li[data-kind='school'] .glanceNode {
+  border-color: var(--color-brand-blue);
+  color: var(--color-brand-blue);
+}
+
+.glance li[data-top='true'] .glanceNode {
+  background: var(--color-brand-blue);
+  color: var(--color-text-inverse);
+}
+
+.glanceNode svg {
+  width: var(--font-size-lg);
+  height: var(--font-size-lg);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+}
+
+.glanceYear {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.glance b {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+  line-height: var(--font-line-height-tight);
+}
+
+.glance small {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.topBadge,
+.eduBadge {
+  border-radius: var(--radius-sm);
+  padding: var(--space-0) var(--space-2);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.topBadge,
+.eduBadge[data-tone='top'] {
+  background: var(--color-search-chip-active-bg);
+  color: var(--color-brand-blue);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 세로 타임라인 */
+.timeline {
+  display: grid;
+  gap: var(--space-4);
+  margin: var(--space-0);
+  padding: var(--space-0);
+  list-style: none;
+}
+
+.timeline li {
+  position: relative;
+  padding-left: var(--space-6);
+}
+
+.timeline li::before {
+  position: absolute;
+  z-index: 1;
+  top: var(--space-2);
+  left: var(--space-0);
+  width: var(--search-timeline-dot-size);
+  height: var(--search-timeline-dot-size);
+  border-radius: var(--radius-pill);
+  background: var(--color-border-strong);
+  content: '';
+}
+
+.timeline li[data-top='true']::before {
+  background: var(--color-brand-blue);
+}
+
+/* 각 점에서 다음 항목의 점까지 세로선 (점 정중앙을 지난다) */
+.timeline > li:not(:last-child)::after {
+  position: absolute;
+  top: var(--space-2);
+  bottom: calc((var(--space-4) + var(--space-2)) * -1);
+  left: calc((var(--search-timeline-dot-size) - var(--border-width-default)) / 2);
+  border-left: var(--border-width-default) solid var(--color-border-default);
+  content: '';
+}
+
+.schoolCard {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-0);
+}
+
+.schoolHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.timeline li[data-top='true'] .when {
+  color: var(--color-brand-blue);
+  font-weight: var(--font-weight-bold);
+}
+
+.badges {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.schoolCard h3,
+.courseBody h3 {
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+}
+
+/* 테두리·배경 없이 학교명을 키워서 구분한다 */
+.schoolCard h3,
+.schoolLine b {
+  font-size: var(--font-size-lg);
+}
+
+.note {
+  margin: var(--space-0);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.foldButton {
+  width: var(--layout-full);
+  margin-top: var(--space-4);
+  border: var(--border-width-none);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.foldButton svg {
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+  margin-left: var(--space-1);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+  vertical-align: middle;
+}
+
+.foldButton:hover {
+  color: var(--color-text-primary);
+}
+
+/* 교육 카드 */
+.courseList {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-0);
+  padding: var(--space-0);
+  list-style: none;
+}
+
+.courseList > li {
+  display: grid;
+  grid-template-columns: minmax(var(--space-0), 1fr) auto auto;
+  align-items: start;
+  gap: var(--space-1) var(--space-3);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.courseBody {
+  display: grid;
+  flex: var(--flex-auto);
+  gap: var(--space-1);
+  min-width: var(--space-0);
+}
+
+.schoolLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  margin: var(--space-0);
+}
+
+.schoolLine b {
+  color: var(--color-text-primary);
+}
+
+.schoolLine span {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.courseToggle {
+  display: grid;
+  flex: var(--flex-none);
+  width: var(--search-rail-button-size);
+  height: var(--search-rail-button-size);
+  place-items: center;
+  border: var(--border-width-none);
+  border-radius: var(--radius-pill);
+  padding: var(--space-0);
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+button.courseToggle:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+}
+
+.courseToggle svg {
+  width: var(--font-size-lg);
+  height: var(--font-size-lg);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+  transition: transform var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.courseToggle[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+
+/* 교육 펼친 내용: 배운 것 → 회고 → 프로젝트 */
+.courseDetail {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--space-3);
+  /* 구분선은 카드 좌우 끝까지, 내용은 카드 안쪽 여백에 맞춘다 */
+  margin: var(--space-2) calc(var(--space-4) * -1) var(--space-0);
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  padding: var(--space-3) var(--space-4) var(--space-0);
+}
+
+.courseDetail[hidden] {
+  display: none;
+}
+
+.courseNotes {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-0);
+  padding-left: var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--resume-body-line-height);
+}
+
+.courseNotes li::marker {
+  color: var(--color-text-muted);
+}
+
+.courseNotes li[data-retro='true'] {
+  color: var(--color-text-muted);
+}
+
+.courseNotes li[data-retro='true'] b {
+  margin-right: var(--space-1);
+  color: var(--color-text-primary);
+}
+
+.projectRail {
+  position: relative;
+}
+
+.projectRail ul {
+  display: grid;
+  grid-auto-columns: calc((100% - var(--space-3)) / 2);
+  grid-auto-flow: column;
+  gap: var(--space-3);
+  overflow-x: auto;
+  margin: var(--space-0);
+  padding: var(--space-0);
+  list-style: none;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.projectRail li {
+  scroll-snap-align: start;
+}
+
+.projectRail a {
+  display: grid;
+  /* 옆 카드 높이에 맞춰 늘어나도 내용은 세로 가운데 (위아래 여백이 같게) */
+  align-content: center;
+  gap: var(--space-1);
+  height: var(--layout-full);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  background: var(--color-bg-page);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.projectRail a:hover .projectName {
+  text-decoration: underline;
+}
+
+.projectTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: var(--space-0);
+  color: var(--color-text-primary);
+}
+
+.projectName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 제목 앞 작은 회색 태그 */
+.projectBadge {
+  display: inline-flex;
+  flex: var(--flex-none);
+  align-items: center;
+  border-radius: var(--radius-sm);
+  padding: var(--search-tag-padding-y) var(--space-1);
+  background: var(--color-border-strong);
+  color: var(--color-text-inverse);
+  font-size: var(--search-tag-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--font-line-height-tight);
+}
+
+.projectDesc {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.projectRailButton {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  width: var(--search-strength-no-size);
+  height: var(--search-strength-no-size);
+  place-items: center;
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-pill);
+  padding: var(--space-0);
+  background: var(--color-bg-surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.projectRailButton[data-side='prev'] {
+  left: calc(var(--space-2) * -1);
+}
+
+.projectRailButton[data-side='next'] {
+  right: calc(var(--space-2) * -1);
+}
+
+.projectRailButton svg {
+  width: var(--font-size-sm);
+  height: var(--font-size-sm);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+}
+
+.courseMeta {
+  display: grid;
+  flex: var(--flex-none);
+  justify-items: end;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.courseMeta small {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 48rem) {
+  .courseList > li {
+    grid-template-columns: minmax(var(--space-0), 1fr) auto;
+  }
+
+  .courseMeta {
+    grid-row: 2;
+    justify-items: start;
   }
 }
