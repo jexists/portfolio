@@ -11,11 +11,19 @@
     "base_commit": "71af962bad145441d4f19655314697796ea33676",
     "dirty": false
   },
-  "status": "approved",
+  "status": "implemented",
   "sensitive_findings": [],
   "issue": {
     "number": 12,
     "url": "https://github.com/jexists/portfolio/issues/12"
   },
-  "branch": "feat/12-search-refine"
+  "branch": "feat/12-search-refine",
+  "result_commits": [
+    "d56e172",
+    "f3e47db",
+    "b3ec137",
+    "2514195",
+    "972b935",
+    "43f9ecb"
+  ]
 }
