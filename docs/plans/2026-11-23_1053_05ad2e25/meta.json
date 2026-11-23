@@ -1,0 +1,17 @@
+{
+  "id": "2026-11-23_1053_05ad2e25",
+  "approved_at": "2026-11-23T10:53:45+09:00",
+  "session_id": "b863513b-2732-459c-b6bc-b95fe5431fd9",
+  "tool_use_id": "toolu_01TZU3wpFcwwkgu4uGsfFJbi",
+  "source_plan_path": "/Users/jexists/.claude/plans/pasted-content-id-25de-glittery-hellman-of-b863513b-2732-459c-b6bc-b95fe5431fd9.md",
+  "sha256": "05ad2e25bf81a6f20505d4c77d19909d604814c2b21d8e132940fc28026d6fb4",
+  "previous": null,
+  "git": {
+    "branch": "main",
+    "base_commit": "8bfa5b71b957bb48967acbd5177d3dee2c984e3b",
+    "dirty": true
+  },
+  "status": "approved",
+  "sensitive_findings": [],
+  "branch": "docs/design-prototype"
+}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>정주애 포트폴리오 — 디자인 시안</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="proto-bar" role="region" aria-label="시안 도구">
+    <strong>디자인 시안</strong>
+    <button type="button" data-device="desktop" aria-pressed="true">데스크톱</button>
+    <button type="button" data-device="mobile" aria-pressed="false">모바일 390px</button>
+    <nav aria-label="시안 화면 바로가기">
+      <a href="#/">1 검색</a><a href="#/search?tab=all">2 전체</a><a href="#/search?tab=career">3 경력</a>
+      <a href="#/search?tab=skills">4 기술</a><a href="#/search?tab=education">5 학력</a><a href="#/search?tab=certs">6 자격·수상</a>
+      <a href="#/search?tab=projects">7 프로젝트</a><a href="#/project/hanbit">8 상세(한빛수학)</a><a href="#/project/blog2shorts">8 상세(blog2shorts)</a>
+    </nav>
+  </div>
+  <div class="frame" id="frame"><div id="app"></div></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
