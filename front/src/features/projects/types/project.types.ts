@@ -1,18 +1,43 @@
-export type Category = 'resume' | 'publishing' | 'design' | 'study' | 'etc';
+/** 프로젝트 구분 (mockup/categories.json) */
+export type Category = 'edu' | 'personal' | 'archive';
+
+export type ProjectLinkType = 'live' | 'github' | 'slides' | 'video' | 'doc' | 'pdf';
+
+export interface ProjectLink {
+  type: ProjectLinkType;
+  label: string;
+  url: string;
+}
+
+export interface ProjectImage {
+  src: string;
+  caption: string;
+}
+
+export interface ProjectPeriod {
+  start: string;
+  end: string;
+}
 
 export interface ProjectMeta {
   slug: string;
   title: string;
+  subtitle?: string;
   category: Category;
   kind?: string;
+  course?: string;
+  period: ProjectPeriod;
   publishedAt: string;
   featured?: boolean;
   draft?: boolean;
   tags: string[];
   summary: string;
-  thumbnail?: string;
-  link?: string;
-  github?: string;
+  team?: string;
+  role?: string;
+  highlights: string[];
+  links: ProjectLink[];
+  linkNote?: string;
+  images: ProjectImage[];
   series?: string;
   seriesOrder?: number;
 }
@@ -32,15 +57,21 @@ export interface Series {
 export interface ProjectDto {
   _id: string;
   title: string;
+  subtitle?: string;
   categoryId: Category;
   kind?: string;
+  course?: string;
+  period: ProjectPeriod;
   summary: string;
   tags: string[];
-  series?: { name: string; order: number };
+  team?: string;
+  role?: string;
+  highlights: string[];
+  links: ProjectLink[];
+  linkNote?: string;
+  images: ProjectImage[];
+  series?: { name: string; order: number } | null;
   publishedAt: string;
-  thumbnail?: string;
-  link?: string;
-  github?: string;
   featured: boolean;
   draft: boolean;
   /** 상세 조회에만 포함된다 */

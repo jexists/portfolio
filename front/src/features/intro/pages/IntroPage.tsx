@@ -16,12 +16,14 @@ type SuggestionStyle = CSSProperties & {
   '--suggestion-index': number;
 };
 
-const SUGGESTIONS = [
-  '정주애 포트폴리오',
-  '정주애 개발 기록 ',
-  '정주애 프로젝트',
-  '정주애 성장과정',
-];
+const SUGGESTIONS = ['정주애 포트폴리오', '정주애 경력', '정주애 프로젝트', '정주애 기술'];
+
+/** Enter·Escape 로만 건너뛴다. Tab 이동이나 링크·버튼 위 Enter 는 그대로 둔다. */
+function isSkipKey(event: KeyboardEvent): boolean {
+  if (event.key === 'Escape') return true;
+  const onControl = event.target instanceof Element && event.target.closest('a, button, input, textarea, select');
+  return event.key === 'Enter' && !onControl;
+}
 
 export function IntroPage({ onComplete }: IntroProps) {
   const navigate = useNavigate();
@@ -33,7 +35,7 @@ export function IntroPage({ onComplete }: IntroProps) {
 
     navigate('/search', { state: { fromIntro: true } });
   }, [navigate, onComplete]);
-  const { phase, typedText, suggestOpen, skip } = useIntroSequence({ onComplete: complete });
+  const { phase, typedText, suggestOpen, skip, pause } = useIntroSequence({ onComplete: complete });
   const isSelectingFirstSuggestion = phase === 'cursor';
 
   const handleSkip = (event: MouseEvent<HTMLElement>) => {
@@ -61,8 +63,11 @@ export function IntroPage({ onComplete }: IntroProps) {
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', skip);
-    return () => window.removeEventListener('keydown', skip);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (isSkipKey(event)) skip();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, [skip]);
 
   return (
@@ -70,9 +75,7 @@ export function IntroPage({ onComplete }: IntroProps) {
       className={styles.page}
       data-phase={phase}
       onClick={skip}
-      onKeyDown={skip}
-      role="main"
-      tabIndex={-1}
+      onFocus={pause}
     >
       <IntroHeader onSkip={skip} />
       <section className={styles.searchPanel} aria-label="포트폴리오 인트로">

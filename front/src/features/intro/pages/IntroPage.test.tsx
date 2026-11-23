@@ -3,6 +3,7 @@ import { MemoryRouter, useLocation } from 'react-router';
 import { vi } from 'vitest';
 import { AuthProvider } from '@/features/auth';
 import type { ProjectMeta } from '@/features/projects/types/project.types';
+import { projectMeta } from '@/test/fixtures';
 import { IntroPage } from './IntroPage';
 
 const mocks = vi.hoisted(() => ({
@@ -16,14 +17,11 @@ vi.mock('@/features/projects/api/projects.api', async (importOriginal) => ({
   projectsApi: mocks.contentSource,
 }));
 
-const publishedProject: ProjectMeta = {
+const publishedProject: ProjectMeta = projectMeta({
   slug: 'published-project',
   title: '공개 프로젝트',
-  category: 'design',
-  publishedAt: '2026-07-13',
-  tags: ['UI'],
   summary: '공개 프로젝트 요약',
-};
+});
 
 const draftProject: ProjectMeta = {
   ...publishedProject,
@@ -143,13 +141,35 @@ describe('Intro page', () => {
     expect(screen.getByTestId('location-state')).toHaveTextContent('{"fromIntro":true}');
   });
 
-  it('skips to search when any key is pressed', () => {
+  it('skips to search when Enter or Escape is pressed', () => {
     const onComplete = vi.fn();
     renderIntro(onComplete);
 
     fireEvent.keyDown(window, { key: 'Enter' });
 
     expect(onComplete).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps keyboard Tab navigation and pauses auto-advance on focus (AC-IA8)', () => {
+    const onComplete = vi.fn();
+    renderIntro(onComplete);
+
+    fireEvent.keyDown(window, { key: 'Tab' });
+    expect(onComplete).not.toHaveBeenCalled();
+
+    act(() => screen.getAllByRole('link', { name: 'GitHub', hidden: true })[0].focus());
+    act(() => vi.advanceTimersByTime(5000));
+
+    expect(onComplete).not.toHaveBeenCalled();
+  });
+
+  it('does not skip when Enter is pressed on a link', () => {
+    const onComplete = vi.fn();
+    renderIntro(onComplete);
+
+    fireEvent.keyDown(screen.getAllByRole('link', { name: 'GitHub', hidden: true })[0], { key: 'Enter' });
+
+    expect(onComplete).not.toHaveBeenCalled();
   });
 
   it('selects the first suggestion with the keyboard-style cursor phase', () => {

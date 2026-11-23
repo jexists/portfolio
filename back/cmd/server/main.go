@@ -10,11 +10,14 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/readpref"
 
 	"github.com/jexists/portfolio/back/internal/config"
 	"github.com/jexists/portfolio/back/internal/db"
 	"github.com/jexists/portfolio/back/internal/handler"
+	"github.com/jexists/portfolio/back/internal/model"
 	"github.com/jexists/portfolio/back/internal/repo"
 	"github.com/jexists/portfolio/back/internal/router"
 	"github.com/jexists/portfolio/back/internal/service"
@@ -40,9 +43,13 @@ func main() {
 	}
 
 	engine := router.New(router.Deps{
-		Projects:   handler.NewProjectHandler(service.NewProjectService(repo.NewProjectRepo(database))),
-		Profile:    handler.NewProfileHandler(service.NewProfileService(repo.NewProfileRepo(database))),
-		Categories: handler.NewCategoryHandler(service.NewCategoryService(repo.NewCategoryRepo(database))),
+		Projects:    handler.NewProjectHandler(service.NewProjectService(repo.NewProjectRepo(database))),
+		Profile:     handler.NewProfileHandler(service.NewProfileService(repo.NewProfileRepo(database))),
+		Categories:  handler.NewCategoryHandler(service.NewCategoryService(repo.NewCategoryRepo(database))),
+		Careers:     listHandler[model.Career](database, db.CollCareers),
+		Skills:      listHandler[model.Skill](database, db.CollSkills),
+		Educations:  listHandler[model.Education](database, db.CollEducations),
+		Credentials: listHandler[model.Credential](database, db.CollCredentials),
 		Ping: func(ctx context.Context) error {
 			return client.Ping(ctx, readpref.Primary())
 		},
@@ -64,4 +71,9 @@ func main() {
 	if err := srv.Shutdown(shutdownCtx); err != nil {
 		log.Printf("shutdown: %v", err)
 	}
+}
+
+// listHandler 는 이력 컬렉션 목록 API 를 repo → service → handler 로 조립한다.
+func listHandler[T any](database *mongo.Database, collection string) gin.HandlerFunc {
+	return handler.List[T](service.NewListService[T](repo.NewListRepo[T](database, collection)))
 }

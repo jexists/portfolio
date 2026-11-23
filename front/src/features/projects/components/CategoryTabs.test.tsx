@@ -60,7 +60,7 @@ describe('CategoryTabs', () => {
   it('renders an accessible free-mode auto-width tab list', () => {
     render(<CategoryTabs value="all" onChange={vi.fn()} />);
 
-    const tabList = screen.getByRole('tablist', { name: '프로젝트 카테고리' });
+    const tabList = screen.getByRole('tablist', { name: '검색 탭' });
 
     expect(tabList).toHaveAttribute('data-slides-per-view', 'auto');
     expect(tabList).toHaveAttribute('data-free-mode', 'true');
@@ -70,32 +70,32 @@ describe('CategoryTabs', () => {
     expect(screen.getAllByRole('tab')).toHaveLength(6);
     expect(screen.getByRole('tab', { name: '전체' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('tab', { name: '전체' })).toHaveAttribute('tabindex', '0');
-    expect(screen.getByRole('tab', { name: '이력서' })).toHaveAttribute('tabindex', '-1');
+    expect(screen.getByRole('tab', { name: '경력' })).toHaveAttribute('tabindex', '-1');
   });
 
-  it('emits the selected category', async () => {
+  it('emits the selected tab', async () => {
     const onChange = vi.fn();
     const user = userEvent.setup();
 
     render(<CategoryTabs value="all" onChange={onChange} />);
 
-    await user.click(screen.getByRole('tab', { name: '퍼블리싱' }));
+    await user.click(screen.getByRole('tab', { name: '경력' }));
 
-    expect(onChange).toHaveBeenCalledWith('publishing');
+    expect(onChange).toHaveBeenCalledWith('career');
   });
 
   it('moves focus and selection with the arrow keys', async () => {
     const onChange = vi.fn();
     const user = userEvent.setup();
 
-    render(<CategoryTabs value="publishing" onChange={onChange} />);
+    render(<CategoryTabs value="career" onChange={onChange} />);
 
-    const currentTab = screen.getByRole('tab', { name: '퍼블리싱' });
+    const currentTab = screen.getByRole('tab', { name: '경력' });
     currentTab.focus();
     await user.keyboard('{ArrowRight}');
 
-    expect(screen.getByRole('tab', { name: '디자인' })).toHaveFocus();
-    expect(onChange).toHaveBeenCalledWith('design');
+    expect(screen.getByRole('tab', { name: '기술' })).toHaveFocus();
+    expect(onChange).toHaveBeenCalledWith('skills');
   });
 
   it('slides to the selected tab when the controlled value changes', async () => {
@@ -104,7 +104,7 @@ describe('CategoryTabs', () => {
     await waitFor(() => expect(slideTo).toHaveBeenCalledWith(0));
     slideTo.mockClear();
 
-    rerender(<CategoryTabs value="study" onChange={vi.fn()} />);
+    rerender(<CategoryTabs value="certs" onChange={vi.fn()} />);
 
     await waitFor(() => expect(slideTo).toHaveBeenCalledWith(4));
   });

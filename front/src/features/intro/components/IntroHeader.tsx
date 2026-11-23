@@ -17,7 +17,7 @@ export function IntroHeader({ onSkip }: IntroHeaderProps) {
         className={styles.textLink}
         href="https://github.com/jexists/"
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         onClick={stopPageSkip}
         onKeyDown={stopPageSkip}
       >

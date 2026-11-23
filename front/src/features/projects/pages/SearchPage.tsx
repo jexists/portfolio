@@ -1,145 +1,103 @@
-import { type CSSProperties, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useLocation, useSearchParams } from 'react-router';
-import { CategoryTabs, type CategoryTab } from '@/features/projects/components/CategoryTabs';
-import { Chip } from '@/components/ui/Chip';
-import { ProfileCard, type Profile, useProfile } from '@/features/profile';
-import { ProjectCard } from '@/features/projects/components/ProjectCard';
 import { SearchHeader } from '@/components/layout/SearchHeader';
-import { useProjects, useTags } from '@/features/projects/hooks/useProjects';
-import type { Category, ProjectMeta } from '@/features/projects/types/project.types';
+import { LinksCard, ProfileCard, ProfileSide, StrengthsCard, useProfile } from '@/features/profile';
+import {
+  buildProfileFacts,
+  CareerSection,
+  CredentialsSection,
+  EducationSection,
+  ResumeResultCards,
+  SkillsSection,
+  useCareers,
+  useCredentials,
+  useEducations,
+  useSkills,
+} from '@/features/resume';
+import { CategoryTabs, isSearchTab, searchTabs, type SearchTab } from '@/features/projects/components/CategoryTabs';
+import { buildRelatedQueries, FeaturedRail, ProjectsTab, RelatedQueries } from '@/features/projects/components/ProjectCollections';
+import { useProjects } from '@/features/projects/hooks/useProjects';
 import styles from './SearchPage.module.scss';
-
-interface SearchContent {
-  profile: Profile;
-  projects: ProjectMeta[];
-  tags: string[];
-}
-
-const categories: Category[] = ['resume', 'publishing', 'design', 'study', 'etc'];
-
-function isCategory(value: string | null): value is Category {
-  return value !== null && categories.some((category) => category === value);
-}
-
-type SectionStyle = CSSProperties & {
-  '--search-section-index': number;
-};
 
 export function SearchPage() {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const fromIntro = Boolean(location.state && 'fromIntro' in location.state && location.state.fromIntro);
-  const tab = searchParams.get('tab');
-  const category: CategoryTab = isCategory(tab) ? tab : 'all';
-  const [activeTag, setActiveTag] = useState<string | null>(() => searchParams.get('tag'));
+  const rawTab = searchParams.get('tab');
+  const tag = searchParams.get('tag');
+  // ?tag= 만 있으면(상세 화면의 기술 태그) 프로젝트 탭으로 본다
+  const tab: SearchTab = isSearchTab(rawTab) ? rawTab : tag ? 'projects' : 'all';
 
-  const profileQuery = useProfile();
-  const projectsQuery = useProjects({ includeDrafts: true });
-  const tagsQuery = useTags();
-  const content = useMemo<SearchContent | null>(
-    () =>
-      profileQuery.data && projectsQuery.data && tagsQuery.data
-        ? { profile: profileQuery.data, projects: projectsQuery.data, tags: tagsQuery.data }
-        : null,
-    [profileQuery.data, projectsQuery.data, tagsQuery.data],
+  const profile = useProfile().data;
+  const projects = useProjects().data;
+  const careers = useCareers().data;
+  const skills = useSkills().data;
+  const educations = useEducations().data;
+  const credentials = useCredentials().data;
+
+  const facts = useMemo(
+    () => buildProfileFacts(careers ?? [], educations ?? [], credentials ?? []),
+    [careers, educations, credentials],
   );
+  const projectTitles = useMemo(
+    () => Object.fromEntries((projects ?? []).map((project) => [project.slug, project.title])),
+    [projects],
+  );
+  const featured = useMemo(() => (projects ?? []).filter((project) => project.featured), [projects]);
 
-  const effectiveActiveTag = content && activeTag && content.tags.includes(activeTag) ? activeTag : null;
-
-  const filteredProjects = useMemo(() => {
-    if (!content) {
-      return [];
-    }
-
-    return content.projects
-      .filter((project) => !effectiveActiveTag || project.tags.includes(effectiveActiveTag))
-      .sort((left, right) => Number(Boolean(left.draft)) - Number(Boolean(right.draft)));
-  }, [content, effectiveActiveTag]);
-
-  function changeCategory(nextCategory: CategoryTab) {
-    const nextSearchParams = new URLSearchParams(searchParams);
-
-    if (nextCategory === 'all') {
-      nextSearchParams.delete('tab');
-    } else {
-      nextSearchParams.set('tab', nextCategory);
-    }
-
-    setSearchParams(nextSearchParams);
+  function changeTab(next: SearchTab) {
+    setSearchParams(next === 'all' ? {} : { tab: next });
   }
 
-  function toggleTag(tag: string) {
-    const nextActiveTag = effectiveActiveTag === tag ? null : tag;
-    const nextSearchParams = new URLSearchParams(searchParams);
-
-    if (nextActiveTag) {
-      nextSearchParams.set('tag', nextActiveTag);
-    } else {
-      nextSearchParams.delete('tag');
-    }
-
-    setActiveTag(nextActiveTag);
-    setSearchParams(nextSearchParams, { replace: true });
+  function clearTag() {
+    setSearchParams({ tab: 'projects' }, { replace: true });
   }
 
-  function applyKeyword(keyword: string | null) {
-    if (keyword === null) {
-      if (effectiveActiveTag) {
-        toggleTag(effectiveActiveTag);
-      }
-    } else if (content?.tags.includes(keyword)) {
-      toggleTag(keyword);
-    }
-  }
+  const ready = Boolean(profile && projects && careers && skills && educations && credentials);
 
   return (
     <main className={styles.page} data-from-intro={fromIntro}>
-      <SearchHeader tabs={<CategoryTabs value={category} onChange={changeCategory} />} />
-      <div className={styles.shell}>
-        {category === 'all' && !content ? (
+      <SearchHeader tabs={<CategoryTabs value={tab} onChange={changeTab} />} />
+      {!ready || !profile || !projects || !careers || !skills || !educations || !credentials ? (
+        <div className={styles.shell}>
           <SearchSkeleton />
-        ) : category === 'all' && content ? (
-          <>
-            <section className={styles.section} style={{ '--search-section-index': 0 } as SectionStyle}>
-              <ProfileCard
-                profile={content.profile}
-                activeKeyword={effectiveActiveTag}
-                onKeywordClick={applyKeyword}
-              />
-            </section>
-            <section
-              className={styles.section}
-              style={{ '--search-section-index': 1 } as SectionStyle}
-              aria-label="태그 필터"
-            >
-              <h2>태그 필터</h2>
-              <div className={styles.chips}>
-                {content.tags.map((tag) => (
-                  <Chip
-                    key={tag}
-                    label={tag}
-                    ariaLabel={`${tag} 태그 필터`}
-                    active={effectiveActiveTag === tag}
-                    onClick={() => toggleTag(tag)}
-                  />
-                ))}
-              </div>
-            </section>
-            <section className={styles.section} style={{ '--search-section-index': 2 } as SectionStyle}>
-              <h2>프로젝트</h2>
-              {filteredProjects.length > 0 ? (
-                <div className={styles.grid}>
-                  {filteredProjects.map((project) => (
-                    <ProjectCard key={project.slug} project={project} />
-                  ))}
-                </div>
-              ) : (
-                <p className={styles.empty}>검색결과가 없습니다</p>
+        </div>
+      ) : (
+        <div className={styles.shell}>
+          <div className={styles.main} data-tab={tab}>
+            {tab === 'all' ? (
+              <>
+                <ProfileCard profile={profile} facts={facts} tabs={searchTabs} activeTab={tab} />
+                <FeaturedRail projects={featured} />
+                <ResumeResultCards
+                  headline={profile.headline}
+                  summary={profile.summary}
+                  careers={careers}
+                  skills={skills}
+                  educations={educations}
+                  credentials={credentials}
+                />
+              </>
+            ) : null}
+            {tab === 'career' ? <CareerSection careers={careers} skills={skills} /> : null}
+            {tab === 'skills' ? <SkillsSection skills={skills} careers={careers} projectTitles={projectTitles} /> : null}
+            {tab === 'education' ? <EducationSection educations={educations} /> : null}
+            {tab === 'certs' ? <CredentialsSection credentials={credentials} /> : null}
+            {tab === 'projects' ? <ProjectsTab key={tag ?? ''} projects={projects} tag={tag} onClearTag={clearTag} /> : null}
+          </div>
+          <aside className={styles.side} aria-label="사이드 정보">
+            {tab === 'all' ? <StrengthsCard strengths={profile.strengths} /> : <ProfileSide profile={profile} facts={facts} />}
+            <RelatedQueries
+              queries={buildRelatedQueries(
+                profile.name,
+                featured,
+                skills.filter((skill) => skill.usage === 'work').map((skill) => skill.name),
               )}
-            </section>
-          </>
-        ) : null}
-      </div>
+            />
+            <LinksCard profile={profile} />
+          </aside>
+        </div>
+      )}
     </main>
   );
 }

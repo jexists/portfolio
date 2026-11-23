@@ -39,7 +39,8 @@
 | **로그인 방문자** | 아바타 클릭 → Kakao/GitHub 소셜 로그인(가입=로그인) → 첫 로그인 시 방문 목적 설문 1회 → (향후) 프로젝트 즐겨찾기·방명록 |
 
 ### 시나리오별 수용 기준
-- **AC-U1**: 인트로는 사용자 조작 없이 끝까지 진행되어 검색결과로 이동한다. 클릭/키 입력 시 즉시 스킵된다.
+- **AC-U1**: 인트로는 사용자 조작 없이 끝까지 진행되어 검색결과로 이동한다. 클릭·Enter·Escape 시 즉시 스킵된다.
+- **AC-IA8**: 인트로에서 키보드 Tab 이동은 페이지 이동을 일으키지 않고, 포커스가 들어오면 자동 이동을 멈춘다.
 - **AC-U2**: 이메일 복사 버튼 클릭 시 클립보드에 이메일이 복사되고 시각적 피드백이 표시된다.
 - **AC-U3**: `prefers-reduced-motion` 사용자는 애니메이션 없이 콘텐츠를 볼 수 있다.
 - **AC-U4**: 첫 로그인 사용자에게 방문 목적 설문(채용 담당자/개발자/학생/둘러보기)을 1회만 보여주고 저장한다. 이미 답한 사용자에게 다시 묻지 않는다.
@@ -53,9 +54,14 @@
 
 ### 3.1 프로젝트 목록 (`/search`)
 - **US-L1**: 방문자로서 프로젝트를 카테고리 탭으로 필터해 보고 싶다.
-  - **AC-L1**: 탭은 전체/이력서/퍼블리싱/디자인/스터디/기타. "전체" 탭은 인물카드 + 태그 필터 + 전체 프로젝트를 표시하고, 그 외 탭은 탭별 화면이 확정될 때까지 빈 화면(헤더·탭만 유지)을 표시한다.
+  - **AC-IA1** (AC-L1 대체, 2026-11-23): 탭은 전체/경력/기술/학력/자격·수상/프로젝트이고 모두 내용이 있다. 모르는 `tab` 값은 전체로 간다.
+  - **AC-IA2**: 전체 탭은 인물정보 카드, 대표 프로젝트 레일, 경력·기술·학력 결과 카드, 사이드(핵심 역량·관련 검색어·링크)를 보여 준다. 나머지 탭은 사이드 첫 카드가 내 정보다.
+  - **AC-IA3**: 경력은 회사별 기간·역할·수치(출처 주석)·업무·문제 해결·성과·기술을 보여 준다. 회사 업무(레사모)는 프로젝트 목록에 넣지 않는다.
+  - **AC-IA4**: 기술은 숙련도 수치 없이 실무/프로젝트/학습 구분, 활용 맥락, 관련 프로젝트·경력 링크로 보여 준다.
+  - **AC-IA5**: 프로젝트 탭은 대표작 카드를 먼저 보여 주고 "더보기"로 전체 목록과 구분 필터를 펼친다. 상세는 원본 프로젝트 문서(요약·면접 질문 제외)를 보여 주고 실제 링크만 새 탭(`rel="noopener noreferrer"`)으로 연다. 값이 없는 필드는 숨긴다.
+  - **AC-IA6**: 헤더 윗줄은 기존 SearchHeader 와 같다. **AC-IA7**: MSW와 Go API가 같은 계약 테스트를 통과한다.
   - **AC-L2**: `draft: true` 프로젝트는 "준비중" placeholder 카드로만 표시되고 상세로 이동할 수 없다.
-  - **AC-L3**: 카드에는 썸네일, kind 라벨(클론/카피/리디자인 등), 제목, 태그, (있으면) 시리즈 뱃지가 표시된다.
+  - **AC-L3**: 카드에는 썸네일(없으면 제목 첫 글자), 제목·부제, 구분·기간·팀이 표시되고, 프로젝트 탭에서는 요약·성과·기술 태그도 표시된다.
   - **AC-L4**: 목록은 `featured` 우선, 그다음 `publishedAt` 내림차순으로 정렬된다.
 
 ### 3.2 프로젝트 상세 (`/project/:slug`)
@@ -89,25 +95,28 @@
 ```jsonc
 // mockup/projects.json 의 문서 1개
 {
-  "_id": "naver-clone",                 // slug, 필수
-  "title": "(클론) 네이버 포털 사이트",   // 필수
-  "categoryId": "publishing",           // 필수: resume|publishing|design|study|etc (categories 컬렉션)
-  "kind": "클론",                        // 선택: 클론|카피|리디자인|...
+  "_id": "hanbit-math",                  // slug, 필수
+  "title": "한빛수학", "subtitle": "학원 수강 신청·출결 관리 서비스",
+  "categoryId": "edu",                   // 필수: edu|personal|archive (categories 컬렉션 = 프로젝트 구분)
+  "kind": "교육", "course": "AX Campus 3회차 · …",
+  "period": { "start": "2026.11.02", "end": "2026.11.06" },
   "summary": "한 줄 소개",               // 필수
-  "tags": ["HTML", "SCSS", "반응형"],
+  "tags": ["Next.js", "NestJS"],         // 기술
+  "team": "1명", "role": "DB 설계, QA, 발표",
+  "highlights": ["20테이블 ERD"],
+  "links": [{ "type": "live", "label": "코어 웹", "url": "https://..." }],   // live|github|slides|video|doc|pdf
+  "linkNote": "",                        // 링크 주의 문구 (배포 종료 등)
+  "images": [],                          // [{ src, caption }], 첫 장이 대표 이미지
   "series": { "name": "클론 코딩", "order": 1 },   // 선택
-  "publishedAt": "2026-05-10",           // 필수
-  "thumbnail": "/images/naver.png",     // 선택
-  "link": "https://...",                // 선택 (라이브)
-  "github": "https://github.com/...",   // 선택
-  "featured": true,                      // 추천 프로젝트
-  "draft": false,                        // true = 준비중
-  "body": "## 개요\n..."                 // 마크다운 본문 (목록 응답에서는 제외)
+  "publishedAt": "2026-11-06",           // 필수 (정렬 기준)
+  "featured": true, "draft": false,
+  "body": "## 프로젝트 개요\n..."        // 원본 프로젝트 문서 마크다운 (목록 응답에서는 제외)
 }
 ```
 
-`mockup/profiles.json`: _id, name, nameEn, role, location, kakaoId, email, website, github, avatar, keywords(연관검색어), body(자기소개 마크다운).
-그 밖의 컬렉션: `categories`(탭 라벨·순서), `users`(소셜 로그인 사용자·방문 목적), `visits`(방문 기록).
+`mockup/profiles.json`: _id, name, nameEn, role, years, location, email, avatar, headline, summary[], links[], strengths[].
+이력 컬렉션: `careers`, `skills`, `educations`, `credentials` (필드는 `docs/ARCHITECTURE.md`).
+그 밖의 컬렉션: `categories`(프로젝트 구분 라벨·순서), `users`(소셜 로그인 사용자·방문 목적), `visits`(방문 기록).
 
 ---
 
@@ -168,6 +177,7 @@ UI는 데이터 출처를 모른다. 화면은 `features/*/hooks`(React Query)�
 | **3** | 검색결과 페이지: 구글 검색결과 헤더(공유·HeaderActions·탭 slot), Swiper 탭+태그 필터, 인물카드(이메일 복사), 프로젝트 그리드, draft placeholder | AC-U2, AC-L1~L4, AC-T1~T2 | ✅ 완료 |
 | **4** | 프로젝트 상세 + 시리즈 내비 + RSS/sitemap 빌드 스크립트 | AC-D1~D3, AC-S1~S2, AC-R1~R2, AC-M1~M2 | ✅ 완료 |
 | **4.5** | 로그인 UX: mock 소셜 로그인(AuthService 추상화), /login 미니멀 카드+태그라인+혜택 안내, 첫 로그인 방문 목적 설문, StatsService(방문·목적·제공자 수집), /admin 통계 대시보드 | AC-U4, AC-U5 | 진행 |
+| **4.6** | 통합검색형 리디자인: 탭 6개, 이력 컬렉션 4개와 목록 API, 인물정보·사이드 카드, 프로젝트 레일·더보기, 상세 md 본문(remark-gfm), 인트로 키보드 수정 (Issue #10) | AC-IA1~IA8 | 진행 |
 | **5** | 배포: front Vercel(SPA rewrite, 피드 포함 빌드), back 컨테이너 호스팅, MongoDB Atlas | 프로덕션 URL | 예정 |
 | **6** | 확장: Go API 실연동(인증·방문 통계 API, users.role 기반 admin), admin 인라인 편집, **프로젝트 즐겨찾기·방명록**, 검색, AI 디자인 개선 사이클 | 계약 테스트 재사용 | 향후 |
 

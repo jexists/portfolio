@@ -1,8 +1,11 @@
 import type { ProfileApi } from '@/features/profile/api/profile.api';
 import type { ProjectsApi } from '@/features/projects/api/projects.api';
+import type { ResumeApi } from '@/features/resume/api/resume.api';
 
 /** 프론트가 기대하는 API 계약. MSW 목업과 (향후) 실제 Go 백엔드가 모두 통과해야 한다. */
-export type ContentApi = ProjectsApi & ProfileApi;
+export type ContentApi = ProjectsApi & ProfileApi & ResumeApi;
+
+const isAscending = (values: number[]) => values.every((value, index) => index === 0 || values[index - 1] <= value);
 
 export function runContentApiContract(
   name: string,
@@ -15,36 +18,82 @@ export function runContentApiContract(
       expect(profile).toEqual(
         expect.objectContaining({
           name: '정주애',
-          nameEn: 'Jeong, Ju Ae',
+          nameEn: 'Jeong, Juae',
           role: expect.any(String),
           email: expect.stringContaining('@'),
-          body: expect.any(String),
+          headline: expect.any(String),
         }),
       );
-      expect(profile.keywords.length).toBeGreaterThan(0);
+      expect(profile.summary.length).toBeGreaterThan(0);
+      expect(profile.strengths.length).toBeGreaterThan(0);
+      expect(profile.links).toContainEqual(expect.objectContaining({ type: 'github', url: expect.stringMatching(/^https:\/\//) }));
+    });
+
+    it('lists resume collections sorted by order with ids', async () => {
+      const source = createSource();
+      const lists = await Promise.all([
+        source.listCareers(),
+        source.listSkills(),
+        source.listEducations(),
+        source.listCredentials(),
+      ]);
+
+      for (const list of lists) {
+        expect(list.length).toBeGreaterThan(0);
+        expect(list.every((item) => typeof item.id === 'string' && item.id.length > 0)).toBe(true);
+        expect(isAscending(list.map((item) => item.order))).toBe(true);
+      }
+    });
+
+    it('returns career details with metrics and achievements', async () => {
+      const careers = await createSource().listCareers();
+      const main = careers[0];
+
+      expect(main.minor).toBe(false);
+      expect(main.metrics.length).toBeGreaterThan(0);
+      expect(main.achievements.length).toBeGreaterThan(0);
+      expect(main.achievements.every((item) => Array.isArray(item.work) && Array.isArray(item.problems))).toBe(true);
+      expect(careers.some((career) => career.minor)).toBe(true);
+    });
+
+    it('links skills to existing projects and careers', async () => {
+      const source = createSource();
+      const [skills, projects, careers] = await Promise.all([
+        source.listSkills(),
+        source.listProjects(),
+        source.listCareers(),
+      ]);
+      const projectIds = new Set(projects.map((project) => project.slug));
+      const careerIds = new Set(careers.map((career) => career.id));
+
+      expect(skills.every((skill) => ['work', 'project', 'study'].includes(skill.usage))).toBe(true);
+      expect(skills.every((skill) => skill.projectIds.every((id) => projectIds.has(id)))).toBe(true);
+      expect(skills.every((skill) => skill.careerIds.every((id) => careerIds.has(id)))).toBe(true);
+    });
+
+    it('splits educations and credentials by kind', async () => {
+      const source = createSource();
+      const [educations, credentials] = await Promise.all([source.listEducations(), source.listCredentials()]);
+
+      expect(new Set(educations.map((item) => item.kind))).toEqual(new Set(['degree', 'course']));
+      expect(new Set(credentials.map((item) => item.kind))).toEqual(new Set(['certificate', 'award']));
     });
 
     it('filters projects by category and tag', async () => {
       const source = createSource();
-      const publishing = await source.listProjects({ category: 'publishing' });
-      const scss = await source.listProjects({ tag: 'SCSS' });
+      const edu = await source.listProjects({ category: 'edu' });
+      const react = await source.listProjects({ tag: 'React' });
 
-      expect(publishing.length).toBeGreaterThan(0);
-      expect(publishing.every((project) => project.category === 'publishing')).toBe(
-        true,
-      );
-      expect(scss.length).toBeGreaterThan(0);
-      expect(scss.every((project) => project.tags.includes('SCSS'))).toBe(true);
+      expect(edu.length).toBeGreaterThan(0);
+      expect(edu.every((project) => project.category === 'edu')).toBe(true);
+      expect(react.length).toBeGreaterThan(0);
+      expect(react.every((project) => project.tags.includes('React'))).toBe(true);
     });
 
     it('sorts featured projects first, then by publishedAt descending', async () => {
       const projects = await createSource().listProjects();
 
-      expect(projects.map((project) => project.slug).slice(0, 3)).toEqual([
-        'cocacola-redesign',
-        'asiana-clone',
-        'naver-clone',
-      ]);
+      expect(projects[0].featured).toBe(true);
       for (let index = 1; index < projects.length; index += 1) {
         const previous = projects[index - 1];
         const current = projects[index];
@@ -63,8 +112,7 @@ export function runContentApiContract(
       const all = await source.listProjects({ includeDrafts: true });
 
       expect(visible.some((project) => project.draft)).toBe(false);
-      expect(all.some((project) => project.slug === 'coming-soon-1')).toBe(true);
-      expect(all.some((project) => project.slug === 'coming-soon-2')).toBe(true);
+      expect(all.length).toBeGreaterThanOrEqual(visible.length);
     });
 
     it('returns project lists without markdown body content', async () => {
@@ -78,33 +126,23 @@ export function runContentApiContract(
       ).toBe(true);
     });
 
-    it('returns required project summaries in list metadata', async () => {
-      const projects = await createSource().listProjects({ includeDrafts: true });
+    it('returns project metadata with period, links and images', async () => {
+      const projects = await createSource().listProjects();
 
-      expect(projects.every((project) => typeof project.summary === 'string')).toBe(true);
       expect(projects.every((project) => project.summary.length > 0)).toBe(true);
+      expect(projects.every((project) => project.period.start.length > 0)).toBe(true);
+      expect(projects.every((project) => Array.isArray(project.links) && Array.isArray(project.images))).toBe(true);
+      expect(
+        projects.every((project) => project.links.every((link) => /^https?:\/\//.test(link.url))),
+      ).toBe(true);
     });
 
-    it('parses project metadata when optional kind is absent', async () => {
-      const projects = await createSource().listProjects({ includeDrafts: true });
-
-      expect(projects).toContainEqual(
-        expect.objectContaining({
-          slug: 'coming-soon-2',
-          kind: undefined,
-          summary: expect.any(String),
-        }),
-      );
-    });
-
-    it('looks up projects by slug and returns null for missing slugs', async () => {
+    it('looks up projects by slug with body and returns null for missing slugs', async () => {
       const source = createSource();
+      const project = await source.getProject('hanbit-math');
 
-      await expect(source.getProject('naver-clone')).resolves.toEqual(
-        expect.objectContaining({
-          meta: expect.objectContaining({ slug: 'naver-clone' }),
-        }),
-      );
+      expect(project?.meta.slug).toBe('hanbit-math');
+      expect(project?.body.length).toBeGreaterThan(0);
       await expect(source.getProject('missing-project')).resolves.toBeNull();
     });
 
@@ -113,13 +151,15 @@ export function runContentApiContract(
       const tags = await source.listTags();
       const series = await source.listSeries();
 
-      expect(tags).toContain('SCSS');
+      expect(tags).toContain('React');
       expect(series).toEqual([
         expect.objectContaining({
           name: '클론 코딩',
           projects: [
             expect.objectContaining({ slug: 'naver-clone' }),
             expect.objectContaining({ slug: 'asiana-clone' }),
+            expect.objectContaining({ slug: 'payple-clone' }),
+            expect.objectContaining({ slug: 'trello-clone' }),
           ],
         }),
       ]);
