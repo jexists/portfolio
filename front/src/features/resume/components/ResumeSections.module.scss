@@ -1205,6 +1205,31 @@ button.courseToggle:hover {
   background: var(--color-text-primary);
 }
 
+/* 로고가 있으면 점 대신 동그란 로고(28px)를 선 위에 둔다. 점 크기 변수를 키워 선·글자 위치가 함께 맞춰진다
+   shortcut: 로고 없는 항목이 섞이면 그 점도 28px 로 커진다, 섞이게 되면 점 크기를 항목별로 나눈다 */
+.hTimelineLogos {
+  --search-timeline-dot-size: calc(var(--space-6) + var(--space-1));
+}
+
+.hTimeline li[data-logo]::before {
+  display: none;
+}
+
+.hTimelineLogo {
+  position: absolute;
+  z-index: 1;
+  top: var(--space-0);
+  left: var(--space-0);
+  box-sizing: border-box;
+  width: var(--search-timeline-dot-size);
+  height: var(--search-timeline-dot-size);
+  /* 흰 바탕 로고(성진)도 동그라미가 보이게 연한 테두리 */
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-pill);
+  /* 로고 파일은 여백 없이 만들어 동그라미를 꽉 채운다 */
+  object-fit: cover;
+}
+
 /* 점에서 다음 점까지 가로선 (마지막 점도 칸 끝까지 이어 그린다) */
 .hTimeline li::after {
   position: absolute;
@@ -1246,6 +1271,11 @@ button.courseToggle:hover {
   text-decoration: underline;
 }
 
+/* 직책은 회사명에 붙인다 (li 의 grid gap 상쇄) */
+.hTimelineTitle + .hTimelineSub {
+  margin-top: calc(var(--space-1) * -1);
+}
+
 .hTimelineSub {
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
@@ -1261,12 +1291,35 @@ button.courseToggle:hover {
   font-size: var(--font-size-sm);
 }
 
-/* 직무: 회사명에 붙이고(grid gap 을 음수 margin 으로 상쇄), 아래 구분선은 카드 끝에서 끝까지.
+/* 직무: 회사명에 붙이고(grid gap 상쇄 + 4px 더 당김), 아래 구분선은 카드 끝에서 끝까지.
    .career p { margin: 0 } 보다 우선하도록 .career 를 붙인다 */
 .career .careerRole {
-  margin: calc(var(--space-2) * -1) calc(var(--search-card-padding) * -1) var(--space-1);
+  margin: calc((var(--space-2) + var(--space-1)) * -1) calc(var(--search-card-padding) * -1) var(--space-1);
   border-bottom: var(--border-width-default) solid var(--color-border-default);
   padding: var(--space-0) var(--search-card-padding) var(--space-3);
+}
+
+/* 로고: 회사명·직무 두 줄 높이로 왼쪽에 두고 두 줄을 로고 너비만큼 민다 (장식, 회사명이 바로 옆에 있음) */
+.hasLogo {
+  position: relative;
+}
+
+.careerLogo {
+  position: absolute;
+  top: var(--space-0);
+  left: var(--space-0);
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-md);
+  object-fit: contain;
+}
+
+.hasLogo .careerHead {
+  padding-left: calc(var(--space-12) + var(--space-3));
+}
+
+.career.hasLogo .careerRole {
+  padding-left: calc(var(--search-card-padding) + var(--space-12) + var(--space-3));
 }
 
 .career .subhead {
@@ -1371,4 +1424,13 @@ button.courseToggle:hover {
 /* 타임라인 아래 "경력기술서 보기"는 위를 16px 띄운다 */
 .hTimelineWrap + .moreLink {
   margin-top: var(--space-4);
+}
+
+/* 교육 행: 둘째 줄 14px, 제목과 줄간격을 좁힌다 */
+.courseList > li > .courseBody {
+  gap: 2px;
+}
+
+.courseList > li > .courseBody p {
+  font-size: 14px;
 }

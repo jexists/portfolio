@@ -24,6 +24,8 @@ export interface Career {
   order: number;
   company: string;
   companyNote?: string;
+  /** 경력 카드 회사명 앞 작은 로고 (public 이미지 경로) */
+  logo?: string;
   /** 인물정보 카드의 한 줄 요약(회사 + 직무). 비어 있으면 company + role */
   summaryLine?: string;
   period: Period;
@@ -80,6 +82,8 @@ export interface Education {
   kind: 'degree' | 'course' | 'school';
   order: number;
   name: string;
+  /** 주요 타임라인 점 자리 동그란 로고 (public 이미지 경로) */
+  logo?: string;
   /** 인물정보 카드의 한 줄 요약. 비어 있으면 name + 전공 + 상태 */
   summaryLine?: string;
   org: string;
