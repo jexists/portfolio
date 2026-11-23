@@ -346,7 +346,7 @@
   const TAB_VIEWS = { all: tabAll, career: tabCareer, skills: tabSkills, education: tabEducation, certs: tabCerts, projects: tabProjects };
   function renderSearch(tab) {
     const view = TAB_VIEWS[tab] ? tab : 'all';
-    app.innerHTML = `${header(view)}<main class="page"><div class="col">${personCard(view)}${TAB_VIEWS[view]()}</div>${side(view)}</main>${footer()}`;
+    app.innerHTML = `${header(view)}<main class="page"><div class="col">${view === 'all' ? personCard(view) : ''}${TAB_VIEWS[view]()}</div>${side(view)}</main>${footer()}`;
   }
 
   function route() {
