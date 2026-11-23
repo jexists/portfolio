@@ -36,6 +36,14 @@ describe('SearchHeader', () => {
     expect(screen.getByLabelText('검색어')).toHaveAttribute('readonly');
   });
 
+  it('keeps a P mark inside the search bar for narrow screens (AC-3)', () => {
+    renderHeader();
+
+    const mark = screen.getByRole('link', { name: 'PortFolio 첫페이지' });
+    expect(screen.getByRole('search')).toContainElement(mark);
+    expect(mark).toHaveTextContent('P');
+  });
+
   it('copies the current URL and shows feedback for two seconds', async () => {
     renderHeader();
     vi.useFakeTimers();

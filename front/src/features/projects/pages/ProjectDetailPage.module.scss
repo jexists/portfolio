@@ -6,7 +6,7 @@
 /* 검색결과 화면과 같은 열: 헤더 검색바 아래 본문 + 오른쪽 사이드 */
 .shell {
   display: grid;
-  grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) var(--search-side-width);
+  grid-template-columns: calc(var(--search-content-offset) - var(--space-6)) minmax(var(--space-0), var(--search-content-max-width)) var(--search-side-width);
   column-gap: var(--space-6);
   align-items: start;
   width: var(--layout-full);
@@ -153,7 +153,7 @@
 }
 
 .markdown blockquote {
-  border-left: var(--search-accent-rule) solid var(--color-bg-subtle);
+  border-left: var(--search-accent-rule) solid var(--color-search-quote-rule);
   padding-left: var(--space-4);
 }
 
@@ -320,7 +320,7 @@
 
 @media (max-width: 80rem) {
   .shell {
-    grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) minmax(var(--space-0), 1fr);
+    grid-template-columns: calc(var(--search-content-offset) - var(--space-6)) minmax(var(--space-0), var(--search-content-max-width)) minmax(var(--space-0), 1fr);
     row-gap: var(--search-card-gap);
   }
 
