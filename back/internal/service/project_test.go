@@ -48,7 +48,7 @@ func sampleProjects() []model.Project {
 func TestProjectService_ListPassesQuery(t *testing.T) {
 	store := &fakeProjectStore{projects: sampleProjects()}
 	svc := NewProjectService(store)
-	q := model.ProjectQuery{Category: "publishing", Tag: "SCSS", IncludeDrafts: true}
+	q := model.ProjectQuery{Category: "edu", Tag: "React", IncludeDrafts: true}
 
 	if _, err := svc.List(context.Background(), q); err != nil {
 		t.Fatal(err)

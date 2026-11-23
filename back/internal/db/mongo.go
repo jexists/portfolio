@@ -13,11 +13,15 @@ import (
 
 // 컬렉션 이름은 mockup/<이름>.json 파일 이름과 같다.
 const (
-	CollProfiles   = "profiles"
-	CollProjects   = "projects"
-	CollCategories = "categories"
-	CollUsers      = "users"
-	CollVisits     = "visits"
+	CollProfiles    = "profiles"
+	CollProjects    = "projects"
+	CollCategories  = "categories"
+	CollUsers       = "users"
+	CollVisits      = "visits"
+	CollCareers     = "careers"
+	CollSkills      = "skills"
+	CollEducations  = "educations"
+	CollCredentials = "credentials"
 )
 
 func Connect(ctx context.Context, uri string) (*mongo.Client, error) {

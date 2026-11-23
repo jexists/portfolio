@@ -6,20 +6,37 @@ type Series struct {
 	Order int    `bson:"order" json:"order"`
 }
 
+type ProjectLink struct {
+	Type  string `bson:"type" json:"type"` // live | github | slides | video | doc | pdf
+	Label string `bson:"label" json:"label"`
+	URL   string `bson:"url" json:"url"`
+}
+
+type ProjectImage struct {
+	Src     string `bson:"src" json:"src"`
+	Caption string `bson:"caption" json:"caption"`
+}
+
 type Project struct {
-	ID          string   `bson:"_id" json:"_id"`
-	Title       string   `bson:"title" json:"title"`
-	CategoryID  string   `bson:"categoryId" json:"categoryId"`
-	Kind        string   `bson:"kind,omitempty" json:"kind,omitempty"`
-	Summary     string   `bson:"summary" json:"summary"`
-	Tags        []string `bson:"tags" json:"tags"`
-	Series      *Series  `bson:"series,omitempty" json:"series,omitempty"`
-	PublishedAt string   `bson:"publishedAt" json:"publishedAt"`
-	Thumbnail   string   `bson:"thumbnail,omitempty" json:"thumbnail,omitempty"`
-	Link        string   `bson:"link,omitempty" json:"link,omitempty"`
-	GitHub      string   `bson:"github,omitempty" json:"github,omitempty"`
-	Featured    bool     `bson:"featured" json:"featured"`
-	Draft       bool     `bson:"draft" json:"draft"`
+	ID          string         `bson:"_id" json:"_id"`
+	Title       string         `bson:"title" json:"title"`
+	Subtitle    string         `bson:"subtitle" json:"subtitle"`
+	CategoryID  string         `bson:"categoryId" json:"categoryId"`
+	Kind        string         `bson:"kind,omitempty" json:"kind,omitempty"`
+	Course      string         `bson:"course" json:"course"`
+	Period      Period         `bson:"period" json:"period"`
+	Summary     string         `bson:"summary" json:"summary"`
+	Tags        []string       `bson:"tags" json:"tags"`
+	Team        string         `bson:"team" json:"team"`
+	Role        string         `bson:"role" json:"role"`
+	Highlights  []string       `bson:"highlights" json:"highlights"`
+	Links       []ProjectLink  `bson:"links" json:"links"`
+	LinkNote    string         `bson:"linkNote" json:"linkNote"`
+	Images      []ProjectImage `bson:"images" json:"images"`
+	Series      *Series        `bson:"series,omitempty" json:"series,omitempty"`
+	PublishedAt string         `bson:"publishedAt" json:"publishedAt"`
+	Featured    bool           `bson:"featured" json:"featured"`
+	Draft       bool           `bson:"draft" json:"draft"`
 	// Body 는 상세 조회에만 채워진다 (목록에서는 projection 으로 제외).
 	Body string `bson:"body,omitempty" json:"body,omitempty"`
 }

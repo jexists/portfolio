@@ -15,6 +15,10 @@ type Deps struct {
 	Projects       *handler.ProjectHandler
 	Profile        *handler.ProfileHandler
 	Categories     *handler.CategoryHandler
+	Careers        gin.HandlerFunc
+	Skills         gin.HandlerFunc
+	Educations     gin.HandlerFunc
+	Credentials    gin.HandlerFunc
 	Ping           func(ctx context.Context) error
 	CORSOrigins    []string
 	RequestTimeout time.Duration
@@ -32,5 +36,9 @@ func New(d Deps) *gin.Engine {
 	v1.GET("/projects/:slug", d.Projects.Get)
 	v1.GET("/tags", d.Projects.Tags)
 	v1.GET("/series", d.Projects.Series)
+	v1.GET("/careers", d.Careers)
+	v1.GET("/skills", d.Skills)
+	v1.GET("/educations", d.Educations)
+	v1.GET("/credentials", d.Credentials)
 	return r
 }
