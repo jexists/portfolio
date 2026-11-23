@@ -37,19 +37,26 @@ mockup/*.json ──(back: make seed)──▶ MongoDB ──▶ repo ─▶ ser
 | GET | `/projects/:slug` | Project (body 포함) | 없으면 404. draft도 반환하고, 프론트가 숨긴다 |
 | GET | `/tags` | string[] | 공개 프로젝트 기준, 중복 없음, 한글 → 영문 순 |
 | GET | `/series` | `{name, order, projects[]}`[] | 공개 프로젝트 기준, order 순 |
+| GET | `/careers` · `/skills` · `/educations` · `/credentials` | 각 컬렉션 문서[] | 이력 컬렉션 전체, order 오름차순. Go는 제네릭 `ListRepo[T]`·`ListService[T]`·`handler.List[T]` 하나로 처리 |
 
 에러 형식: `{"error": {"code": "NOT_FOUND" | "BAD_REQUEST" | "INTERNAL", "message": "..."}}`
 
 ## 4. 컬렉션 (mockup 파일 = 컬렉션)
 | 컬렉션 | 주요 필드 | 인덱스 |
 |---|---|---|
-| `profiles` | `_id`, name, nameEn, role, location, kakaoId, email, website, github, avatar?, keywords[], body(md) | — |
-| `projects` | `_id`(slug), title, categoryId, kind?, summary, tags[], series?{name, order}, publishedAt(YYYY-MM-DD), thumbnail?, link?, github?, featured, draft, body(md) | categoryId, tags, (featured, publishedAt) |
-| `categories` | `_id`(resume·publishing·design·study·etc), label, order | — |
+| `profiles` | `_id`, name, nameEn, role, years, location, email, avatar(빈 문자열 = 사진 없음), headline, summary[], links[{type,label,url}], strengths[{title,text}] | — |
+| `projects` | `_id`(slug), title, subtitle, categoryId, kind, course, period{start,end}, summary, tags[](기술), team, role, highlights[], links[{type: live·github·slides·video·doc·pdf, label, url}], linkNote, images[{src,caption}], series?{name, order}, publishedAt(YYYY-MM-DD), featured, draft, body(md, 원본 프로젝트 문서) | categoryId, tags, (featured, publishedAt) |
+| `categories` | `_id`(edu·personal·archive = 프로젝트 구분), label, order | — |
+| `careers` | `_id`, order, company, companyNote, period, duration, role, service, responsibilities[], metrics[{value,label,note}], achievements[{title,period,role,work[],problems[],result}], extras[], skillIds[], minor | — |
+| `skills` | `_id`, order, name, group(Frontend·Backend·…), usage(work·project·study), context, projectIds[], careerIds[] | — |
+| `educations` | `_id`, kind(degree·course), order, name, org, major, degree, period, hours, notes[] | — |
+| `credentials` | `_id`, kind(certificate·award), order, name, issuer, date, note | — |
 | `users` | `_id`, name, provider(kakao·github), providerId, role(admin·user), purpose?, createdAt | (provider, providerId) unique |
 | `visits` | `_id`, userId?, path, visitedAt | visitedAt |
 
 - 태그와 시리즈는 projects 안에 넣어 두고(embed) 집계해서 응답한다. 별도 컬렉션을 만들지 않는다.
+- 관계는 id 배열로 표현한다(skill.projectIds·careerIds, career.skillIds). 향후 ERD: Profile 1–N ExternalLink, Career 1–N CareerAchievement, Project 1–N ProjectImage·ProjectLink, Project N–M Skill, Career N–M Skill.
+- 검색결과 탭(전체·경력·기술·학력·자격수상·프로젝트)은 고정 UI이며 categories 와 관계없다.
 - 날짜는 현재 문자열(ISO)로 저장한다. 정렬과 범위 조회가 필요해지면 BSON Date로 바꾸는 방안을 DECISIONS에 남긴다.
 
 ## 5. front (`front/src`)
@@ -81,7 +88,7 @@ internal/
   config      env: PORT, MONGO_URI, MONGO_DB, CORS_ORIGINS
   db          연결·종료, 컬렉션 이름 상수, 인덱스
   model       컬렉션 문서 struct, 공통 오류(ErrNotFound, ErrInvalid), ProjectQuery
-  repo        컬렉션별 Mongo 쿼리 (project, profile, category, user, visit)
+  repo        컬렉션별 Mongo 쿼리 (project, profile, category, user, visit) + 제네릭 ListRepo[T](이력 컬렉션)
   service     규칙(태그·시리즈 집계, 한국어 정렬). Store interface 정의
   handler     Gin 핸들러, 에러 → HTTP 매핑. Service interface 정의
   middleware  CORS, Timeout, (auth 자리)

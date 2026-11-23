@@ -12,5 +12,10 @@
     "dirty": true
   },
   "status": "approved",
-  "sensitive_findings": []
+  "sensitive_findings": [],
+  "issue": {
+    "number": 10,
+    "url": "https://github.com/jexists/portfolio/issues/10"
+  },
+  "branch": "feat/10-portal-redesign"
 }

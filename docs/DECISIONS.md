@@ -2,6 +2,12 @@
 
 > 중요한 설계 결정을 최신순으로 쌓는다. 형식: `## YYYY-MM-DD 제목` → 결정 / 이유 / 대안(버린 것). 뒤집을 때는 지우지 말고 새 항목에서 "대체: <이전 제목>"으로 연결한다.
 
+## 2026-11-23 통합검색형 정보 구조: 고정 탭 6개 + 이력 컬렉션 분리
+- 결정: 검색결과 탭을 전체/경력/기술/학력/자격·수상/프로젝트로 고정 UI로 두고, `categories`는 프로젝트 구분(edu·personal·archive)으로 의미를 바꾼다. 이력은 `careers`·`skills`·`educations`·`credentials` 컬렉션으로 나누고 관계는 id 배열로 둔다. Go는 같은 모양의 목록 API 4개를 제네릭 `ListRepo[T]`·`ListService[T]`·`handler.List[T]`로 처리한다. 프로젝트 상세 본문은 원본 프로젝트 문서(md)를 그대로 옮기고 표 렌더를 위해 `remark-gfm`을 쓴다.
+- 이유: 탭마다 데이터 모양이 달라 프로젝트 카테고리로 표현할 수 없다. 컬렉션을 나눠 두면 관리자 편집·API 전환 때 그대로 쓴다. 원본 md를 옮기면 내용이 자료와 어긋나지 않는다.
+- 대안: profile 문서에 배열로 넣기(관리·관계 표현이 어려움), 직무 렌즈(이번 범위에서 제외), 컬렉션마다 handler·service·repo 복제(반복 코드).
+- 대체: `refactor/category-ids` 브랜치의 카테고리 id 변경(career·project·skills·education·etc)은 merge하지 않는다.
+
 ## 2026-11-03 첫 공개 배포는 GitHub Pages + MSW 목업
 - 결정: 프론트만 GitHub Actions로 빌드해 GitHub Pages(`/portfolio/` 하위 경로)에 올리고, API는 브라우저의 MSW가 mockup JSON으로 응답한다. 하위 경로는 `VITE_BASE_PATH` 하나로 맞추고 기본값은 `/`로 둔다.
 - 이유: 저장소가 public이라 추가 비용·계정 없이 바로 공개 URL을 얻는다. 백엔드·DB 호스팅을 정하기 전에도 포트폴리오를 보여 줄 수 있다.
