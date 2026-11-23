@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { Card } from '@/components/ui/Card';
+import { RailButton } from '@/components/ui/RailButton';
 import { TechBadge } from '@/components/ui/TechBadge';
 import { useRail } from '@/hooks/useRail';
-import type { Career, CareerAchievement, Credential, Education, Skill, SkillSection } from '@/features/resume/types/resume.types';
+import type { Career, CareerAchievement, Credential, Education, Period, Skill, SkillSection } from '@/features/resume/types/resume.types';
 import { CERTIFICATE_COUNT } from '../utils/profileFacts';
 import styles from './ResumeSections.module.scss';
 
@@ -65,16 +66,48 @@ function Achievement({ item, open }: { item: CareerAchievement; open: boolean })
   );
 }
 
-export function CareerSection({ careers, skills }: { careers: Career[]; skills: Skill[] }) {
+const careerAnchor = (id: string) => `career-${id}`;
+
+/** 상세 문서가 있으면 상세 화면, 없으면 경력 탭의 그 회사 위치 */
+const careerLink = (career: Career) =>
+  career.body ? `/career/${career.id}` : `/search?tab=career#${careerAnchor(career.id)}`;
+
+interface CareerSectionProps {
+  careers: Career[];
+  skills: Skill[];
+  /** 경력 요약 줄 (profiles.json summary) */
+  summary: string[];
+}
+
+/** 경력 탭: 경력기술서 순서 (경력 타임라인 → 경력 요약 → 회사별 카드) */
+export function CareerSection({ careers, skills, summary }: CareerSectionProps) {
+  const location = useLocation();
   const skillName = new Map(skills.map((skill) => [skill.id, skill.name]));
   const main = careers.filter((career) => !career.minor);
   const minor = careers.filter((career) => career.minor);
 
+  // 타임라인·전체 탭에서 #career-<id> 로 오면 그 회사 카드로 내려간다 (같은 링크를 다시 눌러도 key 가 바뀐다).
+  // 헤더 높이만큼 띄우는 건 .career 의 scroll-margin-top 이 맡아서 새로고침 때 브라우저 이동과 위치가 같다
+  useEffect(() => {
+    if (!location.hash) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  }, [location.hash, location.key]);
+
   return (
     <>
+      <HTimeline
+        title="경력 타임라인"
+        items={main.map((career) => careerItem(career, `/search?tab=career#${careerAnchor(career.id)}`))}
+      />
+      {summary.length ? (
+        <Card title="경력 요약">
+          <Bullets items={summary} />
+        </Card>
+      ) : null}
       {main.map((career) => (
         <Card key={career.id} ariaLabel={career.company}>
-          <article className={styles.career}>
+          <article className={styles.career} id={careerAnchor(career.id)}>
             <header className={styles.careerHead}>
               <h3>
                 {career.company}
@@ -83,6 +116,11 @@ export function CareerSection({ careers, skills }: { careers: Career[]; skills: 
               <span>
                 {period(career.period)} · {career.duration}
               </span>
+              {career.body ? (
+                <Link className={styles.careerMore} to={`/career/${career.id}`}>
+                  자세히 보기 &gt;
+                </Link>
+              ) : null}
             </header>
             <p className={styles.muted}>{career.role}</p>
             {career.service ? <p>{career.service}</p> : null}
@@ -764,8 +802,6 @@ export function CredentialsSection({ credentials }: { credentials: Credential[] 
 }
 
 interface ResumeResultCardsProps {
-  headline: string;
-  summary: string[];
   careers: Career[];
   educations: Education[];
   /** 기술 카드 배지 (기술 요점 첫 줄 = 주요 실무 기술) */
@@ -775,7 +811,7 @@ interface ResumeResultCardsProps {
 }
 
 /** 전체 탭의 통합검색 결과 형식 카드 (경력·기술·학력/교육) */
-export function ResumeResultCards({ headline, summary, careers, educations, mainSkills, skillHighlights }: ResumeResultCardsProps) {
+export function ResumeResultCards({ careers, educations, mainSkills, skillHighlights }: ResumeResultCardsProps) {
   const [main, ...others] = careers.filter((career) => !career.minor);
   const degree = educations.find((item) => item.kind === 'degree');
 
@@ -784,30 +820,31 @@ export function ResumeResultCards({ headline, summary, careers, educations, main
       {main ? (
         <article className={styles.resultCard} aria-label="경력 검색결과">
           <p className={styles.source}>
-            <span className={styles.dot} data-tone="blue" aria-hidden="true">경</span>경력 · {main.company}
+            <span className={styles.dot} data-tone="blue" aria-hidden="true">경</span>경력
           </p>
-          <h3>
-            <Link to="/search?tab=career">
-              {main.role} - {main.duration}
-            </Link>
-          </h3>
-          <p>{headline}</p>
-          <ul className={styles.facts}>
-            {summary.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-          <div className={styles.resultFoot}>
-            <span>{period(main.period)}</span>
-            <Link to="/search?tab=career">경력 더보기 &gt;</Link>
+          <div className={styles.degreeHead}>
+            <h3>
+              <Link to={careerLink(main)}>{main.company}</Link>
+              <span className={styles.when}>
+                {period(main.period)} ({main.duration})
+              </span>
+            </h3>
+            <p>{main.highlight?.line ?? main.role}</p>
           </div>
+          {main.highlight?.notes.length ? (
+            <ul className={styles.facts} data-bullet="dot">
+              {main.highlight.notes.map((note) => (
+                <li key={note}>{note}</li>
+              ))}
+            </ul>
+          ) : null}
           {others.length ? (
             <div className={styles.related}>
               <h4>다른 경력</h4>
               <ul>
                 {others.map((career) => (
                   <li key={career.id}>
-                    <Link to="/search?tab=career">
+                    <Link to={careerLink(career)}>
                       {career.company} - {career.role}
                     </Link>
                   </li>
@@ -815,6 +852,9 @@ export function ResumeResultCards({ headline, summary, careers, educations, main
               </ul>
             </div>
           ) : null}
+          <Link className={styles.moreLink} to="/search?tab=career">
+            경력 더보기 <span aria-hidden="true">→</span>
+          </Link>
         </article>
       ) : null}
       {mainSkills.length || skillHighlights.length ? (
@@ -839,10 +879,9 @@ export function ResumeResultCards({ headline, summary, careers, educations, main
               </li>
             ))}
           </ul>
-          <div className={styles.resultFoot}>
-            <span />
-            <Link to="/search?tab=skills">기술 더보기 &gt;</Link>
-          </div>
+          <Link className={styles.moreLink} to="/search?tab=skills">
+            기술 더보기 <span aria-hidden="true">→</span>
+          </Link>
         </article>
       ) : null}
       {degree ? (
@@ -862,10 +901,9 @@ export function ResumeResultCards({ headline, summary, careers, educations, main
               <li key={note}>{note}</li>
             ))}
           </ul>
-          <div className={styles.resultFoot}>
-            <span />
-            <Link to="/search?tab=education">학력·교육 더보기 &gt;</Link>
-          </div>
+          <Link className={styles.moreLink} to="/search?tab=education">
+            학력·교육 더보기 <span aria-hidden="true">→</span>
+          </Link>
         </article>
       ) : null}
     </>
@@ -879,12 +917,58 @@ const TIMELINE_LABEL: Record<TimelineKind, string> = { career: '경력', degree:
 // shortcut: 주요 타임라인에 보일 항목은 id 로 고정, 자주 바뀌면 careers·educations 에 필드를 둔다
 const TIMELINE_IDS = ['skn30', 'brace', 'uxui', 'newsgate', 'ust'];
 
+const companyTitle = (career: Career) => (career.companyNote ? `${career.company} (${career.companyNote})` : career.company);
+
+interface TimelineItem {
+  id: string;
+  kind: TimelineKind;
+  period: Period;
+  title: string;
+  sub: string;
+  to: string;
+}
+
+const careerItem = (career: Career, to: string): TimelineItem => ({
+  id: career.id,
+  kind: 'career',
+  period: career.period,
+  title: companyTitle(career),
+  sub: career.role,
+  to,
+});
+
+/** 가로 타임라인 카드 (최신순). 스크롤바 대신 양 끝 화살표로 넘긴다 */
+function HTimeline({ title, items }: { title: string; items: TimelineItem[] }) {
+  const rail = useRail<HTMLOListElement>([items]);
+  if (!items.length) return null;
+  const sorted = [...items].sort((a, b) => b.period.start.localeCompare(a.period.start));
+
+  return (
+    <Card title={title}>
+      <div className={styles.hTimelineWrap}>
+        <ol className={styles.hTimeline} ref={rail.ref} onScroll={rail.update}>
+          {sorted.map((item) => (
+            <li key={item.id} data-kind={item.kind}>
+              <span className={styles.hTimelineWhen}>{period({ start: item.period.start.slice(0, 7), end: item.period.end.slice(0, 7) })}</span>
+              <span className={styles.hTimelineKind}>{TIMELINE_LABEL[item.kind]}</span>
+              <Link to={item.to} className={styles.hTimelineTitle}>
+                {item.title}
+              </Link>
+              {item.sub ? <span className={styles.hTimelineSub}>{item.sub}</span> : null}
+            </li>
+          ))}
+        </ol>
+        {rail.edge.start ? null : <RailButton side="prev" label="이전 항목" onClick={() => rail.scroll(-1)} />}
+        {rail.edge.end ? null : <RailButton side="next" label="다음 항목" onClick={() => rail.scroll(1)} />}
+      </div>
+    </Card>
+  );
+}
+
 /** 전체 탭: 주요 경력·학력·교육을 최신순으로 가로 타임라인에 놓는다 */
 export function ResumeTimeline({ careers, educations }: { careers: Career[]; educations: Education[] }) {
-  const items = [
-    ...careers
-      .filter((career) => TIMELINE_IDS.includes(career.id))
-      .map((career) => ({ id: career.id, kind: 'career' as const, period: career.period, title: career.company, sub: career.role, to: '/search?tab=career' })),
+  const items: TimelineItem[] = [
+    ...careers.filter((career) => TIMELINE_IDS.includes(career.id)).map((career) => careerItem(career, '/search?tab=career')),
     ...educations
       .filter((item) => TIMELINE_IDS.includes(item.id))
       .map((item) => ({
@@ -895,24 +979,7 @@ export function ResumeTimeline({ careers, educations }: { careers: Career[]; edu
         sub: item.kind === 'degree' ? item.degree ?? '' : item.org,
         to: '/search?tab=education',
       })),
-  ].sort((a, b) => b.period.start.localeCompare(a.period.start));
+  ];
 
-  if (!items.length) return null;
-
-  return (
-    <Card title="주요 타임라인">
-      <ol className={styles.hTimeline}>
-        {items.map((item) => (
-          <li key={item.id} data-kind={item.kind}>
-            <span className={styles.hTimelineWhen}>{period({ start: item.period.start.slice(0, 7), end: item.period.end.slice(0, 7) })}</span>
-            <span className={styles.hTimelineKind}>{TIMELINE_LABEL[item.kind]}</span>
-            <Link to={item.to} className={styles.hTimelineTitle}>
-              {item.title}
-            </Link>
-            {item.sub ? <span className={styles.hTimelineSub}>{item.sub}</span> : null}
-          </li>
-        ))}
-      </ol>
-    </Card>
-  );
+  return <HTimeline title="주요 타임라인" items={items} />;
 }

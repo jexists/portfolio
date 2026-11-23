@@ -37,6 +37,10 @@ export interface Career {
   skillIds: string[];
   /** 짧은 경력(아르바이트·OJT)은 "그 밖의 경력"에 모아 보여 준다 */
   minor: boolean;
+  /** 전체 탭 경력 결과 카드에만 쓰는 문구 (없으면 role) */
+  highlight?: { line: string; notes: string[] };
+  /** 경력 상세 화면(/career/:id) 본문 마크다운. 있을 때만 "자세히 보기"가 보인다 */
+  body?: string;
 }
 
 export type SkillUsage = 'work' | 'project' | 'study';

@@ -1,0 +1,105 @@
+.markdown {
+  color: var(--color-text-primary);
+  line-height: var(--font-line-height-body);
+}
+
+.markdown > :first-child {
+  margin-top: var(--space-0);
+}
+
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  margin-block: var(--space-6) var(--space-2);
+  color: var(--color-text-primary);
+  line-height: var(--font-line-height-tight);
+}
+
+.markdown h2 {
+  font-size: var(--font-size-lg);
+}
+
+.markdown h3,
+.markdown h4 {
+  font-size: var(--font-size-base);
+}
+
+.markdown p,
+.markdown ul,
+.markdown ol,
+.markdown table,
+.markdown blockquote,
+.markdown pre {
+  margin-block: var(--space-0) var(--space-3);
+}
+
+.markdown p,
+.markdown li {
+  color: var(--color-text-secondary);
+}
+
+.markdown strong {
+  color: var(--color-text-primary);
+}
+
+.markdown a {
+  color: var(--color-text-link);
+  overflow-wrap: anywhere;
+}
+
+.markdown ul,
+.markdown ol {
+  padding-inline-start: var(--space-6);
+}
+
+.markdown blockquote {
+  border-left: var(--search-accent-rule) solid var(--color-search-quote-rule);
+  padding-left: var(--space-4);
+}
+
+.markdown table {
+  display: block;
+  overflow-x: auto;
+  width: var(--layout-full);
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.markdown th,
+.markdown td {
+  border-bottom: var(--border-width-default) solid var(--color-border-default);
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-0);
+  text-align: left;
+  vertical-align: top;
+}
+
+.markdown th {
+  border-bottom-color: var(--color-border-strong);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.markdown code {
+  border-radius: var(--radius-sm);
+  padding: var(--space-0) var(--space-1);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.markdown pre {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--color-bg-subtle);
+}
+
+.markdown pre code {
+  padding: var(--space-0);
+}
+
+/* 문서 안 이동 링크(#제목)로 왔을 때 고정 헤더에 가리지 않게 */
+.markdown :is(h2, h3, h4) {
+  scroll-margin-top: calc(var(--space-12) * 2);
+}

@@ -33,6 +33,14 @@
       "states": ["ready", "notFound"]
     },
     {
+      "name": "CareerDetail",
+      "role": "경력 상세 페이지 (경력 문서 마크다운)",
+      "path": "src/features/resume/pages/CareerDetailPage.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "radius", "search"],
+      "states": ["loading", "ready", "notFound"]
+    },
+    {
       "name": "Admin",
       "role": "관리자 전용 방문 통계 대시보드",
       "path": "src/features/admin/pages/AdminPage.tsx",
@@ -81,6 +89,14 @@
       "variants": ["default"],
       "tokens": ["color", "font", "space", "search", "shadow"],
       "states": ["ready", "sticky"]
+    },
+    {
+      "name": "SiteFooter",
+      "role": "검색결과·상세 화면 하단 저작권 표시",
+      "path": "src/components/layout/SiteFooter.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "search"],
+      "states": ["ready"]
     },
     {
       "name": "CategoryTabs",
@@ -136,6 +152,22 @@
       "path": "src/components/ui/Card.tsx",
       "variants": ["default", "titled"],
       "tokens": ["color", "space", "radius", "search"],
+      "states": ["ready"]
+    },
+    {
+      "name": "RailButton",
+      "role": "가로 레일 원형 화살표 버튼 (대표 프로젝트·타임라인 공용)",
+      "path": "src/components/ui/RailButton.tsx",
+      "variants": ["prev", "next"],
+      "tokens": ["color", "space", "radius", "shadow", "search"],
+      "states": ["ready", "hover"]
+    },
+    {
+      "name": "Markdown",
+      "role": "원본 md 본문 렌더링 (프로젝트·경력 상세 공용)",
+      "path": "src/components/ui/Markdown.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "radius", "search"],
       "states": ["ready"]
     },
     {

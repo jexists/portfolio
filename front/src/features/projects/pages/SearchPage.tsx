@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useLocation, useSearchParams } from 'react-router';
 import { SearchHeader } from '@/components/layout/SearchHeader';
+import { SiteFooter } from '@/components/layout/SiteFooter';
 import { LinksCard, ProfileCard, ProfileSide, StrengthsCard, useProfile } from '@/features/profile';
 import {
   buildProfileFacts,
@@ -43,9 +44,10 @@ export function SearchPage() {
   );
   const featured = useMemo(() => (projects ?? []).filter((project) => project.featured), [projects]);
 
-  // 탭이 바뀌면(탭 버튼·"더보기" 링크 모두) 브라우저가 스크롤을 유지하므로 맨 위로 올린다
+  // 탭이 바뀌면(탭 버튼·"더보기" 링크 모두) 브라우저가 스크롤을 유지하므로 맨 위로 올린다.
+  // #career-<id> 처럼 위치가 붙어 오면 그 탭이 직접 스크롤한다 (탭이 바뀔 때만 실행)
   useEffect(() => {
-    window.scrollTo({ top: 0 });
+    if (!location.hash) window.scrollTo({ top: 0 });
   }, [tab]);
 
   function changeTab(next: SearchTab) {
@@ -74,8 +76,6 @@ export function SearchPage() {
                 <ResumeTimeline careers={careers} educations={educations} />
                 <FeaturedRail projects={featured} />
                 <ResumeResultCards
-                  headline={profile.headline}
-                  summary={profile.summary}
                   careers={careers}
                   educations={educations}
                   mainSkills={profile.skillSummary?.[0]?.items ?? []}
@@ -84,7 +84,7 @@ export function SearchPage() {
               </>
             ) : null}
             {tab === 'resume' ? <ResumeDocument /> : null}
-            {tab === 'career' ? <CareerSection careers={careers} skills={skills} /> : null}
+            {tab === 'career' ? <CareerSection careers={careers} skills={skills} summary={profile.summary} /> : null}
             {tab === 'skills' ? (
               <SkillsSection skills={skills} summary={profile.skillSummary ?? []} languages={profile.languages ?? []} />
             ) : null}
@@ -110,6 +110,7 @@ export function SearchPage() {
           )}
         </div>
       )}
+      <SiteFooter />
     </main>
   );
 }
