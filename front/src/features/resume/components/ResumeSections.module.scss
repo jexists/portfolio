@@ -1294,7 +1294,7 @@ button.courseToggle:hover {
 /* 직무: 회사명에 붙이고(grid gap 상쇄 + 4px 더 당김), 아래 구분선은 카드 끝에서 끝까지.
    .career p { margin: 0 } 보다 우선하도록 .career 를 붙인다 */
 .career .careerRole {
-  margin: calc((var(--space-2) + var(--space-1)) * -1) calc(var(--search-card-padding) * -1) var(--space-1);
+  margin: calc(var(--space-2) * -1) calc(var(--search-card-padding) * -1) var(--space-1);
   border-bottom: var(--border-width-default) solid var(--color-border-default);
   padding: var(--space-0) var(--search-card-padding) var(--space-3);
 }
