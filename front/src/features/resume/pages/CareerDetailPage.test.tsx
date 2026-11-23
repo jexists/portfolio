@@ -13,7 +13,7 @@ describe('CareerDetail page (MSW mockup)', () => {
     expect(await screen.findByRole('heading', { level: 1, name: '주식회사 브레이스 (구 아유레디)' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: '< 경력' })).toHaveAttribute('href', '/search?tab=career');
     const body = screen.getByRole('article', { name: '경력 상세 내용' });
-    expect(within(body).getByRole('heading', { name: '서비스 개요' })).toBeInTheDocument();
+    expect(screen.getByRole('complementary', { name: '경력 정보' })).toBeInTheDocument();
     expect(within(body).queryByText(/면접 예상 질문|4줄 요약/)).not.toBeInTheDocument();
   });
 

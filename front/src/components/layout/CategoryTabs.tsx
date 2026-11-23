@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
 import type { CSSProperties, KeyboardEvent } from 'react';
 import { FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,9 +8,9 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import styles from './CategoryTabs.module.scss';
 
-export type SearchTab = 'all' | 'resume' | 'career' | 'skills' | 'education' | 'certs' | 'projects';
+export type SearchTab = 'all' | 'resume' | 'careerdoc' | 'career' | 'skills' | 'education' | 'certs' | 'projects';
 
-/** 검색결과 탭. resume(이력서)는 인물정보 카드의 "이력서 보기"로만 들어가서 목록에 없다. */
+/** 검색결과 탭. resume(이력서)·careerdoc(경력기술서)은 "이력서 보기"·"경력기술서 보기"로만 들어가서 목록에 없다. */
 const tabs: Array<{ value: SearchTab; label: string }> = [
   { value: 'all', label: '전체' },
   { value: 'career', label: '경력' },
@@ -20,7 +21,7 @@ const tabs: Array<{ value: SearchTab; label: string }> = [
 ];
 
 export function isSearchTab(value: string | null): value is SearchTab {
-  return value === 'resume' || tabs.some((tab) => tab.value === value);
+  return value === 'resume' || value === 'careerdoc' || tabs.some((tab) => tab.value === value);
 }
 
 interface CategoryTabsProps {
@@ -121,4 +122,10 @@ export function CategoryTabs({ value, onChange }: CategoryTabsProps) {
       </Swiper>
     </nav>
   );
+}
+
+/** 검색 화면 밖(프로젝트·경력 상세)에서 쓰는 탭: 누르면 그 탭의 검색결과로 돌아간다 */
+export function SearchTabsNav({ value }: { value: SearchTab }) {
+  const navigate = useNavigate();
+  return <CategoryTabs value={value} onChange={(next) => navigate(next === 'all' ? '/search' : `/search?tab=${next}`)} />;
 }

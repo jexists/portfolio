@@ -45,11 +45,10 @@ describe('Search page (MSW mockup)', () => {
   });
 
   it('shows career metrics with notes and keeps 레사모 out of projects (AC-IA3)', async () => {
-    renderSearch('/search?tab=career');
+    renderSearch('/search?tab=careerdoc');
 
-    expect(await screen.findByText('8만 명')).toBeInTheDocument();
-    expect(screen.getAllByText('2025년 기준, 회사 내부 집계').length).toBeGreaterThan(0);
-    expect(screen.getByText('그 밖의 경력')).toBeInTheDocument();
+    expect(await screen.findByText(/8만 명/)).toBeInTheDocument();
+    expect(screen.getAllByText(/회사 내부 집계/).length).toBeGreaterThan(0);
   });
 
   it('groups skills by usage without percentages (AC-IA4)', async () => {
@@ -88,9 +87,8 @@ describe('Search page (MSW mockup)', () => {
 
     const card = await screen.findByRole('region', { name: '정주애 인물정보 카드' });
     expect(within(card).queryByRole('navigation', { name: '인물정보 탭' })).not.toBeInTheDocument();
-    expect(card).toHaveTextContent('필리핀 한인 매거진 뉴스게이트 디자이너');
+    expect(card).toHaveTextContent('필리핀 산토 토마스 대학교');
     expect(card).toHaveTextContent('주식회사 브레이스 웹 풀스택');
-    expect(card).not.toHaveTextContent('성진에이치디에스');
 
     await user.click(within(card).getByRole('link', { name: /이력서 보기/ }));
 

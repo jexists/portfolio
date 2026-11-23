@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router';
 import { Card } from '@/components/ui/Card';
 import { Markdown } from '@/components/ui/Markdown';
+import { SearchTabsNav } from '@/components/layout/CategoryTabs';
 import { SearchHeader } from '@/components/layout/SearchHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ProjectThumbnail } from '@/features/projects/components/ProjectCard';
@@ -35,7 +36,7 @@ export function ProjectDetailPage() {
   if (status === 'loading') {
     return (
       <main className={styles.page}>
-        <SearchHeader />
+        <SearchHeader tabs={<SearchTabsNav value="projects" />} />
         <div className={styles.shell} aria-label="프로젝트 로딩 중">
           <span className={styles.skeleton} />
           <span className={styles.skeleton} />
@@ -48,7 +49,7 @@ export function ProjectDetailPage() {
   if (status === 'notFound' || !project) {
     return (
       <main className={styles.page}>
-        <SearchHeader />
+        <SearchHeader tabs={<SearchTabsNav value="projects" />} />
         <section className={`${styles.shell} ${styles.notFound}`}>
           <h1>프로젝트를 찾을 수 없습니다</h1>
           <p>공개되지 않았거나 존재하지 않는 프로젝트입니다.</p>
@@ -69,7 +70,7 @@ export function ProjectDetailPage() {
 
   return (
     <main className={styles.page}>
-      <SearchHeader />
+      <SearchHeader tabs={<SearchTabsNav value="projects" />} />
       <div className={styles.shell}>
         <div className={styles.main}>
           <section className={styles.hero} aria-label="프로젝트 소개">

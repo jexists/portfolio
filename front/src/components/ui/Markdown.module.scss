@@ -101,5 +101,5 @@
 
 /* 문서 안 이동 링크(#제목)로 왔을 때 고정 헤더에 가리지 않게 */
 .markdown :is(h2, h3, h4) {
-  scroll-margin-top: calc(var(--space-12) * 2);
+  scroll-margin-top: calc(var(--space-12) * 3 + var(--space-4)); /* 고정 헤더(검색창 + 탭) 아래로 */
 }

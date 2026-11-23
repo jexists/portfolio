@@ -27,9 +27,8 @@
   min-width: var(--space-0);
 }
 
+/* 서비스 개요 카드는 따라 내려오지 않는다 */
 .side {
-  position: sticky;
-  top: var(--space-6);
   grid-column: 3;
 }
 
@@ -161,4 +160,230 @@
   margin: var(--space-0);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
+}
+
+/* ── 오른쪽 서비스 개요 카드: 좁은 칸에 맞게 정리 ── */
+.side {
+  font-size: var(--font-size-sm);
+  word-break: keep-all; /* "합류"처럼 단어가 줄 끝에서 쪼개지지 않게 */
+}
+
+/* 소제목(**기본 정보** 등)으로 묶는다: ─ 소제목 ──── 모양 */
+.side p:has(> strong:only-child) {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-4) var(--space-0) var(--space-1);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+/* 소제목 앞 짧은 선(6px) + 뒤로 끝까지 이어지는 선 */
+.side p:has(> strong:only-child)::before,
+.side p:has(> strong:only-child)::after {
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  content: '';
+}
+
+.side p:has(> strong:only-child)::before {
+  width: 6px;
+  flex: var(--flex-none);
+}
+
+.side p:has(> strong:only-child)::after {
+  flex: 1;
+}
+
+
+/* 카드 제목 바로 아래 첫 소제목만 위 여백 없이 (기술 스택 뒤 두 번째 본문 묶음은 그대로 띄운다) */
+.side div:first-child + div > p:first-child:has(> strong:only-child) {
+  margin-top: var(--space-0);
+}
+
+/* 항목·내용 2칸 표: 왼쪽 좁은 칸에 항목(작게), 오른쪽에 내용. 머리 줄·선 없이 */
+.side table:not(:has(th:nth-child(3))) {
+  display: block;
+  overflow: visible;
+}
+
+.side table:not(:has(th:nth-child(3))) thead {
+  display: none;
+}
+
+.side table:not(:has(th:nth-child(3))) tbody {
+  display: block;
+}
+
+.side table:not(:has(th:nth-child(3))) tr {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(var(--space-0), 1fr);
+  column-gap: var(--space-2);
+  padding: var(--space-1) var(--space-0);
+  line-height: 1.5;
+}
+
+.side table:not(:has(th:nth-child(3))) td {
+  border: var(--border-width-none);
+  padding: var(--space-0);
+}
+
+.side table:not(:has(th:nth-child(3))) td:first-child {
+  padding-top: 0.1em;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Git 기여처럼 칸이 많은 표는 표 모양 그대로 작게, 선 없이 */
+.side table:has(th:nth-child(3)) {
+  font-size: var(--font-size-xs);
+}
+
+.side table:has(th:nth-child(3)) :is(th, td) {
+  padding-right: var(--space-2);
+  white-space: nowrap;
+}
+
+.side table:has(th:nth-child(3)) :is(th, td) {
+  border-bottom: var(--border-width-none);
+}
+
+/* 항목 이름이 빈 줄(조직·주소의 이어지는 줄)은 위 줄에 붙인다 */
+.side table:not(:has(th:nth-child(3))) tr:has(> td:first-child:empty) {
+  padding-top: var(--space-0);
+}
+
+/* Git 기여 카드: 표 줄 간격은 좁게 */
+
+.side .git table :is(th, td) {
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+
+/* 백엔드+프론트엔드 막대 두 개: 제목 앞 차트 아이콘, 막대마다 양 끝에 이름·% */
+.shares {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.share {
+  margin: var(--space-0);
+}
+
+.share figcaption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.shareBar {
+  display: flex;
+  gap: 2px;
+  height: var(--space-3);
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.shareBar span {
+  flex-basis: 0;
+}
+
+.shareLabels {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.shareLabels span {
+  display: grid;
+}
+
+.shareLabels span:last-child {
+  text-align: right;
+}
+
+.shareLabels small {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.shareBar [data-part='mine'],
+.shareLabels [data-part='mine'] strong {
+  color: var(--color-brand-blue);
+  background: var(--color-brand-blue);
+}
+
+.shareLabels [data-part] strong {
+  background: none;
+}
+
+.shareBar [data-part='others'] {
+  background: var(--color-border-default);
+}
+
+.shareLabels [data-part='others'] strong {
+  color: var(--color-text-muted);
+}
+
+.shareBar [data-part='front'] {
+  background: var(--color-resume-accent);
+}
+
+.shareLabels [data-part='front'] strong {
+  color: var(--color-resume-accent);
+}
+
+.shareBar [data-part='back'] {
+  background: var(--color-border-strong);
+}
+
+.shareLabels [data-part='back'] strong {
+  color: var(--color-text-secondary);
+}
+
+/* 이 표만 줄 사이 선을 넣는다 (위의 "칸 많은 표는 선 없이" 규칙보다 우선) */
+.side .git table:has(th) :is(th, td) {
+  border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+}
+
+.share figcaption svg {
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+  flex: var(--flex-none);
+  fill: none;
+  stroke: var(--color-text-muted);
+  stroke-linecap: round;
+  stroke-width: var(--border-width-strong);
+}
+
+/* 머리 줄·내용 줄 높이와 여백을 같게: 위아래 4px, 칸 사이 6px, 양 끝 8px */
+.side .git table:has(th) :is(th, td) {
+  padding: var(--space-1) 6px var(--space-1) var(--space-0);
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+.side .git table:has(th) :is(th, td):first-child {
+  padding-left: var(--space-2);
+  white-space: normal; /* 긴 저장소 이름은 줄바꿈해서 표가 카드 밖으로 넘치지 않게 */
+}
+
+.side .git table:has(th) :is(th, td):last-child {
+  padding-right: var(--space-2);
+}
+
+/* 표를 카드 너비 꽉 채우기 (마크다운 표는 가로 스크롤용 block 이라 줄어든다) */
+.side .git table:has(th) {
+  display: table;
+  width: var(--layout-full);
+}
+
+/* 표 머리 줄에 연한 배경 */
+.side .git table:has(th) th {
+  background: var(--color-bg-subtle);
 }

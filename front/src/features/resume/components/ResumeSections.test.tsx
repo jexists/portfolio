@@ -120,13 +120,15 @@ describe('ResumeResultCards (전체 탭 경력 카드)', () => {
 });
 
 describe('CareerSection (경력 탭)', () => {
-  it('shows a career timeline, the summary, then each company with 자세히 보기 for detailed ones', () => {
-    inRouter(<CareerSection careers={careers} skills={[]} summary={['웹 풀스택 개발 5년 8개월']} />);
+  it('shows a career timeline with 경력기술서 보기, then each company with 자세히 보기 for detailed ones', () => {
+    inRouter(<CareerSection careers={careers} skills={[]} />);
 
     expect(screen.getByRole('region', { name: '경력 타임라인' })).toBeInTheDocument();
-    expect(screen.getByRole('region', { name: '경력 요약' })).toHaveTextContent('웹 풀스택 개발 5년 8개월');
-    expect(screen.getByRole('link', { name: '자세히 보기 >' })).toHaveAttribute('href', '/career/brace');
-    expect(screen.getAllByRole('link', { name: '자세히 보기 >' })).toHaveLength(1);
+    expect(screen.getByRole('link', { name: '경력기술서 보기' })).toHaveAttribute('href', '/search?tab=careerdoc');
+    expect(screen.queryByRole('region', { name: '경력 요약' })).toBeNull();
+    expect(screen.getByRole('link', { name: '프로젝트 보기' })).toHaveAttribute('href', '/career/brace');
+    expect(screen.getAllByRole('link', { name: '프로젝트 보기' })).toHaveLength(1);
+    expect(screen.queryByRole('link', { name: '자세히 보기 →' })).toBeNull();
     expect(document.getElementById('career-sungjin')).not.toBeNull();
   });
 });

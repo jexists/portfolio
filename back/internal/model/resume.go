@@ -29,6 +29,18 @@ type CareerHighlight struct {
 	Notes []string `bson:"notes" json:"notes"`
 }
 
+// 경력 카드 항목·내용 한 줄. Links 의 Text 와 같은 글자를 내용 속에서 찾아 링크로 건다
+type CareerFact struct {
+	Label string     `bson:"label" json:"label"`
+	Text  string     `bson:"text" json:"text"`
+	Links []FactLink `bson:"links,omitempty" json:"links,omitempty"`
+}
+
+type FactLink struct {
+	Text string `bson:"text" json:"text"`
+	URL  string `bson:"url" json:"url"`
+}
+
 type Career struct {
 	ID               string              `bson:"_id" json:"_id"`
 	Order            int                 `bson:"order" json:"order"`
@@ -40,6 +52,8 @@ type Career struct {
 	Role             string              `bson:"role" json:"role"`
 	Service          string              `bson:"service" json:"service"`
 	Responsibilities []string            `bson:"responsibilities" json:"responsibilities"`
+	Facts            []CareerFact        `bson:"facts,omitempty" json:"facts,omitempty"`                 // 경력 카드 위쪽 항목·내용 표
+	Collaboration    []string            `bson:"collaboration,omitempty" json:"collaboration,omitempty"` // 경력 카드 협업 줄
 	Metrics          []CareerMetric      `bson:"metrics" json:"metrics"`
 	Achievements     []CareerAchievement `bson:"achievements" json:"achievements"`
 	Extras           []string            `bson:"extras" json:"extras"`

@@ -38,12 +38,12 @@ const components: Components = {
   h3: ({ children }) => <h3 id={headingId(textOf(children))}>{children}</h3>,
 };
 
-/** 원본 md 본문(GFM 표 포함)을 화면 글꼴·색으로 보여 준다 */
+/** 원본 md 본문(GFM 표 포함)을 화면 글꼴·색으로 보여 준다. HTML 주석(<!-- -->)은 숨긴 메모라 지운다 */
 export function Markdown({ children }: { children: string }) {
   return (
     <div className={styles.markdown}>
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-        {children}
+        {children.replace(/<!--[\s\S]*?-->/g, '')}
       </ReactMarkdown>
     </div>
   );
