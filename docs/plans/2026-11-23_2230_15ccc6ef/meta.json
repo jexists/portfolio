@@ -11,11 +11,19 @@
     "base_commit": "bca4de21ca952738b8a60d489ae089ec99325583",
     "dirty": true
   },
-  "status": "implemented",
+  "status": "merged",
   "sensitive_findings": [],
   "issue": {
     "number": 15,
     "url": "https://github.com/jexists/portfolio/issues/15"
   },
-  "branch": "feat/15-career-detail"
+  "branch": "feat/15-career-detail",
+  "pr": {
+    "number": 16,
+    "url": "https://github.com/jexists/portfolio/pull/16"
+  },
+  "merged_pr": {
+    "number": 16,
+    "url": "https://github.com/jexists/portfolio/pull/16"
+  }
 }
