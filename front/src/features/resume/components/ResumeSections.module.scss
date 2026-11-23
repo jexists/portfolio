@@ -1,0 +1,393 @@
+.muted {
+  margin: var(--space-0);
+  color: var(--color-text-secondary);
+}
+
+.strong {
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.label {
+  margin: var(--space-0) var(--space-0) var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.bullets {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-0);
+  padding-left: var(--space-4);
+  color: var(--color-text-primary);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+}
+
+.tag {
+  border-radius: var(--radius-sm);
+  padding: var(--space-0) var(--space-2);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+/* ── 경력 ── */
+.career,
+.degree {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.career p,
+.degree p {
+  margin: var(--space-0);
+}
+
+.careerHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+}
+
+.careerHead h3 {
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xl);
+}
+
+.careerHead small {
+  margin-left: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.careerHead span {
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(var(--search-metric-columns), minmax(var(--space-0), 1fr));
+  gap: var(--space-2);
+  margin: var(--space-2) var(--space-0);
+}
+
+.metrics > div {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-page);
+}
+
+.metrics dt {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.metrics dd {
+  display: contents;
+  margin: var(--space-0);
+}
+
+.metrics strong {
+  order: 2;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xl);
+}
+
+.metrics small {
+  order: -1;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.subhead {
+  margin: var(--space-4) var(--space-0) var(--space-1);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+}
+
+.achievements {
+  border-bottom: var(--border-width-default) solid var(--color-border-default);
+}
+
+.achievement {
+  border-top: var(--border-width-default) solid var(--color-border-default);
+}
+
+.achievement summary {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-0);
+  cursor: pointer;
+  list-style: none;
+}
+
+.achievement summary::-webkit-details-marker {
+  display: none;
+}
+
+.achievement summary::after {
+  margin-left: auto;
+  color: var(--color-text-muted);
+  content: '+';
+}
+
+.achievement[open] summary::after {
+  content: '−';
+}
+
+.achievement summary h4 {
+  margin: var(--space-0);
+  font-size: var(--font-size-base);
+}
+
+.achievement summary span {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.achievementBody {
+  display: grid;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.result {
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-search-chip-active-bg);
+}
+
+.rows {
+  display: grid;
+  margin: var(--space-0);
+  padding: var(--space-0);
+  list-style: none;
+}
+
+.rows > li {
+  display: grid;
+  grid-template-columns: var(--search-row-label-width) minmax(var(--space-0), 1fr);
+  gap: var(--space-4);
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  padding: var(--space-3) var(--space-0);
+}
+
+.rows > li:first-child {
+  border-top: var(--border-width-none);
+  padding-top: var(--space-0);
+}
+
+.when {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 기술 ── */
+.skills {
+  margin: var(--space-0);
+  padding: var(--space-0);
+  list-style: none;
+}
+
+.skill {
+  display: grid;
+  grid-template-columns: var(--search-skill-name-width) minmax(var(--space-0), 1fr);
+  gap: var(--space-4);
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  padding: var(--space-3) var(--space-0);
+}
+
+.skill:first-child {
+  border-top: var(--border-width-none);
+  padding-top: var(--space-0);
+}
+
+.skill p {
+  margin: var(--space-0);
+}
+
+.skillName {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-weight: var(--font-weight-bold);
+}
+
+.badge {
+  border: var(--border-width-default) solid var(--color-border-strong);
+  border-radius: var(--radius-badge);
+  padding: var(--space-0) var(--space-1);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+.badge[data-usage='work'] {
+  border-color: var(--color-text-link);
+  color: var(--color-text-link);
+}
+
+.refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-0) var(--space-3);
+  margin-top: var(--space-1);
+  font-size: var(--font-size-sm);
+}
+
+.refs a,
+.resultCard h3 a,
+.related a {
+  color: var(--color-text-link);
+}
+
+/* ── 표 ── */
+.table {
+  width: var(--layout-full);
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.table th {
+  border-bottom: var(--border-width-default) solid var(--color-border-strong);
+  padding: var(--space-0) var(--space-3) var(--space-2) var(--space-0);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  text-align: left;
+}
+
+.table td {
+  border-bottom: var(--border-width-default) solid var(--color-border-default);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-0);
+  vertical-align: top;
+}
+
+.table tr:last-child td {
+  border-bottom: var(--border-width-none);
+}
+
+.table td:first-child {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 전체 탭 결과 카드 ── */
+.resultCard {
+  display: grid;
+  gap: var(--space-2);
+  min-width: var(--space-0);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--search-card-padding);
+  background: var(--color-bg-surface);
+}
+
+.resultCard p,
+.resultCard h3 {
+  margin: var(--space-0);
+}
+
+.resultCard h3 {
+  font-size: var(--font-size-lg);
+}
+
+.source {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.dot {
+  display: grid;
+  width: var(--font-size-xl);
+  height: var(--font-size-xl);
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-blue);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.dot[data-tone='green'] {
+  background: var(--color-brand-green);
+}
+
+.dot[data-tone='yellow'] {
+  background: var(--color-text-muted);
+}
+
+.facts {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-1) var(--space-0) var(--space-0);
+  border-left: var(--search-accent-rule) solid var(--color-bg-subtle);
+  padding: var(--space-0) var(--space-0) var(--space-0) var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  list-style: none;
+}
+
+.resultFoot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.resultFoot a {
+  color: var(--color-text-secondary);
+}
+
+.related {
+  margin-top: var(--space-2);
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  padding-top: var(--space-3);
+}
+
+.related h4 {
+  margin: var(--space-0) var(--space-0) var(--space-1);
+  font-size: var(--font-size-base);
+}
+
+.related ul {
+  margin: var(--space-0);
+  padding: var(--space-0);
+  list-style: none;
+}
+
+@media (max-width: 48rem) {
+  .metrics,
+  .skill,
+  .rows > li {
+    grid-template-columns: minmax(var(--space-0), 1fr);
+    gap: var(--space-1);
+  }
+
+  .resultCard {
+    padding: var(--space-4);
+  }
+}

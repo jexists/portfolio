@@ -1,0 +1,46 @@
+.card {
+  min-width: var(--space-0);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--search-card-padding);
+  background: var(--color-bg-surface);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.head h2 {
+  margin: var(--space-0);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.more {
+  display: inline-flex;
+  padding: var(--space-1);
+  color: var(--color-text-primary);
+}
+
+.more:hover {
+  color: var(--color-brand-blue);
+}
+
+.more svg {
+  width: var(--font-size-lg);
+  height: var(--font-size-lg);
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+}
+
+@media (max-width: 48rem) {
+  .card {
+    padding: var(--space-4);
+  }
+}

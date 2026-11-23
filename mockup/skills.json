@@ -1,0 +1,449 @@
+[
+  {
+    "_id": "angular",
+    "order": 1,
+    "name": "Angular",
+    "group": "Frontend",
+    "usage": "work",
+    "context": "레사모 사용자·관리자 화면 5년 8개월, 13 → 20 단계적 업그레이드",
+    "projectIds": [
+      "trello-clone"
+    ],
+    "careerIds": [
+      "brace",
+      "sungjin"
+    ]
+  },
+  {
+    "_id": "typescript",
+    "order": 2,
+    "name": "TypeScript",
+    "group": "Frontend",
+    "usage": "work",
+    "context": "Angular 실무와 React·Next.js 프로젝트 전반",
+    "projectIds": [
+      "hanbit-math",
+      "blog2shorts",
+      "salesluv"
+    ],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "rxjs",
+    "order": 3,
+    "name": "RxJS",
+    "group": "Frontend",
+    "usage": "work",
+    "context": "Angular 화면 상태·비동기 처리",
+    "projectIds": [
+      "trello-clone"
+    ],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "html-css",
+    "order": 4,
+    "name": "HTML · CSS(SCSS) · JavaScript",
+    "group": "Frontend",
+    "usage": "work",
+    "context": "퍼블리싱 실무, 2019–2020 클론·리디자인 작업",
+    "projectIds": [
+      "cocacola-redesign",
+      "naver-clone",
+      "asiana-clone"
+    ],
+    "careerIds": [
+      "sungjin"
+    ]
+  },
+  {
+    "_id": "react",
+    "order": 5,
+    "name": "React",
+    "group": "Frontend",
+    "usage": "project",
+    "context": "5단계 진행 화면, 영업 CRM 화면, RAG 상담 화면",
+    "projectIds": [
+      "blog2shorts",
+      "salesluv",
+      "jeonse-factchecker",
+      "lecture-practice"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "nextjs",
+    "order": 6,
+    "name": "Next.js",
+    "group": "Frontend",
+    "usage": "project",
+    "context": "AX 캠퍼스 서비스 전체와 plog (Vercel 배포)",
+    "projectIds": [
+      "hanbit-math",
+      "testory",
+      "snapbook",
+      "heuk-studio",
+      "plog"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "jquery",
+    "order": 7,
+    "name": "jQuery",
+    "group": "Frontend",
+    "usage": "project",
+    "context": "2019–2020 리디자인·클론 인터랙션",
+    "projectIds": [
+      "cocacola-redesign",
+      "portfolio-2019",
+      "naver-clone"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "vue",
+    "order": 8,
+    "name": "Vue.js",
+    "group": "Frontend",
+    "usage": "study",
+    "context": "학습",
+    "projectIds": [],
+    "careerIds": []
+  },
+  {
+    "_id": "go",
+    "order": 9,
+    "name": "Go (Gin)",
+    "group": "Backend",
+    "usage": "work",
+    "context": "경매·결제·정산·재고 API, 스케줄러",
+    "projectIds": [],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "python",
+    "order": 10,
+    "name": "Python",
+    "group": "Backend",
+    "usage": "work",
+    "context": "네이버 카페 크롤러, 데이터 수집·자동화 스크립트",
+    "projectIds": [
+      "travel-content-maker",
+      "tube-eottae",
+      "ev-charging-sos"
+    ],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "fastapi",
+    "order": 11,
+    "name": "FastAPI",
+    "group": "Backend",
+    "usage": "project",
+    "context": "작업 상태 API, 비동기 처리(202 + 폴링), 서버 페이지네이션",
+    "projectIds": [
+      "blog2shorts",
+      "salesluv",
+      "jeonse-factchecker",
+      "plog"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "nestjs",
+    "order": 12,
+    "name": "NestJS",
+    "group": "Backend",
+    "usage": "project",
+    "context": "TypeORM·Prisma, 행 잠금 기반 정원 관리, Swagger",
+    "projectIds": [
+      "hanbit-math",
+      "testory",
+      "snapbook",
+      "heuk-studio"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "django",
+    "order": 13,
+    "name": "Django",
+    "group": "Backend",
+    "usage": "study",
+    "context": "학습",
+    "projectIds": [],
+    "careerIds": []
+  },
+  {
+    "_id": "mongodb",
+    "order": 14,
+    "name": "MongoDB",
+    "group": "Database",
+    "usage": "work",
+    "context": "Aggregation, 인덱스, Atlas Search 통합 검색",
+    "projectIds": [],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "redis",
+    "order": 15,
+    "name": "Redis",
+    "group": "Database",
+    "usage": "work",
+    "context": "캐시, SETNX 락으로 중복 마감 차단",
+    "projectIds": [],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "firebase",
+    "order": 16,
+    "name": "Firebase",
+    "group": "Database",
+    "usage": "work",
+    "context": "Realtime DB 채팅, FCM 푸시",
+    "projectIds": [],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "postgresql",
+    "order": 17,
+    "name": "PostgreSQL",
+    "group": "Database",
+    "usage": "project",
+    "context": "EXCLUDE 제약으로 예약 겹침 차단, FOR UPDATE 정원 관리, 20테이블 ERD",
+    "projectIds": [
+      "hanbit-math",
+      "snapbook",
+      "heuk-studio",
+      "testory"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "supabase",
+    "order": 18,
+    "name": "Supabase",
+    "group": "Database",
+    "usage": "project",
+    "context": "서비스 DB·인증·pgvector",
+    "projectIds": [
+      "salesluv",
+      "jeonse-factchecker",
+      "plog"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "aws",
+    "order": 19,
+    "name": "AWS (S3 · CloudFront · EC2)",
+    "group": "Infra / DevOps",
+    "usage": "project",
+    "context": "정적 배포와 EC2 백엔드 배포. 실무에서는 S3·Secrets Manager 콘솔 등록",
+    "projectIds": [
+      "salesluv"
+    ],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "docker",
+    "order": 20,
+    "name": "Docker · Nginx",
+    "group": "Infra / DevOps",
+    "usage": "project",
+    "context": "EC2 한 대에서 무중단 배포. 실무에서는 기존 환경 사용",
+    "projectIds": [
+      "salesluv"
+    ],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "actions",
+    "order": 21,
+    "name": "GitHub Actions",
+    "group": "Infra / DevOps",
+    "usage": "project",
+    "context": "OIDC 인증, SSM 환경변수, 헬스체크, 자동 롤백",
+    "projectIds": [
+      "salesluv"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "vercel",
+    "order": 22,
+    "name": "Vercel · Render · GitHub Pages",
+    "group": "Infra / DevOps",
+    "usage": "project",
+    "context": "프로젝트 배포",
+    "projectIds": [
+      "hanbit-math",
+      "testory",
+      "heuk-studio",
+      "plog"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "ai-coding",
+    "order": 23,
+    "name": "Claude Code · Codex",
+    "group": "AI / Data",
+    "usage": "project",
+    "context": "구현과 테스트 작성, 스킬 제작, MCP 연결, CodeRabbit 세팅",
+    "projectIds": [
+      "hanbit-math",
+      "travel-content-maker",
+      "blog2shorts"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "rag",
+    "order": 24,
+    "name": "RAG (LangChain · pgvector · Dify)",
+    "group": "AI / Data",
+    "usage": "project",
+    "context": "근거가 부족하면 답하지 않는 RAG, 학원 안내 챗봇",
+    "projectIds": [
+      "jeonse-factchecker",
+      "hanbit-math",
+      "heuk-studio"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "prompt",
+    "order": 25,
+    "name": "프롬프트 설계",
+    "group": "AI / Data",
+    "usage": "project",
+    "context": "숏폼 대본 규칙, 블로그 초안 2단계 호출",
+    "projectIds": [
+      "blog2shorts",
+      "plog"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "streamlit",
+    "order": 26,
+    "name": "Streamlit",
+    "group": "AI / Data",
+    "usage": "project",
+    "context": "데이터 대시보드 프로토타입",
+    "projectIds": [
+      "jeonse-factchecker",
+      "tube-eottae",
+      "ev-charging-sos"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "kotlin",
+    "order": 27,
+    "name": "Kotlin · Jetpack Compose",
+    "group": "Mobile",
+    "usage": "project",
+    "context": "사진 정리·문구 편집 Android 앱",
+    "projectIds": [
+      "instpic",
+      "photo-organizer"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "figma",
+    "order": 28,
+    "name": "Figma",
+    "group": "Design",
+    "usage": "work",
+    "context": "웹 UI·디자인 시스템",
+    "projectIds": [
+      "blog2shorts"
+    ],
+    "careerIds": []
+  },
+  {
+    "_id": "indesign",
+    "order": 29,
+    "name": "InDesign",
+    "group": "Design",
+    "usage": "work",
+    "context": "매거진 편집디자인, 전자책 파일 제작",
+    "projectIds": [],
+    "careerIds": [
+      "newsgate"
+    ]
+  },
+  {
+    "_id": "illustrator",
+    "order": 30,
+    "name": "Illustrator",
+    "group": "Design",
+    "usage": "work",
+    "context": "광고 그래픽",
+    "projectIds": [],
+    "careerIds": [
+      "newsgate"
+    ]
+  },
+  {
+    "_id": "photoshop",
+    "order": 31,
+    "name": "Photoshop",
+    "group": "Design",
+    "usage": "work",
+    "context": "광고 그래픽, 리디자인 그래픽",
+    "projectIds": [
+      "cocacola-redesign"
+    ],
+    "careerIds": [
+      "newsgate"
+    ]
+  },
+  {
+    "_id": "git",
+    "order": 32,
+    "name": "Git · GitHub",
+    "group": "Tools",
+    "usage": "work",
+    "context": "실무 8개 저장소, 팀 PR 협업",
+    "projectIds": [
+      "blog2shorts",
+      "salesluv"
+    ],
+    "careerIds": [
+      "brace"
+    ]
+  },
+  {
+    "_id": "notion",
+    "order": 33,
+    "name": "Notion · MS Office",
+    "group": "Tools",
+    "usage": "work",
+    "context": "문서·기획",
+    "projectIds": [],
+    "careerIds": []
+  }
+]

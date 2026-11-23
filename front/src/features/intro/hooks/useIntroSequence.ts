@@ -96,10 +96,24 @@ export function useIntroSequence({ onComplete }: UseIntroSequenceOptions) {
     };
   }, [complete, shouldAutoplay]);
 
+  /** 키보드로 화면 안에 들어오면 자동 이동을 멈추고 완성된 상태로 둔다 */
+  const pause = useCallback(() => {
+    if (completedRef.current || timersRef.current.length === 0) {
+      return;
+    }
+
+    timersRef.current.forEach((timer) => window.clearTimeout(timer));
+    timersRef.current = [];
+    setPhase('static');
+    setTypedText(SELECTED_QUERY);
+    setSuggestOpen(true);
+  }, []);
+
   return {
     phase,
     typedText,
     suggestOpen,
     skip: complete,
+    pause,
   };
 }

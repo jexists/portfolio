@@ -1,27 +1,17 @@
 [
   {
-    "_id": "resume",
-    "label": "이력서",
+    "_id": "edu",
+    "label": "교육 프로젝트",
     "order": 1
   },
   {
-    "_id": "publishing",
-    "label": "퍼블리싱",
+    "_id": "personal",
+    "label": "개인 프로젝트",
     "order": 2
   },
   {
-    "_id": "design",
-    "label": "디자인",
+    "_id": "archive",
+    "label": "2019–2020 작업",
     "order": 3
-  },
-  {
-    "_id": "study",
-    "label": "스터디",
-    "order": 4
-  },
-  {
-    "_id": "etc",
-    "label": "기타",
-    "order": 5
   }
 ]

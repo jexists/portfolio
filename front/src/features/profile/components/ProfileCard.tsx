@@ -1,112 +1,185 @@
 import { useEffect, useState } from 'react';
-import type { Profile } from '@/features/profile/types/profile.types';
+import { Link } from 'react-router';
+import { Card } from '@/components/ui/Card';
+import type { Profile, Strength } from '@/features/profile/types/profile.types';
 import styles from './ProfileCard.module.scss';
 
-interface ProfileCardProps {
-  profile: Profile;
-  activeKeyword?: string | null;
-  onKeywordClick?: (keyword: string | null) => void;
+/** 경력·학력·자격 요약 한 줄 (resume feature 의 buildProfileFacts 결과와 같은 모양) */
+export interface ProfileFactRow {
+  label: string;
+  values: string[];
 }
 
-export function ProfileCard({ profile, activeKeyword = null, onKeywordClick }: ProfileCardProps) {
+export interface ProfileTab {
+  value: string;
+  label: string;
+}
+
+function useCopy(text: string) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (!copied) {
-      return;
-    }
-
+    if (!copied) return;
     const timeout = window.setTimeout(() => setCopied(false), 2000);
-
     return () => window.clearTimeout(timeout);
   }, [copied]);
 
-  async function copyEmail() {
+  async function copy() {
     try {
-      await window.navigator.clipboard?.writeText(profile.email);
+      await window.navigator.clipboard?.writeText(text);
       setCopied(true);
     } catch {
-      // Clipboard failures should not interrupt exploration.
+      // 복사에 실패해도 탐색은 계속한다.
     }
   }
 
+  return { copied, copy };
+}
+
+function Avatar({ profile, size }: { profile: Profile; size: 'large' | 'small' }) {
+  return profile.avatarUrl ? (
+    <img className={styles.photo} data-size={size} src={profile.avatarUrl} alt={`${profile.name} 사진`} />
+  ) : (
+    <span className={styles.photo} data-size={size} role="img" aria-label={`${profile.name} 이니셜`}>
+      {profile.nameEn.slice(0, 1)}
+    </span>
+  );
+}
+
+function FactList({ profile, facts }: { profile: Profile; facts: ProfileFactRow[] }) {
+  const { copied, copy } = useCopy(profile.email);
+
+  return (
+    <dl className={styles.facts}>
+      {facts.map((fact) => (
+        <div key={fact.label}>
+          <dt>{fact.label}</dt>
+          <dd>
+            {fact.values.map((value) => (
+              <p key={value}>{value}</p>
+            ))}
+          </dd>
+        </div>
+      ))}
+      <div>
+        <dt>사이트</dt>
+        <dd className={styles.links}>
+          {profile.links.map((link) => (
+            <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
+              {link.label}
+            </a>
+          ))}
+        </dd>
+      </div>
+      <div>
+        <dt>이메일</dt>
+        <dd>
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          <button className={styles.copy} type="button" onClick={copy} aria-label="이메일 주소 복사">
+            {copied ? '복사됨' : '복사'}
+          </button>
+        </dd>
+      </div>
+    </dl>
+  );
+}
+
+interface ProfileCardProps {
+  profile: Profile;
+  facts: ProfileFactRow[];
+  tabs: ProfileTab[];
+  activeTab: string;
+}
+
+/** 전체 탭 맨 위 인물정보 카드: 이름, 칩 탭, 요약 정보, 사진 */
+export function ProfileCard({ profile, facts, tabs, activeTab }: ProfileCardProps) {
   return (
     <section className={styles.card} aria-label={`${profile.name} 인물정보 카드`}>
-      <header className={styles.header}>
-        <div className={styles.identity}>
-          <h1>{profile.name}</h1>
-          <p className={styles.subtitle}>{profile.nameEn} · {profile.role}</p>
-        </div>
-        <span className={styles.more} aria-hidden="true">⋮</span>
-      </header>
-
-      <div className={styles.keywords} aria-label="인물 키워드">
-        <button
-          type="button"
-          className={styles.keyword}
-          data-active={activeKeyword === null}
-          aria-label="전체 인물 키워드"
-          aria-pressed={activeKeyword === null}
-          onClick={() => onKeywordClick?.(null)}
-        >
-          전체
-        </button>
-        {profile.keywords.map((keyword) => (
-          <button
-            type="button"
-            className={styles.keyword}
-            data-active={activeKeyword === keyword}
-            aria-label={`${keyword} 인물 키워드`}
-            aria-pressed={activeKeyword === keyword}
-            onClick={() => onKeywordClick?.(keyword)}
-            key={keyword}
+      <h1>{profile.name}</h1>
+      <p className={styles.subtitle}>
+        <span>{profile.nameEn}</span> · {profile.role}, {profile.years}
+      </p>
+      <nav className={styles.chips} aria-label="인물정보 탭">
+        {tabs.map((tab) => (
+          <Link
+            key={tab.value}
+            className={styles.chip}
+            to={tab.value === 'all' ? '/search' : `/search?tab=${tab.value}`}
+            aria-current={tab.value === activeTab ? 'page' : undefined}
           >
-            {keyword}
-          </button>
+            {tab.label}
+          </Link>
         ))}
+      </nav>
+      <div className={styles.body}>
+        <FactList profile={profile} facts={facts} />
+        <Avatar profile={profile} size="large" />
       </div>
-
-      <div className={styles.details}>
-        <dl className={styles.meta} aria-label={`${profile.name} 인물정보`}>
-          <MetaRow label="거주지">{profile.location}</MetaRow>
-          <MetaRow label="카톡">{profile.kakaoId}</MetaRow>
-          <MetaRow label="이메일">
-            <button
-              type="button"
-              className={styles.textButton}
-              aria-label={copied ? '이메일 복사됨' : '이메일 복사'}
-              onClick={copyEmail}
-            >
-              <span>{profile.email}</span>
-              <span className={styles.copyFeedback}>{copied ? '복사됨' : '복사'}</span>
-            </button>
-          </MetaRow>
-          <MetaRow label="사이트">
-            <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
-            <span aria-hidden="true">, </span>
-            <a href={profile.website} target="_blank" rel="noreferrer">웹사이트</a>
-          </MetaRow>
-        </dl>
-
-        {profile.avatarUrl ? (
-          <img className={styles.avatar} src={profile.avatarUrl} alt={`${profile.name} 프로필 사진`} />
-        ) : (
-          <div className={styles.avatar} aria-hidden="true">{profile.name.slice(0, 1)}</div>
-        )}
-      </div>
-
-      <footer className={styles.footer}>
-        <p>2026.07.14.</p>
-      </footer>
     </section>
   );
 }
 
-function MetaRow({ label, children }: { label: string; children: React.ReactNode }) {
+/** 전체 외 탭의 사이드 첫 카드: 내 정보 */
+export function ProfileSide({ profile, facts }: { profile: Profile; facts: ProfileFactRow[] }) {
   return (
-    <div>
-      <dt>{label}</dt>
-      <dd>{children}</dd>
-    </div>
+    <Card ariaLabel="프로필" className={styles.side}>
+      <div className={styles.sideHead}>
+        <Avatar profile={profile} size="small" />
+        <div>
+          <h2>{profile.name}</h2>
+          <p className={styles.subtitle}>
+            {profile.role} · {profile.years}
+          </p>
+        </div>
+      </div>
+      <FactList profile={profile} facts={facts} />
+    </Card>
+  );
+}
+
+export function StrengthsCard({ strengths }: { strengths: Strength[] }) {
+  return (
+    <Card title="핵심 역량">
+      <ul className={styles.strengths}>
+        {strengths.map((strength) => (
+          <li key={strength.title}>
+            <b>{strength.title}</b>
+            <span>{strength.text}</span>
+          </li>
+        ))}
+      </ul>
+    </Card>
+  );
+}
+
+const linkHost = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+
+export function LinksCard({ profile }: { profile: Profile }) {
+  const rows = [
+    ...profile.links.map((link) => ({ key: link.url, href: link.url, label: link.label, sub: linkHost(link.url), external: true })),
+    { key: 'email', href: `mailto:${profile.email}`, label: '이메일', sub: profile.email, external: false },
+  ];
+
+  return (
+    <Card ariaLabel="외부 링크">
+      <ul className={styles.linkRows}>
+        {rows.map((row) => (
+          <li key={row.key}>
+            <a href={row.href} {...(row.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+              <span className={styles.linkIcon} aria-hidden="true">
+                {row.external ? row.label.slice(0, 1) : '@'}
+              </span>
+              <span className={styles.linkText}>
+                <b>{row.label}</b>
+                <span>{row.sub}</span>
+              </span>
+              <span className={styles.chevron} aria-hidden="true">
+                ›
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Card>
   );
 }

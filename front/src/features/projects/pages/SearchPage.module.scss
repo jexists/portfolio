@@ -3,10 +3,12 @@
   background: var(--color-bg-page);
 }
 
+/* 헤더 검색바 열(content-offset 다음 칸)에 본문을 맞추고, 오른쪽에 사이드 열을 둔다 */
 .shell {
   display: grid;
-  grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) minmax(var(--space-0), 1fr);
-  row-gap: var(--space-6);
+  grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) var(--search-side-width);
+  column-gap: var(--space-6);
+  align-items: start;
   width: var(--layout-full);
   max-width: var(--search-header-max-width);
   margin-inline: auto;
@@ -18,48 +20,30 @@
   grid-column: 2;
 }
 
-.section {
+.main,
+.side {
+  display: grid;
+  gap: var(--search-card-gap);
+  min-width: var(--space-0);
+}
+
+.side {
+  position: sticky;
+  top: var(--space-6);
+  grid-column: 3;
+}
+
+.page[data-from-intro='true'] .main > * {
+  animation: section-enter var(--motion-duration-slow) var(--motion-easing-standard) both;
+}
+
+.skeleton {
   display: grid;
   gap: var(--space-3);
-}
-
-.page[data-from-intro='true'] .section {
-  animation: section-enter var(--motion-duration-slow) var(--motion-easing-standard) both;
-  animation-delay: calc(var(--search-section-index) * var(--motion-duration-stagger));
-}
-
-.section h2 {
-  margin: var(--space-0);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-lg);
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--search-card-min-width), 1fr));
-  gap: var(--space-4);
-}
-
-.empty,
-.skeleton {
   border: var(--border-width-default) solid var(--color-border-default);
   border-radius: var(--radius-lg);
   padding: var(--space-8);
   background: var(--color-bg-surface);
-  color: var(--color-text-muted);
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-}
-
-.skeleton {
-  display: grid;
-  gap: var(--space-3);
 }
 
 .skeleton span {
@@ -82,17 +66,32 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page[data-from-intro='true'] .section {
+  .page[data-from-intro='true'] .main > * {
     animation: none;
+  }
+}
+
+/* 사이드 열이 들어갈 폭이 없으면 본문 아래로 내린다 */
+@media (max-width: 80rem) {
+  .shell {
+    grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) minmax(var(--space-0), 1fr);
+    row-gap: var(--search-card-gap);
+  }
+
+  .side {
+    position: static;
+    grid-column: 2;
   }
 }
 
 @media (max-width: 48rem) {
   .shell {
     grid-template-columns: minmax(var(--space-0), 1fr);
+    padding-block: var(--space-3) var(--space-8);
   }
 
-  .shell > * {
+  .shell > *,
+  .side {
     grid-column: 1;
   }
 }

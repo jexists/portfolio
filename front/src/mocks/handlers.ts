@@ -1,12 +1,19 @@
 import { http, HttpResponse } from 'msw';
+import careers from '@mockup/careers.json';
 import categories from '@mockup/categories.json';
+import credentials from '@mockup/credentials.json';
+import educations from '@mockup/educations.json';
 import profiles from '@mockup/profiles.json';
 import projects from '@mockup/projects.json';
+import skills from '@mockup/skills.json';
 import type { ProjectDto } from '@/features/projects/types/project.types';
 import { findProject, listProjects, listSeries, listTags } from './queries';
 
 const API = '*/api/v1';
 const projectDocs = projects as ProjectDto[];
+
+/** 이력 컬렉션 목록: order 오름차순 (Go repo.ListRepo 와 같은 규칙) */
+const byOrder = <T extends { order: number }>(docs: T[]) => [...docs].sort((a, b) => a.order - b.order);
 
 function notFound(message: string) {
   return HttpResponse.json({ error: { code: 'NOT_FOUND', message } }, { status: 404 });
@@ -37,6 +44,11 @@ export const handlers = [
     const project = findProject(projectDocs, String(params.slug));
     return project ? HttpResponse.json(project) : notFound(`project ${String(params.slug)} not found`);
   }),
+
+  http.get(`${API}/careers`, () => HttpResponse.json(byOrder(careers))),
+  http.get(`${API}/skills`, () => HttpResponse.json(byOrder(skills))),
+  http.get(`${API}/educations`, () => HttpResponse.json(byOrder(educations))),
+  http.get(`${API}/credentials`, () => HttpResponse.json(byOrder(credentials))),
 
   http.get(`${API}/tags`, () => HttpResponse.json(listTags(projectDocs))),
 

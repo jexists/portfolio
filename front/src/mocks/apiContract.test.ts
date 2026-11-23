@@ -6,6 +6,7 @@
  */
 import { profileApi } from '@/features/profile/api/profile.api';
 import { projectsApi } from '@/features/projects/api/projects.api';
+import { resumeApi } from '@/features/resume/api/resume.api';
 import { http } from '@/lib/axios';
 import { runContentApiContract } from './apiContract';
 import { server } from './server';
@@ -23,4 +24,4 @@ afterAll(() => {
   if (!realApi) server.close();
 });
 
-runContentApiContract(realApi ? `Go API (${realApi})` : 'MSW mockup', () => ({ ...projectsApi, ...profileApi }));
+runContentApiContract(realApi ? `Go API (${realApi})` : 'MSW mockup', () => ({ ...projectsApi, ...profileApi, ...resumeApi }));

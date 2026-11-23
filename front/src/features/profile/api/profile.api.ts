@@ -1,20 +1,11 @@
 import { http } from '@/lib/axios';
 import type { Profile, ProfileDto } from '@/features/profile/types/profile.types';
 
+/** 문서 id(_id)는 화면에서 쓰지 않는다. 빈 avatar(Go zero value)는 사진 없음으로 본다. */
 export function toProfile(dto: ProfileDto): Profile {
-  return {
-    name: dto.name,
-    nameEn: dto.nameEn,
-    role: dto.role,
-    location: dto.location,
-    kakaoId: dto.kakaoId,
-    email: dto.email,
-    website: dto.website,
-    github: dto.github,
-    avatarUrl: dto.avatar,
-    keywords: dto.keywords,
-    body: dto.body,
-  };
+  const { _id, avatar, ...rest } = dto;
+  void _id;
+  return { ...rest, avatarUrl: avatar || undefined };
 }
 
 export const profileApi = {

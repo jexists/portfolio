@@ -5,23 +5,28 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper/types';
 import 'swiper/css';
 import 'swiper/css/free-mode';
-import type { Category } from '@/features/projects/types/project.types';
 import styles from './CategoryTabs.module.scss';
 
-export type CategoryTab = Category | 'all';
+export type SearchTab = 'all' | 'career' | 'skills' | 'education' | 'certs' | 'projects';
 
-const tabs: Array<{ value: CategoryTab; label: string }> = [
+/** 검색결과 탭. 인물정보 카드의 칩 탭도 같은 목록을 쓴다. */
+export const searchTabs: Array<{ value: SearchTab; label: string }> = [
   { value: 'all', label: '전체' },
-  { value: 'resume', label: '이력서' },
-  { value: 'publishing', label: '퍼블리싱' },
-  { value: 'design', label: '디자인' },
-  { value: 'study', label: '스터디' },
-  { value: 'etc', label: '기타' },
+  { value: 'career', label: '경력' },
+  { value: 'skills', label: '기술' },
+  { value: 'education', label: '학력' },
+  { value: 'certs', label: '자격·수상' },
+  { value: 'projects', label: '프로젝트' },
 ];
+const tabs = searchTabs;
+
+export function isSearchTab(value: string | null): value is SearchTab {
+  return tabs.some((tab) => tab.value === value);
+}
 
 interface CategoryTabsProps {
-  value: CategoryTab;
-  onChange: (value: CategoryTab) => void;
+  value: SearchTab;
+  onChange: (value: SearchTab) => void;
 }
 
 type IndicatorStyle = CSSProperties & {
@@ -78,7 +83,7 @@ export function CategoryTabs({ value, onChange }: CategoryTabsProps) {
   };
 
   return (
-    <nav className={styles.tabs} aria-label="프로젝트 카테고리">
+    <nav className={styles.tabs} aria-label="검색 탭">
       <Swiper
         className={styles.tabList}
         modules={[FreeMode]}
@@ -87,7 +92,7 @@ export function CategoryTabs({ value, onChange }: CategoryTabsProps) {
         grabCursor
         simulateTouch
         role="tablist"
-        aria-label="프로젝트 카테고리"
+        aria-label="검색 탭"
         onSwiper={setSwiper}
         style={indicatorStyle}
       >

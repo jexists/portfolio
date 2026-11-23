@@ -1,32 +1,30 @@
 import type { ProjectMeta } from '@/features/projects/types/project.types';
+import { projectMeta } from '@/test/fixtures';
 import { buildRss, buildSitemap, DEFAULT_SITE_URL } from './generate-feeds';
 
 const projects: ProjectMeta[] = [
-  {
+  projectMeta({
     slug: 'older-project',
     title: '오래된 <프로젝트>',
-    category: 'study',
     publishedAt: '2026-07-01',
     tags: ['React'],
     summary: '먼저 공개된 & 스터디',
-  },
-  {
+  }),
+  projectMeta({
     slug: 'latest-project',
     title: '최신 프로젝트',
-    category: 'publishing',
     publishedAt: '2026-07-10',
     tags: ['HTML'],
     summary: '가장 최근 공개',
-  },
-  {
+  }),
+  projectMeta({
     slug: 'draft-project',
     title: '준비중 프로젝트',
-    category: 'design',
     publishedAt: '2026-07-20',
     draft: true,
     tags: ['UI'],
     summary: '아직 공개되지 않음',
-  },
+  }),
 ];
 
 describe('generate feeds', () => {

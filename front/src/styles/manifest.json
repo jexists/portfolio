@@ -18,18 +18,18 @@
     },
     {
       "name": "Search",
-      "role": "프로젝트 검색 페이지",
+      "role": "통합검색형 포트폴리오: 전체·경력·기술·학력·자격수상·프로젝트 탭",
       "path": "src/features/projects/pages/SearchPage.tsx",
       "variants": ["default"],
-      "tokens": ["color", "font", "space"],
-      "states": ["ready", "empty"]
+      "tokens": ["color", "font", "space", "radius", "search"],
+      "states": ["loading", "ready"]
     },
     {
       "name": "ProjectDetail",
       "role": "프로젝트 상세 페이지",
       "path": "src/features/projects/pages/ProjectDetailPage.tsx",
       "variants": ["default"],
-      "tokens": ["color", "font", "space"],
+      "tokens": ["color", "font", "space", "radius", "search"],
       "states": ["ready", "notFound"]
     },
     {
@@ -92,9 +92,9 @@
     },
     {
       "name": "ProfileCard",
-      "role": "네이버 인물정보 스타일의 프로필·키워드·연락처 카드",
+      "role": "인물정보 카드와 사이드 프로필·핵심 역량·외부 링크 카드",
       "path": "src/features/profile/components/ProfileCard.tsx",
-      "variants": ["initialAvatar", "imageAvatar"],
+      "variants": ["card", "side", "strengths", "links"],
       "tokens": ["color", "font", "space", "radius", "search", "shadow", "motion"],
       "states": ["ready", "keywordSelected", "copied"]
     },
@@ -121,6 +121,30 @@
       "variants": ["default"],
       "tokens": ["color", "font", "space", "search", "shadow"],
       "states": ["ready", "disabled"]
+    },
+    {
+      "name": "Card",
+      "role": "검색결과 흰 카드 (제목·더보기 화살표)",
+      "path": "src/components/ui/Card.tsx",
+      "variants": ["default", "titled"],
+      "tokens": ["color", "space", "radius", "search"],
+      "states": ["ready"]
+    },
+    {
+      "name": "ResumeSections",
+      "role": "경력·기술·학력·자격수상 탭 섹션과 전체 탭 결과 카드",
+      "path": "src/features/resume/components/ResumeSections.tsx",
+      "variants": ["career", "skills", "education", "credentials", "results"],
+      "tokens": ["color", "font", "space", "radius", "search"],
+      "states": ["ready", "empty"]
+    },
+    {
+      "name": "ProjectCollections",
+      "role": "대표 프로젝트 레일, 프로젝트 탭(더보기·구분 필터), 관련 검색어",
+      "path": "src/features/projects/components/ProjectCollections.tsx",
+      "variants": ["rail", "tab", "queries"],
+      "tokens": ["color", "font", "space", "radius", "search"],
+      "states": ["collapsed", "expanded", "filtered", "empty"]
     }
   ]
 }

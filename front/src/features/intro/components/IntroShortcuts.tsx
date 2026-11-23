@@ -1,4 +1,5 @@
 import type { ReactNode, SyntheticEvent } from 'react';
+import { Link } from 'react-router';
 import styles from './IntroShortcuts.module.scss';
 
 interface IntroShortcutsProps {
@@ -9,6 +10,8 @@ interface Shortcut {
   label: string;
   icon: ReactNode;
   href?: string;
+  /** 앱 안 경로 (검색결과 탭) */
+  to?: string;
   external?: boolean;
 }
 
@@ -19,19 +22,28 @@ const iconProps = {
 
 const SHORTCUTS: Shortcut[] = [
   {
+    label: '경력',
+    to: '/search?tab=career',
+    icon: <svg {...iconProps}><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M9 7V5h6v2" /></svg>,
+  },
+  {
     label: '프로젝트',
+    to: '/search?tab=projects',
     icon: <svg {...iconProps}><path d="M4 7h6l2 2h8v10H4z" /><path d="M4 7V5h6l2 2" /></svg>,
   },
   {
-    label: '퍼블리싱',
+    label: '기술',
+    to: '/search?tab=skills',
     icon: <svg {...iconProps}><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" /></svg>,
   },
   {
-    label: '디자인',
+    label: '자격·수상',
+    to: '/search?tab=certs',
     icon: <svg {...iconProps}><path d="M12 3a9 9 0 1 0 0 18h2a2 2 0 0 0 0-4h-1a2 2 0 0 1 0-4h4a4 4 0 0 0 4-4c0-3-4-6-9-6Z" /><path d="M7.5 9h.01M10 6.5h.01M15 7h.01" /></svg>,
   },
   {
-    label: '스터디',
+    label: '학력',
+    to: '/search?tab=education',
     icon: <svg {...iconProps}><path d="M4 5h7a3 3 0 0 1 3 3v11a3 3 0 0 0-3-3H4z" /><path d="M20 5h-3a3 3 0 0 0-3 3v11a3 3 0 0 1 3-3h3z" /></svg>,
   },
   {
@@ -45,10 +57,6 @@ const SHORTCUTS: Shortcut[] = [
     href: 'mailto:jexists486@gmail.com',
     icon: <svg {...iconProps}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>,
   },
-  {
-    label: '자세히 보기',
-    icon: <svg {...iconProps}><circle cx="12" cy="12" r="9" /><path d="M8 12h8M13 8l4 4-4 4" /></svg>,
-  },
 ];
 
 function stopPageSkip(event: SyntheticEvent<HTMLAnchorElement>): void {
@@ -58,13 +66,18 @@ function stopPageSkip(event: SyntheticEvent<HTMLAnchorElement>): void {
 export function IntroShortcuts({ onSkip }: IntroShortcutsProps) {
   return (
     <nav className={styles.shortcuts} aria-label="포트폴리오 바로가기">
-      {SHORTCUTS.map(({ label, icon, href, external }) =>
-        href ? (
+      {SHORTCUTS.map(({ label, icon, href, to, external }) =>
+        to ? (
+          <Link className={styles.shortcut} to={to} onClick={stopPageSkip} key={label}>
+            <span className={styles.icon}>{icon}</span>
+            <span>{label}</span>
+          </Link>
+        ) : href ? (
           <a
             className={styles.shortcut}
             href={href}
             target={external ? '_blank' : undefined}
-            rel={external ? 'noreferrer' : undefined}
+            rel={external ? 'noopener noreferrer' : undefined}
             onClick={stopPageSkip}
             onKeyDown={stopPageSkip}
             key={label}
