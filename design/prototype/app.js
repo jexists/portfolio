@@ -94,10 +94,21 @@
   }
   const footer = () => `<footer class="footer">© ${esc(D.profile.name)}</footer>`;
 
+  function infoList() {
+    const p = D.profile;
+    const edu = D.educations[0];
+    return `<dl class="info">
+            <div><dt>경력</dt><dd>${D.careers.slice(0, 2).map((c) => `<p>${c.period.start}.~${c.period.end}. ${esc(c.company)} ${esc(c.role)}</p>`).join('')}</dd></div>
+            <div><dt>학력</dt><dd>${esc(edu.school)} ${esc(edu.major.split(' · ').pop())} 졸업</dd></div>
+            <div><dt>자격</dt><dd>${D.certificates.slice(0, 3).map((c) => esc(c.name)).join(', ')}</dd></div>
+            <div><dt>사이트</dt><dd class="links">${p.links.map((l) => ext(l.url, esc(l.label))).join('')}</dd></div>
+            <div><dt>이메일</dt><dd><a href="mailto:${esc(p.email)}">${esc(p.email)}</a><button class="copy" type="button" data-copy="${esc(p.email)}">복사</button></dd></div>
+          </dl>`;
+  }
+
   // ── 인물정보 카드 (모든 탭 맨 위) ──
   function personCard(tab) {
     const p = D.profile;
-    const edu = D.educations[0];
     return `
       <section class="card person" aria-label="인물정보">
         <h1>${esc(p.name)}</h1>
@@ -107,20 +118,14 @@
         </nav>
         ${tab === 'all' ? `
         <div class="person-body">
-          <dl class="info">
-            <div><dt>경력</dt><dd>${D.careers.slice(0, 2).map((c) => `<p>${c.period.start}.~${c.period.end}. ${esc(c.company)} ${esc(c.role)}</p>`).join('')}</dd></div>
-            <div><dt>학력</dt><dd>${esc(edu.school)} ${esc(edu.major.split(' · ').pop())} 졸업</dd></div>
-            <div><dt>자격</dt><dd>${D.certificates.slice(0, 3).map((c) => esc(c.name)).join(', ')}</dd></div>
-            <div><dt>사이트</dt><dd class="links">${p.links.map((l) => ext(l.url, esc(l.label))).join('')}</dd></div>
-            <div><dt>이메일</dt><dd><a href="mailto:${esc(p.email)}">${esc(p.email)}</a><button class="copy" type="button" data-copy="${esc(p.email)}">복사</button></dd></div>
-          </dl>
+          ${infoList()}
           <div class="photo">사진</div>
         </div>` : ''}
       </section>`;
   }
 
   // ── 오른쪽 사이드 ──
-  function side() {
+  function side(tab) {
     const p = D.profile;
     const queries = [
       ['정주애 레사모 경매', '#/search?tab=career'], ['정주애 한빛수학', '#/project/hanbit'],
@@ -129,9 +134,12 @@
     ];
     return `
       <aside class="side side-stack" aria-label="사이드">
-        <section class="card">${cardHead('핵심 역량')}
+        ${tab === 'all' ? `<section class="card">${cardHead('핵심 역량')}
           <ul class="pill-list">${p.strengths.map((s) => `<li><b>${esc(s.title)}</b><span>${esc(s.text)}</span></li>`).join('')}</ul>
-        </section>
+        </section>` : `<section class="card side-profile" aria-label="프로필">
+          <div class="side-profile-head"><div class="photo">사진</div><div><h2>${esc(p.name)}</h2><p class="muted small">${esc(p.role)} · ${esc(p.years)}</p></div></div>
+          ${infoList()}
+        </section>`}
         <section class="card">${cardHead('관련 검색어')}
           <ul class="query-list">${queries.map(([q, h]) => `<li><a href="${h}">${ICON.search}${esc(q)}</a></li>`).join('')}</ul>
         </section>
@@ -338,7 +346,7 @@
   const TAB_VIEWS = { all: tabAll, career: tabCareer, skills: tabSkills, education: tabEducation, certs: tabCerts, projects: tabProjects };
   function renderSearch(tab) {
     const view = TAB_VIEWS[tab] ? tab : 'all';
-    app.innerHTML = `${header(view)}<main class="page"><div class="col">${personCard(view)}${TAB_VIEWS[view]()}</div>${side()}</main>${footer()}`;
+    app.innerHTML = `${header(view)}<main class="page"><div class="col">${personCard(view)}${TAB_VIEWS[view]()}</div>${side(view)}</main>${footer()}`;
   }
 
   function route() {

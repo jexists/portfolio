@@ -113,6 +113,10 @@ svg.i { width: 1.1em; height: 1.1em; flex: none; vertical-align: -.15em; }
 .info dd p + p { margin-top: 2px; }
 .info .links a + a::before { content: ', '; color: var(--color-text-primary); }
 .photo { width: 8rem; aspect-ratio: 4 / 5; border-radius: var(--radius-lg); background: var(--color-bg-subtle); display: grid; place-items: center; color: var(--color-text-muted); font-size: var(--fs-xs); }
+.side-profile-head { display: flex; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-4); }
+.side-profile-head .photo { width: 4.5rem; flex: none; }
+.side-profile-head h2 { font-size: var(--fs-lg); }
+.side-profile .info > div { grid-template-columns: 3rem minmax(0, 1fr); gap: var(--sp-2); font-size: var(--fs-sm); }
 .copy { border: 0; background: none; color: var(--color-link); padding: 0; margin-left: var(--sp-2); font-size: var(--fs-xs); }
 
 /* ── 썸네일 가로 목록 (최근영상 형식) ── */
