@@ -55,18 +55,22 @@
   margin: var(--space-0);
 }
 
-.content h3 {
-  display: -webkit-box;
+/* 제목·한 줄 설명은 한 줄로 자르고 말줄임 */
+.content h3,
+.subtitle {
   overflow: hidden;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-base);
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.content h3 span {
+.content h3 {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+}
+
+.subtitle {
   color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
 }
 
 .meta {

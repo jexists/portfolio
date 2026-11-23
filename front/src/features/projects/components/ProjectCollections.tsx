@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { Card } from '@/components/ui/Card';
+import { RailButton } from '@/components/ui/RailButton';
 import { useRail } from '@/hooks/useRail';
 import { CATEGORY_LABEL } from '@/features/projects/types/project.types';
 import type { Category, ProjectLinkType, ProjectMeta } from '@/features/projects/types/project.types';
-import { ProjectCard } from './ProjectCard';
+import { ProjectCard, projectFacts } from './ProjectCard';
 import styles from './ProjectCollections.module.scss';
 
 export const LINK_KIND: Record<ProjectLinkType, string> = {
@@ -37,32 +38,35 @@ export function FeaturedRail({ projects }: { projects: ProjectMeta[] }) {
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
-        {edge.start ? null : (
-          <button className={styles.railButton} data-side="prev" type="button" aria-label="이전 프로젝트" onClick={() => scrollRail(-1)}>
-            <Chevron direction="left" />
-          </button>
-        )}
-        {edge.end ? null : (
-          <button className={styles.railButton} data-side="next" type="button" aria-label="다음 프로젝트" onClick={() => scrollRail(1)}>
-            <Chevron direction="right" />
-          </button>
-        )}
+        {edge.start ? null : <RailButton side="prev" label="이전 프로젝트" onClick={() => scrollRail(-1)} />}
+        {edge.end ? null : <RailButton side="next" label="다음 프로젝트" onClick={() => scrollRail(1)} />}
       </div>
     </Card>
   );
 }
-
-const Chevron = ({ direction }: { direction: 'left' | 'right' }) => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d={direction === 'left' ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6'} />
-  </svg>
-);
 
 interface ProjectsTabProps {
   projects: ProjectMeta[];
   /** ?tag= 로 들어오면 그 기술로 거른다 */
   tag: string | null;
   onClearTag: () => void;
+}
+
+/** 목록 항목 아래 캡처 줄: 넘치면 양 끝 화살표로 넘긴다 (버튼은 링크 밖에 둔다) */
+function ImageStrip({ images, to }: { images: ProjectMeta['images']; to: string }) {
+  const rail = useRail<HTMLAnchorElement>([images]);
+
+  return (
+    <div className={styles.stripWrap}>
+      <Link className={styles.strip} to={to} tabIndex={-1} aria-hidden="true" ref={rail.ref} onScroll={rail.update}>
+        {images.map((image) => (
+          <img key={image.src} src={image.src} alt="" loading="lazy" onLoad={rail.update} />
+        ))}
+      </Link>
+      {rail.edge.start ? null : <RailButton side="prev" label="이전 화면" onClick={() => rail.scroll(-1)} />}
+      {rail.edge.end ? null : <RailButton side="next" label="다음 화면" onClick={() => rail.scroll(1)} />}
+    </div>
+  );
 }
 
 /** 프로젝트 탭: 전체 + 구분(categories) 칩으로 거르는 최신순 목록 */
@@ -98,28 +102,41 @@ export function ProjectsTab({ projects, tag, onClearTag }: ProjectsTabProps) {
       </div>
       {visible.length ? (
         <ul className={styles.list}>
-          {visible.slice(0, limit).map((project) => (
-            <li key={project.slug}>
-              <h3>
-                <Link to={`/project/${project.slug}`}>
-                  {project.title}
-                  {project.subtitle ? ` - ${project.subtitle}` : ''}
-                </Link>
-              </h3>
-              <p>{project.summary}</p>
-              <p className={styles.meta}>
-                <span>
-                  {project.period.start} – {project.period.end}
-                </span>
-                <span>{project.tags.slice(0, 3).join(' · ')}</span>
-                {project.links.slice(0, 2).map((link) => (
-                  <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
-                    {LINK_KIND[link.type]}
-                  </a>
-                ))}
-              </p>
-            </li>
-          ))}
+          {visible.slice(0, limit).map((project) => {
+            // 검색결과처럼 캡처가 1~2장이면 오른쪽 썸네일 하나, 3장 이상이면 설명 아래 가로 줄
+            const strip = project.images.length >= 3;
+            const thumb = !strip ? project.images[0] : undefined;
+            const to = `/project/${project.slug}`;
+            return (
+              <li key={project.slug} data-thumb={thumb ? 'true' : undefined}>
+                <div className={styles.itemText}>
+                  <h3>
+                    <Link to={to}>
+                      {project.title}
+                      {project.subtitle ? ` - ${project.subtitle}` : ''}
+                    </Link>
+                  </h3>
+                  <p>{project.summary}</p>
+                  <p className={styles.meta}>
+                    <span>{projectFacts(project)}</span>
+                    <span>{project.tags.slice(0, 3).join(' · ')}</span>
+                    {project.links.slice(0, 2).map((link) => (
+                      <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
+                        {LINK_KIND[link.type]}
+                      </a>
+                    ))}
+                  </p>
+                </div>
+                {/* 이미지 링크는 제목 링크와 같은 곳이라 탭 순서·읽기에서 뺀다 */}
+                {thumb ? (
+                  <Link className={styles.thumb} to={to} tabIndex={-1} aria-hidden="true">
+                    <img src={thumb.src} alt="" loading="lazy" />
+                  </Link>
+                ) : null}
+                {strip ? <ImageStrip images={project.images} to={to} /> : null}
+              </li>
+            );
+          })}
         </ul>
       ) : (
         <p className={styles.empty}>해당하는 프로젝트가 없습니다</p>

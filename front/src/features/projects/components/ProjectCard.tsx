@@ -6,7 +6,12 @@ interface ProjectCardProps {
   project: ProjectMeta;
 }
 
-const year = (project: ProjectMeta) => project.period.start.slice(0, 7);
+/** team 이 "1명 …"이면 개인, 그 밖에는 협업. 비어 있으면 표시하지 않는다 */
+const teamKind = (team?: string) => (!team ? '' : /^1명/.test(team) ? '개인' : '협업');
+
+/** 카드·목록 공통 한 줄 정보: 연도 · 작업 기간 · 개인/협업 (예: 2026 · 4일 · 개인) */
+export const projectFacts = (project: ProjectMeta) =>
+  [project.period.start.slice(0, 4), project.duration, teamKind(project.team)].filter(Boolean).join(' · ');
 
 /** 썸네일 타일. 대표 이미지가 없으면 제목 첫 글자를 보여 준다. */
 export function ProjectCard({ project }: ProjectCardProps) {
@@ -14,13 +19,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <>
       <ProjectThumbnail project={project} />
       <div className={styles.content}>
-        <h3>
-          {project.title}
-          {project.subtitle ? <span> · {project.subtitle}</span> : null}
-        </h3>
-        <p className={styles.meta}>
-          {[project.kind, year(project), project.team?.replace(/ \(.*\)$/, '')].filter(Boolean).join(' · ')}
-        </p>
+        <h3>{project.title}</h3>
+        {project.subtitle ? <p className={styles.subtitle}>{project.subtitle}</p> : null}
+        <p className={styles.meta}>{projectFacts(project)}</p>
       </div>
     </>
   );

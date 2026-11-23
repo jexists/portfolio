@@ -25,6 +25,7 @@ type Project struct {
 	Kind        string         `bson:"kind,omitempty" json:"kind,omitempty"`
 	Course      string         `bson:"course" json:"course"`
 	Period      Period         `bson:"period" json:"period"`
+	Duration    string         `bson:"duration" json:"duration"` // 집중해서 작업한 기간 (하루·이틀·N일·N주·N개월)
 	Summary     string         `bson:"summary" json:"summary"`
 	Tags        []string       `bson:"tags" json:"tags"`
 	Team        string         `bson:"team" json:"team"`
