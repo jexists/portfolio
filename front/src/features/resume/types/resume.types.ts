@@ -24,6 +24,8 @@ export interface Career {
   order: number;
   company: string;
   companyNote?: string;
+  /** 인물정보 카드의 한 줄 요약(회사 + 직무). 비어 있으면 company + role */
+  summaryLine?: string;
   period: Period;
   duration: string;
   role: string;
@@ -52,15 +54,21 @@ export interface Skill {
 
 export interface Education {
   id: string;
-  kind: 'degree' | 'course';
+  kind: 'degree' | 'course' | 'school';
   order: number;
   name: string;
+  /** 인물정보 카드의 한 줄 요약. 비어 있으면 name + 전공 + 상태 */
+  summaryLine?: string;
   org: string;
   major?: string;
   degree?: string;
   period: Period;
   hours?: string;
   notes: string[];
+  /** 교육(course) 중 "중요" 필터에 보일 과정 */
+  featured?: boolean;
+  /** 이 과정에서 만든 프로젝트 slug */
+  projectIds?: string[];
 }
 
 export interface Credential {

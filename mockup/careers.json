@@ -1,6 +1,7 @@
 [
   {
     "companyNote": "구 아유레디",
+    "summaryLine": "주식회사 브레이스 웹 풀스택",
     "service": "축구 유니폼 커뮤니티·중고거래 플랫폼 레사모 (4mation.net). 웹, Android·iOS 앱 웹뷰, 관리자 화면",
     "responsibilities": [
       "출시 전 프론트엔드(Angular)로 합류, 2021.04부터 백엔드(Go · MongoDB) 병행",
@@ -122,6 +123,7 @@
   },
   {
     "companyNote": "",
+    "summaryLine": "",
     "service": "Angular 기반 웹 프로젝트",
     "responsibilities": [],
     "metrics": [],
@@ -144,6 +146,7 @@
   },
   {
     "companyNote": "",
+    "summaryLine": "필리핀 한인 매거진 뉴스게이트 디자이너",
     "service": "1996년부터 발행된 필리핀 최초의 한인 종합 매거진 (마닐라)",
     "responsibilities": [
       "매거진 편집디자인·광고 그래픽 제작",
@@ -171,6 +174,7 @@
   },
   {
     "companyNote": "",
+    "summaryLine": "",
     "service": "",
     "responsibilities": [],
     "metrics": [],
@@ -190,6 +194,7 @@
   },
   {
     "companyNote": "",
+    "summaryLine": "",
     "service": "",
     "responsibilities": [],
     "metrics": [],

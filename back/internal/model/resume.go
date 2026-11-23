@@ -28,6 +28,7 @@ type Career struct {
 	Order            int                 `bson:"order" json:"order"`
 	Company          string              `bson:"company" json:"company"`
 	CompanyNote      string              `bson:"companyNote" json:"companyNote"`
+	SummaryLine      string              `bson:"summaryLine" json:"summaryLine"` // 인물정보 카드 한 줄 요약(회사 + 직무), 비면 company + role
 	Period           Period              `bson:"period" json:"period"`
 	Duration         string              `bson:"duration" json:"duration"`
 	Role             string              `bson:"role" json:"role"`
@@ -52,16 +53,20 @@ type Skill struct {
 }
 
 type Education struct {
-	ID     string   `bson:"_id" json:"_id"`
-	Kind   string   `bson:"kind" json:"kind"` // degree | course
-	Order  int      `bson:"order" json:"order"`
-	Name   string   `bson:"name" json:"name"`
-	Org    string   `bson:"org" json:"org"`
-	Major  string   `bson:"major" json:"major"`
-	Degree string   `bson:"degree" json:"degree"`
-	Period Period   `bson:"period" json:"period"`
-	Hours  string   `bson:"hours" json:"hours"`
-	Notes  []string `bson:"notes" json:"notes"`
+	ID    string `bson:"_id" json:"_id"`
+	Kind  string `bson:"kind" json:"kind"` // degree | course | school
+	Order int    `bson:"order" json:"order"`
+	Name  string `bson:"name" json:"name"`
+	// 인물정보 카드 한 줄 요약, 비면 name + 전공 + 상태
+	SummaryLine string   `bson:"summaryLine" json:"summaryLine"`
+	Org         string   `bson:"org" json:"org"`
+	Major       string   `bson:"major" json:"major"`
+	Degree      string   `bson:"degree" json:"degree"`
+	Period      Period   `bson:"period" json:"period"`
+	Hours       string   `bson:"hours" json:"hours"`
+	Notes       []string `bson:"notes" json:"notes"`
+	Featured    bool     `bson:"featured" json:"featured"`     // 교육 "중요" 필터에 보일 과정
+	ProjectIDs  []string `bson:"projectIds" json:"projectIds"` // 이 과정에서 만든 프로젝트
 }
 
 type Credential struct {
