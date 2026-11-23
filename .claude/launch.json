@@ -23,6 +23,40 @@
         "dev"
       ],
       "port": 5173
+    },
+    {
+      "name": "back-api-local",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "MONGO_URI=mongodb://localhost:27017",
+        "MONGO_DB=portfolio_contract",
+        "PORT=8089",
+        "CORS_ORIGINS=http://localhost:5174",
+        "go",
+        "-C",
+        "back",
+        "run",
+        "./cmd/server"
+      ],
+      "port": 8089
+    },
+    {
+      "name": "front-api-local",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "VITE_USE_MOCK=false",
+        "VITE_API_BASE_URL=http://localhost:8089/api/v1",
+        "npm",
+        "--prefix",
+        "front",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5174",
+        "--strictPort"
+      ],
+      "port": 5174
     }
   ]
 }
