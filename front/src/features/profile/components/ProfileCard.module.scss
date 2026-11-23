@@ -1,8 +1,10 @@
 .card {
+  --profile-card-padding: var(--search-card-padding);
+
   min-width: var(--space-0);
   border: var(--border-width-default) solid var(--color-border-default);
   border-radius: var(--radius-lg);
-  padding: var(--search-card-padding);
+  padding: var(--profile-card-padding);
   background: var(--color-bg-surface);
 }
 
@@ -29,41 +31,6 @@
   color: var(--color-text-link);
 }
 
-.chips {
-  display: flex;
-  gap: var(--space-2);
-  overflow-x: auto;
-  margin-top: var(--space-4);
-  border-bottom: var(--border-width-default) solid var(--color-border-default);
-  padding-bottom: var(--space-4);
-  scrollbar-width: none;
-}
-
-.chip {
-  display: inline-flex;
-  flex: var(--flex-none);
-  align-items: center;
-  min-height: var(--search-chip-height);
-  border: var(--border-width-default) solid var(--color-border-default);
-  border-radius: var(--radius-pill);
-  padding: var(--space-0) var(--space-4);
-  background: var(--color-bg-surface);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-}
-
-.chip:hover {
-  border-color: var(--color-brand-blue);
-  color: var(--color-brand-blue);
-}
-
-.chip[aria-current='page'] {
-  border-color: var(--color-brand-blue);
-  background: var(--color-brand-blue);
-  color: var(--color-text-inverse);
-}
-
 .body {
   display: grid;
   grid-template-columns: minmax(var(--space-0), 1fr) var(--search-photo-width);
@@ -75,8 +42,8 @@
   display: grid;
   gap: var(--space-2);
   margin: var(--space-0);
-  border-left: var(--search-accent-rule) solid var(--color-bg-subtle);
-  padding-left: var(--space-4);
+  border-left: var(--search-accent-rule) solid var(--color-search-quote-rule);
+  padding-left: var(--space-3);
 }
 
 .facts > div {
@@ -99,6 +66,13 @@
   margin: var(--space-0);
 }
 
+/* 경력·학력 등 요약은 항목마다 한 줄 */
+.card .facts dd p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .facts a {
   color: var(--color-text-link);
 }
@@ -109,13 +83,48 @@
 }
 
 .copy {
-  margin-left: var(--space-2);
+  display: inline-grid;
+  margin-left: var(--space-1);
+  place-items: center;
   border: var(--border-width-none);
-  padding: var(--space-0);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1);
   background: none;
-  color: var(--color-text-link);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  vertical-align: middle;
   cursor: pointer;
+}
+
+.copy:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-link);
+}
+
+.copy svg {
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+}
+
+/* 카드 맨 아래 "이력서 보기 →" 줄 */
+.resumeLink {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-4) calc(var(--profile-card-padding) * -1) calc(var(--profile-card-padding) * -1);
+  border-top: var(--border-width-default) solid var(--color-border-default);
+  padding: var(--space-3);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.resumeLink:hover {
+  color: var(--color-text-primary);
 }
 
 .photo {
@@ -131,11 +140,6 @@
   object-fit: cover;
 }
 
-.photo[data-size='small'] {
-  width: var(--search-avatar-small);
-  font-size: var(--font-size-lg);
-}
-
 .side .facts {
   font-size: var(--font-size-sm);
 }
@@ -144,10 +148,24 @@
   gap: var(--space-2);
 }
 
+/* 사이드 카드는 폭이 좁아 경력 기간을 숨기고 한 줄로 */
+.side .period {
+  display: none;
+}
+
+.side .facts dd p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 사이드 카드는 왼쪽 선 없이 */
+.side .facts {
+  border-left: var(--border-width-none);
+  padding-left: var(--space-0);
+}
+
 .sideHead {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
   margin-bottom: var(--space-4);
 }
 
@@ -164,14 +182,68 @@
 }
 
 .strengths li {
-  display: grid;
+  border: var(--border-width-default) solid transparent;
   border-radius: var(--radius-lg);
-  padding: var(--space-3) var(--space-4);
   background: var(--color-bg-page);
   font-size: var(--font-size-sm);
+  transition: border-color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
-.strengths span {
+.strengths li[data-open='true'] {
+  border-color: var(--color-border-default);
+  background: var(--color-bg-surface);
+}
+
+.strengths button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: var(--layout-full);
+  border: var(--border-width-none);
+  padding: var(--space-3) var(--space-4);
+  background: none;
+  color: var(--color-text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.strengths b {
+  flex: var(--flex-auto);
+}
+
+.strengthNo {
+  display: grid;
+  flex: var(--flex-none);
+  width: var(--search-strength-no-size);
+  height: var(--search-strength-no-size);
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-search-chip-active-bg);
+  color: var(--color-brand-blue);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.strengthArrow {
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+  flex: var(--flex-none);
+  fill: none;
+  stroke: var(--color-text-muted);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+  transition: transform var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.strengths li[data-open='true'] .strengthArrow {
+  transform: rotate(180deg);
+}
+
+.strengths p {
+  margin: var(--space-0);
+  padding: var(--space-0) var(--space-4) var(--space-3);
   color: var(--color-text-secondary);
 }
 
@@ -224,7 +296,7 @@
 
 @media (max-width: 48rem) {
   .card {
-    padding: var(--space-4);
+    --profile-card-padding: var(--space-4);
   }
 
   .body {
