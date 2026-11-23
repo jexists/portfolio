@@ -1275,6 +1275,18 @@ button.courseToggle:hover {
   -webkit-line-clamp: 2;
 }
 
+/* 경력 탭: 한 줄로 이어 쓴다 */
+.hTimelineOneLine .hTimelineTitle {
+  display: block;
+  min-height: 0;
+  -webkit-line-clamp: unset;
+}
+
+.hTimelineNote {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-regular);
+}
+
 .hTimelineTitle:hover {
   text-decoration: underline;
 }

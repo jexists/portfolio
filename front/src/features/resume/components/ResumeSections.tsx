@@ -921,6 +921,8 @@ interface TimelineItem {
   kind: TimelineKind;
   period: Period;
   title: string;
+  /** 제목 둘째 줄 (구 이름·한 줄 소개) */
+  note?: string;
   sub: string;
   to: string;
   logo?: string;
@@ -930,8 +932,8 @@ const careerItem = (career: Career, to: string): TimelineItem => ({
   id: career.id,
   kind: 'career',
   period: career.period,
-  // 옛 이름(companyNote) 대신 점 자리에 로고를 둔다
   title: career.company,
+  note: career.companyNote,
   sub: career.role,
   to,
   logo: career.logo,
@@ -958,7 +960,7 @@ function HTimeline({
     <Card title={title}>
       <div className={styles.hTimelineWrap}>
         <ol
-          className={`${styles.hTimeline} ${items.some((item) => item.logo) ? styles.hTimelineLogos : ''}`}
+          className={`${styles.hTimeline} ${items.some((item) => item.logo) ? styles.hTimelineLogos : ''} ${hideKind ? styles.hTimelineOneLine : ''}`}
           ref={rail.ref} onScroll={rail.update}>
           {sorted.map((item) => (
             <li key={item.id} data-kind={item.kind} data-logo={item.logo ? true : undefined}>
@@ -967,6 +969,13 @@ function HTimeline({
               {hideKind ? null : <span className={styles.hTimelineKind}>{TIMELINE_LABEL[item.kind]}</span>}
               <Link to={item.to} className={styles.hTimelineTitle}>
                 {item.title}
+                {item.note ? (
+                  <>
+                    {/* 전체 탭은 둘째 줄, 경력 탭은 한 줄 */}
+                    {hideKind ? ' ' : <br />}
+                    <span className={styles.hTimelineNote}>({item.note})</span>
+                  </>
+                ) : null}
               </Link>
               {item.sub ? <span className={styles.hTimelineSub}>{item.sub}</span> : null}
             </li>

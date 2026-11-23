@@ -100,12 +100,15 @@ const careers: Career[] = [
 const inRouter = (node: React.ReactNode) => render(<MemoryRouter>{node}</MemoryRouter>);
 
 describe('ResumeTimeline', () => {
-  it('shows company name without note and logos in place of dots for careers and educations', () => {
+  it('shows company name with note on a second line and logos in place of dots for careers and educations', () => {
     const ust = edu({ id: 'ust', kind: 'degree', name: 'UST', logo: '/images/educations/ust.png', period: { start: '2010.06', end: '2014.03' } });
     inRouter(<ResumeTimeline careers={[{ ...careers[0], logo: '/images/careers/brace.png' }]} educations={[ust]} />);
 
-    const brace = screen.getByRole('link', { name: '주식회사 브레이스' });
+    const brace = screen.getByRole('link', { name: /^주식회사 브레이스/ });
     expect(brace.closest('li')?.querySelector('img')).toHaveAttribute('src', '/images/careers/brace.png');
+    // 전체 탭: 옛 이름은 제목 둘째 줄(br)
+    expect(brace.querySelector('br')).not.toBeNull();
+    expect(brace).toHaveTextContent('(구 아유레디)');
     expect(screen.getByRole('link', { name: 'UST' }).closest('li')?.querySelector('img')).toHaveAttribute('src', '/images/educations/ust.png');
     // 경력·학력이 섞여 있어 종류 태그는 남긴다
     expect(screen.getByText('경력')).toBeInTheDocument();
@@ -125,7 +128,7 @@ describe('ResumeResultCards (전체 탭 경력 카드)', () => {
 });
 
 describe('CareerSection (경력 탭)', () => {
-  it('career timeline shows the logo instead of the company note and no 경력 tag', () => {
+  it('career timeline shows the logo, the company note inline and no 경력 tag', () => {
     inRouter(
       <CareerSection
         careers={[{ ...careers[0], logo: '/images/careers/brace.png' }, careers[1]]}
@@ -134,10 +137,12 @@ describe('CareerSection (경력 탭)', () => {
     );
 
     const timeline = screen.getByRole('region', { name: '경력 타임라인' });
-    const brace = within(timeline).getByRole('link', { name: '주식회사 브레이스' });
+    const brace = within(timeline).getByRole('link', { name: /^주식회사 브레이스/ });
     expect(brace.closest('li')?.querySelector('img')).toHaveAttribute('src', '/images/careers/brace.png');
+    // 경력 탭: 옛 이름을 같은 줄에 잇는다
+    expect(brace.querySelector('br')).toBeNull();
+    expect(brace).toHaveTextContent('주식회사 브레이스 (구 아유레디)');
     expect(within(timeline).getByRole('link', { name: '성진에이치디에스' }).closest('li')?.querySelector('img')).toBeNull();
-    expect(timeline).not.toHaveTextContent('구 아유레디');
     expect(timeline).not.toHaveTextContent('경력웹');
     expect(within(timeline).queryByText('경력')).toBeNull();
     // 카드 로고는 주석 처리해 두었다
