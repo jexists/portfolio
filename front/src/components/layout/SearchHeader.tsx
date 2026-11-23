@@ -37,6 +37,10 @@ export function SearchHeader({ tabs }: SearchHeaderProps) {
           <Logo />
         </Link>
         <div className={styles.search} role="search">
+          {/* 좁은 화면에서 왼쪽 로고 대신 보이는 P 마크 */}
+          <Link className={styles.brandMark} to="/" aria-label="PortFolio 첫페이지">
+            P
+          </Link>
           <input aria-label="검색어" value="정주애 포트폴리오" readOnly />
           <button className={styles.clearButton} type="button" aria-label="검색어 지우기" onClick={() => navigate('/')}>
             <CloseIcon />

@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { Card } from '@/components/ui/Card';
+import { useRail } from '@/hooks/useRail';
 import type { Category, ProjectLinkType, ProjectMeta } from '@/features/projects/types/project.types';
 import { ProjectCard } from './ProjectCard';
 import styles from './ProjectCollections.module.scss';
@@ -23,30 +24,38 @@ const SearchIcon = () => (
 
 /** 전체 탭: 대표 프로젝트 가로 썸네일 목록 */
 export function FeaturedRail({ projects }: { projects: ProjectMeta[] }) {
-  const railRef = useRef<HTMLDivElement>(null);
+  const { ref: railRef, edge, update: updateEdge, scroll: scrollRail } = useRail([projects]);
 
   if (!projects.length) return null;
 
   return (
     <Card title="대표 프로젝트" moreTo="/search?tab=projects">
       <div className={styles.carousel}>
-        <div className={styles.rail} ref={railRef}>
+        <div className={styles.rail} ref={railRef} onScroll={updateEdge} data-testid="featured-rail">
           {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
-        <button
-          className={styles.next}
-          type="button"
-          aria-label="다음 프로젝트"
-          onClick={() => railRef.current?.scrollBy({ left: railRef.current.clientWidth / 3, behavior: 'smooth' })}
-        >
-          ›
-        </button>
+        {edge.start ? null : (
+          <button className={styles.railButton} data-side="prev" type="button" aria-label="이전 프로젝트" onClick={() => scrollRail(-1)}>
+            <Chevron direction="left" />
+          </button>
+        )}
+        {edge.end ? null : (
+          <button className={styles.railButton} data-side="next" type="button" aria-label="다음 프로젝트" onClick={() => scrollRail(1)}>
+            <Chevron direction="right" />
+          </button>
+        )}
       </div>
     </Card>
   );
 }
+
+const Chevron = ({ direction }: { direction: 'left' | 'right' }) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d={direction === 'left' ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6'} />
+  </svg>
+);
 
 interface ProjectsTabProps {
   projects: ProjectMeta[];

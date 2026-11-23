@@ -75,7 +75,9 @@ export function runContentApiContract(
       const source = createSource();
       const [educations, credentials] = await Promise.all([source.listEducations(), source.listCredentials()]);
 
-      expect(new Set(educations.map((item) => item.kind))).toEqual(new Set(['degree', 'course']));
+      expect(new Set(educations.map((item) => item.kind))).toEqual(new Set(['degree', 'course', 'school']));
+      const projectSlugs = new Set((await source.listProjects()).map((project) => project.slug));
+      expect(educations.every((item) => (item.projectIds ?? []).every((id) => projectSlugs.has(id)))).toBe(true);
       expect(new Set(credentials.map((item) => item.kind))).toEqual(new Set(['certificate', 'award']));
     });
 

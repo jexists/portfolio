@@ -30,8 +30,11 @@ describe('shared search content layout', () => {
     ['project detail', detailStyles],
   ])('aligns the %s shell to the header search column', (_name, styles) => {
     expect(styles).toMatch(/\.shell\s*\{[^}]*max-width:\s*var\(--search-header-max-width\)/s);
+    // column-gap 이 있으면 첫 열에서 그만큼 빼야 본문 왼쪽 끝이 헤더 검색창과 같다
+    const gap = styles.match(/\.shell\s*\{[^}]*column-gap:\s*(var\(--[\w-]+\))/s)?.[1];
+    const offset = gap ? `calc\\(var\\(--search-content-offset\\) - ${gap.replace(/[()]/g, '\\$&')}\\)` : 'var\\(--search-content-offset\\)';
     expect(styles).toMatch(
-      /\.shell\s*\{[^}]*grid-template-columns:\s*var\(--search-content-offset\)\s+minmax\(var\(--space-0\), var\(--search-content-max-width\)\)/s,
+      new RegExp(`\\.shell\\s*\\{[^}]*grid-template-columns:\\s*${offset}\\s+minmax\\(var\\(--space-0\\), var\\(--search-content-max-width\\)\\)`, 's'),
     );
     expect(styles).toMatch(/\.shell\s*>\s*\*\s*\{[^}]*grid-column:\s*2/s);
     expect(styles).toMatch(/padding-inline:\s*var\(--search-content-padding-x\)/);

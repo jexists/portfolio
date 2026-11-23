@@ -16,10 +16,10 @@
   scroll-snap-align: start;
 }
 
-.next {
+/* 카드 높이의 가운데, 레일 양 끝에 걸친 원형 버튼 */
+.railButton {
   position: absolute;
-  top: var(--search-rail-button-top);
-  right: var(--search-rail-button-offset);
+  top: 50%;
   display: grid;
   width: var(--search-rail-button-size);
   height: var(--search-rail-button-size);
@@ -28,8 +28,27 @@
   border-radius: var(--radius-pill);
   background: var(--color-bg-surface);
   color: var(--color-text-primary);
-  font-size: var(--font-size-xl);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.railButton[data-side='prev'] {
+  left: var(--search-rail-button-offset);
+}
+
+.railButton[data-side='next'] {
+  right: var(--search-rail-button-offset);
+}
+
+.railButton svg {
+  width: var(--font-size-lg);
+  height: var(--font-size-lg);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
 }
 
 .grid {
@@ -157,7 +176,7 @@
     grid-auto-columns: var(--search-tile-column-narrow);
   }
 
-  .next {
+  .railButton {
     display: none;
   }
 

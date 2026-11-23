@@ -3,10 +3,10 @@
   background: var(--color-bg-page);
 }
 
-/* 헤더 검색바 열(content-offset 다음 칸)에 본문을 맞추고, 오른쪽에 사이드 열을 둔다 */
+/* 헤더 검색바 열에 본문을 맞춘다: 첫 열에서 column-gap 만큼 빼야 검색창과 본문 왼쪽 끝이 같다 */
 .shell {
   display: grid;
-  grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) var(--search-side-width);
+  grid-template-columns: calc(var(--search-content-offset) - var(--space-6)) minmax(var(--space-0), var(--search-content-max-width)) var(--search-side-width);
   column-gap: var(--space-6);
   align-items: start;
   width: var(--layout-full);
@@ -74,7 +74,7 @@
 /* 사이드 열이 들어갈 폭이 없으면 본문 아래로 내린다 */
 @media (max-width: 80rem) {
   .shell {
-    grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) minmax(var(--space-0), 1fr);
+    grid-template-columns: calc(var(--search-content-offset) - var(--space-6)) minmax(var(--space-0), var(--search-content-max-width)) minmax(var(--space-0), 1fr);
     row-gap: var(--search-card-gap);
   }
 

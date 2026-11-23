@@ -68,6 +68,7 @@ describe('CategoryTabs', () => {
     expect(tabList).toHaveAttribute('data-simulate-touch', 'true');
     expect(tabList).toHaveAttribute('data-module-count', '1');
     expect(screen.getAllByRole('tab')).toHaveLength(6);
+    expect(screen.queryByRole('tab', { name: '이력서' })).not.toBeInTheDocument();
     expect(screen.getByRole('tab', { name: '전체' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('tab', { name: '전체' })).toHaveAttribute('tabindex', '0');
     expect(screen.getByRole('tab', { name: '경력' })).toHaveAttribute('tabindex', '-1');
@@ -96,6 +97,13 @@ describe('CategoryTabs', () => {
 
     expect(screen.getByRole('tab', { name: '기술' })).toHaveFocus();
     expect(onChange).toHaveBeenCalledWith('skills');
+  });
+
+  it('selects no tab for a page outside the tab list (이력서)', () => {
+    render(<CategoryTabs value="resume" onChange={vi.fn()} />);
+
+    expect(screen.getAllByRole('tab').every((tab) => tab.getAttribute('aria-selected') === 'false')).toBe(true);
+    expect(screen.getByRole('tab', { name: '전체' })).toHaveAttribute('tabindex', '0');
   });
 
   it('slides to the selected tab when the controlled value changes', async () => {

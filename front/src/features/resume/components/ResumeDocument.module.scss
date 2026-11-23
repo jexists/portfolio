@@ -1,0 +1,190 @@
+/* v16 이력서(A4) 스타일을 화면용으로 옮김. 색·크기는 tokens.json 의 resume 그룹 */
+.page {
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--resume-page-padding);
+  background: var(--color-bg-surface);
+  color: var(--color-resume-text);
+  font-size: var(--resume-body-size);
+  line-height: var(--resume-body-line-height);
+  word-break: keep-all;
+}
+
+.page h1,
+.page h2,
+.page h3,
+.page h4,
+.label {
+  color: var(--color-resume-heading);
+  font-weight: var(--font-weight-bold);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.title h1 {
+  margin: var(--space-0);
+  font-size: var(--resume-name-size);
+  line-height: var(--font-line-height-tight);
+}
+
+.doc {
+  color: var(--color-text-muted);
+  font-size: var(--resume-section-size);
+}
+
+.contact {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  column-gap: var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--resume-small-size);
+  line-height: var(--resume-contact-line-height);
+}
+
+.contact a,
+.contact span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact a:hover {
+  color: var(--color-text-link);
+}
+
+.contact svg {
+  width: var(--resume-icon-size);
+  height: var(--resume-icon-size);
+  flex: var(--flex-none);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--border-width-strong);
+}
+
+.page h2 {
+  margin: var(--space-8) var(--space-0) var(--space-4);
+  border-bottom: var(--border-width-strong) solid var(--color-resume-accent);
+  padding-bottom: var(--space-1);
+  color: var(--color-resume-accent);
+  font-size: var(--resume-section-size);
+  line-height: var(--resume-heading-line-height);
+}
+
+.item {
+  margin-bottom: var(--space-4);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.page h3 {
+  margin: var(--space-0);
+  font-size: var(--resume-item-size);
+  line-height: var(--resume-heading-line-height);
+}
+
+.date {
+  color: var(--color-text-muted);
+  font-size: var(--resume-small-size);
+  white-space: nowrap;
+}
+
+/* 줄마다 앞에 점 */
+.lines {
+  padding-left: var(--space-4);
+}
+
+.lines > div,
+.skill > div:not(.sub) {
+  position: relative;
+}
+
+.lines > div::before,
+.skill > div:not(.sub)::before {
+  position: absolute;
+  left: calc(var(--space-3) * -1);
+  color: var(--color-text-muted);
+  content: '•';
+}
+
+.skill {
+  margin-bottom: var(--space-6);
+}
+
+/* 보유기술 점은 원본처럼 줄 안쪽(들여쓰기 안)에 둔다 */
+.skill > div:not(.sub)::before {
+  left: var(--space-1);
+}
+
+.skill h4 {
+  margin: var(--space-0) var(--space-0) var(--space-2);
+  font-size: var(--resume-item-size);
+  line-height: var(--resume-heading-line-height);
+}
+
+.skill > div {
+  padding-left: var(--space-4);
+}
+
+.label,
+.sublabel {
+  margin-right: var(--space-1);
+}
+
+.skill .sub {
+  padding-left: var(--space-8);
+  color: var(--color-text-secondary);
+}
+
+.skill .sub::before {
+  content: '- ';
+}
+
+.sublabel {
+  color: var(--color-resume-text);
+}
+
+@media (max-width: 48rem) {
+  .page {
+    padding: var(--space-4);
+  }
+
+  .header {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .contact {
+    grid-template-columns: auto;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: var(--space-0);
+  }
+
+  .date {
+    white-space: normal;
+  }
+}

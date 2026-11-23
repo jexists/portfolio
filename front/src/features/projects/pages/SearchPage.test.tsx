@@ -83,6 +83,29 @@ describe('Search page (MSW mockup)', () => {
     expect(within(all).getByRole('button', { name: 'Kotlin 필터 해제' })).toBeInTheDocument();
   });
 
+  it('links the person card to the resume tab and shows only detailed careers (AC-10, AC-4)', async () => {
+    const user = userEvent.setup();
+    renderSearch();
+
+    const card = await screen.findByRole('region', { name: '정주애 인물정보 카드' });
+    expect(within(card).queryByRole('navigation', { name: '인물정보 탭' })).not.toBeInTheDocument();
+    expect(card).toHaveTextContent('필리핀 한인 매거진 뉴스게이트 디자이너');
+    expect(card).toHaveTextContent('주식회사 브레이스 웹 풀스택');
+    expect(card).not.toHaveTextContent('성진에이치디에스');
+    expect(card).toHaveTextContent('웹디자인기능사, 운전면허 2종 보통');
+
+    await user.click(within(card).getByRole('link', { name: /이력서 보기/ }));
+
+    expect(screen.getByTestId('location')).toHaveTextContent('/search?tab=resume');
+    const resume = await screen.findByRole('article', { name: '정주애 이력서' });
+    expect(resume).toHaveTextContent('주식회사 브레이스 (구 아유레디)');
+    expect(resume).toHaveTextContent('보유기술');
+    expect(resume).not.toHaveTextContent('010-');
+    expect(within(resume).queryByRole('img')).not.toBeInTheDocument();
+    expect(screen.queryByRole('complementary', { name: '사이드 정보' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('tab', { name: '이력서' })).not.toBeInTheDocument();
+  });
+
   it('syncs tab selection to the query string', async () => {
     const user = userEvent.setup();
     renderSearch();

@@ -4,6 +4,7 @@
     "kind": "degree",
     "order": 1,
     "name": "University of Santo Tomas",
+    "summaryLine": "필리핀 산토 토마스 대학교 산업디자인 졸업",
     "org": "필리핀 마닐라",
     "major": "College of Fine Arts and Design · Industrial Design",
     "degree": "BFA (학사) 졸업",
@@ -15,14 +16,17 @@
     "notes": [
       "GWA 1.76 (100점 환산 89점), 7등/62명",
       "Dean's List 4회 (2013–2016)"
-    ]
+    ],
+    "featured": false,
+    "projectIds": []
   },
   {
     "_id": "ax-campus",
     "kind": "course",
     "order": 2,
-    "name": "AX Campus 1기 (FDE)",
-    "org": "주식회사 에이엑스",
+    "name": "AX Campus 1기 (AX FDE 양성 과정)",
+    "summaryLine": "",
+    "org": "주식회사 에이엑스 (AX)",
     "major": "",
     "degree": "",
     "period": {
@@ -30,14 +34,27 @@
       "end": "2026.12.11"
     },
     "hours": "96시간 + 4주 실무 교육",
-    "notes": []
+    "notes": [
+      "고객 업무를 인터뷰해 요구사항과 사용자 흐름을 정리하는 기획부터 시작",
+      "정리한 흐름을 LLM·RAG 기반 서비스로 개발해 반복 업무를 자동화하는 방법 학습",
+      "회고: 기능보다 고객이 실제로 일하는 방식을 먼저 이해해야 무엇을 자동화할지 정할 수 있음을 배움"
+    ],
+    "featured": true,
+    "projectIds": [
+      "hanbit-math",
+      "testory",
+      "snapbook",
+      "heuk-studio",
+      "travel-content-maker"
+    ]
   },
   {
     "_id": "mini-intern",
     "kind": "course",
     "order": 3,
-    "name": "미니인턴 웹서비스 개발반",
-    "org": "오픈놀 · 스마트동스쿨",
+    "name": "미니인턴 기업실무체험프로젝트 웹서비스 개발반",
+    "summaryLine": "",
+    "org": "미니인턴 ((주)오픈놀) · 과제 기업 (주)스마트동스쿨",
     "major": "",
     "degree": "",
     "period": {
@@ -45,14 +62,23 @@
       "end": "2026.11.19"
     },
     "hours": "12시간",
-    "notes": []
+    "notes": [
+      "기업이 직접 준 요구사항으로 블로그 콘텐츠를 숏폼 영상 초안으로 만드는 웹서비스 프로토타입을 팀으로 개발",
+      "AI 코딩 도구를 활용한 바이브 코딩 개발 방식과 AI 도구 사용법 학습",
+      "회고: 대본 생성 → 장면 편집 → TTS·자막 → 영상 합성을 팀원들과 나눠 구현하며 (본인은 프론트엔드·진행 화면 담당) 숏폼 제작이 어떤 단계로 이루어지는지 체감"
+    ],
+    "featured": true,
+    "projectIds": [
+      "blog2shorts"
+    ]
   },
   {
     "_id": "skn30",
     "kind": "course",
     "order": 4,
-    "name": "SK네트웍스 Family AI 캠프 30기",
-    "org": "플레이데이터",
+    "name": "SK네트웍스 Family AI 캠프 30기 (KDT)",
+    "summaryLine": "",
+    "org": "플레이데이터평생교육원",
     "major": "",
     "degree": "",
     "period": {
@@ -60,14 +86,26 @@
       "end": "2026.09.23"
     },
     "hours": "960시간",
-    "notes": []
+    "notes": [
+      "Python·SQL 기초부터 머신러닝·딥러닝, LLM·RAG·멀티에이전트, AWS까지 단계적으로 학습",
+      "배운 내용으로 AI 서비스를 직접 개발하는 실습 진행",
+      "회고: AI를 기초 개념부터 쌓아 올리며 이후 LLM 서비스를 설계할 때 판단 기준이 생김"
+    ],
+    "featured": true,
+    "projectIds": [
+      "salesluv",
+      "jeonse-factchecker",
+      "tube-eottae",
+      "ev-charging-sos"
+    ]
   },
   {
     "_id": "c-cpp",
     "kind": "course",
     "order": 5,
-    "name": "C, C++ 프로그래밍",
-    "org": "메가스터디컴퓨터아카데미 신촌",
+    "name": "C, C++ 프로그래밍 (국비지원, 야간)",
+    "summaryLine": "",
+    "org": "메가스터디컴퓨터아카데미 신촌학원",
     "major": "",
     "degree": "",
     "period": {
@@ -75,13 +113,19 @@
       "end": "2021.08.17"
     },
     "hours": "60시간",
-    "notes": []
+    "notes": [
+      "C·C++ 기초 문법과 프로그래밍 기본 개념 학습",
+      "회고: 디자인 전공자로서 개발의 기본기를 다지는 계기"
+    ],
+    "featured": true,
+    "projectIds": []
   },
   {
     "_id": "uxui",
     "kind": "course",
     "order": 6,
-    "name": "스마트기기 UX/UI 디자인 실무자 과정",
+    "name": "스마트기기 UX/UI 디자인 실무자 과정 (국비지원)",
+    "summaryLine": "",
     "org": "그린컴퓨터아카데미 수원",
     "major": "",
     "degree": "",
@@ -91,7 +135,271 @@
     },
     "hours": "700시간",
     "notes": [
-      "성적우수상 · 개근상"
+      "98.9/100, 성적우수상·개근상",
+      "UX/UI 디자인 이론과 화면 설계, HTML·CSS (SCSS)·JavaScript (jQuery)로 웹 화면 구현까지 학습",
+      "회고: 디자인과 웹 프론트엔드 개념을 함께 배우며 디자이너에서 개발자로 넘어가는 출발점이 됨"
+    ],
+    "featured": true,
+    "projectIds": [
+      "cocacola-redesign"
     ]
+  },
+  {
+    "_id": "achievement-program",
+    "kind": "course",
+    "order": 7,
+    "name": "성취프로그램",
+    "summaryLine": "",
+    "org": "수원고용센터",
+    "major": "",
+    "degree": "",
+    "period": {
+      "start": "2019.07",
+      "end": "2019.08"
+    },
+    "hours": "30시간",
+    "notes": [],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "job-hope-program",
+    "kind": "course",
+    "order": 8,
+    "name": "취업희망프로그램",
+    "summaryLine": "",
+    "org": "수원고용센터",
+    "major": "",
+    "degree": "",
+    "period": {
+      "start": "2019.07",
+      "end": "2019.07"
+    },
+    "hours": "24시간",
+    "notes": [],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "startup-academy",
+    "kind": "course",
+    "order": 9,
+    "name": "2018 필리핀 한인 청년 창업 아카데미 & 올림피아드",
+    "summaryLine": "",
+    "org": "필리핀 한인 청년 창업 아카데미",
+    "major": "",
+    "degree": "",
+    "period": {
+      "start": "2018.06",
+      "end": "2018.06"
+    },
+    "hours": "40시간",
+    "notes": [
+      "3등"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "creative-vibe-coding",
+    "kind": "course",
+    "order": 10,
+    "name": "Creative Vibe Coding",
+    "summaryLine": "",
+    "org": "모두의연구소 LAB",
+    "major": "학습 모임",
+    "degree": "",
+    "period": {
+      "start": "2026.01",
+      "end": "2026.04"
+    },
+    "hours": "",
+    "notes": [
+      "AI 코딩 도구 활용 방식과 개발 사례 공유·실습"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "seoul-mug",
+    "kind": "course",
+    "order": 11,
+    "name": "Seoul MUG Online: AI Skills",
+    "summaryLine": "",
+    "org": "온라인 세미나",
+    "major": "학습 모임",
+    "degree": "",
+    "period": {
+      "start": "2025",
+      "end": "2025"
+    },
+    "hours": "",
+    "notes": [
+      "MongoDB 기반 벡터 검색, RAG 구조"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "cs50",
+    "kind": "course",
+    "order": 12,
+    "name": "부스트 코딩뉴비 챌린지 2020 Summer: CS50",
+    "summaryLine": "",
+    "org": "온라인",
+    "major": "온라인 학습",
+    "degree": "",
+    "period": {
+      "start": "2020.07",
+      "end": "2020.08"
+    },
+    "hours": "",
+    "notes": [
+      "Harvard CS50 기반 컴퓨터공학·프로그래밍 기초"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "high-school",
+    "kind": "school",
+    "order": 13,
+    "name": "Saint Claire Fountain of Knowledge",
+    "summaryLine": "",
+    "org": "필리핀 마닐라",
+    "major": "고등학교",
+    "degree": "졸업",
+    "period": {
+      "start": "2011.06",
+      "end": "2012.03"
+    },
+    "hours": "",
+    "notes": [
+      "4학년",
+      "개근상"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "high-school-3",
+    "kind": "school",
+    "order": 14,
+    "name": "Saint Claire School",
+    "summaryLine": "",
+    "org": "필리핀 마닐라",
+    "major": "고등학교",
+    "degree": "",
+    "period": {
+      "start": "2010",
+      "end": "2010"
+    },
+    "hours": "",
+    "notes": [
+      "3학년"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "high-school-2",
+    "kind": "school",
+    "order": 15,
+    "name": "Young Rac High School",
+    "summaryLine": "",
+    "org": "필리핀 마닐라",
+    "major": "고등학교",
+    "degree": "",
+    "period": {
+      "start": "2009",
+      "end": "2009"
+    },
+    "hours": "",
+    "notes": [
+      "2학년"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "high-school-1",
+    "kind": "school",
+    "order": 16,
+    "name": "Saint Claire School",
+    "summaryLine": "",
+    "org": "필리핀 마닐라",
+    "major": "고등학교",
+    "degree": "",
+    "period": {
+      "start": "2008",
+      "end": "2008"
+    },
+    "hours": "",
+    "notes": [
+      "1학년"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "middle-school",
+    "kind": "school",
+    "order": 17,
+    "name": "군산산북중학교",
+    "summaryLine": "",
+    "org": "대한민국 군산",
+    "major": "중학교",
+    "degree": "중퇴",
+    "period": {
+      "start": "2007.03",
+      "end": "2007.12"
+    },
+    "hours": "",
+    "notes": [
+      "1학년",
+      "필리핀 유학으로 학업 중단"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "elementary-school",
+    "kind": "school",
+    "order": 18,
+    "name": "군산미성초등학교",
+    "summaryLine": "",
+    "org": "대한민국 군산",
+    "major": "초등학교",
+    "degree": "졸업",
+    "period": {
+      "start": "2004.09",
+      "end": "2007.02"
+    },
+    "hours": "",
+    "notes": [
+      "4~6학년"
+    ],
+    "featured": false,
+    "projectIds": []
+  },
+  {
+    "_id": "elementary-school-first",
+    "kind": "school",
+    "order": 19,
+    "name": "군산산북초등학교",
+    "summaryLine": "",
+    "org": "대한민국 군산",
+    "major": "초등학교",
+    "degree": "전학",
+    "period": {
+      "start": "2001.03",
+      "end": "2004.09"
+    },
+    "hours": "",
+    "notes": [
+      "1~4학년"
+    ],
+    "featured": false,
+    "projectIds": []
   }
 ]
