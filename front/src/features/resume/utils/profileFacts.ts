@@ -14,10 +14,20 @@ export const CERTIFICATE_COUNT = 2;
 // shortcut: 인물정보 카드의 대표 기술 배지는 고정, 자주 바뀌면 profiles.json 필드로 옮긴다
 const MAIN_SKILL_BADGES = ['Angular', 'Go', 'MongoDB'];
 
+const SHORT_MONTHS = 6;
+const monthIndex = (value: string) => {
+  const [year, month] = value.split('.').map(Number);
+  return year * 12 + month;
+};
+/** 6개월 미만 경력 (월이 없는 기간은 짧다고 보지 않는다) */
+const isShort = ({ start, end }: Career['period']) => monthIndex(end) - monthIndex(start) < SHORT_MONTHS;
+
 /** 인물정보 카드·사이드 프로필에 보여 줄 경력·학력·기술 요약 (이력 데이터에서 계산, 항목마다 한 줄 길이) */
 export function buildProfileFacts(careers: Career[], educations: Education[]): ProfileFact[] {
-  // 상세 기록(역할)이 있는 주요 경력만: 3개월짜리 성진은 빠지고 브레이스·뉴스게이트가 남는다
-  const mainCareers = careers.filter((career) => !career.minor && career.responsibilities.length > 0).slice(0, MAIN_CAREER_COUNT);
+  // 상세 기록(역할)이 있고 6개월 이상인 주요 경력만: 3개월짜리 성진은 빠지고 브레이스·뉴스게이트가 남는다
+  const mainCareers = careers
+    .filter((career) => !career.minor && career.responsibilities.length > 0 && !isShort(career.period))
+    .slice(0, MAIN_CAREER_COUNT);
   const degree = educations.find((education) => education.kind === 'degree');
 
   const facts: ProfileFact[] = [

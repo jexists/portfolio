@@ -10,7 +10,7 @@ describe('buildProfileFacts', () => {
   it('summarizes detailed main careers, the degree and main skills', () => {
     const careers = [
       career({ id: 'a', company: '브레이스', role: '웹 풀스택 개발', summaryLine: '브레이스 웹 풀스택', responsibilities: ['역할'] }),
-      career({ id: 'b', order: 2, company: '성진', period: { start: '2020.02', end: '2020.04' }, role: '퍼블리싱' }),
+      career({ id: 'b', order: 2, company: '성진', period: { start: '2020.02', end: '2020.04' }, role: '퍼블리싱', responsibilities: ['역할'] }),
       career({ id: 'c', order: 3, company: '뉴스게이트', period: { start: '2016.08', end: '2019.03' }, role: '편집디자인', responsibilities: ['역할'] }),
       career({ id: 'd', order: 4, company: '아르바이트', minor: true }),
     ];
