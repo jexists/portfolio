@@ -4,7 +4,7 @@
     "summaryLine": "주식회사 브레이스 웹 풀스택",
     "service": "축구 유니폼 커뮤니티·중고거래 플랫폼 레사모 (4mation.net). 웹, Android·iOS 앱 웹뷰, 관리자 화면",
     "responsibilities": [
-      "출시 전 프론트엔드 (Angular)로 합류, 2021.04부터 백엔드 (Go · MongoDB) 병행",
+      "출시 전 프론트엔드 (Angular) 합류, 2021.04부터 백엔드 (Go · MongoDB) 병행",
       "결제·경매·정산·재고·채팅·커뮤니티 등 서비스 주요 기능 개발",
       "사용자 화면, 관리자 화면, API, 데이터 모델을 하나의 단위로 구현",
       "Android·iOS 앱 내 웹뷰 화면 개발"
@@ -112,6 +112,7 @@
     ],
     "minor": false,
     "_id": "brace",
+    "logo": "/images/careers/brace.png",
     "order": 1,
     "company": "주식회사 브레이스",
     "period": {
@@ -199,6 +200,7 @@
     ],
     "minor": false,
     "_id": "sungjin",
+    "logo": "/images/careers/sungjin.png",
     "order": 2,
     "company": "성진에이치디에스",
     "period": {
@@ -209,9 +211,20 @@
     "role": "웹 퍼블리싱·프론트엔드 개발"
   },
   {
-    "companyNote": "",
+    "companyNote": "필리핀 한인 매거진",
     "summaryLine": "필리핀 한인 매거진 뉴스게이트 디자이너",
-    "service": "1996년부터 발행된 필리핀 최초의 한인 종합 매거진 (필리핀 마닐라)",
+    "service": "1996년부터 발행된 필리핀 최초의 한인 종합 매거진",
+    "facts": [
+      { "label": "서비스", "text": "1996년부터 발행된 필리핀 최초의 한인 종합 매거진" },
+      {
+        "label": "운영 채널",
+        "text": "카카오톡 채널 / 페이스북 페이지",
+        "links": [
+          { "text": "카카오톡 채널", "url": "http://pf.kakao.com/_RMVvxd" },
+          { "text": "페이스북 페이지", "url": "https://www.facebook.com/enewsgate/" }
+        ]
+      }
+    ],
     "responsibilities": [
       "매거진 편집디자인·광고 그래픽 제작",
       "오프라인으로만 발행하던 매거진의 온라인 배포 제안·진행\nInDesign으로 온라인 전자책 파일 세팅, 호별 링크를 한인 카카오톡 방·페이스북에 게시",
@@ -229,8 +242,9 @@
     ],
     "minor": false,
     "_id": "newsgate",
+    "logo": "/images/careers/newsgate.png",
     "order": 3,
-    "company": "필리핀 한인 종합 매거진 뉴스게이트",
+    "company": "뉴스게이트",
     "period": {
       "start": "2016.05",
       "end": "2019.05"

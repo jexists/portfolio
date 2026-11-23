@@ -96,6 +96,7 @@ export function CareerSection({ careers, skills }: CareerSectionProps) {
     <>
       <HTimeline
         title="경력 타임라인"
+        hideKind
         items={main.map((career) => careerItem(career, `/search?tab=career#${careerAnchor(career.id)}`))}
         more={
           <Link className={styles.moreLink} to="/search?tab=careerdoc">
@@ -105,6 +106,10 @@ export function CareerSection({ careers, skills }: CareerSectionProps) {
       />
       {main.map((career) => (
         <Card key={career.id} ariaLabel={career.company}>
+          {/* 카드 로고는 나중에 쓸 수 있어 남겨 둔다 (스타일: .hasLogo, .careerLogo)
+          <article className={`${styles.career} ${career.logo ? styles.hasLogo : ''}`} id={careerAnchor(career.id)}>
+            {career.logo ? <img className={styles.careerLogo} src={career.logo} alt="" width={48} height={48} /> : null}
+          */}
           <article className={styles.career} id={careerAnchor(career.id)}>
             <header className={styles.careerHead}>
               <h3>
@@ -297,6 +302,7 @@ function TechBadges({ names, onSelect }: { names: string[]; onSelect: (skillId: 
 }
 
 /** 왼쪽 라벨 + 오른쪽 내용 줄 (언어) */
+/*
 function LabeledRows({ rows }: { rows: LabeledText[] }) {
   return (
     <ul className={styles.rows}>
@@ -309,6 +315,7 @@ function LabeledRows({ rows }: { rows: LabeledText[] }) {
     </ul>
   );
 }
+*/
 
 /** 기술 박스: 이름·한 줄 설명, 세부 내용이 있으면 박스나 화살표를 눌러 펼친다 */
 function SkillBox({ skill }: { skill: Skill }) {
@@ -362,7 +369,7 @@ function SkillBox({ skill }: { skill: Skill }) {
 }
 
 /** 기술 탭: 기술 요점 → 실무 → 프로젝트 기반 기술 → AI 활용 기술 → 디자인 → 기타 → 언어 */
-export function SkillsSection({ skills, summary, languages }: SkillsSectionProps) {
+export function SkillsSection({ skills, summary }: SkillsSectionProps) {
   const [filter, setFilter] = useState<SkillSection | 'all'>('all');
   const sections = SKILL_SECTIONS.filter(({ key }) => skills.some((skill) => skill.section === key));
 
@@ -448,11 +455,13 @@ export function SkillsSection({ skills, summary, languages }: SkillsSectionProps
         );
       })}
 
+      {/* 언어 섹션은 숨김 (다시 쓰려면 주석 해제 + 아래 LabeledRows 주석도 해제)
       {languages.length ? (
         <Card title="언어">
           <LabeledRows rows={languages} />
         </Card>
       ) : null}
+      */}
     </>
   );
 }
@@ -907,28 +916,42 @@ const TIMELINE_LABEL: Record<TimelineKind, string> = { career: '경력', degree:
 // shortcut: 주요 타임라인에 보일 항목은 id 로 고정, 자주 바뀌면 careers·educations 에 필드를 둔다
 const TIMELINE_IDS = ['skn30', 'brace', 'uxui', 'newsgate', 'ust'];
 
-const companyTitle = (career: Career) => (career.companyNote ? `${career.company} (${career.companyNote})` : career.company);
-
 interface TimelineItem {
   id: string;
   kind: TimelineKind;
   period: Period;
   title: string;
+  /** 제목 둘째 줄 (구 이름·한 줄 소개) */
+  note?: string;
   sub: string;
   to: string;
+  logo?: string;
 }
 
 const careerItem = (career: Career, to: string): TimelineItem => ({
   id: career.id,
   kind: 'career',
   period: career.period,
-  title: companyTitle(career),
+  title: career.company,
+  note: career.companyNote,
   sub: career.role,
   to,
+  logo: career.logo,
 });
 
 /** 가로 타임라인 카드 (최신순). 스크롤바 대신 양 끝 화살표로 넘긴다 */
-function HTimeline({ title, items, more }: { title: string; items: TimelineItem[]; more?: ReactNode }) {
+function HTimeline({
+  title,
+  items,
+  more,
+  hideKind = false,
+}: {
+  title: string;
+  items: TimelineItem[];
+  more?: ReactNode;
+  /** 한 종류만 있을 때(경력 탭) 종류 태그를 숨긴다 */
+  hideKind?: boolean;
+}) {
   const rail = useRail<HTMLOListElement>([items]);
   if (!items.length) return null;
   const sorted = [...items].sort((a, b) => b.period.start.localeCompare(a.period.start));
@@ -936,13 +959,23 @@ function HTimeline({ title, items, more }: { title: string; items: TimelineItem[
   return (
     <Card title={title}>
       <div className={styles.hTimelineWrap}>
-        <ol className={styles.hTimeline} ref={rail.ref} onScroll={rail.update}>
+        <ol
+          className={`${styles.hTimeline} ${items.some((item) => item.logo) ? styles.hTimelineLogos : ''} ${hideKind ? styles.hTimelineOneLine : ''}`}
+          ref={rail.ref} onScroll={rail.update}>
           {sorted.map((item) => (
-            <li key={item.id} data-kind={item.kind}>
+            <li key={item.id} data-kind={item.kind} data-logo={item.logo ? true : undefined}>
+              {item.logo ? <img className={styles.hTimelineLogo} src={item.logo} alt="" width={28} height={28} /> : null}
               <span className={styles.hTimelineWhen}>{period({ start: item.period.start.slice(0, 7), end: item.period.end.slice(0, 7) })}</span>
-              <span className={styles.hTimelineKind}>{TIMELINE_LABEL[item.kind]}</span>
+              {hideKind ? null : <span className={styles.hTimelineKind}>{TIMELINE_LABEL[item.kind]}</span>}
               <Link to={item.to} className={styles.hTimelineTitle}>
                 {item.title}
+                {item.note ? (
+                  <>
+                    {/* 전체 탭은 둘째 줄, 경력 탭은 한 줄 */}
+                    {hideKind ? ' ' : <br />}
+                    <span className={styles.hTimelineNote}>({item.note})</span>
+                  </>
+                ) : null}
               </Link>
               {item.sub ? <span className={styles.hTimelineSub}>{item.sub}</span> : null}
             </li>
@@ -969,6 +1002,7 @@ export function ResumeTimeline({ careers, educations }: { careers: Career[]; edu
         title: item.name,
         sub: item.kind === 'degree' ? item.degree ?? '' : item.org,
         to: '/search?tab=education',
+        logo: item.logo,
       })),
   ];
 

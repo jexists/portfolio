@@ -1,6 +1,7 @@
 [
   {
     "_id": "ust",
+    "logo": "/images/educations/ust.png",
     "kind": "degree",
     "order": 1,
     "name": "University of Santo Tomas (UST)",
@@ -82,6 +83,7 @@
   },
   {
     "_id": "skn30",
+    "logo": "/images/educations/skn30.png",
     "kind": "course",
     "order": 4,
     "name": "SK네트웍스 Family AI 캠프 30기 (KDT)",
@@ -130,6 +132,7 @@
   },
   {
     "_id": "uxui",
+    "logo": "/images/educations/uxui.png",
     "kind": "course",
     "order": 6,
     "name": "스마트기기 UX/UI 디자인 실무자 과정 (국비지원)",

@@ -46,7 +46,8 @@ type Career struct {
 	Order            int                 `bson:"order" json:"order"`
 	Company          string              `bson:"company" json:"company"`
 	CompanyNote      string              `bson:"companyNote" json:"companyNote"`
-	SummaryLine      string              `bson:"summaryLine" json:"summaryLine"` // 인물정보 카드 한 줄 요약(회사 + 직무), 비면 company + role
+	Logo             string              `bson:"logo,omitempty" json:"logo,omitempty"` // 경력 카드 회사명 앞 작은 로고 (public 이미지 경로)
+	SummaryLine      string              `bson:"summaryLine" json:"summaryLine"`       // 인물정보 카드 한 줄 요약(회사 + 직무), 비면 company + role
 	Period           Period              `bson:"period" json:"period"`
 	Duration         string              `bson:"duration" json:"duration"`
 	Role             string              `bson:"role" json:"role"`
@@ -99,6 +100,7 @@ type Education struct {
 	Kind  string `bson:"kind" json:"kind"` // degree | course | school
 	Order int    `bson:"order" json:"order"`
 	Name  string `bson:"name" json:"name"`
+	Logo  string `bson:"logo,omitempty" json:"logo,omitempty"` // 주요 타임라인 점 자리 동그란 로고 (public 이미지 경로)
 	// 인물정보 카드 한 줄 요약, 비면 name + 전공 + 상태
 	SummaryLine string   `bson:"summaryLine" json:"summaryLine"`
 	Org         string   `bson:"org" json:"org"`
