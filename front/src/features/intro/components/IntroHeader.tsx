@@ -26,7 +26,7 @@ export function IntroHeader({ onSkip }: IntroHeaderProps) {
       <button className={styles.textLink} type="button" onClick={onSkip}>
         이력서
       </button>
-      <HeaderActions onAppClick={onSkip} stopProfileClickPropagation />
+      <HeaderActions stopProfileClickPropagation />
     </header>
   );
 }

@@ -378,3 +378,11 @@
 .side .git table:has(th) th {
   background: var(--color-bg-subtle);
 }
+
+/* 좁은 화면: 뒤로가기 링크 터치 영역을 키우되 카드 안 위치는 그대로 */
+@media (max-width: 48rem) {
+  .back {
+    margin-block: calc(var(--space-2) * -1);
+    padding-block: var(--space-2);
+  }
+}

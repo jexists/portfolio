@@ -233,3 +233,21 @@
 .moreButton:hover {
   color: var(--color-text-primary);
 }
+
+/* 모바일: 구분 칩은 한 줄로 두고 가로로 넘긴다 */
+@media (max-width: 48rem) {
+  .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    flex: var(--flex-none);
+    white-space: nowrap;
+  }
+}

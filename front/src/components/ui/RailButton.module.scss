@@ -37,9 +37,13 @@
   stroke-width: var(--border-width-strong);
 }
 
-/* 모바일은 손가락으로 넘긴다 */
+/* 모바일: 카드 테두리에 붙어 보이지 않게 10px 안으로 */
 @media (max-width: 48rem) {
-  .button {
-    display: none;
+  .button[data-side='prev'] {
+    left: calc(var(--search-rail-button-offset) + var(--space-2-5));
+  }
+
+  .button[data-side='next'] {
+    right: calc(var(--search-rail-button-offset) + var(--space-2-5));
   }
 }

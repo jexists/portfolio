@@ -106,10 +106,11 @@ export function IntroPage({ onComplete }: IntroProps) {
                 />
                 <span className={styles.visibleQuery} aria-hidden="true">
                   {typedText ? (
-                    <>
+                    // 입력창처럼 한 줄로 두고, 넘치면 앞 글자부터 가려 커서 쪽이 보이게 한다
+                    <span className={styles.queryLine}>
                       <span data-testid="visible-query">{typedText}</span>
                       <span className={styles.textCursor} data-text-cursor="true" />
-                    </>
+                    </span>
                   ) : (
                     <span className={styles.placeholder}></span>
                   )}

@@ -246,27 +246,36 @@ const LINE_ICONS = {
   ),
 };
 
+/** 주소에 맞는 브랜드 로고, 없으면 선 아이콘, 그것도 없으면 이름 첫 글자 (헤더 링크 메뉴도 쓴다) */
+export function LinkIcon({ href, label, icon }: { href: string; label: string; icon?: LinkRow['icon'] }) {
+  const logo = linkLogo(href);
+  if (logo) {
+    return (
+      <svg viewBox="0 0 24 24" style={{ fill: `#${logo.hex}` }} aria-hidden="true">
+        <path d={logo.path} />
+      </svg>
+    );
+  }
+  if (icon) {
+    return (
+      <svg className={styles.lineIcon} viewBox="0 0 24 24" aria-hidden="true">
+        {LINE_ICONS[icon]}
+      </svg>
+    );
+  }
+  return <>{label.slice(0, 1)}</>;
+}
+
 /** 로고 + 이름 + 주소 + › 줄 목록 (프로필 링크 카드, 프로젝트 링크 카드가 같이 쓴다) */
 export function LinkRows({ rows }: { rows: LinkRow[] }) {
   return (
     <ul className={styles.linkRows}>
       {rows.map((row) => {
-        const logo = linkLogo(row.href);
         return (
           <li key={row.key}>
             <a href={row.href} {...(row.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
               <span className={styles.linkIcon} aria-hidden="true">
-                {logo ? (
-                  <svg viewBox="0 0 24 24" style={{ fill: `#${logo.hex}` }}>
-                    <path d={logo.path} />
-                  </svg>
-                ) : row.icon ? (
-                  <svg className={styles.lineIcon} viewBox="0 0 24 24">
-                    {LINE_ICONS[row.icon]}
-                  </svg>
-                ) : (
-                  row.label.slice(0, 1)
-                )}
+                <LinkIcon href={row.href} label={row.label} icon={row.icon} />
               </span>
               <span className={styles.linkText}>
                 <b>{row.label}</b>

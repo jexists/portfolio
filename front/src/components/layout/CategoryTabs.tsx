@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import type { CSSProperties, KeyboardEvent } from 'react';
-import { FreeMode } from 'swiper/modules';
+import { FreeMode, Mousewheel } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper/types';
 import 'swiper/css';
@@ -98,9 +98,11 @@ export function CategoryTabs({ value, onChange }: CategoryTabsProps) {
     <nav className={styles.tabs} aria-label="검색 탭">
       <Swiper
         className={styles.tabList}
-        modules={[FreeMode]}
+        modules={[FreeMode, Mousewheel]}
         slidesPerView="auto"
         freeMode={{ enabled: true, momentum: true }}
+        // 마우스 휠·트랙패드로도 넘긴다. 끝에 닿으면 페이지 스크롤로 넘겨 준다 (탭이 다 보이면 잠겨서 영향 없음)
+        mousewheel={{ releaseOnEdges: true }}
         grabCursor
         simulateTouch
         role="tablist"

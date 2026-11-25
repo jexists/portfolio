@@ -50,7 +50,7 @@ vi.mock('swiper/react', () => ({
   ),
 }));
 
-vi.mock('swiper/modules', () => ({ FreeMode: Symbol('FreeMode') }));
+vi.mock('swiper/modules', () => ({ FreeMode: Symbol('FreeMode'), Mousewheel: Symbol('Mousewheel') }));
 
 describe('CategoryTabs', () => {
   beforeEach(() => {
@@ -66,7 +66,7 @@ describe('CategoryTabs', () => {
     expect(tabList).toHaveAttribute('data-free-mode', 'true');
     expect(tabList).toHaveAttribute('data-grab-cursor', 'true');
     expect(tabList).toHaveAttribute('data-simulate-touch', 'true');
-    expect(tabList).toHaveAttribute('data-module-count', '1');
+    expect(tabList).toHaveAttribute('data-module-count', '2');
     expect(screen.getAllByRole('tab')).toHaveLength(6);
     expect(screen.queryByRole('tab', { name: '이력서' })).not.toBeInTheDocument();
     expect(screen.getByRole('tab', { name: '전체' })).toHaveAttribute('aria-selected', 'true');

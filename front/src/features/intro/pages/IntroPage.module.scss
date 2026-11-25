@@ -71,9 +71,18 @@
   min-width: var(--space-0);
   flex: var(--flex-auto);
   align-items: center;
+  justify-content: flex-end;
   overflow: hidden;
   color: var(--color-text-primary);
   font-size: var(--font-size-lg);
+  white-space: nowrap;
+}
+
+/* 짧으면 칸을 채워 왼쪽 정렬, 길면 내용 폭으로 커져 오른쪽 끝(커서)에 맞춰진다 */
+.queryLine {
+  display: inline-flex;
+  flex: 1 0 auto;
+  align-items: center;
 }
 
 .placeholder {
