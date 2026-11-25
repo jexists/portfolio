@@ -205,16 +205,15 @@
   display: none;
 }
 
+/* 인물정보 사이드 카드와 같은 모양: 라벨은 가장 긴 라벨 폭에 맞춰 모든 줄이 같이 정렬 */
 .side table:not(:has(th:nth-child(3))) tbody {
-  display: block;
+  display: grid;
+  grid-template-columns: max-content minmax(var(--space-0), 1fr);
+  gap: var(--space-2) var(--search-card-padding);
 }
 
 .side table:not(:has(th:nth-child(3))) tr {
-  display: grid;
-  grid-template-columns: 4.5rem minmax(var(--space-0), 1fr);
-  column-gap: var(--space-2);
-  padding: var(--space-1) var(--space-0);
-  line-height: 1.5;
+  display: contents;
 }
 
 .side table:not(:has(th:nth-child(3))) td {
@@ -223,10 +222,7 @@
 }
 
 .side table:not(:has(th:nth-child(3))) td:first-child {
-  padding-top: 0.1em;
   color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
 }
 
 /* Git 기여처럼 칸이 많은 표는 표 모양 그대로 작게, 선 없이 */

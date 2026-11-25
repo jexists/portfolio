@@ -12,6 +12,8 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2) var(--space-4);
+  /* 부모가 세로 flex 이면 margin-inline: auto 때문에 내용 폭으로 줄어든다 → 폭을 꽉 채운다 */
+  width: var(--layout-full);
   max-width: var(--search-header-max-width);
   margin-inline: auto;
   padding: var(--space-6) var(--search-content-padding-x);
@@ -23,6 +25,12 @@
   /* 본문이 짧아도 풋터가 화면 맨 아래에 붙는다 (부모 .page 가 세로 flex) */
   margin-top: auto;
   padding-block: var(--space-0) var(--space-4);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
 }
 
 .inner small {

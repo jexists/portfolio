@@ -49,6 +49,8 @@ export interface ProjectMeta {
   highlights: string[];
   links: ProjectLink[];
   linkNote?: string;
+  /** 링크 카드 제목 옆 작은 상태 (예: 배포 종료) */
+  linkStatus?: string;
   images: ProjectImage[];
   series?: string;
   seriesOrder?: number;
@@ -83,6 +85,8 @@ export interface ProjectDto {
   highlights: string[];
   links: ProjectLink[];
   linkNote?: string;
+  /** 링크 카드 제목 옆 작은 상태 (예: 배포 종료) */
+  linkStatus?: string;
   images: ProjectImage[];
   series?: { name: string; order: number } | null;
   publishedAt: string;

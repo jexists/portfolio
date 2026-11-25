@@ -75,6 +75,11 @@
   color: var(--color-text-link);
 }
 
+/* 이미 열어 본 프로젝트: 검색결과처럼 보라색으로 표시 */
+.list h3 a:visited {
+  color: var(--color-text-visited);
+}
+
 .list p {
   margin-top: var(--space-1);
   color: var(--color-text-secondary);
@@ -102,6 +107,24 @@
 
 .itemText {
   min-width: var(--space-0);
+}
+
+/* 날짜·링크 아래, 화면 캡처 위 기술 배지 줄 */
+.itemText .techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+/* 목록에서는 기술이 제목보다 튀지 않게 로고를 회색으로 (색은 상세 페이지에서) */
+.itemText .techs > span {
+  color: var(--color-text-secondary);
+}
+
+.itemText .techs svg {
+  opacity: 0.6;
+  filter: grayscale(1);
 }
 
 .thumb img,
@@ -139,9 +162,9 @@
 
 .strip img {
   flex: var(--flex-none);
-  width: auto;
-  max-width: calc(var(--space-12) * 5);
+  /* 폭을 미리 정해 두어야 사진이 뜨기 전 좁았다가 넓어지지 않는다 */
   height: calc(var(--space-12) * 2.5);
+  aspect-ratio: 4 / 3;
   scroll-snap-align: start;
 }
 

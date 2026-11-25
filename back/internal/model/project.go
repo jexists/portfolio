@@ -33,6 +33,7 @@ type Project struct {
 	Highlights  []string       `bson:"highlights" json:"highlights"`
 	Links       []ProjectLink  `bson:"links" json:"links"`
 	LinkNote    string         `bson:"linkNote" json:"linkNote"`
+	LinkStatus  string         `bson:"linkStatus,omitempty" json:"linkStatus,omitempty"` // 링크 카드 제목 옆 작은 상태 (예: 배포 종료)
 	Images      []ProjectImage `bson:"images" json:"images"`
 	Series      *Series        `bson:"series,omitempty" json:"series,omitempty"`
 	PublishedAt string         `bson:"publishedAt" json:"publishedAt"`

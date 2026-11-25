@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useLocation, useSearchParams } from 'react-router';
 import { SearchHeader } from '@/components/layout/SearchHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
@@ -45,11 +45,6 @@ export function SearchPage() {
   );
   const featured = useMemo(() => (projects ?? []).filter((project) => project.featured), [projects]);
 
-  // 탭이 바뀌면(탭 버튼·"더보기" 링크 모두) 브라우저가 스크롤을 유지하므로 맨 위로 올린다.
-  // #career-<id> 처럼 위치가 붙어 오면 그 탭이 직접 스크롤한다 (탭이 바뀔 때만 실행)
-  useEffect(() => {
-    if (!location.hash) window.scrollTo({ top: 0 });
-  }, [tab]);
 
   function changeTab(next: SearchTab) {
     setSearchParams(next === 'all' ? {} : { tab: next });

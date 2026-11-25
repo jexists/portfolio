@@ -327,6 +327,14 @@
   height: var(--font-size-lg);
 }
 
+.lineIcon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .linkText {
   display: grid;
   flex: var(--flex-auto);

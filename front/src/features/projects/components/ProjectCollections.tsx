@@ -1,21 +1,12 @@
-import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { Card } from '@/components/ui/Card';
 import { RailButton } from '@/components/ui/RailButton';
+import { TechBadge } from '@/components/ui/TechBadge';
 import { useRail } from '@/hooks/useRail';
 import { CATEGORY_LABEL } from '@/features/projects/types/project.types';
-import type { Category, ProjectLinkType, ProjectMeta } from '@/features/projects/types/project.types';
+import type { Category, ProjectMeta } from '@/features/projects/types/project.types';
 import { ProjectCard, projectFacts } from './ProjectCard';
 import styles from './ProjectCollections.module.scss';
-
-export const LINK_KIND: Record<ProjectLinkType, string> = {
-  live: 'Live',
-  github: 'GitHub',
-  slides: '발표',
-  video: '영상',
-  doc: '문서',
-  pdf: 'PDF',
-};
 
 const SearchIcon = () => (
   <svg className={styles.icon} viewBox="0 0 24 24" aria-hidden="true">
@@ -73,9 +64,28 @@ function ImageStrip({ images, to }: { images: ProjectMeta['images']; to: string 
 const PAGE_SIZE = 10;
 
 export function ProjectsTab({ projects, tag, onClearTag }: ProjectsTabProps) {
-  const [group, setGroup] = useState<Category | 'all'>('all');
+  // 구분·더보기는 주소(?group=&limit=)에 둬서 상세에 갔다가 뒤로 와도 그대로 남는다
+  const [params, setParams] = useSearchParams();
+  const groupParam = params.get('group');
+  const group: Category | 'all' = groupParam && groupParam in CATEGORY_LABEL ? (groupParam as Category) : 'all';
   // 구글 검색결과처럼 처음 PAGE_SIZE 개만 보이고 더보기를 누를 때마다 PAGE_SIZE 개씩 늘린다
-  const [limit, setLimit] = useState(PAGE_SIZE);
+  const limit = Number(params.get('limit')) || PAGE_SIZE;
+  function update(next: { group?: Category | 'all'; limit?: number }) {
+    setParams(
+      (prev) => {
+        const nextParams = new URLSearchParams(prev);
+        if (next.group) {
+          if (next.group === 'all') nextParams.delete('group');
+          else nextParams.set('group', next.group);
+          nextParams.delete('limit');
+        }
+        if (next.limit) nextParams.set('limit', String(next.limit));
+        return nextParams;
+      },
+      // 칩·더보기는 뒤로가기 기록을 쌓지 않고 스크롤도 그대로 둔다
+      { replace: true, preventScrollReset: true },
+    );
+  }
   // API 는 대표작 우선 정렬이라, 이 탭에서는 시작일 기준 최신순으로 다시 정렬한다
   const sorted = [...projects].sort((a, b) => b.period.start.localeCompare(a.period.start));
   const groups = (Object.keys(CATEGORY_LABEL) as Category[]).filter((value) => projects.some((project) => project.category === value));
@@ -87,10 +97,7 @@ export function ProjectsTab({ projects, tag, onClearTag }: ProjectsTabProps) {
     <Card title="프로젝트">
       <div className={styles.filters} role="group" aria-label="프로젝트 구분">
         {(['all', ...groups] as const).map((value) => (
-          <button key={value} className={styles.chip} type="button" aria-pressed={group === value} onClick={() => {
-              setGroup(value);
-              setLimit(PAGE_SIZE);
-            }}>
+          <button key={value} className={styles.chip} type="button" aria-pressed={group === value} onClick={() => update({ group: value })}>
             {value === 'all' ? '전체' : CATEGORY_LABEL[value]}
           </button>
         ))}
@@ -119,13 +126,19 @@ export function ProjectsTab({ projects, tag, onClearTag }: ProjectsTabProps) {
                   <p>{project.summary}</p>
                   <p className={styles.meta}>
                     <span>{projectFacts(project)}</span>
-                    <span>{project.tags.slice(0, 3).join(' · ')}</span>
                     {project.links.slice(0, 2).map((link) => (
                       <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
-                        {LINK_KIND[link.type]}
+                        {link.label}
                       </a>
                     ))}
                   </p>
+                  {project.tags.length ? (
+                    <p className={styles.techs}>
+                      {project.tags.map((tag) => (
+                        <TechBadge key={tag} name={tag} size="sm" />
+                      ))}
+                    </p>
+                  ) : null}
                 </div>
                 {/* 이미지 링크는 제목 링크와 같은 곳이라 탭 순서·읽기에서 뺀다 */}
                 {thumb ? (
@@ -142,7 +155,7 @@ export function ProjectsTab({ projects, tag, onClearTag }: ProjectsTabProps) {
         <p className={styles.empty}>해당하는 프로젝트가 없습니다</p>
       )}
       {visible.length > limit ? (
-        <button className={styles.moreButton} type="button" onClick={() => setLimit((value) => value + PAGE_SIZE)}>
+        <button className={styles.moreButton} type="button" onClick={() => update({ limit: limit + PAGE_SIZE })}>
           더보기
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="m6 9 6 6 6-6" />

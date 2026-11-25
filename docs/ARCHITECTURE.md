@@ -45,7 +45,7 @@ mockup/*.json ──(back: make seed)──▶ MongoDB ──▶ repo ─▶ ser
 | 컬렉션 | 주요 필드 | 인덱스 |
 |---|---|---|
 | `profiles` | `_id`, name, nameEn, role, years, location, email, avatar(빈 문자열 = 사진 없음), headline, summary[], links[{type,label,url}], strengths[{title,text}] | — |
-| `projects` | `_id`(slug), title, subtitle, categoryId, kind, course, period{start,end}, summary, tags[](기술), team, role, highlights[], links[{type: live·github·slides·video·doc·pdf, label, url}], linkNote, images[{src,caption}], series?{name, order}, publishedAt(YYYY-MM-DD), featured, draft, body(md, 원본 프로젝트 문서) | categoryId, tags, (featured, publishedAt) |
+| `projects` | `_id`(slug), title, subtitle, categoryId, kind, course, period{start,end}, summary, tags[](기술), team, role, highlights[], links[{type: live·github·slides·video·doc·pdf, label, url}], linkNote, linkStatus?, images[{src,caption}], series?{name, order}, publishedAt(YYYY-MM-DD), featured, draft, body(md, 원본 프로젝트 문서) | categoryId, tags, (featured, publishedAt) |
 | `categories` | `_id`(edu·personal·archive = 프로젝트 구분), label, order | — |
 | `careers` | `_id`, order, company, companyNote, period, duration, role, service, responsibilities[], metrics[{value,label,note}], achievements[{title,period,role,work[],problems[],result}], extras[], skillIds[], minor | — |
 | `skills` | `_id`, order, name, group(Frontend·Backend·…), usage(work·project·study), context, projectIds[], careerIds[] | — |
