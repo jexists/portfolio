@@ -22,7 +22,7 @@
       "path": "src/features/projects/pages/SearchPage.tsx",
       "variants": ["default"],
       "tokens": ["color", "font", "space", "radius", "search"],
-      "states": ["loading", "ready"]
+      "states": ["loading", "ready", "error"]
     },
     {
       "name": "ProjectDetail",
@@ -30,7 +30,7 @@
       "path": "src/features/projects/pages/ProjectDetailPage.tsx",
       "variants": ["default"],
       "tokens": ["color", "font", "space", "radius", "search"],
-      "states": ["ready", "notFound"]
+      "states": ["loading", "ready", "notFound", "error"]
     },
     {
       "name": "CareerDetail",
@@ -50,6 +50,14 @@
     }
   ],
   "components": [
+    {
+      "name": "PageState",
+      "role": "검색결과·상세 화면 로딩 스켈레톤과 불러오기 실패(원인·다시 시도)",
+      "path": "src/components/ui/PageState.tsx",
+      "variants": ["skeleton", "error"],
+      "tokens": ["color", "space", "radius", "search", "motion"],
+      "states": ["loading", "error", "reducedMotion"]
+    },
     {
       "name": "Logo",
       "role": "PortFolio 브랜드 로고",
@@ -129,6 +137,14 @@
       "variants": ["published", "draft"],
       "tokens": ["color", "font", "space", "search", "shadow"],
       "states": ["ready", "draft"]
+    },
+    {
+      "name": "ProjectGallery",
+      "role": "프로젝트 상세 화면 캐러셀과 전체보기",
+      "path": "src/features/projects/components/ProjectGallery.tsx",
+      "variants": ["default"],
+      "tokens": ["color", "font", "space", "radius", "border", "layout", "search"],
+      "states": ["ready", "fullscreen"]
     },
     {
       "name": "SeriesNav",

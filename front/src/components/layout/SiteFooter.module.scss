@@ -20,6 +20,8 @@
 /* 풋터 위 회색 바탕, 오른쪽 끝 맨위로 */
 .topRow {
   justify-content: flex-end;
+  /* 본문이 짧아도 풋터가 화면 맨 아래에 붙는다 (부모 .page 가 세로 flex) */
+  margin-top: auto;
   padding-block: var(--space-0) var(--space-4);
 }
 

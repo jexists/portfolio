@@ -20,6 +20,14 @@ const tabs: Array<{ value: SearchTab; label: string }> = [
   { value: 'projects', label: '프로젝트' },
 ];
 
+/** 탭마다 검색창에 보여줄 문구 */
+export function searchQueryOf(tab: SearchTab): string {
+  if (tab === 'all') return '정주애 포트폴리오';
+  if (tab === 'resume') return '정주애 이력서';
+  if (tab === 'careerdoc') return '정주애 경력기술서';
+  return `정주애 ${tabs.find((item) => item.value === tab)?.label}`;
+}
+
 export function isSearchTab(value: string | null): value is SearchTab {
   return value === 'resume' || value === 'careerdoc' || tabs.some((tab) => tab.value === value);
 }

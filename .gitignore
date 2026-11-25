@@ -32,3 +32,6 @@ reference/**/*.pdf
 reference/**/*.zip
 reference/**/*.psd
 reference/**/*.mp4
+
+# 프로젝트 원본 사진 (사이트에는 webp 변환본만 둔다)
+reference/project-images-original/

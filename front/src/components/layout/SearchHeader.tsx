@@ -7,9 +7,11 @@ import styles from './SearchHeader.module.scss';
 
 interface SearchHeaderProps {
   tabs?: ReactNode;
+  /** 검색창 문구. 지금 보는 탭·상세 제목을 보여준다 */
+  query?: string;
 }
 
-export function SearchHeader({ tabs }: SearchHeaderProps) {
+export function SearchHeader({ tabs, query = '정주애 포트폴리오' }: SearchHeaderProps) {
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
 
@@ -41,7 +43,7 @@ export function SearchHeader({ tabs }: SearchHeaderProps) {
           <Link className={styles.brandMark} to="/" aria-label="PortFolio 첫페이지">
             P
           </Link>
-          <input aria-label="검색어" value="정주애 포트폴리오" readOnly />
+          <input aria-label="검색어" value={query} readOnly />
           <button className={styles.clearButton} type="button" aria-label="검색어 지우기" onClick={() => navigate('/')}>
             <CloseIcon />
           </button>

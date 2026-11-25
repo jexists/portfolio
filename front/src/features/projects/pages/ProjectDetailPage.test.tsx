@@ -1,4 +1,7 @@
 import { screen, within } from '@testing-library/react';
+import { http as mswHttp, HttpResponse } from 'msw';
+import projectDocs from '@mockup/projects.json';
+import { server } from '@/mocks/server';
 import { renderRoute, useMockApi } from '@/test/renderWithApi';
 import { ProjectDetailPage } from './ProjectDetailPage';
 
@@ -33,9 +36,11 @@ describe('ProjectDetail page (MSW mockup)', () => {
   });
 
   it('hides empty fields: no cover, gallery or course when absent', async () => {
-    renderDetail('instpic');
+    const doc = projectDocs.find((project) => project._id === 'instapic')!;
+    server.use(mswHttp.get('*/projects/instapic', () => HttpResponse.json({ ...doc, images: [], course: '' })));
+    renderDetail('instapic');
 
-    await screen.findByRole('heading', { level: 1, name: 'instpic' });
+    await screen.findByRole('heading', { level: 1, name: 'instapic' });
     expect(screen.queryByRole('img', { name: /대표 화면/ })).not.toBeInTheDocument();
     expect(screen.queryByRole('region', { name: '화면' })).not.toBeInTheDocument();
     expect(screen.getByRole('region', { name: '개요' })).not.toHaveTextContent('과정');

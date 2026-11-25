@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useLocation, useParams } from 'react-router';
 import { Card } from '@/components/ui/Card';
 import { Markdown } from '@/components/ui/Markdown';
+import { LoadError, PageSkeleton } from '@/components/ui/PageState';
 import { SearchTabsNav } from '@/components/layout/CategoryTabs';
 import { SearchHeader } from '@/components/layout/SearchHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
@@ -104,10 +105,22 @@ export function CareerDetailPage() {
     return (
       <main className={styles.page}>
         <SearchHeader tabs={<SearchTabsNav value="career" />} />
-        <div className={styles.shell} aria-label="경력 로딩 중">
-          <span className={styles.skeleton} />
-          <span className={styles.skeleton} />
+        <div className={styles.shell}>
+          <PageSkeleton label="경력 로딩 중" />
         </div>
+        <SiteFooter />
+      </main>
+    );
+  }
+
+  if (careersQuery.isError) {
+    return (
+      <main className={styles.page}>
+        <SearchHeader tabs={<SearchTabsNav value="career" />} />
+        <div className={styles.shell}>
+          <LoadError error={careersQuery.error} />
+        </div>
+        <SiteFooter />
       </main>
     );
   }
@@ -120,6 +133,7 @@ export function CareerDetailPage() {
           <h1>경력을 찾을 수 없습니다</h1>
           <Link to="/search?tab=career">경력 탭으로 돌아가기</Link>
         </section>
+        <SiteFooter />
       </main>
     );
   }
@@ -136,7 +150,7 @@ export function CareerDetailPage() {
 
   return (
     <main className={styles.page}>
-      <SearchHeader tabs={<SearchTabsNav value="career" />} />
+      <SearchHeader query={`정주애 경력 - ${career.company}`} tabs={<SearchTabsNav value="career" />} />
       <div className={styles.shell}>
         <div className={styles.main}>
           <section className={styles.hero} aria-label="경력 소개">

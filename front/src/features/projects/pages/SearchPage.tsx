@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useLocation, useSearchParams } from 'react-router';
 import { SearchHeader } from '@/components/layout/SearchHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
+import { LoadError, PageSkeleton } from '@/components/ui/PageState';
 import { LinksCard, ProfileCard, ProfileSide, StrengthsCard, useProfile } from '@/features/profile';
 import {
   buildProfileFacts,
@@ -18,7 +19,7 @@ import {
   useEducations,
   useSkills,
 } from '@/features/resume';
-import { CategoryTabs, isSearchTab, type SearchTab } from '@/components/layout/CategoryTabs';
+import { CategoryTabs, isSearchTab, searchQueryOf, type SearchTab } from '@/components/layout/CategoryTabs';
 import { FeaturedRail, ProjectsTab } from '@/features/projects/components/ProjectCollections';
 import { useProjects } from '@/features/projects/hooks/useProjects';
 import styles from './SearchPage.module.scss';
@@ -32,12 +33,11 @@ export function SearchPage() {
   // ?tag= 만 있으면(상세 화면의 기술 태그) 프로젝트 탭으로 본다
   const tab: SearchTab = isSearchTab(rawTab) ? rawTab : tag ? 'projects' : 'all';
 
-  const profile = useProfile().data;
-  const projects = useProjects().data;
-  const careers = useCareers().data;
-  const skills = useSkills().data;
-  const educations = useEducations().data;
-  const credentials = useCredentials().data;
+  const queries = [useProfile(), useProjects(), useCareers(), useSkills(), useEducations(), useCredentials()] as const;
+  const [profile, projects, careers, skills, educations, credentials] = [
+    queries[0].data, queries[1].data, queries[2].data, queries[3].data, queries[4].data, queries[5].data,
+  ];
+  const loadError = queries.find((query) => query.isError)?.error;
 
   const facts = useMemo(
     () => buildProfileFacts(careers ?? [], educations ?? []),
@@ -63,10 +63,14 @@ export function SearchPage() {
 
   return (
     <main className={styles.page} data-from-intro={fromIntro}>
-      <SearchHeader tabs={<CategoryTabs value={tab === 'careerdoc' ? 'career' : tab} onChange={changeTab} />} />
-      {!ready || !profile || !projects || !careers || !skills || !educations || !credentials ? (
+      <SearchHeader query={searchQueryOf(tab)} tabs={<CategoryTabs value={tab === 'careerdoc' ? 'career' : tab} onChange={changeTab} />} />
+      {loadError ? (
         <div className={styles.shell}>
-          <SearchSkeleton />
+          <LoadError error={loadError} />
+        </div>
+      ) : !ready || !profile || !projects || !careers || !skills || !educations || !credentials ? (
+        <div className={styles.shell}>
+          <PageSkeleton label="검색결과 로딩 중" />
         </div>
       ) : (
         <div className={styles.shell}>
@@ -114,15 +118,5 @@ export function SearchPage() {
       )}
       <SiteFooter />
     </main>
-  );
-}
-
-function SearchSkeleton() {
-  return (
-    <div className={styles.skeleton} aria-label="검색결과 로딩 중">
-      <span />
-      <span />
-      <span />
-    </div>
   );
 }

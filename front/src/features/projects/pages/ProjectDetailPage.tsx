@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router';
 import { Card } from '@/components/ui/Card';
 import { Markdown } from '@/components/ui/Markdown';
+import { LoadError, PageSkeleton } from '@/components/ui/PageState';
 import { SearchTabsNav } from '@/components/layout/CategoryTabs';
 import { SearchHeader } from '@/components/layout/SearchHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ProjectThumbnail } from '@/features/projects/components/ProjectCard';
+import { ProjectGallery } from '@/features/projects/components/ProjectGallery';
 import { LINK_KIND } from '@/features/projects/components/ProjectCollections';
 import { SeriesNav } from '@/features/projects/components/SeriesNav';
 import { useProject, useProjects, useSeries } from '@/features/projects/hooks/useProjects';
@@ -37,11 +39,23 @@ export function ProjectDetailPage() {
     return (
       <main className={styles.page}>
         <SearchHeader tabs={<SearchTabsNav value="projects" />} />
-        <div className={styles.shell} aria-label="프로젝트 로딩 중">
-          <span className={styles.skeleton} />
-          <span className={styles.skeleton} />
-          <span className={styles.skeleton} />
+        <div className={styles.shell}>
+          <PageSkeleton label="프로젝트 로딩 중" />
         </div>
+        <SiteFooter />
+      </main>
+    );
+  }
+
+  // 인터넷·서버 문제는 "없는 프로젝트"와 구분해서 원인과 다시 시도를 보여 준다
+  if (projectQuery.isError) {
+    return (
+      <main className={styles.page}>
+        <SearchHeader tabs={<SearchTabsNav value="projects" />} />
+        <div className={styles.shell}>
+          <LoadError error={projectQuery.error} />
+        </div>
+        <SiteFooter />
       </main>
     );
   }
@@ -55,6 +69,7 @@ export function ProjectDetailPage() {
           <p>공개되지 않았거나 존재하지 않는 프로젝트입니다.</p>
           <Link to="/search?tab=projects">프로젝트 목록으로 돌아가기</Link>
         </section>
+        <SiteFooter />
       </main>
     );
   }
@@ -70,7 +85,10 @@ export function ProjectDetailPage() {
 
   return (
     <main className={styles.page}>
-      <SearchHeader tabs={<SearchTabsNav value="projects" />} />
+      <SearchHeader
+        query={meta.title}
+        tabs={<SearchTabsNav value="projects" />}
+      />
       <div className={styles.shell}>
         <div className={styles.main}>
           <section className={styles.hero} aria-label="프로젝트 소개">
@@ -98,14 +116,7 @@ export function ProjectDetailPage() {
           </article>
           {meta.images.length > 1 ? (
             <Card title="화면">
-              <div className={styles.gallery}>
-                {meta.images.map((image) => (
-                  <figure key={image.src}>
-                    <img src={image.src} alt={image.caption} loading="lazy" />
-                    <figcaption>{image.caption}</figcaption>
-                  </figure>
-                ))}
-              </div>
+              <ProjectGallery images={meta.images} />
             </Card>
           ) : null}
           {projectSeries ? (

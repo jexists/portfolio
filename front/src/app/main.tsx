@@ -9,12 +9,8 @@ import '@/styles/global.scss';
  */
 async function enableMocking() {
   if (import.meta.env.VITE_USE_MOCK === 'false') return;
-  const { worker } = await import('@/mocks/browser');
-  await worker.start({
-    // 하위 경로 배포(GitHub Pages /portfolio/)에서도 worker 파일을 찾도록 base 를 붙인다
-    serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` },
-    onUnhandledRequest: 'bypass',
-  });
+  const { installMockAdapter } = await import('@/mocks/browser');
+  installMockAdapter();
 }
 
 void enableMocking().then(() => {

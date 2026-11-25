@@ -1,4 +1,6 @@
 .page {
+  display: flex;
+  flex-direction: column;
   min-height: var(--layout-viewport-height);
   background: var(--color-bg-page);
 }
@@ -114,13 +116,6 @@
   color: var(--color-text-link);
 }
 
-.skeleton {
-  display: block;
-  min-height: var(--search-skeleton-height);
-  margin-bottom: var(--space-3);
-  border-radius: var(--radius-pill);
-  background: var(--color-bg-subtle);
-}
 
 @media (max-width: 80rem) {
   .shell {

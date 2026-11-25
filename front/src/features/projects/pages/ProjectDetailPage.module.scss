@@ -1,4 +1,6 @@
 .page {
+  display: flex;
+  flex-direction: column;
   min-height: var(--layout-viewport-height);
   background: var(--color-bg-page);
 }
@@ -98,27 +100,6 @@
   aspect-ratio: var(--search-detail-cover-ratio);
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--search-card-min-width), 1fr));
-  gap: var(--space-3);
-}
-
-.gallery figure {
-  margin: var(--space-0);
-}
-
-.gallery img {
-  width: var(--layout-full);
-  border-radius: var(--radius-lg);
-}
-
-.gallery figcaption {
-  margin-top: var(--space-1);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
-}
-
 .overview {
   display: grid;
   gap: var(--space-3);
@@ -209,13 +190,6 @@
   color: var(--color-text-link);
 }
 
-.skeleton {
-  display: block;
-  min-height: var(--search-skeleton-height);
-  margin-bottom: var(--space-3);
-  border-radius: var(--radius-pill);
-  background: var(--color-bg-subtle);
-}
 
 @media (max-width: 80rem) {
   .shell {

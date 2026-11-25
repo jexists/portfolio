@@ -39,7 +39,8 @@ export const projectsApi = {
       const { data } = await http.get<ProjectDto>(`/projects/${encodeURIComponent(slug)}`);
       return { meta: toProjectMeta(data), body: data.body ?? '' };
     } catch (error) {
-      if (isAxiosError(error) && error.response?.status === 404) {
+      // API 가 "없는 프로젝트"라고 답한 404 만 없음으로 본다. 정적 서버의 404 페이지 등은 오류로 올린다
+      if (isAxiosError(error) && error.response?.status === 404 && error.response.data?.error?.code === 'NOT_FOUND') {
         return null;
       }
       throw error;

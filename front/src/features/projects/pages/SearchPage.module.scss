@@ -1,4 +1,6 @@
 .page {
+  display: flex;
+  flex-direction: column;
   min-height: var(--layout-viewport-height);
   background: var(--color-bg-page);
 }
@@ -37,21 +39,6 @@
   animation: section-enter var(--motion-duration-slow) var(--motion-easing-standard) both;
 }
 
-.skeleton {
-  display: grid;
-  gap: var(--space-3);
-  border: var(--border-width-default) solid var(--color-border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-8);
-  background: var(--color-bg-surface);
-}
-
-.skeleton span {
-  display: block;
-  height: var(--search-skeleton-height);
-  border-radius: var(--radius-pill);
-  background: var(--color-bg-subtle);
-}
 
 @keyframes section-enter {
   from {

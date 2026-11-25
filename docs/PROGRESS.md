@@ -22,7 +22,7 @@
 ## 다음 할 일
 1. Phase 5 프로젝트 캡처: Playwright로 공개 URL 화면을 캡처해 `front/public/images/projects/<slug>/`에 두고 `images[]` 연결.
 2. 프로필 사진: 사용자가 주면 `front/public/images/profile.jpg` + `profiles.avatar`.
-3. 세부 디자인 다듬기(사용자 피드백), 비공개 저장소(plog·instpic·photo_organizer) 공개 여부 확인.
+3. 세부 디자인 다듬기(사용자 피드백), 비공개 저장소(plog·instapic·photo_organizer) 공개 여부 확인.
 1. 다음 기능 계획을 승인할 때 hook 알림 → dev-start 자동 실행이 실제로 동작하는지 확인한다(이번에는 기능 추가 전에 승인돼서 수동으로 실행했다).
 2. 인증 방식을 결정한다 (Kakao/GitHub OAuth + 세션/JWT) → DECISIONS에 기록하고 `back/internal/{service,handler,middleware}/auth.go`를 구현한다.
 3. 방문 통계 API(`visits`, `users.purpose`)를 만들고 프론트 `features/admin/api/stats.api.ts` 구현체를 API로 바꾼다.

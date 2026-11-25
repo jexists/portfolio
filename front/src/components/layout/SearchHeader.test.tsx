@@ -36,6 +36,16 @@ describe('SearchHeader', () => {
     expect(screen.getByLabelText('검색어')).toHaveAttribute('readonly');
   });
 
+  it('shows the given query in the search bar', () => {
+    render(
+      <AuthProvider initialUser={null}><MemoryRouter>
+        <SearchHeader query="흙의 온도 - 도자기 공방 운영 통합 서비스" />
+      </MemoryRouter></AuthProvider>,
+    );
+
+    expect(screen.getByLabelText('검색어')).toHaveValue('흙의 온도 - 도자기 공방 운영 통합 서비스');
+  });
+
   it('keeps a P mark inside the search bar for narrow screens (AC-3)', () => {
     renderHeader();
 

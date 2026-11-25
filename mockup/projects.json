@@ -140,7 +140,56 @@
     ],
     "linkNote": "서비스는 팀원 PC에서 터널로 운영해 PC가 꺼져 있으면 열리지 않습니다.",
     "body": "## 프로젝트 개요\n\n- **목적:** 이미 써 둔 블로그 글을 숏폼으로 바꾸는 데 드는 시간 (대본·장면·더빙·편집) 단축\n- **기간:** 2026.11.03–11.15 (약 2주, 미니인턴 기업실무체험프로젝트, 스마트동 2팀)\n- **인원:** 4명 (1명 초반 이탈, 팀원 A는 발표 전날까지 참여)\n- **역할:** 팀장, 프론트엔드 담당\n- **기술:** React 19, TypeScript, Vite / FastAPI, Pydantic / OpenAI·NVIDIA Nemotron (대본), Supertonic·OpenAI TTS (목소리), FFmpeg (영상)\n- **AI 도구:** Claude Code·Codex로 구현. 요구사항·화면 흐름·디자인 기준은 본인이 정하고 결과를 확인\n\n## Frontend\n\n- **프로젝트 골격:** 첫날 요구사항·아키텍처·API·개발 계획·기술 결정 문서와 프론트·백엔드 초기 구조 세팅\n- **디자인 시스템:** 디자인 토큰과 공통 컴포넌트 (버튼, 탭, 단계 카드, 드롭다운 등), 사용 규칙 문서\n- **진행 상태 화면:** 5단계 (가져오기 → 대본·장면 → 편집 → 음성 → 영상 합성) 진행 위치 표시. \"자동 제작 / 검토 후 제작\" 두 방식, 진행률 막대, 실패 원인 알림\n- **제작 화면 개편:** 사용자가 영상을 만들며 무엇을 고치고 싶어 하는지를 기준으로 화면 재구성\n  - 완성 영상을 오른쪽에 두고 편집·원문 탭 분리, 원문은 블로그에 보이는 순서대로 표시\n  - 스크롤해도 보이는 하단 고정 진행 막대와 영상 제작 버튼\n  - 장면 전체 보기 (이미지와 대본을 한 화면에서 수정)\n- **내보내기:** 영상 파일 이름을 `날짜시간_제목첫단어`로, 크롬·엣지에서는 저장 위치 선택 창\n\n## Backend\n\n- **오류 응답 통일:** 모든 오류를 `{ error: { code, message } }` 한 형식으로 맞추고, OpenAI 오류를 키·권한·크레딧·요청 과다·시간 초과 등으로 분류해 화면 알림까지 연결\n- **작업 상태 API:** 영상 작업의 상태와 실패 원인을 조회하는 API 추가, 프론트는 2초 간격으로 확인해 실패를 바로 표시\n- **진행률 계산:** 영상 제작을 음성 만들기·영상 합성 두 단계로 나눠 진행률과 남은 시간 계산\n- **실행 환경:** Intel Mac에서도 설치되도록 onnxruntime 버전 고정\n- 영상 품질, 자막 편집, 목소리, 대본 평가 등 성능과 세부 품질은 다른 팀원 담당\n\n## Planning / PM\n\n- **진행 방식:** 팀장으로 기능 단위 브랜치 → PR → main 병합 방식 운영\n- **대본 규칙:** 다른 숏폼과 실제로 만든 결과물을 비교해 반복되는 문제 (정의·예고로 시작하는 첫 문장, 긴 제목, 빈말, 홍보 장면 과다)를 찾고, 대본 프롬프트 규칙 6개 (원문의 숫자·항목으로 시작하는 훅, 두 줄 20자 제목, 장면 하나에 정보 하나, 35자 이내 구어체, 홍보는 마지막 한 번, 출력 전 자체 점검)로 반영\n\n## 기술 고민\n\n- **SPA 선택:** 서버 기능은 FastAPI가 맡으므로 Next.js 대신 Vite + React SPA로 결정, 한 방향 단계 화면이라 라우터도 미도입\n- **DB 미도입:** 로그인·작업 내역 저장이 MVP 범위 밖이라, 작업 상태는 서버 메모리·결과물은 로컬 파일로 단순화\n- **긴 작업 처리:** 영상 생성 요청은 작업 번호만 바로 돌려주고 백그라운드에서 실행, 프론트는 상태를 주기적으로 확인. 서버 재시작 시 진행 중 작업이 사라지는 한계는 데모 규모라 수용\n- **자막 합성 방식:** 로컬 FFmpeg에 자막 필터가 빠져 있음을 확인하고, 자막을 이미지로 그려 영상 위에 겹치는 방식으로 빌드 환경 의존성 축소\n- **오류 메시지 보안:** OpenAI 원문 오류에는 API 키 일부가 섞일 수 있어, 분류한 코드와 안내 문구만 화면에 전달\n\n## 기여 구분\n\n### 개인 기여\n\n- **담당 구현:** 프로젝트 골격·설계 문서 6종 (요구사항·아키텍처·API·개발 계획·기술 결정·디자인 시스템), 디자인 시스템과 공통 컴포넌트, 5단계 진행 화면, 제작 화면 개편 (PR #11·#12·#16), 오류 응답 통일과 실패 알림 (PR #7), 영상 파일 이름·저장 창 (PR #20)\n- **제안:** 사용자가 제작 중간에 고칠 수 있는 \"검토 후 제작\" 흐름, 숏폼 대본 규칙 6개 (PR #14)\n- **문제 발견·해결:** 스크롤하면 진행 상황과 버튼이 사라지고 영상 제작 1분 동안 진행을 알 수 없는 문제 → 하단 고정 막대와 단계별 진행률·남은 시간. 실제 결과물에서 반복되는 대본 문제 (정의로 시작하는 첫 문장, 빈말, 홍보 장면 과다) 발견 → 프롬프트 규칙\n- **기술 판단:** Vite SPA·DB 미도입·백그라운드 작업과 상태 확인·자막 이미지 합성·오류 메시지 보안 (5장 기술 고민)\n\n### 팀 기여·프로젝트 성과\n\n- **팀원 담당:** 네이버 블로그 추출·이미지 저장, AI 대본 생성, TTS·자막 파이프라인, 영상 생성 API·미리보기·다운로드, 숏폼 화면 디자인 (팀원 A, 발표 전날 이탈) / 영상 품질 개선, 자막 단위 편집, 대본 스타일·NVIDIA 대본, 무료 목소리·30초 맞추기, 화면 움직임 효과, 서비스 운영 (팀원 B)\n- **함께 진행:** 기능 단위 브랜치 → PR → main 병합 방식으로 PR 22개 협업 (본인 8개)\n- **팀 성과 (팀원 B 작업):** 대본 프롬프트 재구성과 평가 도구로 검증 통과율 72.5% → 96%, 평균 글자 수 312 → 274자, 빈말 1.71 → 0.45회 (같은 글 17개 × 3번). 비교 기준은 본인 규칙이 들어간 main\n- **최종 결과:** 블로그 주소 하나로 30초 이상 세로 숏폼 MP4를 만드는 MVP 완성, 팀원 PC에서 실제 주소로 운영\n\n## 배운 점\n\n- **기다리는 시간의 설계:** 0초에 끝나던 단계는 합치고 1분 걸리던 단계는 둘로 나눠 진행률·남은 시간을 보여 주자, 같은 대기 시간도 덜 답답해짐. 단계 구분은 개발 구조가 아니라 사용자가 체감하는 시간 기준이어야 함\n- **문서로 시작하는 팀 작업:** 첫날 요구사항·기술 결정 문서를 먼저 세워 두니, 이후 팀원이 각자 기능을 맡아도 같은 기준으로 판단\n- **프롬프트 개선의 측정:** 본인 규칙은 화면으로만 확인했지만, 팀원이 같은 글 17개로 비교하는 평가 도구를 만들면서 숫자로 효과를 증명. 프롬프트도 코드처럼 측정한 뒤 반영해야 함\n\n## 개선할 점\n\n- **작업 상태 보존:** 서버 메모리에 둔 작업 상태가 재시작 시 사라짐 → 저장소에 기록해 이어서 조회\n- **운영 환경:** 팀원 PC와 터널로 운영해 PC가 꺼지면 서비스 중단 → 상시 서버에 배포\n- **검증 절차:** 프롬프트 변경 시 평가 도구 결과를 PR에 함께 남기는 규칙으로 통일\n",
-    "images": [],
+    "images": [
+      {
+        "src": "/images/projects/blog2shorts/01.webp",
+        "caption": "블로그 URL 입력"
+      },
+      {
+        "src": "/images/projects/blog2shorts/02.webp",
+        "caption": "콘텐츠 가져오는 중"
+      },
+      {
+        "src": "/images/projects/blog2shorts/03.webp",
+        "caption": "API 키 오류 안내"
+      },
+      {
+        "src": "/images/projects/blog2shorts/04.webp",
+        "caption": "장면별 대본·이미지 편집"
+      },
+      {
+        "src": "/images/projects/blog2shorts/05.webp",
+        "caption": "영상 합성 진행"
+      },
+      {
+        "src": "/images/projects/blog2shorts/06.webp",
+        "caption": "장면 이미지 변경"
+      },
+      {
+        "src": "/images/projects/blog2shorts/07.webp",
+        "caption": "완성 영상 미리보기"
+      },
+      {
+        "src": "/images/projects/blog2shorts/08.webp",
+        "caption": "음성·배경음 설정과 MP4 다운로드"
+      },
+      {
+        "src": "/images/projects/blog2shorts/09.webp",
+        "caption": "카드 보기 편집"
+      },
+      {
+        "src": "/images/projects/blog2shorts/10.webp",
+        "caption": "장면 카드와 완성 영상"
+      },
+      {
+        "src": "/images/projects/blog2shorts/11.webp",
+        "caption": "편집 전체 화면"
+      },
+      {
+        "src": "/images/projects/blog2shorts/12.webp",
+        "caption": "완성 전체 화면"
+      }
+    ],
     "draft": false,
     "kind": "교육"
   },
@@ -187,7 +236,72 @@
     ],
     "linkNote": "배포는 종료됐습니다.",
     "body": "- **저장소:** https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN30-FINAL-1Team (실제 개발: [dev 저장소](https://github.com/jexists/SKN30-FINAL-1Team-dev))\n- **서비스:** 과정 중 CloudFront 주소로 배포·운영, 현재는 배포 종료\n\n## 개요\n\n- **문제:** 영업 담당자의 경험이 개인에게만 남고, 정보가 흩어지고, 보고가 중복됨\n- **기간:** 2026.08.06–09.18 (6주)\n- **인원:** 4명. 팀원이 멀티에이전트 설계와 에이전트별 개발 (미팅 분석·보고서·계약·일정·자료 요약), OCR 담당\n- **역할:** 풀스택·인프라. 아이디어 기획 참여, 프론트엔드, 백엔드 API, 배포\n- **기술:** React 19·TypeScript·Vite / FastAPI·SQLAlchemy async / Supabase PostgreSQL·pgvector·Auth / AWS S3·CloudFront·EC2·Docker·Nginx / GitHub Actions\n\n## Frontend\n\n- **작성 범위:** 대시보드, 고객, 캘린더, 영업 현황, 견적·계약·발주, 매출 분석, 자료실, 팀 관리, 보고서\n- **보고서 화면 설계:** AI 원본과 최종 보고서를 나란히 두고 검토·수정하는 구조. 미팅 원문·요약·후속 조치를 컴포넌트 단위로 나눠, 긴 보고서도 필요한 블록만 읽히도록 재구성\n- **진행 상태 가시화:** 명함 인식 진행 단계 표시, AI 브리핑을 스트리밍처럼 펼치고 참고 자료를 옆 패널로 확인, 로딩 중 스켈레톤. 오래 걸리는 AI·OCR 작업에서 사용자가 지금 어디까지 왔는지 알 수 있게 함\n- **실제 API 연결:** 목업으로 시작한 화면을 Supabase Auth 전환과 함께 실제 API에 연결\n- **공통 컴포넌트:** 회사 검색·담당자 선택·Select·상세 드로어를 공통화하고, 화면마다 복사돼 있던 검색·스크롤 페이징 훅을 하나로 통합\n\n## Backend\n\n- **서버 페이지네이션 전환:** 8개 화면에 복사돼 있던 \"다 받을 때까지 반복 호출\" 코드를 걷어내고 한 번에 30건으로 통일. 화면에서 하던 검색·필터·달력 계산을 서버 쿼리로 옮겨, 첫 페이지 밖 데이터가 검색·필터에서 빠지던 문제까지 함께 정리\n- **초대 기반 계정 발급:** 관리자 allowlist로 발급 권한을 제한하고, Supabase 초대 메일로 사용자가 직접 비밀번호를 설정. 발급 중 실패하면 만든 계정을 되돌리는 롤백과 테스트 포함\n- **고객 중복 확인·엑셀 일괄 등록:** 등록 경로마다 달랐던 중복 기준 (전화번호·이메일·회사명+고객명)을 한 곳으로 모으고, 저장 전 확인 + 서버 409로 이중 차단. 엑셀은 최대 1,000줄을 줄 단위 저장점으로 처리해 한 줄의 오류가 나머지를 막지 않고, 결과를 성공·중복·형식 오류·실패로 나눠 반환\n- **명함 인식 비동기 전환:** 한 요청 안에서 OCR과 LLM 구조화를 모두 기다리다 CloudFront 타임아웃 (504)에 걸려, 정상 인식까지 실패로 보이던 문제를 해결. 업로드는 접수만 하고 (202) 인식은 백그라운드로 넘겨 진행 상태를 폴링하는 구조로 바꾸고, 업로드 전 이미지를 서버와 같은 크기로 줄여 전송 시간 단축. 원본 이미지와 확인 전 인식 결과는 DB에 저장하지 않음 (OCR 엔진은 팀원 A)\n\n## 배포·인프라\n\n- **비용을 최소로 잡은 구성:** 프론트는 S3 + CloudFront 정적 배포, 백엔드는 EC2 한 대에 Docker + Nginx. 작업 큐도 별도 브로커 없이 PostgreSQL로 처리해 관리형 서비스를 늘리지 않음\n- **CI:** develop·main에 push하면 백엔드·프론트 lint·타입 검사·테스트가 자동 실행\n- **배포 (GitHub Actions 수동 실행):** AWS 키를 저장소에 두지 않고 OIDC 역할로 인증, 환경변수는 SSM 파라미터에서 읽음. 백엔드는 새 버전을 다른 포트에 띄워 헬스체크 통과 후 Nginx를 전환하고, 실패하면 이전 버전으로 자동 롤백. 프론트는 S3 업로드 후 CloudFront 캐시 무효화. 백엔드 → 프론트 순서 전체 배포 workflow도 구성\n- **협업 도구:** 개발 저장소, PR·Issue 템플릿, CodeRabbit, AI 코딩 도구 공통 규칙 (`AGENTS.md`) 세팅\n\n## 기술 고민\n\n- **전건 조회 제거:** 데이터가 늘어도 화면이 느려지지 않도록, 전체를 한 번에 받던 조회를 어디서든 \"한 번에 30건 + 서버 페이지네이션\"으로 통일\n- **무중단 배포:** EC2 한 대에서도 새 버전을 다른 포트로 띄운 뒤 전환해 배포 중 접속이 끊기지 않게 구성\n\n## 기여 구분\n\n### 개인 기여\n\n- **기여 범위:** 프론트엔드 화면 대부분과 팀·계정·고객 API, CI/CD·배포 담당. 멀티에이전트·AI 에이전트·OCR·ML은 팀원 담당\n- **담당 구현:** 프론트엔드 (대시보드·고객·캘린더·영업 현황·견적/계약/발주·매출·자료실·팀 관리·보고서), 팀·인증·관리자·공지·고객·영업 건 API, GitHub Actions CI·배포 workflow 작성, 무중단 배포 스크립트\n- **제안·주도:** 아이디어 기획 참여, 개발 저장소·PR·Issue 템플릿·CodeRabbit·AI 코딩 도구 공통 규칙 (`AGENTS.md`) 세팅\n- **문제 발견·해결:** 전건 조회를 30건 서버 페이지네이션으로 전환, 명함 인식을 기다리지 않도록 비동기 등록 흐름으로 변경, 고객 중복 확인·엑셀 일괄 등록\n- **기술 판단:** 비용을 최소로 잡은 배포 구성 (S3 + CloudFront, EC2 한 대), AI 원본과 최종 보고서를 분리한 승인 화면\n\n### 팀 기여·프로젝트 성과\n\n- **팀원 담당:**\n\n  | 팀원 | 담당 |\n  |---|---|\n  | 팀원 A | PM, OCR·RunPod, 자료 요약 에이전트 |\n  | 팀원 B | 기술 리드, 멀티에이전트 설계, 미팅 분석·보고서 에이전트, 딜 승산 예측 ML과 평가 |\n  | 팀원 C | 계약·일정 에이전트 |\n\n- **함께 진행:** \"AI는 초안까지, 확정은 사람 승인\" 원칙, PR 기반 협업, 팀원 리뷰와 CodeRabbit 자동 리뷰\n- **최종 결과:** 고객부터 보고서까지 이어지는 영업 CRM과 AI 에이전트를 실제 주소에 배포·운영 (현재 종료), push마다 자동 테스트하는 CI 구성\n\n## 배운 점\n\n- **에이전트는 평가 기준부터:** 만들고 나서 확인하는 게 아니라, 평가 데이터와 지표를 먼저 정하고 그 점수를 기준으로 프롬프트·구조를 끌어올리는 방식이어야 함. 언제 어떤 이벤트로 에이전트가 실행되는지 (트리거)도 설계 단계에서 확정해야 화면·API가 흔들리지 않음 (에이전트 담당 팀원들과 논의하며 정리)\n- **OCR 품질은 모델만의 문제가 아님:** 인식이 안 될 때 모델 교체로 끝내지 않고 입력 해상도·전처리·촬영 조건까지 함께 봐야 함\n- **초안은 AI, 확정은 사람:** AI 기능일수록 사람이 검토·승인하는 흐름이 화면과 데이터 구조에 함께 들어가야 함\n- **AWS 배포 전 과정:** S3·CloudFront·EC2·IAM (OIDC)·SSM을 콘솔에서 처음부터 직접 구성해 보며 각 리소스가 어떻게 연결되는지 이해. 이후 같은 작업을 MCP 기반 도구로 자동화할 수 있다는 점도 확인\n\n## 개선할 점\n\n- **운영 로그·모니터링:** 컨테이너 로그를 로컬 파일로만 남겨 운영 중 오류를 모아 볼 수 없었음 → 구조화 로그와 CloudWatch 같은 수집·알림 체계를 배포 단계부터 포함\n- **에이전트 평가 기준 고도화:** 보고서 작성·미팅 브리핑·딜 예측은 평가했지만 일정 추천은 평가 없이 넣었고, 기준도 영업 도메인 관점이 약했음 → 영업 담당자가 실제로 쓰는 기준 (보고서 필수 항목, 일정 우선순위)으로 평가셋을 만들어 기능 개발과 함께 운영\n- **배포 환경 분리:** 서버가 하나라 develop 브랜치를 바로 운영에 배포함 → 테스트 서버 (어느 브랜치든 배포)와 운영 서버 (main만 배포)를 나눠, 검증을 마친 코드만 운영에 반영\n- **UI/UX 검증:** 화면 구성을 팀 내부 판단으로 정함 → 실제 영업 업무 흐름 기준으로 사용성 테스트를 거쳐 우선순위를 조정\n",
-    "images": [],
+    "images": [
+      {
+        "src": "/images/projects/salesluv/01.webp",
+        "caption": "대시보드"
+      },
+      {
+        "src": "/images/projects/salesluv/02.webp",
+        "caption": "고객 현황"
+      },
+      {
+        "src": "/images/projects/salesluv/03.webp",
+        "caption": "CS 대응"
+      },
+      {
+        "src": "/images/projects/salesluv/04.webp",
+        "caption": "캘린더"
+      },
+      {
+        "src": "/images/projects/salesluv/05.webp",
+        "caption": "업무 보고"
+      },
+      {
+        "src": "/images/projects/salesluv/06.webp",
+        "caption": "미팅 보고서 작성"
+      },
+      {
+        "src": "/images/projects/salesluv/07.webp",
+        "caption": "미팅 보고서"
+      },
+      {
+        "src": "/images/projects/salesluv/08.webp",
+        "caption": "일일 보고서 작성"
+      },
+      {
+        "src": "/images/projects/salesluv/09.webp",
+        "caption": "일일 보고서"
+      },
+      {
+        "src": "/images/projects/salesluv/10.webp",
+        "caption": "보고서 PDF 저장"
+      },
+      {
+        "src": "/images/projects/salesluv/11.webp",
+        "caption": "영업 현황 · 리스트"
+      },
+      {
+        "src": "/images/projects/salesluv/12.webp",
+        "caption": "영업 현황 · 보드"
+      },
+      {
+        "src": "/images/projects/salesluv/13.webp",
+        "caption": "매출 분석"
+      },
+      {
+        "src": "/images/projects/salesluv/14.webp",
+        "caption": "거래 문서"
+      },
+      {
+        "src": "/images/projects/salesluv/15.webp",
+        "caption": "영업 자료"
+      },
+      {
+        "src": "/images/projects/salesluv/16.webp",
+        "caption": "AI 브리핑"
+      }
+    ],
     "draft": false,
     "kind": "교육"
   },
@@ -250,24 +364,100 @@
     "linkNote": "",
     "images": [
       {
-        "src": "/images/projects/jeonse-factchecker/01.webp",
-        "caption": "홈 화면"
+        "src": "/images/projects/jeonse-factchecker-3/01.webp",
+        "caption": "3차 · 메인 화면"
       },
       {
-        "src": "/images/projects/jeonse-factchecker/02.webp",
-        "caption": "계약서 진단"
+        "src": "/images/projects/jeonse-factchecker-3/02.webp",
+        "caption": "3차 · 챗봇"
       },
       {
-        "src": "/images/projects/jeonse-factchecker/03.webp",
-        "caption": "위험 보고서"
+        "src": "/images/projects/jeonse-factchecker-3/03.webp",
+        "caption": "3차 · 챗봇 대화"
       },
       {
-        "src": "/images/projects/jeonse-factchecker/04.webp",
-        "caption": "AI 상담 챗봇"
+        "src": "/images/projects/jeonse-factchecker-3/04.webp",
+        "caption": "3차 · 챗봇 이미지 답변"
       },
       {
-        "src": "/images/projects/jeonse-factchecker/05.webp",
-        "caption": "마이페이지"
+        "src": "/images/projects/jeonse-factchecker-4/01.webp",
+        "caption": "4차 · 홈 화면"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/02.webp",
+        "caption": "4차 · 로그인 화면"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/03.webp",
+        "caption": "4차 · 회원가입"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/04.webp",
+        "caption": "4차 · 회원가입 · 이메일"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/05.webp",
+        "caption": "4차 · 계약 진단 · 파일 올리기 전"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/06.webp",
+        "caption": "4차 · 계약 진단 · 파일 올리는 중"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/07.webp",
+        "caption": "4차 · 계약 진단 · 분석 시작"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/08.webp",
+        "caption": "4차 · 위험 보고서 · 시작 전"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/09.webp",
+        "caption": "4차 · 위험 보고서 · 예시"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/10.webp",
+        "caption": "4차 · 위험 보고서 · 최근 내역"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/11.webp",
+        "caption": "4차 · AI 챗봇"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/12.webp",
+        "caption": "4차 · AI 챗봇 · 메시지"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/13.webp",
+        "caption": "4차 · 이용약관"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/14.webp",
+        "caption": "4차 · 개인정보처리방침"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/15.webp",
+        "caption": "4차 · 법적 근거"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/16.webp",
+        "caption": "4차 · 고객지원"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/17.webp",
+        "caption": "4차 · 404 페이지"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/18.webp",
+        "caption": "4차 · 알림 · 전체 알림"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/19.webp",
+        "caption": "4차 · 알림 · 읽지 않은 알림"
+      },
+      {
+        "src": "/images/projects/jeonse-factchecker-4/20.webp",
+        "caption": "4차 · 마이페이지"
       }
     ],
     "draft": false,
@@ -528,7 +718,7 @@
         "url": "https://jexists.github.io/travel-content-maker/presentation/run_v5.html"
       }
     ],
-    "body": "## 프로젝트 개요\n\n| 항목 | 내용 |\n|---|---|\n| 과정 | AX 캠퍼스 4회차 · 업무 자동화 |\n| 기간 | 2026.11.09–11.11 (11.10 제출, 11.11 발표) |\n| 인원 | 1명 (구현은 Claude Code·Codex 활용) |\n| 직접 한 일 | 업무 분석, 흐름·확인 지점 설계, 채널별 규칙, 결과물 검수, 발표 |\n| 기술 | Claude Code 스킬 · Python (Pillow, openpyxl, pillow-heif) · ffmpeg · OpenAI TTS |\n| 링크 | [저장소](https://github.com/jexists/travel-content-maker) · [전체 발표](https://jexists.github.io/travel-content-maker/presentation/index_v5.html) · [업무 분석·개선 설계](https://jexists.github.io/travel-content-maker/presentation/analysis_v5.html) · [실행 방법](https://jexists.github.io/travel-content-maker/presentation/run_v5.html) |\n\n**배경**\n과제는 잘 아는 업무 하나의 현재 흐름 (As-Is)을 분석하고 개선 프로세스를 직접 구현하는 것. 직접 운영하는 여행 블로그·인스타에서 겪던 문제를 대상으로 했다. 채널마다 같은 정보를 다시 찾아 쓰고, 표지를 매번 손으로 만들고, 영상 편집 부담 때문에 유튜브는 시작하지 못하고 있었다.\n\n**구현 방식 선택**\n과제의 구현 방식 3안 중 \"Claude 스킬 + 로컬 파일\"을 선택. 웹 서비스를 따로 만들지 않고도 입력 → 처리 → 결과 저장 → 재실행 시 이력 유지까지 완결된 도구로 만들 수 있다고 판단했다. 개인 프로젝트로 만든 instpic (표지 디자인·글씨체)과 plog (블로그 프롬프트)를 부품으로 재사용했다.\n\n## PM / FDE 관점\n\n### 현재 업무 분석 (As-Is)\n| # | 문제 | 개선 |\n|---|---|---|\n| P1 | 표지를 매번 수작업 | instpic 디자인 기반 표지 템플릿 자동 생성 |\n| P2 | 채널마다 정보 재검색 | 브리프 하나 (`content.json`)로 3채널 생성 |\n| P3 | 숏폼 편집 부담 | 대본 → TTS → 자막·모션 영상 자동 합성 |\n| P4 | 버전·반려 사유 기록 없음 | 채널별 버전 (v1·v2)과 사건을 콘텐츠대장에 기록 |\n| P5 | 해시태그·금지 표현을 눈으로 확인 | 규칙 파일 기반 자동 점검 |\n| P6 | 게시 링크 분산 | 게시 링크를 대장에 모음 |\n\n### 사람이 판단할 지점 설계\n- 확인 지점을 다섯 번 (A 브리프·인스타 / B 영상 대본 / C 블로그 / D 최종 승인 / E 게시 링크)으로 줄이고 그 사이는 자동화\n- 공유·발행처럼 되돌리기 어려운 일은 항상 사람에게 남김\n- 순서를 강제해 승인 전에는 다음 단계나 게시로 넘어가지 못하게 함\n\n### 역할 분리\n| 주체 | 맡은 일 |\n|---|---|\n| AI | 사진 추리기, 장소 정보 검색, 글·대본 작성 |\n| 스크립트 (`tc.py`) | 위치 정보 제거, 카드·영상 생성, 규칙 점검, 순서 강제, 대장 기록 |\n| 사람 | 확인 지점 승인·반려, 발행 |\n\nAI에는 \"사람 대신 승인 결정\"과 \"확인되지 않은 사실을 확정\"하는 것을 금지했다.\n\n## 개발자 관점\n\n### 처리 흐름\n1. 사진 폴더 입력 → 20장이 넘으면 AI가 선별, GPS·EXIF 위치 정보를 지운 복사본만 사용 (원본은 수정하지 않음)\n2. 사진·검색 정보·사용자 메모를 브리프 `content.json` 하나로 정리\n3. 인스타: 첫 장은 표지 템플릿으로 생성, 나머지 카드 구성\n4. 숏폼: 장면별 대본 → TTS → 자막·줌/팬·전환을 넣은 1080×1920 MP4 (ffmpeg)\n5. 블로그: plog 프롬프트 기반 제목·본문\n6. 채널별 규칙 점검 → 확인 지점 승인 → `ledger.xlsx` 기록\n\n### 주요 구현 판단\n- **규칙 점검을 코드로:** 채널별 해시태그 개수·금지 표현·제목 길이를 `rules.json`으로 분리해 자동 점검. 점검에 실패한 결과물은 승인 요청 자체를 막음\n- **설치 환경 대응:** TTS API 키가 없으면 Mac·Windows 기본 음성으로 대체해 다른 사람 컴퓨터에서도 끝까지 실행. HEIC 사진은 pillow-heif로 처리\n- **배포 형태:** 스킬 zip 하나와 4단계 설치 안내로 다른 사람도 설치해 사용 가능\n- **테스트:** 단위 테스트 21개\n\n## 주요 사례\n\n### 사례 1. 자동화의 범위를 확인 지점으로 정의\n- **배경:** 콘텐츠는 채널에 올라가면 되돌리기 어렵고, AI 결과물은 사실 확인이 필요\n- **판단:** 모든 것을 자동화하기보다 사람이 판단할 곳을 먼저 정하고 그 사이를 자동으로 채우는 것이 실제로 쓸 수 있는 자동화\n- **구현:** 확인 지점 5개 + 순서 강제 + 승인·반려·버전 기록\n- **결과:** 사진 폴더 하나로 세 채널 콘텐츠를 만들면서 승인 없는 게시는 구조적으로 불가능\n\n### 사례 2. 형식 규칙은 사람 대신 코드가 확인\n- **배경:** 해시태그 개수·금지 표현을 매번 눈으로 확인\n- **구현:** 채널별 규칙을 데이터 파일로 분리하고 점검 실패 시 승인 단계 진입 차단\n- **결과:** 사람의 확인을 내용 판단에 집중시키고, 채널 규칙이 바뀌어도 파일만 수정\n\n## 결과와 확장 방향\n\n**결과**\n- 3일 안에 사진 → 인스타·숏폼·블로그 흐름을 완성하고 발표\n- 설치형 스킬 zip과 설치 안내로 배포\n\n**배운 점**\n- 웹사이트가 아니어도 스킬만으로 입력부터 기록까지 완결된 도구를 만들 수 있음\n- 스킬로 흐름을 먼저 검증한 뒤 웹사이트로 넓히는 순서가 효율적임\n- 다만 사용자가 결과물을 보고 직접 고치는 단계는 웹 화면이 더 편함 → 다음 단계는 웹 기반 확인·수정 화면\n- 개인적으로 만들어 둔 작은 도구 (표지 디자인, 블로그 프롬프트)가 그대로 부품이 되어 짧은 기간에 세 채널을 묶을 수 있었음\n\n**확장 방향**\n- 결과물 검증 기준 마련: 현재 형식 규칙 중심의 점검에 \"잘 쓴 내용\"의 기준과 검증 추가\n- 영상 대본·사진 선택·블로그 본문 품질 확인 강화, 더 자세한 수정 규칙\n- 결과를 보고 수정할 수 있는 웹 화면, 토큰 사용량·실행 시간 절감\n- 여행 외 주제 (식당·물건 리뷰)로 확대\n",
+    "body": "## 프로젝트 개요\n\n| 항목 | 내용 |\n|---|---|\n| 과정 | AX 캠퍼스 4회차 · 업무 자동화 |\n| 기간 | 2026.11.09–11.11 (11.10 제출, 11.11 발표) |\n| 인원 | 1명 (구현은 Claude Code·Codex 활용) |\n| 직접 한 일 | 업무 분석, 흐름·확인 지점 설계, 채널별 규칙, 결과물 검수, 발표 |\n| 기술 | Claude Code 스킬 · Python (Pillow, openpyxl, pillow-heif) · ffmpeg · OpenAI TTS |\n| 링크 | [저장소](https://github.com/jexists/travel-content-maker) · [전체 발표](https://jexists.github.io/travel-content-maker/presentation/index_v5.html) · [업무 분석·개선 설계](https://jexists.github.io/travel-content-maker/presentation/analysis_v5.html) · [실행 방법](https://jexists.github.io/travel-content-maker/presentation/run_v5.html) |\n\n**배경**\n과제는 잘 아는 업무 하나의 현재 흐름 (As-Is)을 분석하고 개선 프로세스를 직접 구현하는 것. 직접 운영하는 여행 블로그·인스타에서 겪던 문제를 대상으로 했다. 채널마다 같은 정보를 다시 찾아 쓰고, 표지를 매번 손으로 만들고, 영상 편집 부담 때문에 유튜브는 시작하지 못하고 있었다.\n\n**구현 방식 선택**\n과제의 구현 방식 3안 중 \"Claude 스킬 + 로컬 파일\"을 선택. 웹 서비스를 따로 만들지 않고도 입력 → 처리 → 결과 저장 → 재실행 시 이력 유지까지 완결된 도구로 만들 수 있다고 판단했다. 개인 프로젝트로 만든 instapic (표지 디자인·글씨체)과 plog (블로그 프롬프트)를 부품으로 재사용했다.\n\n## PM / FDE 관점\n\n### 현재 업무 분석 (As-Is)\n| # | 문제 | 개선 |\n|---|---|---|\n| P1 | 표지를 매번 수작업 | instpic 디자인 기반 표지 템플릿 자동 생성 |\n| P2 | 채널마다 정보 재검색 | 브리프 하나 (`content.json`)로 3채널 생성 |\n| P3 | 숏폼 편집 부담 | 대본 → TTS → 자막·모션 영상 자동 합성 |\n| P4 | 버전·반려 사유 기록 없음 | 채널별 버전 (v1·v2)과 사건을 콘텐츠대장에 기록 |\n| P5 | 해시태그·금지 표현을 눈으로 확인 | 규칙 파일 기반 자동 점검 |\n| P6 | 게시 링크 분산 | 게시 링크를 대장에 모음 |\n\n### 사람이 판단할 지점 설계\n- 확인 지점을 다섯 번 (A 브리프·인스타 / B 영상 대본 / C 블로그 / D 최종 승인 / E 게시 링크)으로 줄이고 그 사이는 자동화\n- 공유·발행처럼 되돌리기 어려운 일은 항상 사람에게 남김\n- 순서를 강제해 승인 전에는 다음 단계나 게시로 넘어가지 못하게 함\n\n### 역할 분리\n| 주체 | 맡은 일 |\n|---|---|\n| AI | 사진 추리기, 장소 정보 검색, 글·대본 작성 |\n| 스크립트 (`tc.py`) | 위치 정보 제거, 카드·영상 생성, 규칙 점검, 순서 강제, 대장 기록 |\n| 사람 | 확인 지점 승인·반려, 발행 |\n\nAI에는 \"사람 대신 승인 결정\"과 \"확인되지 않은 사실을 확정\"하는 것을 금지했다.\n\n## 개발자 관점\n\n### 처리 흐름\n1. 사진 폴더 입력 → 20장이 넘으면 AI가 선별, GPS·EXIF 위치 정보를 지운 복사본만 사용 (원본은 수정하지 않음)\n2. 사진·검색 정보·사용자 메모를 브리프 `content.json` 하나로 정리\n3. 인스타: 첫 장은 표지 템플릿으로 생성, 나머지 카드 구성\n4. 숏폼: 장면별 대본 → TTS → 자막·줌/팬·전환을 넣은 1080×1920 MP4 (ffmpeg)\n5. 블로그: plog 프롬프트 기반 제목·본문\n6. 채널별 규칙 점검 → 확인 지점 승인 → `ledger.xlsx` 기록\n\n### 주요 구현 판단\n- **규칙 점검을 코드로:** 채널별 해시태그 개수·금지 표현·제목 길이를 `rules.json`으로 분리해 자동 점검. 점검에 실패한 결과물은 승인 요청 자체를 막음\n- **설치 환경 대응:** TTS API 키가 없으면 Mac·Windows 기본 음성으로 대체해 다른 사람 컴퓨터에서도 끝까지 실행. HEIC 사진은 pillow-heif로 처리\n- **배포 형태:** 스킬 zip 하나와 4단계 설치 안내로 다른 사람도 설치해 사용 가능\n- **테스트:** 단위 테스트 21개\n\n## 주요 사례\n\n### 사례 1. 자동화의 범위를 확인 지점으로 정의\n- **배경:** 콘텐츠는 채널에 올라가면 되돌리기 어렵고, AI 결과물은 사실 확인이 필요\n- **판단:** 모든 것을 자동화하기보다 사람이 판단할 곳을 먼저 정하고 그 사이를 자동으로 채우는 것이 실제로 쓸 수 있는 자동화\n- **구현:** 확인 지점 5개 + 순서 강제 + 승인·반려·버전 기록\n- **결과:** 사진 폴더 하나로 세 채널 콘텐츠를 만들면서 승인 없는 게시는 구조적으로 불가능\n\n### 사례 2. 형식 규칙은 사람 대신 코드가 확인\n- **배경:** 해시태그 개수·금지 표현을 매번 눈으로 확인\n- **구현:** 채널별 규칙을 데이터 파일로 분리하고 점검 실패 시 승인 단계 진입 차단\n- **결과:** 사람의 확인을 내용 판단에 집중시키고, 채널 규칙이 바뀌어도 파일만 수정\n\n## 결과와 확장 방향\n\n**결과**\n- 3일 안에 사진 → 인스타·숏폼·블로그 흐름을 완성하고 발표\n- 설치형 스킬 zip과 설치 안내로 배포\n\n**배운 점**\n- 웹사이트가 아니어도 스킬만으로 입력부터 기록까지 완결된 도구를 만들 수 있음\n- 스킬로 흐름을 먼저 검증한 뒤 웹사이트로 넓히는 순서가 효율적임\n- 다만 사용자가 결과물을 보고 직접 고치는 단계는 웹 화면이 더 편함 → 다음 단계는 웹 기반 확인·수정 화면\n- 개인적으로 만들어 둔 작은 도구 (표지 디자인, 블로그 프롬프트)가 그대로 부품이 되어 짧은 기간에 세 채널을 묶을 수 있었음\n\n**확장 방향**\n- 결과물 검증 기준 마련: 현재 형식 규칙 중심의 점검에 \"잘 쓴 내용\"의 기준과 검증 추가\n- 영상 대본·사진 선택·블로그 본문 품질 확인 강화, 더 자세한 수정 규칙\n- 결과를 보고 수정할 수 있는 웹 화면, 토큰 사용량·실행 시간 절감\n- 여행 외 주제 (식당·물건 리뷰)로 확대\n",
     "linkNote": "",
     "images": [
       {
@@ -601,7 +791,55 @@
       },
       {
         "src": "/images/projects/tube-eottae/03.webp",
-        "caption": "광고주 추천"
+        "caption": "채널 분석 결과"
+      },
+      {
+        "src": "/images/projects/tube-eottae/04.webp",
+        "caption": "활동 추이·최근 영상"
+      },
+      {
+        "src": "/images/projects/tube-eottae/05.webp",
+        "caption": "이탈 예측 결과"
+      },
+      {
+        "src": "/images/projects/tube-eottae/06.webp",
+        "caption": "광고주 추천 채널"
+      },
+      {
+        "src": "/images/projects/tube-eottae/07.webp",
+        "caption": "추천 채널 목록"
+      },
+      {
+        "src": "/images/projects/tube-eottae/08.webp",
+        "caption": "인사이트 참여율 분포"
+      },
+      {
+        "src": "/images/projects/tube-eottae/09.webp",
+        "caption": "QR 공유"
+      },
+      {
+        "src": "/images/projects/tube-eottae/10.webp",
+        "caption": "채널 분석 전체 화면"
+      },
+      {
+        "src": "/images/projects/tube-eottae/11.webp",
+        "caption": "채널 분석 전체 화면 (2)"
+      },
+      {
+        "src": "/images/projects/tube-eottae/12.webp",
+        "caption": "광고주 추천 전체 화면"
+      },
+      {
+        "src": "/images/projects/tube-eottae/13.webp",
+        "caption": "인사이트 참여율"
+      },
+      {
+        "src": "/images/projects/tube-eottae/14.webp",
+        "caption": "인사이트 콘텐츠 분석"
+      },
+      {
+        "src": "/images/projects/tube-eottae/15.webp",
+        "caption": "인사이트 업로드 분석"
       }
     ],
     "draft": false,
@@ -640,15 +878,31 @@
     "images": [
       {
         "src": "/images/projects/ev-charging-sos/01.webp",
-        "caption": "SOS 핫스팟 히트맵"
+        "caption": "SOS 핫스팟 히트맵·워드클라우드"
       },
       {
         "src": "/images/projects/ev-charging-sos/02.webp",
-        "caption": "전기차·충전기 통계 추이"
+        "caption": "수요·공급 비교 분석"
       },
       {
         "src": "/images/projects/ev-charging-sos/03.webp",
-        "caption": "데이터 모델"
+        "caption": "연도별 상세 데이터"
+      },
+      {
+        "src": "/images/projects/ev-charging-sos/04.webp",
+        "caption": "지역별 통계 추이"
+      },
+      {
+        "src": "/images/projects/ev-charging-sos/05.webp",
+        "caption": "지역별 상세 데이터"
+      },
+      {
+        "src": "/images/projects/ev-charging-sos/06.webp",
+        "caption": "연도별 전체 화면"
+      },
+      {
+        "src": "/images/projects/ev-charging-sos/07.webp",
+        "caption": "지역별 전체 화면"
       }
     ],
     "draft": false,
@@ -688,11 +942,48 @@
         "url": "https://github.com/jexists/plog"
       }
     ],
-    "body": "## 기획\n\n- **문제:** 여행 사진은 많은데 블로그 글은 쓰기 어려워 미루게 됨\n- **목표:** 사진을 올리면 AI가 초안을 쓰고, 사람은 고치고 다듬기만 하는 것\n- **사람과 AI의 역할 분리:** 카테고리 (여행·음식·카페·리뷰 등)마다 입력 3개 (장소명, 꼭 들어갈 정보, 직접 겪은 팁)를 받음. 인터넷에 없는 경험은 사람이 넣고, AI는 그것을 글로 엮는 역할로 한정해 지어낸 내용 방지\n- **기획 변경:** 처음에는 로컬 폴더를 통째로 읽어 AI가 사진까지 고르는 구조 (흐림·노출 검사 → 비슷한 사진 묶기 → 대표 컷 선정)로 설계. 배포 단계에서 브라우저가 서버에 로컬 폴더 접근을 허용하지 않아, 사진은 사람이 골라 올리고 AI는 글쓰기만 맡는 구조로 전환\n\n## 주요 기능\n\n- **초안 생성:** 사진 선택 → AI가 EXIF·구도를 분석해 블로그 초안 생성 → 제목·본문·태그 편집\n- **AI 검토:** 맞춤법·문장을 다듬되 작가 말투는 유지하고 사실은 지어내지 않는 검토 기능\n- **버전 관리:** 초안·수정본을 버전으로 쌓고 이전 버전으로 되돌리기\n- **내보내기:** 이미지까지 포함한 복사 (붙여넣으면 블로그 에디터에 그대로 들어감), 네이버 블로그 자동 발행\n- **표지:** instpic과 같은 글씨체·배치로 첫 사진에 지역·장소명 표지 합성\n\n## 기술 고민\n\n- **2단계 AI 호출:** 본문을 먼저 쓰고, 완성된 본문을 보고 제목·태그를 따로 생성해 실제 내용과 맞는 검색 키워드 확보\n- **카테고리별 프롬프트:** 공통 규칙 (AI 말투 제거, 후기형 문체, 검색 노출 규칙)과 카테고리별 글 구조를 분리해, 새 카테고리는 규칙만 추가하면 되도록 구성\n- **긴 작업의 진행 표시:** AI 분석이 수십 초 걸리므로, 서버가 진행 상황을 실시간으로 보내는 방식 (SSE)으로 단계별 진행률 표시\n- **비용 보호:** 공개 주소에서 누구나 AI를 호출하지 못하도록 비밀번호 확인 후에만 분석 시작\n- **배포 구성:** 프론트는 Vercel, 백엔드는 Render, DB·사진 저장은 Supabase로 나눠 배포\n\n## 배운 점\n\n- **기술 제약에 따른 기획 수정:** 브라우저 보안이라는 제약 때문에 AI 사진 선별을 빼고, 사람과 AI의 역할을 다시 나누는 결정을 내림\n- **프롬프트도 설계 대상:** 프롬프트를 코드처럼 파일로 분리하고 역할 (공통·카테고리·제목·검토)별로 나누자, 품질 개선과 다른 기능에서의 재사용이 쉬워짐\n- **기록하며 만들기:** 작업마다 변경 내용과 배운 점을 기록으로 남겨, 이후 travel-content-maker에서 프롬프트 원문을 그대로 가져다 씀\n\n## 개선할 점\n\n- **AI 사진 선별:** 설계해 둔 사진 선별 단계를 배포 환경에서도 쓸 수 있도록 업로드 방식에 맞게 다시 연결\n- **발행 옵션:** 네이버 발행 시 카테고리 선택, 발행 전 미리보기, 비공개·예약 발행\n",
+    "body": "## 기획\n\n- **문제:** 여행 사진은 많은데 블로그 글은 쓰기 어려워 미루게 됨\n- **목표:** 사진을 올리면 AI가 초안을 쓰고, 사람은 고치고 다듬기만 하는 것\n- **사람과 AI의 역할 분리:** 카테고리 (여행·음식·카페·리뷰 등)마다 입력 3개 (장소명, 꼭 들어갈 정보, 직접 겪은 팁)를 받음. 인터넷에 없는 경험은 사람이 넣고, AI는 그것을 글로 엮는 역할로 한정해 지어낸 내용 방지\n- **기획 변경:** 처음에는 로컬 폴더를 통째로 읽어 AI가 사진까지 고르는 구조 (흐림·노출 검사 → 비슷한 사진 묶기 → 대표 컷 선정)로 설계. 배포 단계에서 브라우저가 서버에 로컬 폴더 접근을 허용하지 않아, 사진은 사람이 골라 올리고 AI는 글쓰기만 맡는 구조로 전환\n\n## 주요 기능\n\n- **초안 생성:** 사진 선택 → AI가 EXIF·구도를 분석해 블로그 초안 생성 → 제목·본문·태그 편집\n- **AI 검토:** 맞춤법·문장을 다듬되 작가 말투는 유지하고 사실은 지어내지 않는 검토 기능\n- **버전 관리:** 초안·수정본을 버전으로 쌓고 이전 버전으로 되돌리기\n- **내보내기:** 이미지까지 포함한 복사 (붙여넣으면 블로그 에디터에 그대로 들어감), 네이버 블로그 자동 발행\n- **표지:** instapic과 같은 글씨체·배치로 첫 사진에 지역·장소명 표지 합성\n\n## 기술 고민\n\n- **2단계 AI 호출:** 본문을 먼저 쓰고, 완성된 본문을 보고 제목·태그를 따로 생성해 실제 내용과 맞는 검색 키워드 확보\n- **카테고리별 프롬프트:** 공통 규칙 (AI 말투 제거, 후기형 문체, 검색 노출 규칙)과 카테고리별 글 구조를 분리해, 새 카테고리는 규칙만 추가하면 되도록 구성\n- **긴 작업의 진행 표시:** AI 분석이 수십 초 걸리므로, 서버가 진행 상황을 실시간으로 보내는 방식 (SSE)으로 단계별 진행률 표시\n- **비용 보호:** 공개 주소에서 누구나 AI를 호출하지 못하도록 비밀번호 확인 후에만 분석 시작\n- **배포 구성:** 프론트는 Vercel, 백엔드는 Render, DB·사진 저장은 Supabase로 나눠 배포\n\n## 배운 점\n\n- **기술 제약에 따른 기획 수정:** 브라우저 보안이라는 제약 때문에 AI 사진 선별을 빼고, 사람과 AI의 역할을 다시 나누는 결정을 내림\n- **프롬프트도 설계 대상:** 프롬프트를 코드처럼 파일로 분리하고 역할 (공통·카테고리·제목·검토)별로 나누자, 품질 개선과 다른 기능에서의 재사용이 쉬워짐\n- **기록하며 만들기:** 작업마다 변경 내용과 배운 점을 기록으로 남겨, 이후 travel-content-maker에서 프롬프트 원문을 그대로 가져다 씀\n\n## 개선할 점\n\n- **AI 사진 선별:** 설계해 둔 사진 선별 단계를 배포 환경에서도 쓸 수 있도록 업로드 방식에 맞게 다시 연결\n- **발행 옵션:** 네이버 발행 시 카테고리 선택, 발행 전 미리보기, 비공개·예약 발행\n",
     "course": "",
     "role": "",
     "linkNote": "",
-    "images": [],
+    "images": [
+      {
+        "src": "/images/projects/plog/01.webp",
+        "caption": "사진 선택"
+      },
+      {
+        "src": "/images/projects/plog/02.webp",
+        "caption": "글 정보 입력"
+      },
+      {
+        "src": "/images/projects/plog/03.webp",
+        "caption": "AI 분석 중"
+      },
+      {
+        "src": "/images/projects/plog/04.webp",
+        "caption": "제목 후보와 초안"
+      },
+      {
+        "src": "/images/projects/plog/05.webp",
+        "caption": "사진별 본문 편집"
+      },
+      {
+        "src": "/images/projects/plog/06.webp",
+        "caption": "본문·해시태그"
+      },
+      {
+        "src": "/images/projects/plog/07.webp",
+        "caption": "내보내기 메뉴"
+      },
+      {
+        "src": "/images/projects/plog/08.webp",
+        "caption": "버전 기록"
+      },
+      {
+        "src": "/images/projects/plog/09.webp",
+        "caption": "버전 기록 비교"
+      }
+    ],
     "draft": false,
     "kind": "개인"
   },
@@ -727,13 +1018,58 @@
     "course": "",
     "role": "",
     "linkNote": "",
-    "images": [],
+    "images": [
+      {
+        "src": "/images/projects/photo_organizer/01.webp",
+        "caption": "폴더 선택"
+      },
+      {
+        "src": "/images/projects/photo_organizer/02.webp",
+        "caption": "날짜별 정리 확인"
+      },
+      {
+        "src": "/images/projects/photo_organizer/03.webp",
+        "caption": "스캔 중"
+      },
+      {
+        "src": "/images/projects/photo_organizer/04.webp",
+        "caption": "정리할 파일 없음"
+      },
+      {
+        "src": "/images/projects/photo_organizer/05.webp",
+        "caption": "날짜별 목록"
+      },
+      {
+        "src": "/images/projects/photo_organizer/06.webp",
+        "caption": "폴더명 수정"
+      },
+      {
+        "src": "/images/projects/photo_organizer/07.webp",
+        "caption": "폴더명 수정 후 목록"
+      },
+      {
+        "src": "/images/projects/photo_organizer/08.webp",
+        "caption": "이동 확인"
+      },
+      {
+        "src": "/images/projects/photo_organizer/09.webp",
+        "caption": "이동 중 진행률"
+      },
+      {
+        "src": "/images/projects/photo_organizer/10.webp",
+        "caption": "정리 완료"
+      },
+      {
+        "src": "/images/projects/photo_organizer/11.webp",
+        "caption": "갤러리에 생긴 날짜별 폴더"
+      }
+    ],
     "draft": false,
     "kind": "개인"
   },
   {
-    "_id": "instpic",
-    "title": "instpic",
+    "_id": "instapic",
+    "title": "instapic",
     "subtitle": "인스타 사진 문구 자동 입력",
     "categoryId": "vibe-coding",
     "featured": false,
@@ -761,7 +1097,44 @@
     "course": "",
     "role": "",
     "linkNote": "",
-    "images": [],
+    "images": [
+      {
+        "src": "/images/projects/instapic/01.webp",
+        "caption": "첫 화면"
+      },
+      {
+        "src": "/images/projects/instapic/02.webp",
+        "caption": "지역·장소 문구 편집"
+      },
+      {
+        "src": "/images/projects/instapic/03.webp",
+        "caption": "장소명 입력 전"
+      },
+      {
+        "src": "/images/projects/instapic/04.webp",
+        "caption": "GPS 정보 없는 사진"
+      },
+      {
+        "src": "/images/projects/instapic/05.webp",
+        "caption": "문구 위치·크기 조절"
+      },
+      {
+        "src": "/images/projects/instapic/06.webp",
+        "caption": "편집 화면과 조절 패널"
+      },
+      {
+        "src": "/images/projects/instapic/07.webp",
+        "caption": "원본 사진"
+      },
+      {
+        "src": "/images/projects/instapic/08.webp",
+        "caption": "문구를 얹어 저장한 사진"
+      },
+      {
+        "src": "/images/projects/instapic/09.webp",
+        "caption": "갤러리 저장 폴더"
+      }
+    ],
     "draft": false,
     "kind": "개인"
   },
@@ -805,6 +1178,46 @@
       {
         "src": "/images/projects/portfolio-2019/01.webp",
         "caption": "검색창 컨셉 첫 화면"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/02.webp",
+        "caption": "검색 버튼"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/03.webp",
+        "caption": "검색 결과 전체 탭"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/04.webp",
+        "caption": "포트폴리오 목록"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/05.webp",
+        "caption": "포트폴리오 (마우스 올림)"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/06.webp",
+        "caption": "이력서 경력사항"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/07.webp",
+        "caption": "교육·자격·스킬"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/08.webp",
+        "caption": "학력사항·언어 능력"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/09.webp",
+        "caption": "포트폴리오 탭"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/10.webp",
+        "caption": "포트폴리오 목록 계속"
+      },
+      {
+        "src": "/images/projects/portfolio-2019/11.webp",
+        "caption": "연관 검색어"
       }
     ],
     "draft": false,
@@ -849,11 +1262,11 @@
     "images": [
       {
         "src": "/images/projects/cocacola-redesign/01.webp",
-        "caption": "메인 배너"
+        "caption": "검색창을 연 메인 배너"
       },
       {
         "src": "/images/projects/cocacola-redesign/02.webp",
-        "caption": "브랜드 소개"
+        "caption": "브랜드 슬라이드"
       },
       {
         "src": "/images/projects/cocacola-redesign/03.webp",
@@ -861,7 +1274,103 @@
       },
       {
         "src": "/images/projects/cocacola-redesign/04.webp",
-        "caption": "모바일 화면"
+        "caption": "회사 소개"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/05.webp",
+        "caption": "회사 소개 (마우스 올림)"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/06.webp",
+        "caption": "SNS"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/07.webp",
+        "caption": "SNS·푸터"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/08.webp",
+        "caption": "회사소개 페이지"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/09.webp",
+        "caption": "제품소개 브랜드"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/10.webp",
+        "caption": "제품소개 브랜드 (마우스 올림)"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/11.webp",
+        "caption": "대표 제품"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/12.webp",
+        "caption": "전체 제품"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/13.webp",
+        "caption": "전체 제품 (스크롤)"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/14.webp",
+        "caption": "신제품"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/15.webp",
+        "caption": "신제품 (스프라이트)"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/16.webp",
+        "caption": "스토리 목록"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/17.webp",
+        "caption": "신제품 상세"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/18.webp",
+        "caption": "스토리 전체"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/19.webp",
+        "caption": "스토리 페이지 이동·검색"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/20.webp",
+        "caption": "고객센터 약관 동의"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/21.webp",
+        "caption": "고객센터 문의 작성"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/22.webp",
+        "caption": "커뮤니티 미디어"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/23.webp",
+        "caption": "미디어 Facebook·YouTube"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/24.webp",
+        "caption": "모바일 브랜드"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/25.webp",
+        "caption": "모바일 스토리"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/26.webp",
+        "caption": "모바일 회사 소개"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/27.webp",
+        "caption": "모바일 SNS"
+      },
+      {
+        "src": "/images/projects/cocacola-redesign/28.webp",
+        "caption": "모바일 메뉴"
       }
     ],
     "draft": false,
@@ -923,7 +1432,23 @@
       },
       {
         "src": "/images/projects/naver-clone/04.webp",
-        "caption": "좁은 화면"
+        "caption": "메인 배너 재생"
+      },
+      {
+        "src": "/images/projects/naver-clone/05.webp",
+        "caption": "동영상 레이어 팝업"
+      },
+      {
+        "src": "/images/projects/naver-clone/06.webp",
+        "caption": "뉴스스탠드"
+      },
+      {
+        "src": "/images/projects/naver-clone/07.webp",
+        "caption": "급상승 검색어 펼침"
+      },
+      {
+        "src": "/images/projects/naver-clone/08.webp",
+        "caption": "메인 전체 화면"
       }
     ],
     "draft": false,
@@ -984,7 +1509,19 @@
       },
       {
         "src": "/images/projects/asiana-clone/04.webp",
-        "caption": "좁은 화면"
+        "caption": "출도착 조회"
+      },
+      {
+        "src": "/images/projects/asiana-clone/05.webp",
+        "caption": "예약 메뉴 펼침"
+      },
+      {
+        "src": "/images/projects/asiana-clone/06.webp",
+        "caption": "아시아나클럽 메뉴 펼침"
+      },
+      {
+        "src": "/images/projects/asiana-clone/07.webp",
+        "caption": "메인 전체 화면"
       }
     ],
     "draft": false,
@@ -1083,6 +1620,38 @@
       {
         "src": "/images/projects/trello-clone/01.webp",
         "caption": "보드 목록"
+      },
+      {
+        "src": "/images/projects/trello-clone/02.webp",
+        "caption": "보드 목록 전체 화면"
+      },
+      {
+        "src": "/images/projects/trello-clone/03.webp",
+        "caption": "새 보드 만들기"
+      },
+      {
+        "src": "/images/projects/trello-clone/04.webp",
+        "caption": "공개 범위 선택"
+      },
+      {
+        "src": "/images/projects/trello-clone/05.webp",
+        "caption": "보드 리스트"
+      },
+      {
+        "src": "/images/projects/trello-clone/06.webp",
+        "caption": "리스트 추가"
+      },
+      {
+        "src": "/images/projects/trello-clone/07.webp",
+        "caption": "카드 추가"
+      },
+      {
+        "src": "/images/projects/trello-clone/08.webp",
+        "caption": "리스트 메뉴"
+      },
+      {
+        "src": "/images/projects/trello-clone/09.webp",
+        "caption": "카드 상세"
       }
     ],
     "draft": false,
@@ -1119,7 +1688,56 @@
     "course": "",
     "role": "",
     "linkNote": "",
-    "images": [],
+    "images": [
+      {
+        "src": "/images/projects/til/01.webp",
+        "caption": "일정관리 이름 입력"
+      },
+      {
+        "src": "/images/projects/til/02.webp",
+        "caption": "일정관리 할 일"
+      },
+      {
+        "src": "/images/projects/til/03.webp",
+        "caption": "그림판"
+      },
+      {
+        "src": "/images/projects/til/04.webp",
+        "caption": "그림판 채우기"
+      },
+      {
+        "src": "/images/projects/til/05.webp",
+        "caption": "스톱워치"
+      },
+      {
+        "src": "/images/projects/til/06.webp",
+        "caption": "스톱워치 실행"
+      },
+      {
+        "src": "/images/projects/til/07.webp",
+        "caption": "시계"
+      },
+      {
+        "src": "/images/projects/til/08.webp",
+        "caption": "버킷리스트 히스토리"
+      },
+      {
+        "src": "/images/projects/til/09.webp",
+        "caption": "버킷리스트 홈"
+      },
+      {
+        "src": "/images/projects/til/10.webp",
+        "caption": "버킷리스트 상세"
+      },
+      {
+        "src": "/images/projects/til/11.webp",
+        "caption": "영화 블로그 목록"
+      },
+      {
+        "src": "/images/projects/til/12.webp",
+        "caption": "영화 상세"
+      }
+    ],
     "draft": false,
     "kind": "아카이브"
   }
