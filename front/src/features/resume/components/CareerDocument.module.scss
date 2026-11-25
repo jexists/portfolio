@@ -181,4 +181,14 @@
   .etc .kv {
     grid-template-columns: 1fr;
   }
+
+  /* 회사 기간은 회사명 아래 왼쪽 정렬, 줄바꿈된 기간도 왼쪽부터 */
+  .co {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .date {
+    margin-left: var(--space-0);
+  }
 }

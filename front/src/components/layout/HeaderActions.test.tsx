@@ -1,9 +1,10 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation } from 'react-router';
 import { vi } from 'vitest';
 import type { AuthProviderName, AuthService, AuthUser } from '@/features/auth';
 import { AuthProvider } from '@/features/auth';
+import { renderRoute, useMockApi } from '@/test/renderWithApi';
 import { HeaderActions } from './HeaderActions';
 
 class HeaderAuthService implements AuthService {
@@ -23,7 +24,7 @@ function renderActions(service: HeaderAuthService, stopProfileClickPropagation =
     <AuthProvider service={service}>
       <MemoryRouter initialEntries={['/search']}>
         <div onClick={parentClick}>
-          <HeaderActions onAppClick={vi.fn()} stopProfileClickPropagation={stopProfileClickPropagation} />
+          <HeaderActions stopProfileClickPropagation={stopProfileClickPropagation} />
         </div>
         <LocationProbe />
       </MemoryRouter>
@@ -81,5 +82,26 @@ describe('HeaderActions', () => {
     await user.click(dashboardLink);
 
     expect(screen.getByTestId('location')).toHaveTextContent('/admin');
+  });
+
+  describe('my links menu', () => {
+    useMockApi();
+
+    it('lists resume, career doc, profile links and email', async () => {
+      const user = userEvent.setup();
+      renderRoute('/search', '/search', <HeaderActions />);
+
+      await user.click(screen.getByRole('button', { name: '내 링크' }));
+      const menu = screen.getByRole('dialog', { name: '내 링크' });
+      expect(within(menu).getByRole('link', { name: '이력서' })).toHaveAttribute('href', '/search?tab=resume');
+      expect(within(menu).getByRole('link', { name: '경력기술서' })).toHaveAttribute('href', '/search?tab=careerdoc');
+      for (const name of ['GitHub', 'LinkedIn', '블로그']) {
+        expect(await within(menu).findByRole('link', { name })).toHaveAttribute('target', '_blank');
+      }
+      expect(within(menu).getByRole('link', { name: '이메일' })).toHaveAttribute('href', expect.stringMatching(/^mailto:/));
+
+      await user.keyboard('{Escape}');
+      expect(screen.queryByRole('dialog', { name: '내 링크' })).not.toBeInTheDocument();
+    });
   });
 });

@@ -220,41 +220,87 @@ function linkLogo(href: string) {
 
 const linkHost = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 
-export function LinksCard({ profile }: { profile: Profile }) {
-  const rows = [
-    ...profile.links.map((link) => ({ key: link.url, href: link.url, label: link.label, sub: linkHost(link.url), external: true })),
-    { key: 'email', href: `mailto:${profile.email}`, label: '이메일', sub: profile.email, external: false },
-  ];
+export interface LinkRow {
+  key: string;
+  href: string;
+  label: string;
+  /** 없으면 주소에서 http·www 를 뗀 값 */
+  sub?: string;
+  external: boolean;
+  /** 브랜드 로고가 없는 주소에 쓸 선 아이콘 (web: 지구본, doc: 문서) */
+  icon?: 'web' | 'doc';
+}
 
+const LINE_ICONS = {
+  web: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3Z" />
+    </>
+  ),
+  doc: (
+    <>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" />
+      <path d="M14 3v5h5M9 13h6M9 17h6" />
+    </>
+  ),
+};
+
+/** 주소에 맞는 브랜드 로고, 없으면 선 아이콘, 그것도 없으면 이름 첫 글자 (헤더 링크 메뉴도 쓴다) */
+export function LinkIcon({ href, label, icon }: { href: string; label: string; icon?: LinkRow['icon'] }) {
+  const logo = linkLogo(href);
+  if (logo) {
+    return (
+      <svg viewBox="0 0 24 24" style={{ fill: `#${logo.hex}` }} aria-hidden="true">
+        <path d={logo.path} />
+      </svg>
+    );
+  }
+  if (icon) {
+    return (
+      <svg className={styles.lineIcon} viewBox="0 0 24 24" aria-hidden="true">
+        {LINE_ICONS[icon]}
+      </svg>
+    );
+  }
+  return <>{label.slice(0, 1)}</>;
+}
+
+/** 로고 + 이름 + 주소 + › 줄 목록 (프로필 링크 카드, 프로젝트 링크 카드가 같이 쓴다) */
+export function LinkRows({ rows }: { rows: LinkRow[] }) {
   return (
-    <Card ariaLabel="외부 링크">
-      <ul className={styles.linkRows}>
-        {rows.map((row) => {
-          const logo = linkLogo(row.href);
-          return (
+    <ul className={styles.linkRows}>
+      {rows.map((row) => {
+        return (
           <li key={row.key}>
             <a href={row.href} {...(row.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
               <span className={styles.linkIcon} aria-hidden="true">
-                {logo ? (
-                  <svg viewBox="0 0 24 24" style={{ fill: `#${logo.hex}` }}>
-                    <path d={logo.path} />
-                  </svg>
-                ) : (
-                  row.label.slice(0, 1)
-                )}
+                <LinkIcon href={row.href} label={row.label} icon={row.icon} />
               </span>
               <span className={styles.linkText}>
                 <b>{row.label}</b>
-                <span>{row.sub}</span>
+                <span>{row.sub ?? linkHost(row.href)}</span>
               </span>
               <span className={styles.chevron} aria-hidden="true">
                 ›
               </span>
             </a>
           </li>
-          );
-        })}
-      </ul>
+        );
+      })}
+    </ul>
+  );
+}
+
+export function LinksCard({ profile }: { profile: Profile }) {
+  const rows: LinkRow[] = [
+    ...profile.links.map((link) => ({ key: link.url, href: link.url, label: link.label, external: true })),
+    { key: 'email', href: `mailto:${profile.email}`, label: '이메일', sub: profile.email, external: false },
+  ];
+
+  return (
+    <Card ariaLabel="외부 링크">
+      <LinkRows rows={rows} />
     </Card>
   );
 }

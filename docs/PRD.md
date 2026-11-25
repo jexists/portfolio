@@ -105,7 +105,8 @@
   "team": "1명", "role": "DB 설계, QA, 발표",
   "highlights": ["20테이블 ERD"],
   "links": [{ "type": "live", "label": "코어 웹", "url": "https://..." }],   // live|github|slides|video|doc|pdf
-  "linkNote": "",                        // 링크 주의 문구 (배포 종료 등)
+  "linkNote": "",                        // 링크 주의 문구 (긴 안내)
+  "linkStatus": "",                      // 링크 카드 제목 옆 작은 상태 (배포 종료 등)
   "images": [],                          // [{ src, caption }], 첫 장이 대표 이미지
   "series": { "name": "클론 코딩", "order": 1 },   // 선택
   "publishedAt": "2026-11-06",           // 필수 (정렬 기준)

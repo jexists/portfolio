@@ -1,8 +1,10 @@
 .actions {
+  --header-actions-gap: var(--space-4);
+
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--header-actions-gap);
 }
 
 .profile {
@@ -99,5 +101,71 @@
     color: var(--color-text-inverse);
     font-weight: var(--font-weight-bold);
     place-items: center;
+  }
+}
+
+/* 내 링크 메뉴: 3열 아이콘 격자 */
+.linksMenu {
+  position: absolute;
+  z-index: var(--z-dropdown);
+  top: calc(var(--layout-full) + var(--space-2));
+  right: calc(var(--intro-avatar-ring-size) * -1 - var(--header-actions-gap));
+  width: var(--search-links-menu-width);
+  max-width: calc(100vw - var(--space-4) * 2);
+  padding: var(--space-4) var(--space-3);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-subtle);
+  box-shadow: var(--shadow-md);
+  color: var(--color-text-primary);
+  text-align: center;
+  white-space: normal;
+
+  strong {
+    display: block;
+    margin-bottom: var(--space-3);
+    padding-inline: var(--space-1);
+    font-size: var(--font-size-base);
+    text-align: left;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(var(--space-0), 1fr));
+    gap: var(--space-0);
+    margin: var(--space-0);
+    padding: var(--space-0);
+    list-style: none;
+  }
+
+  a {
+    display: grid;
+    justify-items: center;
+    gap: calc(var(--space-1) * 1.5);
+    padding: var(--space-2) var(--space-1);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xs);
+    text-decoration: none;
+
+    &:hover {
+      background: var(--color-intro-control-hover);
+    }
+  }
+}
+
+.linkIcon {
+  display: grid;
+  width: var(--search-links-icon-size);
+  height: var(--search-links-icon-size);
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-bold);
+
+  svg {
+    width: var(--font-size-2xl);
+    height: var(--font-size-2xl);
   }
 }

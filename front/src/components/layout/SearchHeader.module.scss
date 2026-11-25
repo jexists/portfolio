@@ -18,6 +18,8 @@
 }
 
 .topRow {
+  /* 오른쪽 액션은 내용만큼 자리를 지켜서, 중간 폭에서 검색창이 공유·앱 버튼을 덮지 않게 한다 */
+  grid-template-columns: var(--search-content-offset) minmax(var(--space-0), var(--search-content-max-width)) var(--search-header-column-gap) minmax(max-content, var(--search-header-actions-column-width));
   padding-block: var(--search-header-padding-y);
 }
 
@@ -47,18 +49,6 @@
 .search:focus-within,
 .search:hover {
   box-shadow: var(--shadow-intro-search);
-}
-
-.brandMark {
-  display: none;
-  flex: var(--flex-none);
-  width: var(--search-brand-mark-size);
-  height: var(--search-brand-mark-size);
-  place-items: center;
-  color: var(--color-brand-blue);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  text-decoration: none;
 }
 
 .search input {
@@ -146,34 +136,56 @@
   min-width: var(--space-0);
 }
 
-/* 좁은 화면: 로고를 숨기고 검색창 안 P 마크로 대신한다. 액션은 윗줄 오른쪽, 검색창은 아랫줄 전체 폭 */
+/* 좁은 화면: 윗줄은 [공유] 가운데 로고 [앱·계정], 검색창은 아랫줄 전체 폭. 헤더는 따라오지 않고 맨위로 버튼(SiteFooter)이 대신한다 */
 @media (max-width: 48rem) {
+  .header {
+    position: static;
+  }
+
   .topRow {
-    grid-template-columns: minmax(var(--space-0), 1fr);
+    grid-template-columns: minmax(var(--space-0), 1fr) auto minmax(var(--space-0), 1fr);
     row-gap: var(--space-2);
   }
 
   .logoLink {
-    display: none;
-  }
-
-  .brandMark {
-    display: grid;
+    grid-row: 1;
+    grid-column: 2;
   }
 
   .search {
     grid-row: 2;
-    grid-column: 1;
-    padding-inline: var(--space-3);
+    grid-column: 1 / -1;
+    padding-inline: var(--space-4) var(--space-3);
   }
 
+  /* 공유는 왼쪽 칸, 앱·계정은 오른쪽 칸으로 흩어 놓는다 */
   .rightActions {
+    display: contents;
+  }
+
+  .shareButton {
     grid-row: 1;
     grid-column: 1;
+    justify-self: start;
+    justify-content: center;
+    width: var(--search-header-action-height);
+    padding-inline: var(--space-0);
+    background: transparent;
+  }
+
+  .rightActions > :last-child {
+    grid-row: 1;
+    grid-column: 3;
+    justify-self: end;
+    --header-actions-gap: var(--space-1);
   }
 
   .shareButton span {
     display: none;
+  }
+
+  .clearButton {
+    padding: var(--space-2);
   }
 
   .tabsRow {

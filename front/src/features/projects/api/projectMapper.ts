@@ -27,6 +27,7 @@ export function toProjectMeta(dto: ProjectDto): ProjectMeta {
     highlights: dto.highlights ?? [],
     links: dto.links ?? [],
     linkNote: optional(dto.linkNote),
+    linkStatus: optional(dto.linkStatus),
     images: (dto.images ?? []).map((image) => ({ ...image, src: assetUrl(image.src) })),
     series: dto.series?.name,
     seriesOrder: dto.series?.order,

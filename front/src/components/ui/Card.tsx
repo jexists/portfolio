@@ -8,18 +8,23 @@ interface CardProps {
   moreTo?: string;
   /** 제목 오른쪽 끝의 작은 설명 (예: 집계 기준) */
   note?: string;
+  /** 제목 바로 옆 작은 회색 상태 (예: 배포 종료) */
+  badge?: string;
   className?: string;
   ariaLabel?: string;
   children: ReactNode;
 }
 
 /** 검색 결과 화면의 흰 카드. 제목이 있으면 section 의 이름이 된다. */
-export function Card({ title, moreTo, note, className, ariaLabel, children }: CardProps) {
+export function Card({ title, moreTo, note, badge, className, ariaLabel, children }: CardProps) {
   return (
     <section className={[styles.card, className].filter(Boolean).join(' ')} aria-label={ariaLabel ?? title}>
       {title ? (
         <div className={styles.head}>
-          <h2>{title}</h2>
+          <h2>
+            {title}
+            {badge ? <span className={styles.badge}>{badge}</span> : null}
+          </h2>
           {note ? <span className={styles.note}>{note}</span> : null}
           {moreTo ? (
             <Link className={styles.more} to={moreTo} aria-label={`${title} 더보기`}>

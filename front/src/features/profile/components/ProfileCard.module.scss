@@ -327,6 +327,14 @@
   height: var(--font-size-lg);
 }
 
+.lineIcon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .linkText {
   display: grid;
   flex: var(--flex-auto);
@@ -351,17 +359,41 @@
     --profile-card-padding: var(--space-4);
   }
 
+  /* 사진은 요약 오른쪽 위에 작게 둔다 */
   .body {
-    grid-template-columns: minmax(var(--space-0), 1fr);
+    grid-template-columns: minmax(var(--space-0), 1fr) var(--search-avatar-small);
+    gap: var(--space-3);
   }
 
   .body .photo {
-    order: -1;
     width: var(--search-avatar-small);
   }
 
   .facts > div {
     grid-template-columns: var(--search-case-label-width) minmax(var(--space-0), 1fr);
     gap: var(--space-2);
+  }
+
+  /* 폭이 좁으니 요약은 말줄임 대신 두 줄까지 보이고, 줄 간격은 좁힌다 */
+  .card .facts dd p {
+    display: -webkit-box;
+    line-height: var(--resume-heading-line-height);
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .card .facts dd p + p {
+    margin-top: var(--space-1);
+  }
+
+  .copy {
+    padding: var(--space-2);
+  }
+
+  /* 사이드 카드(Card)도 좁은 화면에선 패딩이 space-4 로 줄어드니 음수 여백을 맞춘다 */
+  .side .resumeLink {
+    margin-inline: calc(var(--space-4) * -1);
+    margin-bottom: calc(var(--space-4) * -1);
   }
 }

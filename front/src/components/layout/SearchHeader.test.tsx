@@ -46,14 +46,6 @@ describe('SearchHeader', () => {
     expect(screen.getByLabelText('검색어')).toHaveValue('흙의 온도 - 도자기 공방 운영 통합 서비스');
   });
 
-  it('keeps a P mark inside the search bar for narrow screens (AC-3)', () => {
-    renderHeader();
-
-    const mark = screen.getByRole('link', { name: 'PortFolio 첫페이지' });
-    expect(screen.getByRole('search')).toContainElement(mark);
-    expect(mark).toHaveTextContent('P');
-  });
-
   it('copies the current URL and shows feedback for two seconds', async () => {
     renderHeader();
     vi.useFakeTimers();
