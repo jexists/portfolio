@@ -41,6 +41,8 @@ export interface ProjectMeta {
   duration?: string;
   publishedAt: string;
   featured?: boolean;
+  /** 추천순 점수. 클수록 위, 새 프로젝트는 가장 큰 숫자+10 (mockup/projects.json 에서 직접 고친다) */
+  recommend?: number;
   draft?: boolean;
   tags: string[];
   summary: string;
@@ -91,6 +93,7 @@ export interface ProjectDto {
   series?: { name: string; order: number } | null;
   publishedAt: string;
   featured: boolean;
+  recommend?: number;
   draft: boolean;
   /** 상세 조회에만 포함된다 */
   body?: string;

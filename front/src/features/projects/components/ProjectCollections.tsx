@@ -60,8 +60,20 @@ function ImageStrip({ images, to }: { images: ProjectMeta['images']; to: string 
   );
 }
 
-/** 프로젝트 탭: 전체 + 구분(categories) 칩으로 거르는 최신순 목록 */
+/** 프로젝트 탭: 전체 + 구분(categories) 칩으로 거르고 추천·최신·인원순으로 정렬하는 목록 */
 const PAGE_SIZE = 10;
+
+type ProjectSort = 'recommend' | 'latest' | 'team';
+const SORT_LABEL: Record<ProjectSort, string> = { recommend: '추천순', latest: '최신순', team: '인원순' };
+const byLatest = (a: ProjectMeta, b: ProjectMeta) => b.period.start.localeCompare(a.period.start);
+// '4명 (2명 중도 이탈)' → 4. 숫자가 없으면 1명으로 본다
+const headcount = (project: ProjectMeta) => Number.parseInt(project.team ?? '', 10) || 1;
+export const SORTS: Record<ProjectSort, (a: ProjectMeta, b: ProjectMeta) => number> = {
+  // recommend 숫자(클수록 위, 새 프로젝트는 가장 큰 숫자+10)는 mockup/projects.json 에서 직접 고친다. 없으면 맨 뒤
+  recommend: (a, b) => (b.recommend ?? -Infinity) - (a.recommend ?? -Infinity) || byLatest(a, b),
+  latest: byLatest,
+  team: (a, b) => headcount(a) - headcount(b) || byLatest(a, b),
+};
 
 export function ProjectsTab({ projects, tag, onClearTag }: ProjectsTabProps) {
   // 구분·더보기는 주소(?group=&limit=)에 둬서 상세에 갔다가 뒤로 와도 그대로 남는다
@@ -70,13 +82,20 @@ export function ProjectsTab({ projects, tag, onClearTag }: ProjectsTabProps) {
   const group: Category | 'all' = groupParam && groupParam in CATEGORY_LABEL ? (groupParam as Category) : 'all';
   // 구글 검색결과처럼 처음 PAGE_SIZE 개만 보이고 더보기를 누를 때마다 PAGE_SIZE 개씩 늘린다
   const limit = Number(params.get('limit')) || PAGE_SIZE;
-  function update(next: { group?: Category | 'all'; limit?: number }) {
+  const sortParam = params.get('sort');
+  const sort: ProjectSort = sortParam === 'latest' || sortParam === 'team' ? sortParam : 'recommend';
+  function update(next: { group?: Category | 'all'; sort?: ProjectSort; limit?: number }) {
     setParams(
       (prev) => {
         const nextParams = new URLSearchParams(prev);
         if (next.group) {
           if (next.group === 'all') nextParams.delete('group');
           else nextParams.set('group', next.group);
+          nextParams.delete('limit');
+        }
+        if (next.sort) {
+          if (next.sort === 'recommend') nextParams.delete('sort');
+          else nextParams.set('sort', next.sort);
           nextParams.delete('limit');
         }
         if (next.limit) nextParams.set('limit', String(next.limit));
@@ -86,15 +105,25 @@ export function ProjectsTab({ projects, tag, onClearTag }: ProjectsTabProps) {
       { replace: true, preventScrollReset: true },
     );
   }
-  // API 는 대표작 우선 정렬이라, 이 탭에서는 시작일 기준 최신순으로 다시 정렬한다
-  const sorted = [...projects].sort((a, b) => b.period.start.localeCompare(a.period.start));
+  const sorted = [...projects].sort(SORTS[sort]);
   const groups = (Object.keys(CATEGORY_LABEL) as Category[]).filter((value) => projects.some((project) => project.category === value));
   const visible = sorted
     .filter((project) => group === 'all' || project.category === group)
     .filter((project) => !tag || project.tags.includes(tag));
 
   return (
-    <Card title="프로젝트">
+    <Card
+      title="프로젝트"
+      action={
+        <div className={styles.sortToggle} role="group" aria-label="프로젝트 정렬">
+          {(Object.keys(SORT_LABEL) as ProjectSort[]).map((value) => (
+            <button key={value} type="button" aria-pressed={sort === value} onClick={() => update({ sort: value })}>
+              {SORT_LABEL[value]}
+            </button>
+          ))}
+        </div>
+      }
+    >
       <div className={styles.filters} role="group" aria-label="프로젝트 구분">
         {(['all', ...groups] as const).map((value) => (
           <button key={value} className={styles.chip} type="button" aria-pressed={group === value} onClick={() => update({ group: value })}>

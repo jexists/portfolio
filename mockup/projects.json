@@ -5,6 +5,7 @@
     "subtitle": "학원 수강 신청·출결 관리 서비스",
     "categoryId": "ax-campus",
     "featured": true,
+    "recommend": 160,
     "course": "AX Campus 3회차 · DB 설계와 사내 문서 챗봇",
     "period": {
       "start": "2026.11.02",
@@ -98,6 +99,7 @@
     "subtitle": "블로그 글을 세로 숏폼 영상으로",
     "categoryId": "minintern",
     "featured": false,
+    "recommend": 80,
     "course": "미니인턴 웹서비스 개발반 · 스마트동 2팀",
     "period": {
       "start": "2026.11.03",
@@ -195,6 +197,7 @@
     "subtitle": "영업 운영 CRM + AI 에이전트",
     "categoryId": "skn30",
     "featured": true,
+    "recommend": 200,
     "course": "SK네트웍스 Family AI 캠프 30기 · 최종 프로젝트",
     "period": {
       "start": "2026.08.06",
@@ -308,6 +311,7 @@
     "subtitle": "계약서 위험 진단 RAG 상담",
     "categoryId": "skn30",
     "featured": true,
+    "recommend": 190,
     "course": "SK네트웍스 Family AI 캠프 30기 · 3·4차 프로젝트",
     "period": {
       "start": "2026.06.29",
@@ -466,6 +470,7 @@
     "subtitle": "베타테스터 모집·피드백 관리",
     "categoryId": "ax-campus",
     "featured": true,
+    "recommend": 150,
     "course": "AX Campus 1회차 · 로그인과 AI",
     "period": {
       "start": "2026.10.25",
@@ -542,6 +547,7 @@
     "subtitle": "1인 사진관 촬영 예약",
     "categoryId": "ax-campus",
     "featured": false,
+    "recommend": 120,
     "course": "AX Campus 1회차 · 로그인과 AI",
     "period": {
       "start": "2026.10.28",
@@ -600,6 +606,7 @@
     "subtitle": "도자기 공방 운영 통합 서비스",
     "categoryId": "ax-campus",
     "featured": false,
+    "recommend": 140,
     "course": "AX Campus 7회차 · FDE 해커톤 (5시간)",
     "period": {
       "start": "2026.11.13",
@@ -672,6 +679,7 @@
     "subtitle": "여행 콘텐츠 제작 자동화",
     "categoryId": "ax-campus",
     "featured": false,
+    "recommend": 130,
     "course": "AX Campus 4회차 · 업무 자동화",
     "period": {
       "start": "2026.11.09",
@@ -748,6 +756,7 @@
     "subtitle": "유튜브 채널 이탈 예측과 광고 추천",
     "categoryId": "skn30",
     "featured": false,
+    "recommend": 180,
     "course": "SK네트웍스 Family AI 캠프 30기 · 2차 프로젝트",
     "period": {
       "start": "2026.05.15",
@@ -848,6 +857,7 @@
     "subtitle": "충전 불편지수 대시보드",
     "categoryId": "skn30",
     "featured": false,
+    "recommend": 70,
     "course": "SK네트웍스 Family AI 캠프 30기 · 1차 프로젝트",
     "period": {
       "start": "2026.04.14",
@@ -911,6 +921,7 @@
     "subtitle": "사진으로 블로그 초안 쓰기",
     "categoryId": "vibe-coding",
     "featured": false,
+    "recommend": 110,
     "period": {
       "start": "2026.03.06",
       "end": "2026.03.17"
@@ -990,6 +1001,7 @@
     "subtitle": "촬영일 기준 사진 자동 분류",
     "categoryId": "vibe-coding",
     "featured": false,
+    "recommend": 100,
     "period": {
       "start": "2026.02.15",
       "end": "2026.02.15"
@@ -1070,6 +1082,7 @@
     "subtitle": "인스타 사진 문구 자동 입력",
     "categoryId": "vibe-coding",
     "featured": false,
+    "recommend": 90,
     "period": {
       "start": "2026.02.13",
       "end": "2026.02.15"
@@ -1141,6 +1154,7 @@
     "subtitle": "검색엔진 컨셉 첫 포트폴리오",
     "categoryId": "uiux",
     "featured": false,
+    "recommend": 20,
     "period": {
       "start": "2019.12.10",
       "end": "2019.12.18"
@@ -1226,6 +1240,7 @@
     "subtitle": "브랜드 사이트 리디자인",
     "categoryId": "uiux",
     "featured": false,
+    "recommend": 10,
     "period": {
       "start": "2019.11.04",
       "end": "2019.12.11"
@@ -1379,6 +1394,7 @@
     "subtitle": "손코딩 클론",
     "categoryId": "hand-coding",
     "featured": false,
+    "recommend": 30,
     "series": {
       "name": "클론 코딩",
       "order": 1
@@ -1457,6 +1473,7 @@
     "subtitle": "손코딩 클론",
     "categoryId": "hand-coding",
     "featured": false,
+    "recommend": 40,
     "series": {
       "name": "클론 코딩",
       "order": 2
@@ -1530,6 +1547,7 @@
     "subtitle": "손코딩 클론",
     "categoryId": "hand-coding",
     "featured": false,
+    "recommend": 60,
     "series": {
       "name": "클론 코딩",
       "order": 3
@@ -1578,6 +1596,7 @@
     "subtitle": "Angular 클론",
     "categoryId": "hand-coding",
     "featured": false,
+    "recommend": 70,
     "series": {
       "name": "클론 코딩",
       "order": 4
@@ -1660,6 +1679,7 @@
     "subtitle": "일정관리·그림판·시계·버킷리스트·영화 블로그",
     "categoryId": "hand-coding",
     "featured": false,
+    "recommend": 50,
     "period": {
       "start": "2020.03",
       "end": "2020.07"

@@ -59,11 +59,13 @@ describe('Search page (MSW mockup)', () => {
     expect(screen.queryByText(/%$/)).not.toBeInTheDocument();
   });
 
-  it('lists all projects newest first with group filters (AC-IA5)', async () => {
+  it('lists all projects in recommend order, switchable to newest, with group filters (AC-IA5)', async () => {
     const user = userEvent.setup();
     renderSearch('/search?tab=projects');
 
     const all = await screen.findByRole('region', { name: '프로젝트' });
+    expect(within(all).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('SalesLuv');
+    await user.click(within(all).getByRole('button', { name: '최신순' }));
     expect(within(all).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('흙의 온도');
     expect(within(all).getByRole('link', { name: /흙의 온도/ })).toHaveAttribute('href', '/project/heuk-studio');
     expect(within(all).queryByText(/레사모/)).not.toBeInTheDocument();
