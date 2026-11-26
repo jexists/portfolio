@@ -11,6 +11,11 @@
     "base_commit": "f9c6ecbee5ac863a09254575158182a43c715c08",
     "dirty": true
   },
-  "status": "approved",
-  "sensitive_findings": []
+  "status": "implemented",
+  "sensitive_findings": [],
+  "result_commits": [
+    "155492d",
+    "32d0b0e"
+  ],
+  "branch": "refactor/typography-consistency"
 }
