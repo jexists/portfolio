@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
-import type { AuthProviderName, AuthUser } from '../api/AuthService';
+import type { AuthUser } from '../api/AuthService';
 import { useAuth } from '../hooks/AuthContext';
 import { Logo } from '@/components/layout/Logo';
 import { statsService } from '@/features/admin';
@@ -13,17 +13,18 @@ interface LoginLocationState {
 }
 
 export function LoginPage() {
-  const { user, loading, signIn } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [surveyUser, setSurveyUser] = useState<AuthUser | null>(null);
   const [checkingPurpose, setCheckingPurpose] = useState(false);
   const [savingPurpose, setSavingPurpose] = useState(false);
-  const signInStarted = useRef(false);
+  // 0이면 숨김. 누를 때마다 값이 바뀌어 타이머가 다시 시작된다.
+  const [toastKey, setToastKey] = useState(0);
   const destination = (location.state as LoginLocationState | null)?.from ?? '/search';
 
   useEffect(() => {
-    if (loading || !user || signInStarted.current) return;
+    if (loading || !user) return;
 
     let active = true;
     setCheckingPurpose(true);
@@ -38,16 +39,13 @@ export function LoginPage() {
     return () => { active = false; };
   }, [destination, loading, navigate, user]);
 
-  async function handleSignIn(provider: AuthProviderName) {
-    signInStarted.current = true;
-    setCheckingPurpose(true);
-    const signedInUser = await signIn(provider);
-    const purpose = await statsService.getPurpose(signedInUser.id);
+  useEffect(() => {
+    if (!toastKey) return;
+    const timer = window.setTimeout(() => setToastKey(0), 2500);
+    return () => window.clearTimeout(timer);
+  }, [toastKey]);
 
-    if (purpose) navigate(destination, { replace: true });
-    else setSurveyUser(signedInUser);
-    setCheckingPurpose(false);
-  }
+  const showComingSoon = () => setToastKey((key) => key + 1);
 
   async function handlePurpose(purpose: Purpose) {
     if (!surveyUser) return;
@@ -107,11 +105,11 @@ export function LoginPage() {
               <p className={styles.tagline}>성장과 경험을 담은 공간</p>
             </div>
             <div className={styles.providers}>
-              <button className={`${styles.providerButton} ${styles.kakao}`} type="button" onClick={() => handleSignIn('kakao')}>
+              <button className={`${styles.providerButton} ${styles.kakao}`} type="button" onClick={showComingSoon}>
                 <KakaoIcon />
                 카카오로 시작하기
               </button>
-              <button className={`${styles.providerButton} ${styles.github}`} type="button" onClick={() => handleSignIn('github')}>
+              <button className={`${styles.providerButton} ${styles.github}`} type="button" onClick={showComingSoon}>
                 <GithubIcon />
                 GitHub로 시작하기
               </button>
@@ -120,8 +118,20 @@ export function LoginPage() {
           </>
         )}
       </section>
+      <div className={styles.toastRegion} role="status">
+        {toastKey > 0 && (
+          <p className={styles.toast}>
+            <InfoIcon />
+            개발중입니다.
+          </p>
+        )}
+      </div>
     </main>
   );
+}
+
+function InfoIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></svg>;
 }
 
 function BackIcon() {

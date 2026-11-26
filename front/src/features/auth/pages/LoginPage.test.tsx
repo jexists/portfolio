@@ -85,43 +85,27 @@ describe('Login', () => {
     expect(navigateMock).toHaveBeenCalledWith('/search');
   });
 
-  it('shows four purpose choices after a first sign in', async () => {
-    const service = new LoginAuthService();
-    const user = userEvent.setup();
-    renderLogin(service, { pathname: '/login', state: { from: '/project/naver-clone' } });
-
-    await user.click(await screen.findByRole('button', { name: '카카오로 시작하기' }));
-
-    expect(service.signIn).toHaveBeenCalledWith('kakao');
-    expect(await screen.findByRole('heading', { name: '어떤 목적으로 방문하셨나요?' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /채용 담당자/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /개발자/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /학생/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /둘러보기/ })).toBeInTheDocument();
-  });
-
-  it('saves the selected purpose and redirects to the route in location state', async () => {
-    const service = new LoginAuthService();
-    const user = userEvent.setup();
-    renderLogin(service, { pathname: '/login', state: { from: '/project/naver-clone' } });
-
-    await user.click(await screen.findByRole('button', { name: 'GitHub로 시작하기' }));
-    await user.click(await screen.findByRole('button', { name: /개발자/ }));
-
-    expect(savePurposeMock).toHaveBeenCalledWith('user', 'developer', 'github', '정주애');
-    expect(navigateMock).toHaveBeenCalledWith('/project/naver-clone', { replace: true });
-  });
-
-  it('skips the survey for a returning user', async () => {
-    getPurposeMock.mockResolvedValue('student');
+  it.each(['카카오로 시작하기', 'GitHub로 시작하기'])('shows a toast instead of signing in from %s', async (name) => {
     const service = new LoginAuthService();
     const user = userEvent.setup();
     renderLogin(service);
 
-    await user.click(await screen.findByRole('button', { name: '카카오로 시작하기' }));
+    await user.click(await screen.findByRole('button', { name }));
 
-    await waitFor(() => expect(navigateMock).toHaveBeenCalledWith('/search', { replace: true }));
-    expect(screen.queryByRole('heading', { name: '어떤 목적으로 방문하셨나요?' })).not.toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('개발중입니다.');
+    expect(service.signIn).not.toHaveBeenCalled();
+  });
+
+  it('saves the selected purpose and redirects to the route in location state', async () => {
+    const service = new LoginAuthService({ id: 'user', name: '정주애', provider: 'github' });
+    const user = userEvent.setup();
+    renderLogin(service, { pathname: '/login', state: { from: '/project/naver-clone' } });
+
+    await user.click(await screen.findByRole('button', { name: /개발자/ }));
+
+    expect(screen.queryByRole('button', { name: 'GitHub로 시작하기' })).not.toBeInTheDocument();
+    expect(savePurposeMock).toHaveBeenCalledWith('user', 'developer', 'github', '정주애');
+    expect(navigateMock).toHaveBeenCalledWith('/project/naver-clone', { replace: true });
   });
 
   it('checks the survey before redirecting an already signed-in user', async () => {
