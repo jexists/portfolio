@@ -153,6 +153,17 @@
   color: var(--color-text-secondary);
 }
 
+/* 점 하나(한 줄 항목) 안에서 넘어간 줄은 붙이고, 항목 사이만 띄운다(.sec li 와 같은 규칙) */
+.lines > div,
+.skill > div {
+  line-height: var(--resume-item-line-height);
+}
+
+.lines > div + div,
+.skill > div + div {
+  margin-top: var(--space-1);
+}
+
 .skill .sub::before {
   content: '- ';
 }

@@ -405,6 +405,11 @@
   font-size: var(--font-size-sm);
 }
 
+/* 소제목 → 첫 항목은 항목 안 줄 사이보다 넓게 */
+.skillDetail h4 + ul {
+  margin-top: var(--space-1);
+}
+
 /* ── 표 ── */
 .credentialName {
   display: flex;
@@ -456,6 +461,12 @@
 .resultCard p,
 .resultCard h3 {
   margin: var(--space-0);
+}
+
+/* 카드 안 설명은 제목-설명 간격보다 줄 사이를 좁게 */
+.resultCard p,
+.schoolCard p {
+  line-height: var(--font-line-height-compact);
 }
 
 .resultCard h3 {
@@ -619,6 +630,7 @@
 }
 
 .sectionHead h2 {
+  min-width: var(--space-0);
   margin: var(--space-0);
   color: var(--color-text-primary);
   font-size: var(--font-size-lg);
@@ -925,6 +937,8 @@
   align-items: baseline;
   gap: var(--space-1) var(--space-2);
   margin: var(--space-0);
+  /* h3 와 p 로 갈려 있어도 학교명 줄간격이 같도록 */
+  line-height: var(--font-line-height-heading);
 }
 
 .schoolLine b {
@@ -1009,7 +1023,7 @@ button.courseToggle:hover {
   padding-left: var(--space-1);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
-  line-height: var(--resume-body-line-height);
+  line-height: var(--resume-item-line-height);
   list-style: none;
 }
 
@@ -1122,6 +1136,7 @@ button.courseToggle:hover {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-height: var(--font-line-height-compact);
 }
 
 .projectRailButton {
@@ -1324,7 +1339,7 @@ button.courseToggle:hover {
   /* 제목은 항상 두 줄 높이로 맞춰 아래 기관·직책 줄이 가지런하다 (넘치면 말줄임) */
   display: -webkit-box;
   overflow: hidden;
-  line-height: 1.4;
+  line-height: 1.35;
   min-height: 2.8em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -1359,7 +1374,7 @@ button.courseToggle:hover {
 /* 경력 카드 본문: 14px, 줄 간격 조금 좁게 */
 .career {
   font-size: var(--font-size-sm);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .careerHead span {
@@ -1403,12 +1418,13 @@ button.courseToggle:hover {
 }
 
 .career .bullets {
-  gap: var(--space-0);
+  gap: var(--space-1); /* 불릿 사이는 같은 불릿 안 줄(\n)보다 넓게 */
 }
 
 /* 한 항목을 두 줄로 나눌 때 데이터의 줄바꿈(\n)을 살린다 */
 .career .bullets li {
   white-space: pre-line;
+  line-height: var(--font-line-height-compact);
 }
 
 /* 그 밖의 경력: 회사 카드 본문과 같은 14px */
@@ -1530,6 +1546,7 @@ button.courseToggle:hover {
 
   .sectionHead h2 {
     flex: 1000 0 auto;
+    max-width: var(--layout-full); /* 기술 탭처럼 부제가 긴 제목이 화면 밖으로 밀지 않게 */
   }
 
   .eduBadge,

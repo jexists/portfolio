@@ -71,7 +71,7 @@
 .hero h1 {
   color: var(--color-text-primary);
   font-size: var(--font-size-xl);
-  line-height: var(--font-line-height-tight);
+  line-height: var(--font-line-height-heading);
 }
 
 .back {
@@ -224,7 +224,7 @@
   gap: var(--space-3);
   padding: var(--space-2) var(--space-3);
   color: var(--color-text-primary);
-  line-height: 1.45;
+  line-height: 1.4;
   text-decoration: none;
 }
 
