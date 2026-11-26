@@ -144,6 +144,39 @@
   transform: translateY(var(--motion-translate-hover-lift));
 }
 
+.toastRegion {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-8);
+  left: var(--space-4);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-0);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-text-primary);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-sm);
+  box-shadow: var(--shadow-md);
+
+  svg {
+    flex: var(--flex-none);
+    width: var(--login-provider-icon-size);
+    height: var(--login-provider-icon-size);
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: var(--border-width-strong);
+  }
+}
+
 .survey {
   display: grid;
   width: var(--layout-full);
