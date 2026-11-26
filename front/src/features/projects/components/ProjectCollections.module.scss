@@ -69,6 +69,8 @@
 
 .list h3 {
   font-size: var(--font-size-base);
+  /* 검색결과처럼 윗줄을 끝까지 채운다 (전역 제목의 balance 해제) */
+  text-wrap: wrap;
 }
 
 .list h3 a {
@@ -103,8 +105,55 @@
 .list li[data-thumb='true'] {
   display: grid;
   grid-template-columns: minmax(var(--space-0), 1fr) auto;
-  gap: var(--space-4);
+  gap: var(--space-0) var(--space-4);
   align-items: start;
+}
+
+/* PC: 썸네일이 제목·설명 오른쪽 전체 높이 */
+.list li[data-thumb='true'] .thumb {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* 좁은 화면: 제목·설명 왼쪽·썸네일 오른쪽(제목 높이부터), 날짜·기술 배지는 그 아래 전체 폭 */
+@media (max-width: 40rem) {
+  .list li[data-thumb='true'] .itemText {
+    display: contents;
+  }
+
+  .list li[data-thumb='true'] .meta,
+  .list li[data-thumb='true'] .techs {
+    grid-column: 1 / -1;
+  }
+
+  /* 제목은 길어도 두 줄까지, 넘치면 … */
+  .list li[data-thumb='true'] h3 {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .list li[data-thumb='true'] h3,
+  .list li[data-thumb='true'] .itemText > p:first-child {
+    grid-column: 1;
+  }
+
+
+  /* 기술 배지는 한 줄로 두고 넘치면 가로로 넘긴다 */
+  .list .itemText .techs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .list .itemText .techs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .list .itemText .techs > * {
+    flex: var(--flex-none);
+  }
 }
 
 .itemText {
