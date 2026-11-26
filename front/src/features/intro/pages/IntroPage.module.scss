@@ -350,6 +350,20 @@
   }
 }
 
+/* 모바일은 검색창을 비워 둔다: 마이크·카메라를 빼고 AI 모드는 작게 */
+@media (max-width: 48rem) {
+  .actionIcon {
+    display: none;
+  }
+
+  .aiButton {
+    min-height: var(--space-0);
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-xs);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .textCursor,
   .suggestion {

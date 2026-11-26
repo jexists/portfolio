@@ -32,8 +32,10 @@
 }
 
 .body {
+  --photo-column: var(--search-photo-width);
+
   display: grid;
-  grid-template-columns: minmax(var(--space-0), 1fr) var(--search-photo-width);
+  grid-template-columns: minmax(var(--space-0), 1fr) var(--photo-column);
   gap: var(--space-6);
   padding-top: var(--space-4);
 }
@@ -50,6 +52,11 @@
   display: grid;
   grid-template-columns: var(--search-info-label-width) minmax(var(--space-0), 1fr);
   gap: var(--space-3);
+}
+
+/* 사진은 첫 줄(경력) 옆에만 있으니 그 아래 줄은 카드 폭 100% 를 쓴다 (간격은 .body 의 gap 과 같게) */
+.body .facts > div + div {
+  margin-right: calc((var(--photo-column) + var(--space-6)) * -1);
 }
 
 .facts dt {
@@ -361,8 +368,13 @@
 
   /* 사진은 요약 오른쪽 위에 작게 둔다 */
   .body {
-    grid-template-columns: minmax(var(--space-0), 1fr) var(--search-avatar-small);
+    --photo-column: var(--search-avatar-small);
+
     gap: var(--space-3);
+  }
+
+  .body .facts > div + div {
+    margin-right: calc((var(--photo-column) + var(--space-3)) * -1);
   }
 
   .body .photo {
