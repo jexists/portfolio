@@ -1,0 +1,16 @@
+{
+  "id": "2026-11-26_2329_89ae5883",
+  "approved_at": "2026-11-26T23:29:56+09:00",
+  "session_id": "c128dac7-ef9d-455c-9dee-9978d453aa53",
+  "tool_use_id": "toolu_019d6Tjtm1oXGtm8BejarRtL",
+  "source_plan_path": "/Users/jexists/.claude/plans/pasted-content-id-084b-elegant-platypus.md",
+  "sha256": "89ae5883f48676a0c0554e72b6d1b17a41128dd5a20d5452f96676ae0f1a321b",
+  "previous": "2026-11-26_2304_b15f67f1",
+  "git": {
+    "branch": "refactor/typography-consistency",
+    "base_commit": "f9c6ecbee5ac863a09254575158182a43c715c08",
+    "dirty": true
+  },
+  "status": "approved",
+  "sensitive_findings": []
+}
