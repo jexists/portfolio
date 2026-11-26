@@ -32,12 +32,12 @@
     "links": [
       {
         "type": "live",
-        "label": "코어 웹",
+        "label": "사이트 (사용자)",
         "url": "https://academy-enrollment-web.vercel.app"
       },
       {
         "type": "live",
-        "label": "어드민",
+        "label": "사이트 (관리자)",
         "url": "https://academy-enrollment-admin.vercel.app"
       },
       {
@@ -47,22 +47,22 @@
       },
       {
         "type": "video",
-        "label": "시연 영상 (MP4)",
+        "label": "시연 영상",
         "url": "https://github.com/jexists/academy-enrollment-web/blob/main/docs/%ED%95%9C%EB%B9%9B%EC%88%98%ED%95%99-%EB%8D%B0%EB%AA%A8.mp4"
       },
       {
         "type": "github",
-        "label": "backend",
+        "label": "코드 (백엔드)",
         "url": "https://github.com/jexists/academy-enrollment-backend"
       },
       {
         "type": "github",
-        "label": "admin",
+        "label": "코드 (관리자)",
         "url": "https://github.com/jexists/academy-enrollment-admin"
       },
       {
         "type": "github",
-        "label": "web",
+        "label": "코드 (사용자)",
         "url": "https://github.com/jexists/academy-enrollment-web"
       }
     ],
@@ -126,12 +126,12 @@
     "links": [
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/smartdong-2team/blog2shorts"
       },
       {
         "type": "doc",
-        "label": "문서 (docs)",
+        "label": "문서",
         "url": "https://github.com/smartdong-2team/blog2shorts/tree/main/docs"
       }
     ],
@@ -224,12 +224,12 @@
     "links": [
       {
         "type": "github",
-        "label": "팀 저장소",
+        "label": "코드",
         "url": "https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN30-FINAL-1Team"
       },
       {
         "type": "github",
-        "label": "PR·코드리뷰 기록",
+        "label": "PR 기록",
         "url": "https://github.com/jexists/SKN30-FINAL-1Team-dev"
       }
     ],
@@ -337,22 +337,22 @@
     "links": [
       {
         "type": "github",
-        "label": "3차 팀 저장소",
+        "label": "3차 코드",
         "url": "https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN30-3rd-4Team"
       },
       {
         "type": "github",
-        "label": "4차 팀 저장소",
+        "label": "4차 코드",
         "url": "https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN30-4th-4Team"
       },
       {
         "type": "github",
-        "label": "3차 PR·코드리뷰 기록",
+        "label": "3차 PR 기록",
         "url": "https://github.com/jexists/SKN30-3rd-4Team-dev"
       },
       {
         "type": "github",
-        "label": "4차 PR·코드리뷰 기록",
+        "label": "4차 PR 기록",
         "url": "https://github.com/jexists/SKN30-4th-4Team-dev"
       },
       {
@@ -495,7 +495,7 @@
     "links": [
       {
         "type": "live",
-        "label": "서비스",
+        "label": "사이트",
         "url": "https://testory-level01-frontend.vercel.app"
       },
       {
@@ -505,12 +505,12 @@
       },
       {
         "type": "github",
-        "label": "frontend",
+        "label": "코드 (프론트)",
         "url": "https://github.com/jexists/testory-level03-frontend"
       },
       {
         "type": "github",
-        "label": "backend",
+        "label": "코드 (백엔드)",
         "url": "https://github.com/jexists/testory-level03-backend"
       }
     ],
@@ -571,17 +571,17 @@
     "links": [
       {
         "type": "live",
-        "label": "서비스",
+        "label": "사이트",
         "url": "https://snapbook-level3-frontend.vercel.app"
       },
       {
         "type": "github",
-        "label": "frontend",
+        "label": "코드 (프론트)",
         "url": "https://github.com/jexists/snapbook-level3-frontend"
       },
       {
         "type": "github",
-        "label": "backend",
+        "label": "코드 (백엔드)",
         "url": "https://github.com/jexists/snapbook-level3-backend"
       }
     ],
@@ -632,12 +632,12 @@
     "links": [
       {
         "type": "live",
-        "label": "서비스",
+        "label": "사이트",
         "url": "https://heuk-frontend.vercel.app"
       },
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/studio-booking"
       },
       {
@@ -704,17 +704,17 @@
     "links": [
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/travel-content-maker"
       },
       {
         "type": "slides",
-        "label": "전체 발표",
+        "label": "발표 자료",
         "url": "https://jexists.github.io/travel-content-maker/presentation/index_v5.html"
       },
       {
         "type": "slides",
-        "label": "업무 분석·개선 설계",
+        "label": "설계 자료",
         "url": "https://jexists.github.io/travel-content-maker/presentation/analysis_v5.html"
       },
       {
@@ -780,7 +780,7 @@
     "links": [
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN30-2nd-1Team"
       }
     ],
@@ -876,7 +876,7 @@
     "links": [
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN30-1st-4Team"
       }
     ],
@@ -946,7 +946,7 @@
       },
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/plog"
       }
     ],
@@ -1019,7 +1019,7 @@
     "links": [
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/photo_organizer"
       }
     ],
@@ -1099,7 +1099,7 @@
     "links": [
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/instpic"
       }
     ],
@@ -1177,7 +1177,7 @@
       },
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/portfolio_2019"
       }
     ],
@@ -1263,7 +1263,7 @@
       },
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/port02_coke"
       }
     ],
@@ -1422,7 +1422,7 @@
       },
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/copy01_naver"
       }
     ],
@@ -1500,7 +1500,7 @@
       },
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/copy02_asiana"
       }
     ],
@@ -1573,7 +1573,7 @@
       },
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/copy03_payple"
       }
     ],
@@ -1624,7 +1624,7 @@
       },
       {
         "type": "github",
-        "label": "GitHub",
+        "label": "코드",
         "url": "https://github.com/jexists/copy04_trello"
       }
     ],
@@ -1676,7 +1676,7 @@
   {
     "_id": "lecture-practice",
     "title": "강의 실습",
-    "subtitle": "일정관리·그림판·시계·버킷리스트·영화 블로그",
+    "subtitle": "일정관리 · 그림판 · 시계 · 버킷리스트 · 영화 블로그",
     "categoryId": "hand-coding",
     "featured": false,
     "recommend": 50,
@@ -1686,7 +1686,7 @@
     },
     "duration": "5개월",
     "publishedAt": "2020-07-31",
-    "summary": "온라인 강의와 공식 문서를 따라 Vanilla JS·Angular·React로 만든 실습 5개",
+    "summary": "온라인 강의와 공식 문서를 따라 Vanilla JS · Angular · React로 만든 실습 5개",
     "team": "1명",
     "tags": [
       "JavaScript",
@@ -1697,7 +1697,7 @@
     "links": [
       {
         "type": "github",
-        "label": "TIL",
+        "label": "코드",
         "url": "https://github.com/jexists/TIL"
       }
     ],

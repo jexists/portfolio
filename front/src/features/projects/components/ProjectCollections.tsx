@@ -60,6 +60,9 @@ function ImageStrip({ images, to }: { images: ProjectMeta['images']; to: string 
   );
 }
 
+// 목록에서는 사이트·코드·발표 자료만 보이고, 기록·부가 문서는 상세 페이지에서만 보인다
+const LIST_HIDDEN_LINKS = new Set(['PR 기록', '3차 PR 기록', '4차 PR 기록', '3차 발표 자료', '설계 자료', '문서', 'API 문서', '실행 방법']);
+
 /** 프로젝트 탭: 전체 + 구분(categories) 칩으로 거르고 추천·최신·인원순으로 정렬하는 목록 */
 const PAGE_SIZE = 10;
 
@@ -145,17 +148,17 @@ export function ProjectsTab({ projects, tag, onClearTag }: ProjectsTabProps) {
             const to = `/project/${project.slug}`;
             return (
               <li key={project.slug} data-thumb={thumb ? 'true' : undefined}>
+                <h3>
+                  <Link to={to}>
+                    {project.title}
+                    {project.subtitle ? ` - ${project.subtitle}` : ''}
+                  </Link>
+                </h3>
                 <div className={styles.itemText}>
-                  <h3>
-                    <Link to={to}>
-                      {project.title}
-                      {project.subtitle ? ` - ${project.subtitle}` : ''}
-                    </Link>
-                  </h3>
                   <p>{project.summary}</p>
                   <p className={styles.meta}>
                     <span>{projectFacts(project)}</span>
-                    {project.links.slice(0, 2).map((link) => (
+                    {project.links.filter((link) => !LIST_HIDDEN_LINKS.has(link.label)).slice(0, 2).map((link) => (
                       <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
                         {link.label}
                       </a>

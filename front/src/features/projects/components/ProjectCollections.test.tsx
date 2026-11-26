@@ -29,7 +29,16 @@ describe('FeaturedRail (AC-8)', () => {
 
 describe('ProjectsTab', () => {
   const projects = [
-    projectMeta({ slug: 'a', title: 'A', category: 'skn30', links: [{ type: 'github', label: '팀 저장소', url: 'https://github.com/a' }] }),
+    projectMeta({
+      slug: 'a',
+      title: 'A',
+      category: 'skn30',
+      links: [
+        { type: 'doc', label: 'API 문서', url: 'https://docs.example.com/a' },
+        { type: 'github', label: 'PR 기록', url: 'https://github.com/a/pulls' },
+        { type: 'github', label: '코드', url: 'https://github.com/a' },
+      ],
+    }),
     projectMeta({ slug: 'b', title: 'B', category: 'uiux' }),
   ];
 
@@ -56,7 +65,14 @@ describe('ProjectsTab', () => {
   it('names result links by their label, not by the link type', () => {
     renderAt('/search?tab=projects');
 
-    expect(screen.getByRole('link', { name: '팀 저장소' })).toHaveAttribute('href', 'https://github.com/a');
+    expect(screen.getByRole('link', { name: '코드' })).toHaveAttribute('href', 'https://github.com/a');
+  });
+
+  it('leaves record and extra-document links to the detail page', () => {
+    renderAt('/search?tab=projects');
+
+    expect(screen.queryByRole('link', { name: 'API 문서' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'PR 기록' })).not.toBeInTheDocument();
   });
 });
 
