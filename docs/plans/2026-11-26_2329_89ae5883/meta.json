@@ -17,5 +17,9 @@
     "155492d",
     "32d0b0e"
   ],
-  "branch": "refactor/typography-consistency"
+  "branch": "refactor/typography-consistency",
+  "pr": {
+    "number": 24,
+    "url": "https://github.com/jexists/portfolio/pull/24"
+  }
 }
