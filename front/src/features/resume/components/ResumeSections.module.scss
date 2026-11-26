@@ -1043,6 +1043,7 @@ button.courseToggle:hover {
 
 .projectRail {
   position: relative;
+  container-type: inline-size;
 }
 
 .projectRail ul {
@@ -1062,12 +1063,19 @@ button.courseToggle:hover {
   scroll-snap-align: start;
 }
 
+/* 레일 폭이 350px 이하면 카드가 좁아 태그·제목이 잘리니 한 장씩 보인다 */
+@container (max-width: 21.875rem) {
+  .projectRail ul {
+    grid-auto-columns: var(--layout-full);
+  }
+}
+
 .projectRail a {
   /* 호버 밑줄은 제목에만 준다 */
   text-decoration: none;
   display: grid;
-  /* 옆 카드 높이에 맞춰 늘어나도 내용은 세로 가운데 (위아래 여백이 같게) */
-  align-content: center;
+  /* 옆 카드 높이에 맞춰 늘어나도 제목 줄이 나란하도록 내용은 위에 붙인다 */
+  align-content: start;
   gap: var(--space-1);
   height: var(--layout-full);
   border-radius: var(--radius-lg);
@@ -1500,4 +1508,41 @@ button.courseToggle:hover {
 
 .courseList > li > .courseBody p {
   font-size: 14px;
+}
+
+/* 모바일은 폭이 좁아 붙어 보이는 줄을 자리가 모자랄 때만 두 줄로 나눈다: 학력 날짜 / 태그, 교육 제목 / 구분 버튼 */
+@media (max-width: 48rem) {
+  /* 학력 날짜·태그도 한 줄에 들어가면 그대로, 모자랄 때만 태그가 아랫줄로 */
+  .schoolHead {
+    flex-wrap: wrap;
+  }
+
+  /* 태그 좌우 여백을 줄여 377px 폭에서도 날짜 옆에 들어가게 한다 */
+  .eduBadge {
+    padding-inline: var(--space-1);
+  }
+
+  /* 교육 제목·구분 버튼은 한 줄에 들어가면 그대로, 모자랄 때만 버튼이 아랫줄로 내려가 폭을 꽉 채운다
+     (제목이 남는 폭을 거의 다 가져가서 한 줄일 땐 버튼이 제 크기, 혼자 남으면 버튼이 줄 전체를 채운다) */
+  .sectionHead {
+    flex-wrap: wrap;
+  }
+
+  .sectionHead h2 {
+    flex: 1000 0 auto;
+  }
+
+  .eduBadge,
+  .sortToggle button {
+    white-space: nowrap;
+  }
+
+  /* 교육 구분 버튼이 늘어나면 세 칸을 똑같이 나눈다 */
+  .sectionHead .sortToggle {
+    flex: 1 0 auto;
+  }
+
+  .sectionHead .sortToggle button {
+    flex: 1;
+  }
 }

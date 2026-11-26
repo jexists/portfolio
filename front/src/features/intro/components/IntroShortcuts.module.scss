@@ -51,3 +51,26 @@
     transition: none;
   }
 }
+
+/* 모바일은 로고가 위로 밀리지 않게 동그라미를 줄여 한 줄 5개만 보인다. GitHub·이메일은 헤더 '내 링크'에 있다 */
+@media (max-width: 48rem) {
+  .shortcuts {
+    flex-wrap: nowrap;
+    gap: var(--space-1);
+  }
+
+  .shortcut {
+    min-width: var(--space-0);
+    flex: 1;
+    padding-inline: var(--space-0);
+  }
+
+  .icon {
+    width: var(--intro-shortcut-icon-bg-size-sm);
+    height: var(--intro-shortcut-icon-bg-size-sm);
+  }
+
+  .shortcut:nth-child(n + 6) {
+    display: none;
+  }
+}
