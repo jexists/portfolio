@@ -12,7 +12,7 @@
 .markdown h4 {
   margin-block: var(--space-6) var(--space-2);
   color: var(--color-text-primary);
-  line-height: var(--font-line-height-tight);
+  line-height: var(--font-line-height-heading);
 }
 
 .markdown h2 {
@@ -36,6 +36,11 @@
 .markdown p,
 .markdown li {
   color: var(--color-text-secondary);
+}
+
+/* 줄바꿈으로 내려간 줄보다 항목 사이를 조금 더 띄운다 */
+.markdown li + li {
+  margin-top: var(--space-1);
 }
 
 .markdown strong {

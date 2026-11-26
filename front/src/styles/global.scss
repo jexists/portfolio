@@ -18,7 +18,16 @@ body {
   background: var(--color-bg-page);
   color: var(--color-text-primary);
   font-family: var(--font-family-base);
-  line-height: 1.6;
+  line-height: var(--font-line-height-body);
+  /* 한글은 어절 단위로 줄바꿈하고, 한 어절이 줄보다 길 때만 글자 중간에서 끊는다 */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 제목은 여러 줄로 꺾여도 붙거나 벌어져 보이지 않게 공통 줄간격. 컴포넌트가 따로 정하면 그쪽이 이긴다(:where = 특이도 0) */
+:where(h1, h2, h3, h4) {
+  line-height: var(--font-line-height-heading);
+  text-wrap: balance;
 }
 
 button,

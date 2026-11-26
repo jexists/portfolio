@@ -84,6 +84,8 @@
   margin-top: var(--space-1);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
+  /* 설명 안의 줄 사이는 제목-설명 간격보다 좁게 */
+  line-height: var(--font-line-height-compact);
 }
 
 .list .meta {

@@ -71,11 +71,13 @@
 .subtitle {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
+  line-height: var(--font-line-height-compact);
 }
 
 .meta {
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
+  line-height: var(--font-line-height-compact);
 }
 
 @media (prefers-reduced-motion: reduce) {

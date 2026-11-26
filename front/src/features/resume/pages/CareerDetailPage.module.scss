@@ -57,7 +57,7 @@
   margin-top: var(--space-2);
   color: var(--color-text-primary);
   font-size: var(--font-size-xl);
-  line-height: var(--font-line-height-tight);
+  line-height: var(--font-line-height-heading);
 }
 
 .back {
@@ -355,7 +355,7 @@
 /* 머리 줄·내용 줄 높이와 여백을 같게: 위아래 4px, 칸 사이 6px, 양 끝 8px */
 .side .git table:has(th) :is(th, td) {
   padding: var(--space-1) 6px var(--space-1) var(--space-0);
-  line-height: 1.5;
+  line-height: 1.45;
   vertical-align: middle;
 }
 

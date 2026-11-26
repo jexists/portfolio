@@ -14,7 +14,7 @@
   color: var(--color-text-primary);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
-  line-height: var(--font-line-height-tight);
+  line-height: var(--font-line-height-heading);
 }
 
 .sideHead h2 {
@@ -228,7 +228,7 @@
 
 /* 두 줄로 넘어가는 설명이 벌어져 보이지 않게 줄 간격을 좁힌다 (기본 1.6) */
 .strengths li {
-  line-height: 1.45;
+  line-height: 1.4;
   border: var(--border-width-default) solid transparent;
   border-radius: var(--radius-lg);
   background: var(--color-bg-page);
