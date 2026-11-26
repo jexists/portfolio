@@ -1,0 +1,20 @@
+# AI 학습용 수집 봇 차단. 검색엔진(Googlebot, Yeti 등)은 허용한다.
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: anthropic-ai
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: PerplexityBot
+User-agent: Bytespider
+User-agent: Meta-ExternalAgent
+User-agent: Amazonbot
+User-agent: cohere-ai
+User-agent: Diffbot
+Disallow: /
+
+User-agent: *
+Allow: /

@@ -29,6 +29,15 @@
 4. 번들 크기 경고(index 약 620kB)를 줄인다: 라우트 단위 `lazy()` 분할.
 5. Codex에서 `/skills`로 스킬 7개가 인식되는지 확인한다(Claude 전용 frontmatter 키가 섞여 있다).
 
+## 나중에 할 계획
+1. 문의 기능
+2. 백엔드 연결 (프론트 mock → Go API)
+3. 로그인
+4. 로그인한 사람이 본인일 때만 웹사이트에서 바로 추가·수정·삭제
+5. 저장소 비공개 전환 + 배포 전용 공개 저장소: 지금 저장소를 `portfolio-src`(가칭)로 바꿔 비공개로 두고, main push 때 Actions가 빌드 결과물(`front/dist`)만 공개 저장소 `portfolio`에 올린다. 링크 `jexists.github.io/portfolio/` 유지. 배포 키 1개 필요.
+6. 카카오톡 공유 미리보기(SEO): `index.html` og 태그와 `front/public/images/og.png`(1200×630) 추가함. 남은 일: 배포 후 카카오 개발자 사이트의 공유 디버거에서 캐시 초기화. SPA라 모든 경로가 같은 미리보기다(경로별로 바꾸려면 빌드 때 경로별 HTML 생성 필요).
+7. AI 수집 차단 보강: `robots.txt`는 도메인 루트에서만 읽힌다. 지금은 `front/public/robots.txt`(루트 배포용)와 `index.html`의 `noai` 메타만 있다. 확실히 막으려면 `jexists.github.io` 저장소를 만들어 루트에 같은 `robots.txt`를 두거나 개인 도메인을 쓴다.
+
 ## 메모
 - 브라우저 패널 화면 확인: `.claude/launch.json`의 `back-api-local`(로컬 mongod 27017, DB `portfolio_contract`, :8089) + `front-api-local`(:5174, 목업 끔). 먼저 `MONGO_URI=mongodb://localhost:27017 MONGO_DB=portfolio_contract go run ./cmd/seed -drop`.
 - Node 26 환경에서 jsdom localStorage가 Node 내장 localStorage에 가려지는 문제가 있어 vitest에 `--no-experimental-webstorage`를 넣었다 (`front/vite.config.ts`).
