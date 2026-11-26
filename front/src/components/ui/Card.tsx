@@ -10,13 +10,15 @@ interface CardProps {
   note?: string;
   /** 제목 바로 옆 작은 회색 상태 (예: 배포 종료) */
   badge?: string;
+  /** 제목 오른쪽 끝에 두는 조작 요소 (예: 정렬 토글) */
+  action?: ReactNode;
   className?: string;
   ariaLabel?: string;
   children: ReactNode;
 }
 
 /** 검색 결과 화면의 흰 카드. 제목이 있으면 section 의 이름이 된다. */
-export function Card({ title, moreTo, note, badge, className, ariaLabel, children }: CardProps) {
+export function Card({ title, moreTo, note, badge, action, className, ariaLabel, children }: CardProps) {
   return (
     <section className={[styles.card, className].filter(Boolean).join(' ')} aria-label={ariaLabel ?? title}>
       {title ? (
@@ -26,6 +28,7 @@ export function Card({ title, moreTo, note, badge, className, ariaLabel, childre
             {badge ? <span className={styles.badge}>{badge}</span> : null}
           </h2>
           {note ? <span className={styles.note}>{note}</span> : null}
+          {action}
           {moreTo ? (
             <Link className={styles.more} to={moreTo} aria-label={`${title} 더보기`}>
               <svg viewBox="0 0 24 24" aria-hidden="true">

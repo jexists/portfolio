@@ -38,6 +38,7 @@ type Project struct {
 	Series      *Series        `bson:"series,omitempty" json:"series,omitempty"`
 	PublishedAt string         `bson:"publishedAt" json:"publishedAt"`
 	Featured    bool           `bson:"featured" json:"featured"`
+	Recommend   int            `bson:"recommend,omitempty" json:"recommend,omitempty"` // 추천순 점수, 클수록 위
 	Draft       bool           `bson:"draft" json:"draft"`
 	// Body 는 상세 조회에만 채워진다 (목록에서는 projection 으로 제외).
 	Body string `bson:"body,omitempty" json:"body,omitempty"`

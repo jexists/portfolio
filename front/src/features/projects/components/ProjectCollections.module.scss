@@ -251,3 +251,37 @@
     white-space: nowrap;
   }
 }
+
+/* 정렬: 부수 기능이라 배경 없이 작은 글자 링크처럼 "추천순 · 최신순 · 인원순" */
+.sortToggle {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.sortToggle button {
+  border: var(--border-width-none);
+  padding: var(--space-0);
+  background: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+}
+
+.sortToggle button + button::before {
+  content: '·';
+  margin: var(--space-0) var(--space-2);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-regular);
+}
+
+.sortToggle button:hover {
+  color: var(--color-text-secondary);
+}
+
+.sortToggle button[aria-pressed='true'] {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}

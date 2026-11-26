@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { projectMeta } from '@/test/fixtures';
-import { FeaturedRail, ProjectsTab } from './ProjectCollections';
+import { FeaturedRail, ProjectsTab, SORTS } from './ProjectCollections';
 
 function setScroll(rail: HTMLElement, scrollLeft: number) {
   Object.defineProperty(rail, 'scrollWidth', { configurable: true, value: 900 });
@@ -57,5 +57,18 @@ describe('ProjectsTab', () => {
     renderAt('/search?tab=projects');
 
     expect(screen.getByRole('link', { name: '팀 저장소' })).toHaveAttribute('href', 'https://github.com/a');
+  });
+});
+
+describe('ProjectsTab SORTS', () => {
+  const solo = projectMeta({ slug: 'solo', team: '1명', recommend: 30, period: { start: '2026.01.01', end: '2026.01.02' } });
+  const team = projectMeta({ slug: 'team', team: '4명 (2명 중도 이탈)', recommend: 10, period: { start: '2025.01.01', end: '2025.01.02' } });
+  const fresh = projectMeta({ slug: 'fresh', team: '5명', recommend: undefined, period: { start: '2026.05.01', end: '2026.05.02' } });
+  const order = (key: keyof typeof SORTS) => [solo, team, fresh].sort(SORTS[key]).map((project) => project.slug);
+
+  it('orders by recommend number, then latest, then headcount', () => {
+    expect(order('recommend')).toEqual(['solo', 'team', 'fresh']);
+    expect(order('latest')).toEqual(['fresh', 'solo', 'team']);
+    expect(order('team')).toEqual(['solo', 'team', 'fresh']);
   });
 });

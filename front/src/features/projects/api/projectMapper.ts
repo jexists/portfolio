@@ -19,6 +19,7 @@ export function toProjectMeta(dto: ProjectDto): ProjectMeta {
     duration: optional(dto.duration),
     publishedAt: dto.publishedAt,
     featured: dto.featured,
+    recommend: dto.recommend || undefined,
     draft: dto.draft,
     tags: dto.tags,
     summary: dto.summary,
